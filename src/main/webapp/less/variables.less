@@ -1,0 +1,108 @@
+// Fonts
+@font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+@fontMono: Monaco, Menlo, Consolas, 'Courier New', monospace;
+
+// Colors
+@cWhite: #FFFFFF;
+@cGray5: #F1F1F1;
+@cGray4: #CCCCCC;
+@cGray3: #999999;
+@cGray2: #666666;
+@cGray1: #333333;
+@cGray0: #000000;
+
+// backgrounds
+@colorBackContent: #efefef;
+@colorBackArticle: @cWhite;
+@colorBackFooter: #222;
+
+// Text colors
+@colorTitle: @cGray1;
+@colorText: @cGray2;
+@colorTextLight: @cGray3;
+@colorTextLighter: @cGray4;
+@colorLink: #0099cc;
+@colorLinkHover: #005E7D;
+@colorTitleOnGreen: @cWhite;
+@colorTextOnGreen: #40523C;
+@colorLinkOnGreen: #0099cc;
+@colorTabTitleActive: @cGray1;
+@colorTabTitleInactive: #B0D0AB;
+
+// sizes
+@widthFull: 924px;
+@widthLeft: 924px;
+@widthRight: 924px;
+@widthMiddle: 702px;
+
+
+//
+// MIXINS
+//
+
+.hangingindent(@size) {
+  padding-left: @size ;
+  text-indent: -@size ;
+}
+
+.box-shadow(@arguments){
+  -moz-box-shadow: @arguments;
+  -webkit-box-shadow: @arguments;
+  -o-box-shadow: @arguments;
+  -ms-box-shadow: @arguments;
+  box-shadow: @arguments;
+}
+
+.inline_block() {
+  display: -moz-inline-stack;
+  vertical-align: top;
+  display: inline-block;
+  zoom: 1; *display: inline;
+}
+
+// TODO: do overloaded mixins with the same name work in LESS ???
+.border-radius (@radius: 5px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.border-radius(@arguments){
+  -webkit-border-radius: @arguments;
+  -moz-border-radius: @arguments;
+  border-radius: @arguments;
+  -ms-border-radius: @arguments;
+  -o-border-radius: @arguments;
+}
+
+.disable-selection() {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.size(@width) { width:  @width; height: @width; }
+.size(@width, @height) { width: @width; height: @height; }
+
+.absolute-landscape-center(@width) {
+  position:absolute;
+  left:50%;
+  width: @width;
+  margin-left: -1*@width / 2;
+}
+
+// transition speed for mouse hovering
+@hover-speed: .3s;
+
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}

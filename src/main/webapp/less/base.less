@@ -1,0 +1,118 @@
+/*
+ Very simple html markup styling without classes or complex, nested selectors.
+ This serves as the base for all further styles.
+*/
+
+
+html, body {
+  background: #efefef;
+  height: 100%;
+}
+
+body {
+  text-align: center;
+  color: @colorText;
+  font-size: 13px;
+  font-family: @font;
+  font-weight: normal;
+  font-style: normal;
+}
+
+em {
+  font-style: italic;
+}
+
+abbr {
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+sup {
+  font-size: 11px;
+  top: -3px;
+}
+
+time {
+  color: @colorLink;
+  font-weight: normal;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    color: @cGray1;
+    -webkit-transition: color @hover-speed ease-in-out;
+    -moz-transition: color @hover-speed ease-in-out;
+    -o-transition: color @hover-speed ease-in-out;
+    -ms-transition: color @hover-speed ease-in-out;
+    transition: color @hover-speed ease-in-out;
+  }
+}
+
+code {
+  font-family: @fontMono;
+  margin-left: 10px;
+  padding: 10px 0px 10px 10px;
+  border-left: 2px solid @cGray5;
+  font-size: 14px;
+  color: @cGray3;
+  display: inline-block;
+}
+
+address, .address{
+  font-size: 13px;
+  color: @colorTextLight;
+  margin-bottom: 18px;
+  line-height: 18px;
+  a {
+    color: @colorTextLight;
+    text-decoration: none;
+  }
+  span {
+    display: block;
+  }
+}
+
+dl {
+  font-size: 15px;
+
+  dt {
+    clear: both;
+    float: left;
+    width: 200px;
+    color: @colorTitle;
+    text-transform: uppercase;
+    text-shadow: 0 1px white;
+    font-size: 13px;
+    line-height: 15px;
+    margin-bottom: 10px;
+  }
+
+  dd {
+    margin-bottom: 10px;
+  }
+}
+
+a {
+  color: @colorLink;
+  font-weight: normal;
+  text-decoration: none;
+
+  &:hover {
+    color: @colorLinkHover;
+    -webkit-transition: color @hover-speed ease-in-out;
+    -moz-transition:    color @hover-speed ease-in-out;
+    -o-transition:      color @hover-speed ease-in-out;
+    -ms-transition:     color @hover-speed ease-in-out;
+    transition:         color @hover-speed ease-in-out;
+  }
+  &.sourcePopup, &.helpPopup {
+    cursor: pointer;
+  }
+
+  &.sort {
+    position: relative;
+  }
+
+  &.small {
+    font-size: 11px;
+  }
+}

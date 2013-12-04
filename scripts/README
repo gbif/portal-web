@@ -1,0 +1,14 @@
+Deployment scripts:
+
+There are 2 deployment scripts in the current directory:
+ * deploy-trunk.sh: deploys the projects using the versions available in the corresponding SVN trunk of each project
+ * deploy.sh: deploys using the latest releases of each project.
+ 
+ Both scripts require 2 elements:
+  * An environment variable or parameter named ENV (environment), for example  "ENV=uat ./deploy.sh" executes the deploy script with the variable ENV set to uat.
+  * An maven settings file that must be copied in the same directory where the script is executed. 
+    The file must be named $ENV-settings.xml; for example: uat-settings.xml is a valid settings file when the script is executed using ENV=uat.
+    
+  The script copy-indexes performs 2 steps:
+  * Creates a backup of the current solr index located in //mnt/ssd/solr/occurrence-solr; the backup is created here //var/local/large/solr/occurrence-solr$(date +"%b-%d-%Y")
+  * Moves the occurrence index from //mnt/ssd/solr/occurrence-index-builder/solr to //mnt/ssd/solr/occurrence-solr

@@ -1,0 +1,259 @@
+@import "variables";
+
+div.map {
+  .size(608px, 140px);
+  margin-bottom: 23px;
+}
+
+#map_canvas {
+  position: relative;
+  #map { width: 580px; }
+
+  .tl, .tr, .bl, .br {
+    .size(4px);
+    position: absolute;
+    z-index: 100;
+
+    background: url("../img/circle.png") no-repeat;
+  }
+
+  .tl { top: -1px; left: -1px; background-position: top left; } 
+  .tr { top: -1px; right: -1px; background-position: top right; }
+  .bl { bottom: -1px; left: -1px; background-position: bottom left; } 
+  .br { bottom: -1px; right: -1px; background-position: bottom right; }
+}
+
+#content article.map {
+  // Full screen maps go on top of everything, but not popups
+  z-index: 10000;
+
+  div.map {
+    position: absolute;
+    top: -19px; left: 2px;
+    .size(627px, 423px);
+
+    z-index: 100000;
+  }
+
+  .content {
+    height: 387px;
+  }
+
+  .right {
+    margin-left: 627px;
+
+    .inner {
+      overflow: auto;
+      height: 313px;
+    }
+  }
+
+  .map_container {
+    position:relative;
+    display:inline;
+    .size(627px, 423px);
+  }
+
+  .zoom_in {
+    top: -13px;
+    background: url("../img/icons/zoom.png") no-repeat 0 0;
+    &:hover { cursor: pointer; }
+  }
+
+  .zoom_out {
+    top: 15px;
+    background: url("../img/icons/zoom.png") no-repeat 0 -32px;
+    &:hover { cursor: pointer; }
+  }
+
+  .zoom_fs {
+    top: 43px;
+    background: url("../img/icons/zoom.png") no-repeat 0 -64px;
+    &:hover { cursor: pointer; }
+  }
+
+  .zoom_in, .zoom_out, .zoom_fs {
+    position: absolute;
+    left: 8px;
+    .size(26px);
+    z-index: 200000;
+  }
+
+  .leaflet-control-layers-base {
+    padding: 3px;
+    input[type="radio"] { margin: 0 3px 0 0; }
+  }
+}
+
+
+
+
+
+
+// TODO: IS THE FOLLOWING REST STILL NEEDED ????
+
+
+body.mapfull #content {
+  padding: 0;
+
+  div#map {
+    position: relative;
+    width: 100%;
+    height: 475px;
+    margin: 0;
+    z-index: 1;
+  }
+
+  article.dataset {
+    position: absolute !important;
+    top: 183px;
+    left: 50%;
+    margin: 0 0 0 -356px;
+    z-index: 10;
+    display: block;
+
+    div.content {
+      padding: 50px 0 20px;
+    }
+
+    p.explore {
+      float: left;
+      width: 100%;
+      padding: 40px 0 0 0;
+      text-align: center;
+    }
+  }
+
+  &.countries {
+    top: 205px;
+  }
+
+  div#infowindow_ {
+    position: absolute;
+    width: 261px;
+
+    a.close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 13px;
+      height: 12px;
+      background: url("../img/close_infowindow.png") no-repeat 0 0;
+      z-index: 10;
+
+      &:hover {
+        background-position: 0 -12px;
+      }
+    }
+  }
+
+  img {
+   display: none;
+  }
+
+  div.top {
+   display: inline-block;
+   width: 209px;
+   height: auto;
+   padding: 26px 26px 0px 26px;
+   margin: 0;
+   background: url("../img/infowindow_top.png") no-repeat 0 0;
+
+   h2 {
+     height: auto;
+     margin: 0;
+     padding: 0 0 10px;
+     text-align: left !important;
+
+     a {
+       font-weight: bold;
+       font-size: 19px;
+       color: #0099CC;
+       text-decoration: none;
+
+       &:hover {
+         text-decoration: underline;
+       }
+
+     }
+   }
+ }
+
+ div.bottom {
+   display: inline-block;
+   width: 209px;
+   height: 73px;
+   padding: 5px 26px 10px 26px;
+   background: url("../img/infowindow_bottom.png") no-repeat 0 bottom;
+
+   span {
+     float: left;
+     height: 41px;
+     margin: 0;
+
+     p {
+       text-align: left;
+       font-size: 21px;
+       color: #0099CC;
+     }
+
+     label {
+       text-align: left;
+       font-weight: normal;
+       font-size: 13px;
+       color: #9f9f9f;
+     }
+
+     &.datasets {
+       width: 55px;
+     }
+
+     &.occurrences {
+       margin: 0 0 0 15px;
+       width: 76px;
+     }
+
+     &.species {
+       margin: 0 0 0 14px;
+       width: 47px;
+     }
+   }
+ }
+}
+
+
+body.singlemap div#map {
+  position: absolute;
+  top: -19px;
+  height: 423px;
+  left: 2px;
+  width: 603px;
+  z-index: 10 !important;
+}
+
+body.singlemap a.zoom_in {
+  top: -13px;
+}
+
+body.singlemap a.zoom_out {
+  top: 15px;
+}
+
+body.mapfull #content a.zoom_in {
+  top: 110px;
+  display: none;
+}
+
+body.mapfull #content a.zoom_out {
+  top: 139px;
+  display: none;
+}
+
+body.typesmap a.zoom_in { 
+  top: -13px;
+}
+
+body.typesmap a.zoom_out {
+  top: 15px;
+}
+

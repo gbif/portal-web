@@ -1,0 +1,38 @@
+/*
+  LESS file that contains various tables styles used in the portal, independent of where they are placed
+  //TODO: migrate definitions form occ_table.less to here
+
+*/
+
+#content table {
+  // occurrence metrics tables
+  &.metrics {
+    color: #666;
+    div {
+      display: inline-block;
+    }
+    .total, tr.total td {
+      font-weight: bold !important;
+      background-color: #FFFFDF !important;
+    }
+    td.title {
+      font-weight: bold !important;
+    }
+  }
+
+  &.api {
+    .wordwrap a {
+      word-wrap: normal !important;
+      word-break: normal !important;
+    }
+    td a{
+      word-break: break-all;
+      word-wrap: break-word;
+    }
+    ul {
+      margin-bottom: 0px;
+      font-size: 13px;
+    }
+  }
+
+}

@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright 2011 Global Biodiversity Information Facility (GBIF)
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.gbif</groupId>
+    <artifactId>motherpom</artifactId>
+    <version>11</version>
+  </parent>
+
+  <groupId>org.gbif</groupId>
+  <artifactId>portal-web</artifactId>
+  <version>0.9-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>GBIF Portal</name>
+  <description>The new, integrated GBIF Portal</description>
+  <url>http://sites.gbif.org/portal/portal-web</url>
+
+  <properties>
+
+    <!-- used for packaging and deploying only.
+    We have used a system var localhost configuration for the failsafe and jetty plugin -->
+    <jetty.port>8080</jetty.port>
+    <servername>http://localhost:8080</servername>
+    <!-- configure struts tags to include the servlet context by default -->
+    <url.includeContext>true</url.includeContext>
+    <!-- gbif proxy auth application key. Make sure the matching secret uses the same -->
+    <portal.application.key>gbif.portal</portal.application.key>
+
+    <!-- this looks silly, but we're not aware of a way to negate a variable, so we keep them separate to be used in struts config files -->
+    <devMode>true</devMode>
+    <notDevMode>false</notDevMode>
+    <google.analytics />
+    <occurrencedownload.size.limit>-1</occurrencedownload.size.limit>
+    <occurrence.search.maxoffset>10000</occurrence.search.maxoffset>
+
+    <!-- dependency versions -->
+    <dwc-api.version>1.3</dwc-api.version>
+    <gbif-api.version>0.11-SNAPSHOT</gbif-api.version>
+    <checklistbank-ws-client.version>2.4</checklistbank-ws-client.version>
+    <registry-ws-client.version>2.9</registry-ws-client.version>
+    <occurrence-download-ws-client.version>0.12-SNAPSHOT</occurrence-download-ws-client.version>
+    <occurrence-ws-client.version>0.11</occurrence-ws-client.version>
+    <metrics-ws-client.version>0.11</metrics-ws-client.version>
+    <drupal-mybatis.version>0.10</drupal-mybatis.version>
+    <gbif-common.version>0.15-SNAPSHOT</gbif-common.version>
+    <gbif-common-ws.version>0.11</gbif-common-ws.version>
+
+    <freemarker.version>2.3.20</freemarker.version>
+    <guice.version>3.0</guice.version>
+    <jersey.version>1.17.1</jersey.version>
+    <junit.version>4.11</junit.version>
+    <guava.version>14.0.1</guava.version>
+    <logback.version>1.0.13</logback.version>
+    <mockito.version>1.9.5</mockito.version>
+    <selenium.version>2.35.0</selenium.version>
+    <servletapi.version>2.5</servletapi.version>
+    <slf4j.version>1.7.5</slf4j.version>
+    <struts.version>2.3.15.1</struts.version>
+    <bval.version>0.5</bval.version>
+    <xerces.version>2.9.1</xerces.version>
+    <jsp.version>2.2</jsp.version>
+    <findbugs-jsr305.version>2.0.1</findbugs-jsr305.version>
+    <commons-io.version>2.4</commons-io.version>
+    <javax-validation-api.version>1.0.0.GA</javax-validation-api.version>
+    <commons-beanutils.version>1.8.3</commons-beanutils.version>
+    <lucene.version>4.4.0</lucene.version>
+    <httpclient.version>4.2.3</httpclient.version>
+    <commons-lang3.version>3.1</commons-lang3.version>
+  </properties>
+
+  <scm>
+    <connection>scm:svn:http://gbif-portal.googlecode.com/svn/portal-web/trunk</connection>
+    <developerConnection>scm:svn:https://gbif-portal.googlecode.com/svn/portal-web/trunk</developerConnection>
+    <url>http://code.google.com/p/gbif-portal/source/browse/#svn/portal-web/trunk</url>
+  </scm>
+
+  <distributionManagement>
+    <site>
+      <id>gbif-site</id>
+      <name>Site for the GBIF Portal project</name>
+      <url>scp://tools.gbif.org:/var/www/html/sites/portal/portal-web</url>
+    </site>
+  </distributionManagement>
+
+  <build>
+    <defaultGoal>jetty:run</defaultGoal>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <configuration>
+          <webAppConfig>
+            <contextPath>/</contextPath>
+          </webAppConfig>
+          <!-- no scan if used with JRebel -->
+          <scanIntervalSeconds>0</scanIntervalSeconds>
+          <stopKey>stop</stopKey>
+          <stopPort>9362</stopPort>
+          <systemProperties>
+            <systemProperty>
+              <name>servername</name>
+              <value>http://localhost:${jetty.port}</value>
+            </systemProperty>
+          </systemProperties>
+        </configuration>
+        <executions>
+          <execution>
+            <id>start-jetty</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <scanIntervalSeconds>0</scanIntervalSeconds>
+              <daemon>true</daemon>
+            </configuration>
+          </execution>
+          <execution>
+            <id>stop-jetty</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>stop</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <systemProperties>
+            <property>
+              <name>servername</name>
+              <value>http://localhost:${jetty.port}</value>
+            </property>
+          </systemProperties>
+        </configuration>
+        <executions>
+          <execution>
+            <id>integration-test</id>
+            <goals>
+              <goal>integration-test</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>verify</id>
+            <goals>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+          <groupId>org.lesscss</groupId>
+          <artifactId>lesscss-maven-plugin</artifactId>
+          <version>1.3.3</version>
+          <configuration>
+              <sourceDirectory>${project.basedir}/src/main/webapp/less</sourceDirectory>
+              <outputDirectory>${project.basedir}/src/main/webapp/css</outputDirectory>
+              <compress>true</compress>
+              <includes>
+                <include>style.less</include>
+                <include>print.less</include>
+                <include>google.less</include>
+                <include>leaflet.ie.less</include>
+                <include>leaflet.less</include>
+                <include>uniform.less</include>
+              </includes>
+          </configuration>
+          <executions>
+              <execution>
+                  <goals>
+                      <goal>compile</goal>
+                  </goals>
+              </execution>
+          </executions>
+      </plugin>
+      <!-- Commented out jrebel-maven-plugin plugin, because it breaks release -->
+      <!--<plugin>-->
+        <!--<groupId>org.zeroturnaround</groupId>-->
+        <!--<artifactId>jrebel-maven-plugin</artifactId>-->
+        <!--<version>1.1.5</version>-->
+        <!--<executions>-->
+          <!--<execution>-->
+            <!--<id>generate-rebel-xml</id>-->
+            <!--<phase>process-resources</phase>-->
+            <!--<goals>-->
+              <!--<goal>generate</goal>-->
+            <!--</goals>-->
+          <!--</execution>-->
+        <!--</executions>-->
+      <!--</plugin>-->
+    </plugins>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <excludes>
+          <exclude>struts.xml</exclude>
+        </excludes>
+        <filtering>true</filtering>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>struts.xml</include>
+        </includes>
+        <filtering>false</filtering>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+    </testResources>
+  </build>
+
+  <repositories>
+    <repository>
+      <id>gbif-all</id>
+      <url>http://repository.gbif.org/content/groups/gbif</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <!-- GBIF -->
+    <dependency>
+      <groupId>org.gbif</groupId>
+      <artifactId>dwc-api</artifactId>
+      <version>${dwc-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.gbif</groupId>
+      <artifactId>gbif-api</artifactId>
+      <version>${gbif-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.gbif.checklistbank</groupId>
+      <artifactId>checklistbank-ws-client</artifactId>
+      <version>${checklistbank-ws-client.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.gbif.registry</groupId>
+      <artifactId>registry-ws-client</artifactId>
+      <version>${registry-ws-client.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.gbif.occurrence.download</groupId>
+      <artifactId>occurrence-download-ws-client</artifactId>
+      <version>${occurrence-download-ws-client.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.gbif.occurrence</groupId>
+      <artifactId>occurrence-ws-client</artifactId>
+      <version>${occurrence-ws-client.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.gbif.metrics</groupId>
+      <artifactId>metrics-ws-client</artifactId>
+      <version>${metrics-ws-client.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.gbif</groupId>
+      <artifactId>drupal-mybatis</artifactId>
+      <version>${drupal-mybatis.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.gbif</groupId>
+      <artifactId>gbif-common</artifactId>
+      <version>${gbif-common.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.gbif</groupId>
+      <artifactId>gbif-common-ws</artifactId>
+      <version>${gbif-common-ws.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-api</artifactId>
+      <version>${selenium.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-htmlunit-driver</artifactId>
+      <version>${selenium.version}</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-logging</artifactId>
+          <groupId>commons-logging</groupId>
+        </exclusion>
+        <!-- excluding it as it causes conflicts with the latest httpclient version -->
+        <exclusion>
+          <artifactId>httpclient</artifactId>
+          <groupId>org.apache.httpcomponents</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- Google -->
+    <dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+      <version>${guice.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.inject.extensions</groupId>
+      <artifactId>guice-servlet</artifactId>
+      <version>${guice.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.inject.extensions</groupId>
+      <artifactId>guice-struts2</artifactId>
+      <version>${guice.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.findbugs</groupId>
+      <artifactId>jsr305</artifactId>
+      <version>${findbugs-jsr305.version}</version>
+    </dependency>
+
+    <!-- Struts2 -->
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-core</artifactId>
+      <version>${struts.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.struts.xwork</groupId>
+      <artifactId>xwork-core</artifactId>
+      <version>${struts.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-junit-plugin</artifactId>
+      <version>${struts.version}</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-logging</artifactId>
+          <groupId>commons-logging</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!--
+     This plugin provides a faster Java implementation of tags in the "simple" theme then the default one
+     http://struts.apache.org/2.x/docs/javatemplates-plugin.html
+    -->
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-javatemplates-plugin</artifactId>
+      <version>${struts.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- View Engines, Servlet & other web things-->
+    <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-sitemesh-plugin</artifactId>
+      <version>${struts.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.freemarker</groupId>
+      <artifactId>freemarker</artifactId>
+      <version>${freemarker.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>${servletapi.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- For webservice guice modules -->
+    <dependency>
+      <groupId>com.sun.jersey.contribs</groupId>
+      <artifactId>jersey-apache-client4</artifactId>
+      <version>${jersey.version}</version>
+      <scope>runtime</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-logging</artifactId>
+          <groupId>commons-logging</groupId>
+        </exclusion>
+        <!-- excluding it as it causes conflicts with the latest httpclient version -->
+        <exclusion>
+          <artifactId>httpclient</artifactId>
+          <groupId>org.apache.httpcomponents</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-client</artifactId>
+      <version>${jersey.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jersey</groupId>
+      <artifactId>jersey-server</artifactId>
+      <version>${jersey.version}</version>
+    </dependency>
+
+    <!-- Logging -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <!-- Commons logging bridge for Struts2 & Selenium -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <!-- To ship JUL (e.g. Guice) logging to SLF4J -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jul-to-slf4j</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <!-- Test -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>jsp-api</artifactId>
+      <version>${jsp.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- BVal validation framework - bval/guice plugin -->
+    <dependency>
+      <groupId>org.apache.bval</groupId>
+      <artifactId>bval-guice</artifactId>
+      <version>${bval.version}</version>
+    </dependency>
+    <!-- validation -->
+    <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <version>${javax-validation-api.version}</version>
+    </dependency>
+
+    <!-- Other commons projects -->
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>${commons-io.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils-core</artifactId>
+      <version>${commons-beanutils.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>${commons-beanutils.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-core</artifactId>
+      <version>${lucene.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.lucene</groupId>
+      <artifactId>lucene-analyzers-common</artifactId>
+      <version>${lucene.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>${httpclient.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>${commons-lang3.version}</version>
+    </dependency>
+  </dependencies>
+
+  <profiles>
+    <profile>
+      <!--
+        configured to use the api.gbif.org/uat services and the live master drupal.
+        All settings exist but we need these passwords from somewhere else:
+          <drupal.db.password>
+          <portal.application.secret>
+      -->
+      <id>prod</id>
+      <properties>
+        <cargo.context>portal</cargo.context>
+        <devMode>false</devMode>
+        <notDevMode>true</notDevMode>
+        <baseurl>http://www.gbif.org</baseurl>
+        <servername>http://www.gbif.org</servername>
+        <drupal.url>http://www.gbif.org</drupal.url>
+        <google.analytics>UA-42057855-1</google.analytics>
+        <url.includeContext>false</url.includeContext>
+        <registry.ws.url>http://api.gbif.org/</registry.ws.url>
+        <checklistbank.ws.url>http://api.gbif.org/</checklistbank.ws.url>
+        <checklistbank.search.ws.url>http://api.gbif.org/species/</checklistbank.search.ws.url>
+        <checklistbank.match.ws.url>http://api.gbif.org/species/match/</checklistbank.match.ws.url>
+        <occurrence.ws.url>http://api.gbif.org/</occurrence.ws.url>
+        <occurrence-download.ws.url>http://jawa.gbif.org:8080/b_occurrence-download-ws/</occurrence-download.ws.url>
+        <occurrence-download.ws.url.for.public.link>http://api.gbif.org/</occurrence-download.ws.url.for.public.link>
+        <tile-server.url>http://api.gbif.org/map</tile-server.url>
+        <image-cache.url>http://api.gbif.org/image</image-cache.url>
+        <metrics.ws.url>http://api.gbif.org/</metrics.ws.url>
+        <drupal.cookiename>SESS751c3c6f031b889581268415447c0191</drupal.cookiename>
+        <drupal.db.url>jdbc:mysql://nerf.gbif.org:3306/drupal_live?useUnicode=true&amp;characterEncoding=UTF8&amp;characterSetResults=UTF8</drupal.db.url>
+        <drupal.db.username>drupal_live</drupal.db.username>
+      </properties>
+    </profile>
+
+    <profile>
+      <!--
+        configured to use the api.gbif.org/dev services and the develop drupal.
+        All settings exist but we need these passwords from somewhere else:
+          <drupal.db.url>
+          <portal.application.secret>
+      -->
+      <id>staging</id>
+      <properties>
+        <cargo.context>portal</cargo.context>
+        <devMode>false</devMode>
+        <notDevMode>true</notDevMode>
+        <baseurl>http://portaldev.gbif.org</baseurl>
+        <servername>http://portaldev.gbif.org</servername>
+        <drupal.url>http://portaldev.gbif.org</drupal.url>
+        <url.includeContext>false</url.includeContext>
+        <registry.ws.url>http://apidev.gbif.org/</registry.ws.url>
+        <checklistbank.ws.url>http://apidev.gbif.org/</checklistbank.ws.url>
+        <checklistbank.search.ws.url>http://apidev.gbif.org/species/</checklistbank.search.ws.url>
+        <checklistbank.match.ws.url>http://apidev.gbif.org/species/match/</checklistbank.match.ws.url>
+        <occurrence.ws.url>http://apidev.gbif.org/</occurrence.ws.url>
+        <occurrence-download.ws.url>http://staging.gbif.org:8080/occurrence-download-ws/</occurrence-download.ws.url>
+        <occurrence-download.ws.url.for.public.link>http://apidev.gbif.org/</occurrence-download.ws.url.for.public.link>
+        <tile-server.url>http://apidev.gbif.org/map</tile-server.url>
+        <image-cache.url>http://apidev.gbif.org/image</image-cache.url>
+        <metrics.ws.url>http://apidev.gbif.org/</metrics.ws.url>
+        <drupal.cookiename>SESS751c3c6f031b889581268415447c0191</drupal.cookiename>
+        <drupal.db.url>jdbc:mysql://nerf.gbif.org:3306/drupal_devel?useUnicode=true&amp;characterEncoding=UTF8&amp;characterSetResults=UTF8</drupal.db.url>
+        <drupal.db.username>drupal_devel</drupal.db.username>
+      </properties>
+    </profile>
+
+  </profiles>
+
+</project>

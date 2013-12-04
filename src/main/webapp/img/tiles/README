@@ -1,0 +1,28 @@
+These instructions guide you through recreating the tiles for the base maps in use on the home page.
+
+1) Download TileMill and install it.  
+2) Create a new TileMill project, and include the default world layer, using default everything (e.g. 24-bit PNG) 
+3) Take the pattern-sea and pattern-land from this folder and put them on a public HTTP URL (dropbox perhaps?)
+4) Edit your styles.mss like so (or change to whatever you want):
+
+Map {
+  background-image: url("http://dl.dropboxusercontent.com/u/608155/map/pattern-sea.png");
+}
+
+#countries {
+  line-color: #325D2B;
+   line-width: 1;  
+  line-join: round;
+  polygon-fill: #569D4A;
+  polygon-pattern-file: url("http://dl.dropboxusercontent.com/u/608155/map/pattern-land.png")
+}
+
+5) Save it - you should have a preview which looks like the final result
+6) Export (top right) as MBTiles
+7) We only need zoom 0-4, otherwise defaults are good
+8) Convert the MBTiles to PNGs.  Google it, but I used https://github.com/mapbox/mbutil by downloading it and then:
+  ./mb-util /tmp/countries_922e12.mbtiles /tmp/tiles
+  
+9) Copy the tiles into this folder.
+10) Bask in map glory
+

@@ -1,0 +1,417 @@
+@import "variables";
+
+#content article .content {
+
+  .multipie {
+    display: inline-block;
+    width: 75px;
+  }
+
+  .pieMultiLegend {
+    display: inline-block;
+    width: 100px;
+    vertical-align: top;
+    margin: 0;
+    padding: 0;
+    ul {
+      margin: 0 0 0 15px;
+      padding: 0;
+      li {
+        margin: 0;
+        padding: 0;
+        line-height: 110%;
+        a {
+          font-size: 13px;
+        }
+        span.number {
+          font-size: 11px;
+        }
+        div.pieLegendBullet {
+          display: inline-block;
+          .size(8px);
+          margin: 0 5px 0 0;
+          background-color: #222;
+
+          .border-radius(4px);
+        }
+
+      }
+    }
+  }
+
+  ul.horizontal_graph {
+    margin: 0;
+    li a {
+      display: inline-block;
+      width: 150px;
+    }
+    .grey_bar {
+      display: inline-block;
+      height: 3px;
+      margin: 0 0 3px 0;
+      background-color: #cccccc;
+
+      .border-radius(1px);
+    }
+    .value_label {
+      font-size: 13px;
+      color: #cccccc;
+      display: inline-block;
+      margin: 0 0 0 10px;
+      padding: 0;
+    }
+  }
+
+  ul.pies {
+    margin: 0;
+
+    li {
+      float: left;
+      width: 251px;
+      margin: 0 42px 0 0;
+      padding: 0;
+
+      background: none;
+      list-style: none;
+
+      p { font-size: 14px; }
+      &:last-child { margin: 0; }
+      &.last { margin: 0; }
+    }
+  }
+}
+
+#content article.graph{
+
+  .header {
+    border-bottom: 1px solid #ddd;
+    margin: 0 0 20px 0;
+    .right {
+      margin-top: 7px;
+      color: @cGray2;
+      text-align: right;
+      font-size: 15px;
+    }
+  }
+
+  .multigraph .header {
+    border: 0;
+    margin: 0;
+  }
+
+
+  div.graph, div.bargraph {
+    float: left;
+    margin-right: 24px;
+     &:last-child {
+       margin-right: 0;
+     }
+    .y_label {
+       font-size: 11px;
+       color: #cccccc;
+     }
+    .graph_axis {
+       width: 100%;
+     }
+    .start, .end {
+       display: block;
+       position: relative;
+       bottom: 0px;
+       font-size: 11px;
+       color: #cccccc;
+     }
+    .start {
+       float: left;
+     }
+    .end {
+       float: right;
+     }
+    div.summary {
+       clear: left;
+       text-align: right;
+       float: right;
+       color: @cGray2;
+       h3 {
+         float: left;
+         font-size: 31px;
+         color: @cGray2;
+         margin: 0 5px 0 0;
+         padding: 0;
+       }
+       .info {
+         float: left;
+         text-align: left;
+         margin-top: 3px;
+         strong {
+           display: block;
+           color: @cGray0;
+         }
+       }
+     }
+     ul {
+       padding: 20px 0 0 0;
+       margin: 0;
+       height: 180px;
+       float: left;
+       clear: both;
+       overflow: hidden;
+       li {
+         position: relative;
+         float: left;
+         margin: 0 1px;
+         height: 11em;
+         padding: 0;
+         background: none;
+         a {
+           display: block;
+           height: 100%;
+         }
+         .label {
+           display: none;
+           position: relative;
+           bottom: 0;
+           left: 0;
+           height: 0;
+           width: 100%;
+           font-size: 11px;
+           color: @cGray3;
+         }
+         .value {
+           display: block;
+           position: absolute;
+           bottom: 0;
+           left: 0;
+           .size(100%, 0);
+
+           background: #f1f1f1;
+           background: rgba(0, 0, 0, 0.1);
+           text-indent: -9999px;
+           overflow: hidden;
+
+           -webkit-border-top-left-radius: 3px;
+           -moz-border-top-left-radius: 3px;
+           border-top-left-radius: 3px;
+
+           -webkit-border-top-right-radius: 3px;
+           -moz-border-top-right-radius: 3px;
+           border-top-right-radius: 3px;
+         }
+         .value_label {
+           display: none;
+           position: relative;
+           bottom: 0;
+           left: 0;
+           height: 0;
+           width: 100%;
+           font-size: 16px;
+           color: #0099cc;
+         }
+         &:hover {
+           .value {
+             background: #0099cc;
+           }
+           .label {
+             display: block;
+           }
+           .value_label {
+             display: block;
+           }
+         }
+       }
+     }
+  }
+}
+
+
+
+
+#content article .content .left .graph, #content article .content .left .bargraph, #content article .content .middle .graph, #content article .content .middle .bargraph {
+  position: relative;
+  margin-right: 19px;
+  float: left;
+}
+
+#content article .content .left .graph.graph, #content article .content .left .bargraph.graph, #content article .content .middle .graph.graph, #content article .content .middle .bargraph.graph {
+  width: 606px;
+}
+
+#content article .content .left .graph.bargraph, #content article .content .left .bargraph.bargraph, #content article .content .middle .graph.bargraph, #content article .content .middle .bargraph.bargraph {
+  width: 280px;
+}
+
+#content article .content .left .graph .start, #content article .content .left .graph .end, #content article .content .left .bargraph .start, #content article .content .left .bargraph .end, #content article .content .middle .graph .start, #content article .content .middle .graph .end, #content article .content .middle .bargraph .start, #content article .content .middle .bargraph .end {
+  position: relative;
+  bottom: -10px;
+  font-size: 11px;
+  color: #cccccc;
+}
+
+#content article .content .left .graph .start, #content article .content .left .bargraph .start, #content article .content .middle .graph .start, #content article .content .middle .bargraph .start {
+  float: left;
+}
+
+#content article .content .left .graph .end, #content article .content .left .bargraph .end, #content article .content .middle .graph .end, #content article .content .middle .bargraph .end {
+  float: right;
+}
+
+#content article .content .left .graph .percentage, #content article .content .left .bargraph .percentage, #content article .content .middle .graph .percentage, #content article .content .middle .bargraph .percentage {
+  position: absolute;
+  right: 14px;
+  bottom: 25px;
+  font-size: 14px;
+  color: @cGray2;
+  padding-right: 10px;
+}
+
+#content article .content .left .graph .percentage.up, #content article .content .left .bargraph .percentage.up, #content article .content .middle .graph .percentage.up, #content article .content .middle .bargraph .percentage.up {
+  background: url("../img/icons/tiny_triangle_up.png") no-repeat right center;
+}
+
+#content article .content .left .graph .percentage.down, #content article .content .left .bargraph .percentage.down, #content article .content .middle .graph .percentage.down, #content article .content .middle .bargraph .percentage.down {
+  background: url("../img/icons/tiny_triangle_down.png") no-repeat right center;
+}
+
+#content article .content .left .graph h3, #content article .content .left .bargraph h3, #content article .content .middle .graph h3, #content article .content .middle .bargraph h3 {
+  position: absolute;
+  color: #0099cc;
+  font-size: 31px;
+  font-weight: normal;
+  top: 0px;
+  left: 0px;
+  text-shadow: 0 0;
+}
+
+#content article .content .left .graph h3 span, #content article .content .left .bargraph h3 span, #content article .content .middle .graph h3 span, #content article .content .middle .bargraph h3 span {
+  display: block;
+  text-transform: none;
+  color: @cGray2;
+  font-size: 13px;
+}
+
+#content article .content .left .graph.last-child, #content article .content .left .bargraph.last-child, #content article .content .middle .graph.last-child, #content article .content .middle .bargraph.last-child {
+  margin: 0;
+}
+
+#content article .content .left .graph.last, #content article .content .left .bargraph.last, #content article .content .middle .graph.last, #content article .content .middle .bargraph.last {
+  margin: 0;
+}
+
+#content article .content .left .graph .lt, #content article .content .left .bargraph .lt, #content article .content .middle .graph .lt, #content article .content .middle .bargraph .lt {
+  position: absolute;
+  bottom: 16px;
+  left: 6px;
+  width: 4px;
+  height: 4px;
+  background: url("../img/mingraph_left_corner.png") no-repeat;
+}
+
+#content article .content .left .graph .rt, #content article .content .left .bargraph .rt, #content article .content .middle .graph .rt, #content article .content .middle .bargraph .rt {
+  position: absolute;
+  bottom: 16px;
+  right: 6px;
+  width: 4px;
+  height: 4px;
+  background: url("../img/mingraph_right_corner.png") no-repeat;
+}
+
+#content article .content .minigraphs {
+  clear: both;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+#content article .content .minigraphs .minigraph {
+  position: relative;
+  margin-right: 19px;
+  width: 289px;
+  float: left;
+}
+
+#content article .content .minigraphs .minigraph .start, #content article .content .minigraphs .minigraph .end {
+  position: absolute;
+  bottom: 0px;
+  font-size: 11px;
+  color: #cccccc;
+}
+
+#content article .content .minigraphs .minigraph .start {
+  left: 0;
+}
+
+#content article .content .minigraphs .minigraph .end {
+  right: 0;
+}
+
+#content article .content .minigraphs .minigraph .help {
+  position: absolute;
+  right: 0;
+  top: 10px;
+}
+
+#content article .content .minigraphs .minigraph .percentage {
+  position: absolute;
+  right: 14px;
+  bottom: 25px;
+  font-size: 14px;
+  color: @cGray2;
+  padding-right: 10px;
+}
+
+#content article .content .minigraphs .minigraph .percentage.up {
+  background: url("../img/icons/tiny_triangle_up.png") no-repeat right center;
+}
+
+#content article .content .minigraphs .minigraph .percentage.down {
+  background: url("../img/icons/tiny_triangle_down.png") no-repeat right center;
+}
+
+#content article .content .minigraphs .minigraph h3 {
+  position: absolute;
+  color: #0099cc;
+  font-size: 31px;
+  font-weight: normal;
+  top: 0px;
+  left: 0px;
+  text-shadow: 0 0;
+}
+
+#content article .content .minigraphs .minigraph h3 span {
+  display: block;
+  text-transform: none;
+  color: @cGray2;
+  font-size: 13px;
+}
+
+#content article .content .minigraphs .minigraph.last-child {
+  margin: 0;
+}
+
+#content article .content .minigraphs .minigraph.last {
+  margin: 0;
+}
+
+#content article .content .minigraphs .minigraph .lt {
+  position: absolute;
+  bottom: 16px;
+  left: 3px;
+  width: 4px;
+  height: 4px;
+  background: url("../img/mingraph_left_corner.png") no-repeat;
+}
+
+#content article .content .minigraphs .minigraph .rt {
+  position: absolute;
+  bottom: 16px;
+  right: 3px;
+  width: 4px;
+  height: 4px;
+  background: url("../img/mingraph_right_corner.png") no-repeat;
+}
+
+#content article .content .minigraphs.last-child {
+  margin: 0;
+}
+
+#content article .content .minigraphs.last {
+  margin: 0;
+}

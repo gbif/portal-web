@@ -1,0 +1,414 @@
+@import "variables";
+
+
+#content div.infowindow {
+  display: none;
+  .absolute-landscape-center(404px);
+  top: 208px;
+
+  text-align: left;
+  color: @cGray1;
+
+  z-index: 500000;
+
+  h2 {
+    margin-bottom: 20px;
+      font-size: 23px;
+    line-height: 28px;
+    color: @cGray1;
+    text-shadow: 0 1px white;
+  }
+
+  h3 {
+    margin-bottom: 8px;
+      font-size: 13px;
+    text-transform: uppercase;
+    color: @cGray1;
+    text-shadow: 0 1px white;
+  }
+
+  div.lheader {
+    position: absolute;
+    top: -20px;
+    width: 404px;
+    height: 20px;
+    padding: 0;
+    background: url("../img/boxes/box_min_top.png") no-repeat left top;
+  }
+
+  div.lfooter {
+    position: absolute;
+    bottom: -54px;
+    width: 404px;
+    height: 54px;
+    padding: 0;
+    background: url("../img/boxes/box_min_bottom.png") no-repeat left bottom;
+
+    &.white {
+      position: absolute;
+      bottom: -32px;
+      width: 404px;
+      height: 32px;
+      padding: 0;
+      background: url("../img/boxes/box_min_bottom.png") no-repeat left top;
+    }
+  }
+
+  span.close {
+    position: absolute;
+    width: 8px;
+    height: 6px;
+    top: -12px;
+    right: 8px;
+    padding: 5px 5px 10px;
+    background: url("../img/icons/close.png") no-repeat center center;
+    cursor: pointer;
+  }
+
+  .content {
+    clear: both;
+    overflow: hidden;
+    padding: 0 34px;
+    background: url("../img/boxes/box_min_bkg.png") repeat-y;
+    p {
+      margin-bottom: 14px;
+      font-size: 13px;
+      color: @cGray2;
+      a {
+        text-decoration: underline;
+      }
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    ol {
+      list-style-type: lower-roman;
+      list-style-image: none;
+
+      li {
+        margin-bottom: 10px;
+      }
+    }
+    button {
+      float: right;
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+
+    .light_box {
+      clear: both;
+      overflow: hidden;
+      margin-bottom: 20px;
+      padding: 27px 0 13px 25px;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: -30px;
+      z-index: 100;
+      width: 336px;
+      text-align: center;
+      color: @cGray2;
+      font-size: 13px;
+      a {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .light_box {
+    background: #e5f5fa;
+    position: relative;
+    padding: 11px 0 4px 7px;
+  }
+
+}
+
+
+.infowindow {
+  // all entries here existed also for #content article form, but been removed as they seem not needed
+  // revert if they are
+  form {
+    clear: both;
+    overflow: hidden;
+
+    h2 {
+      float: left;
+      width: 100%;
+      padding-bottom: 21px;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    button {
+      float: right;
+      margin-right: 4px;
+    }
+
+    div.fields {
+      clear: both;
+      overflow: hidden;
+      margin-bottom: 23px;
+
+      div.field {
+        width: auto;
+        float: left;
+        margin: 0 17px 0 0;
+        padding: 0;
+      }
+    }
+    div.field {
+      position: relative;
+      float: left;
+      margin-bottom: 23px;
+      &.last {
+        margin-right: 0;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+      h3 span {
+        float: right;
+        margin-right: 1px;
+        font-weight: normal;
+        font-style: italic;
+        font-size: 13px;
+        color: #cccccc;
+        text-transform: none;
+        text-shadow: none;
+      }
+      textarea {
+        width: 560px;
+        height: 122px;
+        margin: 0;
+        padding: 10px;
+        border: none;
+        overflow: auto;
+        font-size: 13px;
+        background: url("../img/textarea_big_bkg.png") no-repeat;
+        resize: none;
+        &:focus {
+          outline: none;
+        }
+      }
+      span.input_text {
+        float: left;
+        height: 31px;
+        padding: 0 0 0 5px;
+        background: url("../img/input_bkg.png") no-repeat left -99px;
+        &.error {
+          background-position: left -130px;
+        }
+      }
+      &.error span.input_text {
+        background-position: left -130px;
+      }
+    }
+  }
+}
+
+
+
+
+.infowindow form div.field.error span.input_text input[type="text"], .infowindow form div.field.error span.input_text input[type="password"], .infowindow form div.field span.input_text.error input[type="text"], .infowindow form div.field span.input_text.error input[type="password"], #content article form div.field.error span.input_text input[type="text"], #content article form div.field.error span.input_text input[type="password"], #content article form div.field span.input_text.error input[type="text"], #content article form div.field span.input_text.error input[type="password"] {
+  background-position: right -161px;
+  color: #ff3300;
+}
+
+.infowindow form div.field span.error, #content article form div.field span.error {
+  float: right;
+  color: #ff3300;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.infowindow form div.field input[type="text"], .infowindow form div.field input[type="password"], #content article form div.field input[type="text"], #content article form div.field input[type="password"] {
+  -webkit-transition: color .3s ease-in-out;
+  -moz-transition: color .3s ease-in-out;
+  -o-transition: color .3s ease-in-out;
+  -ms-transition: color .3s ease-in-out;
+  transition: color .3s ease-in-out;
+
+  float: left;
+  width: 270px;
+  height: 31px;
+  margin: 0;
+  padding: 0 10px 0 3px;
+  background: url("../img/input_bkg.png") no-repeat right top;
+  font-size: 13px;
+  color: #333333;
+  border: none;
+  resize: none;
+}
+
+.infowindow form div.field input[type="text"]:focus, .infowindow form div.field input[type="password"]:focus, #content article form div.field input[type="text"]:focus, #content article form div.field input[type="password"]:focus {
+  outline: none;
+}
+
+
+
+
+
+#content div.infowindow .light_box.contact .content ul {
+  float: left;
+  margin: 0 45px 0 0;
+  width: 157px;
+}
+
+#content div.infowindow .light_box.contact .content ul.last {
+  margin-right: 0;
+}
+
+#content div.infowindow .light_box.contact .content ul:last-child {
+  margin-right: 0;
+}
+
+#content div.infowindow .light_box.contact .content ul li {
+  font-size: 13px;
+  color: @cGray2;
+  padding: 0;
+  margin: 0 0 5px 0;
+}
+
+#content div.infowindow .light_box.contact .content ul li.phone {
+  padding-left: 25px;
+  background: url("../img/icons/phone.png") no-repeat left top;
+}
+
+#content div.infowindow .light_box.contact .content ul li.fax {
+  padding-left: 25px;
+  background: url("../img/icons/fax.png") no-repeat left top;
+}
+
+#content div.infowindow .light_box.contact .content ul li.email {
+  padding-left: 25px;
+  background: url("../img/icons/email.png") no-repeat left top;
+}
+
+#content div.infowindow .light_box.contact .content ul li strong {
+  display: block;
+  font-weight: bold;
+}
+
+#content div.infowindow .light_box .content {
+  padding: 10px;
+  background: #e5f5fa;
+}
+
+#content div.infowindow .light_box p {
+  color: @cGray1;
+  font-size: 15px;
+}
+
+#content div.infowindow .light_box ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#content div.infowindow .light_box ul li {
+  background: none;
+}
+
+#content div.infowindow .light_box .tl, #content div.infowindow .light_box .tr, #content div.infowindow .light_box .bl, #content div.infowindow .light_box .br {
+  width: 5px;
+  height: 5px;
+  background: url("../img/boxes/box_light_bkg.png") no-repeat;
+  position: absolute;
+}
+
+#content div.infowindow .light_box .tl {
+  top: 0;
+  left: 0;
+  background-position: 0 0;
+}
+
+#content div.infowindow .light_box .tr {
+  top: 0;
+  right: 0;
+  background-position: -5px 0;
+}
+
+#content div.infowindow .light_box .bl {
+  bottom: 0;
+  left: 0;
+  background-position: 0 -5px;
+}
+
+#content div.infowindow .light_box .br {
+  bottom: 0;
+  right: 0;
+  background-position: -5px -5px;
+}
+
+#content div.infowindow .light_box.package .content {
+  background: url("../img/icons/package.png") no-repeat left center;
+  padding: 20px;
+}
+
+#content div.infowindow .light_box.package .content p {
+  padding: 0 0 0 50px;
+  margin: 0;
+}
+
+#content div.infowindow a.back_to_login, #content div.infowindow a.recover_password {
+  float: left;
+  margin-top: 20px;
+  text-decoration: underline;
+}
+
+#content div.infowindow a.back_to_login strong, #content div.infowindow a.recover_password strong {
+  font-weight: bold;
+  color: @cGray2;
+}
+
+#content div.infowindow .filetype {
+  float: left;
+  margin-top: 20px;
+}
+
+#content div.infowindow .filetype strong {
+  font-weight: bold;
+  color: @cGray2;
+}
+
+#content div.infowindow.dialogPopover {
+  z-index:100000;
+
+  .content {
+    height: 250px;
+
+    h2 {
+      padding: 0;
+      margin: 0;
+
+    }
+
+    .scrollpane {
+      width: 370px;
+      height: 200px;
+      overflow: auto;
+      outline:none;
+
+      .jspCap { display: block; }
+      .jspCapBottom { height:0; width: 5px;}
+      .jspArrowUp { height: 0; }
+
+    }
+
+    ul { margin: 0 0 10px 0; }
+
+    background: url("../img/boxes/box_min_bkg.png") repeat-y;
+
+  }
+}
+
+#content div.infowindow .content .candy_white_button, #content div.infowindow .content .candy_blue_button {
+  display: block;
+  float: right;
+  margin-top: 10px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+

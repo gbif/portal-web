@@ -1,0 +1,772 @@
+// TODO: lessify this css and nest it all under some occurrence specific selector
+// make sure we only use it on occurrence pages, otherwise move it to style.less
+// there are some very global selectors defined here that are likely to clash with others !!!
+
+#content article.ocurrence_results {
+  z-index:1000;
+  .content { padding: 0; }
+
+  .content  > .footer {
+    padding: 24px 26px;
+
+    a, .pagination {
+      display: -moz-inline-box;
+      -moz-box-orient: vertical;
+      display: inline-block;
+      vertical-align: middle;
+      *vertical-align:auto;
+    }
+
+    .pagination {
+      width: 642px;
+      padding: 10px 0;
+
+      color: #CCCCCC;
+      font-size: 13px;
+      text-align: center;
+    }
+  }  
+
+  div.location_option {
+    border: 1px solid #F0F0F0; 
+    border-radius:4px;
+  }
+
+  .location_option_geo {
+    border: 1px solid @cGray4; 
+    border-radius:4px;
+    background-color:#F2FAFB;
+    margin:10px;
+  }
+
+  fieldset {
+    legend { 
+      font-size: 11px;
+      color: @cGray2;
+      text-transform: uppercase;
+      vertical-align: baseline;
+    }      
+    input[type='checkbox'] {
+      vertical-align: baseline;
+    }
+  }
+
+  div.summary_view {
+    div.title {
+      display:inline-block !important;
+    } 
+    ul {
+      list-style-image: none !important;
+      list-style: none !important;
+      margin-bottom: 2px;         
+      font-size: 13px;            
+    }
+    div.filter {
+      border: 1px solid #DDDDDD;            
+      border-width: 1px !important;
+      -moz-border-radius: 4px !important;
+      border-radius: 4px !important;                           
+    }
+  }
+  .filter_content{
+    margin-left: 2px;
+    float:left;
+  }
+
+  .filter_view {
+    margin: 15px 0;
+    padding: 39px 19px 14px;
+    background-color: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 4px 4px 4px;
+
+    clear:both; 
+
+    .center { 
+
+      clear:both;
+      overflow:hidden;
+      margin: auto;
+      width: 128px; 
+      padding: 0 4px;
+
+      .button { float: left; width: 128px; }
+
+    }
+
+
+    h4.title {
+      background-color: #F5F5F5;
+      border: 1px solid #DDDDDD;
+      border-radius: 4px 0 4px 0;
+      color: #9DA0A4;        
+      font-size: 12px;
+      left: -1px;
+      padding: 3px 7px;
+      position: absolute;
+      top: -1px;
+    } 
+
+    div.filter, #bboxContainer {
+
+      table tr td{
+        padding: 8px 15px;
+        border: 0px none;
+        vertical-align: top;
+      }
+
+      .geo_type{
+        cursor: pointer;
+      }
+
+      // (UGLY) fix the location of the zoom controls
+      // This should be removed when the occurrence filters are styled 
+      div#zoom_in {
+        top: 122px;
+        left: 50px;
+      }
+      div#zoom_out {
+        top: 153px;
+        left: 50px;
+      }
+    }
+    h4.filtersTitle {
+          display: block;
+      margin: 0 0 1px 0;
+      width: 135px;
+      text-transform: uppercase;
+      color: #999999;
+      font-size: 11px;
+    }
+
+    div.filterlist{
+      ul {
+        list-style: none;
+        font-size: 13px;
+        line-height: 14px;
+        padding: 8px 0;
+      }
+    }
+
+    .close {        
+      border: none;                
+      right: -1px;
+      top: -1px;
+      padding: 1px;
+      margin-top: 2px;
+      position: absolute;        
+    }
+
+    label { 
+      font-size: 11px;
+      color: @cGray2;
+      text-transform: uppercase;
+      vertical-align: baseline;
+    }   
+
+    ul.basis-of-record {
+      list-style: none;
+      background-color: #F5F5F5;
+      border: 1px solid #DDDDDD;
+      border-radius: 4px;
+      color: #9DA0A4;        
+      font-size: 15px;        
+      padding: 2px;      
+      li {
+        margin: 0 0 6px 0 !important;
+        padding-left: 20px !important;
+        cursor: pointer;
+        &:hover { background: url(../img/tick_disabled.png) no-repeat 0 3px !important;  }
+        &:hover a { font-weight: bold !important; }
+
+        a {
+          color: #666 !important;
+          font-size: 15px !important;
+          font-weight:normal !important;
+        }
+
+        &.selected { 
+          background: url(../img/tick.png) no-repeat 0 3px !important;
+          a { font-size: 15px !important; font-weight: bold !important;}
+        }
+      }  
+    }
+    a.apply {
+      cursor: pointer;
+      padding: 0 0 0 1px;
+    }       
+  }
+
+  table.results {
+
+    width: 920px;
+    margin: 0 0 0 2px;
+    div.buttonContainer{
+      margin-left:auto;
+      margin-right:auto;
+      margin-bottom:5px;
+    }
+
+    a.button {
+      .left {  float:left; }
+
+      .inline_block();
+      color: white;
+      text-shadow: 0px 1px #3f789f;
+      box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.8);
+      text-align: center;
+      background: @colorLink;
+      margin-left:auto;
+      margin-right:auto;
+      &:active { box-shadow: inset 0px 1px 3px 0px rgba(0,0,0,0.5), 0px 1px 1px 0px rgba(255,255,255,1) !important; }
+      &:hover { box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.9); background: #99cefc; }
+    }    
+
+    tr.result:hover td         { background: #FFFFF5; }
+    tr.header:hover td  { background: #FFFFFF; }    
+
+    tr.error_summary {
+      div,a {display:inline-block;}
+      a {font-size:13px;}
+    }
+
+    tr.filter { display: none; }
+
+    tr.filter td {
+
+      height: auto;
+
+      h4 {
+        display: block;
+        margin: 0 0 10px 0;
+      }
+
+      border-bottom: 1px solid #C2C2C2;
+      padding: 16px 20px;
+
+      // we use this to solve a problem with relative td in Firefox
+      .inner { position:relative; }      
+
+      .button {
+        width: 128px;
+      }
+
+      .close { position:absolute; top: 0px; right: 0px; }
+
+      input[type="text"] {
+        width: 260px;
+        padding: 8px;
+        margin: 0px 0 10px 0;
+
+        .border-radius(2px);
+        border: 1px solid #CCC;
+        box-shadow: inset 0px 2px 3px #E8E8E8;
+        outline: none;
+        font-size: 13px;
+      }
+
+      .configure_dates {  
+        float:right;
+        font-size:10px; 
+        cursor:pointer;
+        i {
+          margin-top: -3px;
+          .size(18px);
+          background: url(../img/icons/cog.png) no-repeat;
+        }   
+      }
+
+      .configure_dates_box {
+        border: 1px solid @cGray4; 
+        border-radius:4px;
+        background-color:#F2FAFB;
+        margin:0px;
+        padding: 5px;
+        display:inline-block;
+        table tr td{
+          padding: 3px 3px; 
+        }
+        .label{
+          text-transform: uppercase;
+          color: #9DA0A4;
+          font-size: 11px;
+          padding-right: 5px;
+        }
+        .dk_container{
+          float: right;
+          font-size: 11px;
+          margin-bottom: 2px;
+          line-height: 10px;
+          * {
+            font-size: 11px;
+          }
+        }
+        .date_format {
+          width: 78px;
+          font-size: 11px;
+        }
+      }
+    }
+
+    tr.results-header td {
+
+      background: #F2FAFB;
+
+      height: 20px;
+
+      text-align:center;
+
+      ul li {
+
+        display:none;
+
+        border-bottom: 1px solid #F0F0F0;
+        padding: 16px 0;
+        position:relative;
+
+        &:last-child { border: none; }
+      }
+
+      .filter a {
+        font-size: 15px;
+        &:hover { color: #333; }
+      }
+
+    }
+    tr.filters td {
+
+      background: #F2FAFC;
+
+      height: auto;
+
+
+      ul li {
+
+        display:none;
+
+        border-bottom: 1px solid #F0F0F0 !important;
+        padding: 16px 0;
+        position:relative;
+        list-style:none !important;
+
+        &:last-child { border: none; }
+      }
+
+      .filter a {
+        font-size: 15px;
+        &:hover { color: #333; }
+      }
+
+    }
+
+    tr.header {
+      td { height: 30px; padding: 0 20px 15px 20px; border-right: none; }
+      td h2 { padding: 0; margin: 0; }
+
+      td.options, div.options {
+
+        & > ul {
+
+          float:right;
+          padding: 0; margin: 5px 5px 0 0;
+
+          & > li {
+            display: -moz-inline-box;
+            -moz-box-orient: vertical;
+            display: inline-block;
+            vertical-align: middle;
+            *vertical-align:auto;
+
+            margin: 0 0 0 10px;
+
+            background: none;
+
+
+          }
+        }
+
+        .dropdown-menu.filters, .dropdown-menu.configure {          
+
+          label{vertical-align: baseline; font-size:12px;}
+          input{vertical-align: baseline;  font-size:12px;}
+
+          ul { padding: 10px 0 0 0; margin-bottom:3px !important; font-size:15px !important;}
+
+          ul li a {
+            font-size:15px;
+            text-decoration:none;
+
+            &:hover  { color: #333; background:none; }
+            &:action { outline:none; color: #333; background:none; }
+            &:focus  { outline:none; color: #333; background:none; }
+          }
+
+          ul li.more {
+            padding: 0 0 5px 0;
+
+            a { color: #999999; text-decoration: underline; }
+          }
+
+          .tip {
+            background: url(../img/icons/tip.png) no-repeat;
+            position:absolute; top: -12px; z-index: 2000;
+            left:80px; width: 18px;
+            height: 12px;
+          }
+        }
+
+        a {
+          font-size: 15px;
+          outline:none;
+          &:hover { color: #333; }
+        }
+
+        i { // icons
+          display: -moz-inline-box;
+          -moz-box-orient: vertical;
+          display: inline-block;
+          vertical-align: middle;*vertical-align:auto;
+        }
+
+        .filters, .configure {
+          padding: 0 0 0 5px;
+        }
+
+        .filters i {
+          margin-top: -3px;
+          .size(14px, 12px);
+          background: url(../img/icons/filter.png) no-repeat 0 0;
+        }
+
+        .configure i {
+          margin-top: -3px;
+          .size(18px);
+          background: url(../img/icons/cog.png) no-repeat;
+        }
+      }
+    }
+
+    tr td {
+      height: 100px;
+      padding: 0 20px;
+
+      line-height: normal;
+      font-size: 13px;
+      color: #666666;
+
+      border-bottom: 1px solid #C2C2C2;
+      border-right:  1px solid #F0F0F0;
+
+      &.country, &.kind, &.date { width: 116px - 40px; text-align: center; }
+      &.date { border-right: none; }
+
+      a {
+        display:block;
+        margin: 0 0 3px 0;
+
+        color: @colorLink;
+        font-size: 17px;
+        &:hover {
+          color: #005e7d;
+        }
+      }
+
+      a.title {
+        font-weight: bold;
+      }
+
+      .header { font-size: 13px; color: #CCCCCC; }
+      .footer { font-size: 13px; color: #999999; }
+
+      div.country { margin: 20px 0 5px 0; }
+      .coordinates { color: #CCCCCC; }
+
+
+      h4, .filter {
+        display: -moz-inline-box;
+        -moz-box-orient: vertical;
+        display: inline-block;
+        vertical-align: middle;
+        *vertical-align:auto;
+      }
+
+      h4 {
+        width: 135px;
+        text-transform: uppercase;
+        color: #999999;
+        font-size: 11px;
+      }
+
+      a.close {
+        width: 9px;
+        height: 8px;
+        position:absolute;
+        right: 0;
+        top: 23px;
+        background:url(../img/icons/filter_close.png) no-repeat;
+        cursor: pointer;        
+      }
+
+      a.edit {
+        background: url("../img/icons/edit.png") no-repeat scroll 0 0 transparent;
+        float: right;
+        height: 12px;
+        vertical-align: top;
+        width: 12px;
+        cursor: pointer;
+      }
+
+      a.closeFilter {
+        position: relative !important;
+        float: right;
+        margin: 1px 3px;
+        width: 12px;
+        height: 12px;
+        background:url(../img/icons/delete.png) no-repeat;
+        cursor: pointer;
+      }
+
+      // fix the unwanted inheritance on the leaflet attribution
+      div.leaflet-control-attribution  a {
+        font-size: 11px;
+        top: 0px;
+        display:inline;
+        margin: 0;
+
+      }                  
+    }    
+
+
+
+  }  
+  div.date-filter {
+
+    min-width: 350px;
+
+    .dk_toggle{
+      width: 70px !important;
+    }
+
+    li {
+      margin-bottom: 0px !important;
+    }
+
+
+  }
+}
+
+table.hor-minimalist-b {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border-collapse: collapse;
+  font-size: 11px;
+  text-align: left;
+  color: #999999;
+}
+
+table.hor-minimalist-b th {
+  border-left: 1px solid #F1F1F1;
+  border-bottom: 2px solid #CCCCCC;
+  color: #0099CC;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 2px;
+}
+
+table.hor-minimalist-b td {
+  border-left: 1px solid #F1F1F1;
+  border-bottom: 1px solid #CCCCCC;
+  color: #999999;
+  padding: 2px 2px;
+}
+
+table.hor-minimalist-b tbody tr:hover td {
+  color: #666666;
+}
+
+.description {
+  margin-top: 10px;
+  padding: 10px;
+  color: #666;
+  background-color: #E5F5FA;
+}
+
+.error{     
+  border-color: red !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+}
+
+.filter-error{     
+  border-color: red !important;
+  border-style: solid !important;
+  border-width: 1px !important;
+  -moz-border-radius: 4px !important;
+  border-radius: 4px !important;
+}
+
+p.query {
+  color: #999;
+  margin: 0px;
+  padding: 0px;
+  font-size: 11px;
+}
+
+ul.query {
+  list-style: none;
+  padding: 0px 0px 10px 10px;
+  margin: 0px;
+  color: #666;
+  font-weight: bold;
+}
+
+ul.query .boolean {
+  color: #999;
+  margin: 0px;
+  padding: 0px;
+  font-size: 11px;
+  font-weight: normal;
+}
+
+select,input {
+  margin-right: 5px;
+}
+
+select.subject {
+  width: 150px;
+}
+
+select.predicate {
+  width: 120px;
+}
+
+select.value {
+  width: 200px;
+}
+
+div#email-container {
+  margin-bottom: 10px;
+}
+
+div.filterlist {
+  padding: 0;
+  display: block;
+  margin: 0;
+  border-width: 1px;
+  border-style:solid;  
+  border-color: #ECECEC;
+  background-color: #FFFFFF;
+  text-transform: none;    
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  max-height:200px;
+  max-width:400px;
+  width:300px; 
+  overflow-y: auto;
+  clear:both;  
+}
+
+div.suggestionBox {
+  padding: 10px;
+  display: block;
+  margin: 10px;
+  border-width: 1px;
+  border-style:solid;  
+  border-color: #ECECEC;
+  background-color: #FFFFFF;
+  text-transform: none;    
+  font-size:12px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;  
+  overflow-y: auto;
+  clear:both;   
+}
+
+
+div.warningBox, span.warningBox {  
+  display: block;
+  margin: 5px;
+  padding: 5px;
+  border-width: 1px;
+  border-style:solid;  
+  border-color: red;
+  background-color: #FFFFFF;
+  text-transform: none;    
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;  
+  overflow-y: auto;
+  clear:both;
+  width: 360px;    
+}
+
+span.warningCounter {  
+  display: inline;
+  margin: 2px;
+  padding: 2px;
+  border-width: 1px;
+  border-style:solid;  
+  border-color: red;
+  background-color: red;
+  text-transform: none;
+  color: white;    
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;    
+  clear:both;  
+}
+
+div.suggestionBox ul.taxonomy {
+  display: inline-block;
+  clear: both;
+  margin-bottom: 1px !important;
+
+  li {
+    float: left;
+    margin: 0 4px 0 0 !important;
+    padding: 0 6px 0 0 !important;
+    display: block !important;
+    border: none !important;
+    font-size: 10px;
+    background: url("../img/icons/arrow_small_right.png") no-repeat right;
+    list-style: none;
+    color: @cGray4;
+
+    &.last {
+      background: none;
+    }
+
+    li:last-child {
+      background: none;
+    }
+  }       
+}
+header #infoband .content {
+  .table_title {
+    float:left;
+  }   
+  div.download{
+    float:right; position:relative;right:0;    
+  }  
+}
+
+#map.map_widget {  
+  position: relative !important;
+  top: 0px !important;  
+  margin-bottom: 1px !important;
+  margin-left: 1px !important;
+  margin-right: 1px !important;
+  margin-top: 1px !important;
+  height:266px !important;
+  width:455px !important;
+  display:block !important;
+}
+
+.dk_options{
+  background-color:white !important;
+}
+
+select.predicate {
+  width: 50px;
+}

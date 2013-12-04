@@ -1,0 +1,11 @@
+{
+    "attribution": "", 
+    "description": "", 
+    "center": "0,0,0", 
+    "bounds": "-180,-85.0511,180,85.0511", 
+    "minzoom": "0", 
+    "version": "1.0.0", 
+    "template": "", 
+    "maxzoom": "4", 
+    "name": "Country boundaries"
+}

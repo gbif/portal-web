@@ -1,0 +1,296 @@
+
+#content {
+  ul {
+      // species home
+      &.species {
+        clear: both;
+        overflow: hidden;
+        margin: auto;
+        text-align: center;
+        margin-bottom: 26px;
+
+
+        li {
+          background: none !important;
+          display: inline;
+          margin: 0px;
+          padding: 0 !important;
+
+          a { text-decoration: none; }
+
+          &:after { content: "\00a0\00B7"; }
+          &:last-child:after { content: ""; }
+
+        }
+
+      }
+
+      // species detail
+      &.taxonomy {
+        display: inline-block;
+        clear: both;
+
+        li {
+          float: left;
+          margin: 0 6px 0 0;
+          padding: 0 12px 0 0;
+
+          font-size: 13px;
+          background: url("../img/icons/arrow_small_right.png") no-repeat right;
+          list-style: none;
+          color: @cGray2;
+
+          &.last {
+            background: none;
+          }
+
+          li:last-child {
+            background: none;
+          }
+        }
+
+        &.last-horizontal-line {
+          margin: 0 1px 26px 0px;
+        }
+      }
+
+      &.classification {
+        margin: 0;
+        padding: 0;
+
+        li {
+          padding: 0;
+          background: none;
+          margin: 0 0 15px 0;
+
+          .taxon_level {
+            width: 100px;
+            display: inline-block;
+            font-size: 13px;
+            color: @cGray2;
+          }
+
+          .separator {
+            .size(100px, 15px);
+
+            display: inline-block; // TODO: add mixin
+            margin: 0 10px;
+            background: url("../img/dotted_line_bck.png") repeat-x left bottom;
+          }
+
+          a {
+            font-weight: bold;
+          }
+        }
+      }
+
+      // journal article keyword list
+      &.keywords li{
+        display: inline;
+        list-style-type: none;
+        padding-right: 1px;
+        text-transform: lowercase;
+        font-size: 0.8em;
+        color: #999;
+        &:after{
+          content: ",";
+        }
+      }
+
+      &.values {
+        clear: both;
+        margin: 0 !important;
+        padding: 0;
+
+        li {
+          overflow: hidden;
+          clear: both;
+          margin: 0;
+          padding: 0;
+          font-size: 15px;
+
+          &:hover div.value span {
+            display: block;
+          }
+
+        }
+
+        li div.value {
+          float: left;
+          position: relative;
+        }
+
+        li div.value span.remove {
+          display: none;
+          top: 8px;
+          right: -10px;
+          position: absolute;
+          .size(5px);
+
+          background: url("../img/icons/cross.png") no-repeat left top;
+        }
+
+      }
+
+      // list of blue boxes appearing in the main indicators block in occurrence home
+      &.summary {
+        clear: both;
+        overflow: hidden;
+        margin: 16px 0 25px 0;
+        padding: 0;
+
+        li {
+          float: left;
+          width: 182px;
+          margin-right: 18px;
+          background: none;
+          padding: 0!important;
+          line-height: 15px;
+          font-size: 13px;
+          text-align: center;
+          color: @colorTextLight;
+
+          &.last { margin-right: 0; }
+          &:last-child { margin-right: 0; }
+
+          .light_box {
+            padding: 18px 0 0 0;
+          }
+
+          a.detail {
+            display: block;
+            margin-top: 17px;
+            padding: 13px 0 12px 0;
+
+            text-decoration: none;
+            border-top: 1px solid white;
+          }
+
+          h2 {
+            margin: 3px 0;
+            padding: 0;
+            display: block;
+            font-size: 35px;
+            font-weight: bold;
+            color: @cGray2;
+          }
+
+          h3 {
+            margin: 0 0 13px 0;
+            font-size: 25px;
+            color: @cGray1;
+          }
+        }
+      }
+
+      &.two_cols {
+        display: inline-block;
+        margin: 6px 0 25px 0;
+        vertical-align:text-top;
+        width: 380px;
+
+        li {
+          padding-left: 0;
+          background: none;
+        }
+      }
+
+      &.three_cols {
+        display: inline-block;
+        margin: 6px 0 25px 0;
+        vertical-align:text-top;
+        width: 195px;
+
+        li {
+          padding-left: 0;
+          background: none;
+        }
+      }
+
+      &.four_cols {
+        display: inline-block;
+        margin: 6px 0 25px 0;
+        vertical-align:text-top;
+        width: 610px;
+
+        li {
+          padding-left: 0;
+          background: none;
+        }
+      }
+
+      &.no_bullets {
+        display: inline-block;
+        margin: 6px 0 25px 0;
+
+        li {
+          padding-left: 0;
+          background: none;
+        }
+      }
+
+      &.notes {
+        margin: 0;
+        list-style-position: outside;
+        padding-left: 12px;
+
+        .note {
+          padding-left: 0.85em;
+        }
+
+        li > a {
+          display: block;
+          width: 100%;
+        }
+      }
+
+      &.thumbs_list {
+        margin: 0 0 20px 0;
+        padding: 0;
+
+        li {
+
+          // TODO: replace with mixin
+          display: -moz-inline-stack;
+          vertical-align: top;
+          display: inline-block;
+          zoom: 1; *display: inline;
+
+          margin: 0 3px 0 0;
+          padding: 0;
+          background: none;
+
+          a { display: block; }
+
+          img {
+            margin: 0px;
+            padding: 3px;
+            border: 1px solid @cGray4;
+            max-width: 136px;
+            max-height: 93px;
+            width: 136px;
+          }
+
+          &.last           { margin: 0 0px 0 0; }
+          &.last img       { margin-right: 0px; }
+          &:last-child img { margin-right: 0px; }
+        }
+      }
+
+  }
+
+  // list specifics for the right columns
+  .right ul {
+    &.notes {
+      padding-left: 0px;
+    }
+  }
+
+  .right dl {
+    dt {
+      width: 75px;
+    }
+  }
+
+}
+
