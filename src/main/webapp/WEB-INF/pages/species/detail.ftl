@@ -4,8 +4,8 @@
 <head>
   <title>${usage.scientificName} - Checklist View</title>
   <content tag="extra_scripts">
-      <#-- 
-        Set up the map if only we will use it.  
+      <#--
+        Set up the map if only we will use it.
         Maps are embedded as iframes, but we register event listeners to link through to the occurrence
         search based on the state of the widget.
       -->
@@ -17,7 +17,7 @@
              });
          </script>
       </#if>
-      
+
       <#-- shadowbox to view large images -->
       <link rel="stylesheet" type="text/css" href="<@s.url value='/js/vendor/fancybox/jquery.fancybox.css?v=2.1.4'/>">
       <script type="text/javascript" src="<@s.url value='/js/vendor/fancybox/jquery.fancybox.js?v=2.1.4'/>"></script>
@@ -329,6 +329,7 @@
     <li><a target="_blank" href="http://eol.org/search/?q=${usage.canonicalOrScientificName}" title="Encyclopedia of Life">Encyclopedia of Life</a></li>
   </#if>
   <#if usage.canonicalName??>
+    <li><a target="_blank" href="http://www.catalogueoflife.org/col/search/all/key/${usage.canonicalName?replace(' ','+')}" title="Catalogue of Life">Catalogue of Life</a></li>
     <li><a target="_blank" href="http://www.biodiversitylibrary.org/name/${usage.canonicalName?replace(' ','_')}">Biodiversity Heritage Library</a></li>
   </#if>
   </ul>
