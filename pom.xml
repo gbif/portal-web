@@ -20,7 +20,7 @@
   <parent>
     <groupId>org.gbif</groupId>
     <artifactId>motherpom</artifactId>
-    <version>11</version>
+    <version>13</version>
   </parent>
 
   <groupId>org.gbif</groupId>
@@ -30,7 +30,14 @@
 
   <name>GBIF Portal</name>
   <description>The new, integrated GBIF Portal</description>
-  <url>http://sites.gbif.org/portal/portal-web</url>
+  <url>http://github.org/gbif/portal-web</url>
+
+  <scm>
+    <connection>scm:git:git@github.com:gbif/portal-web.git</connection>
+    <url>https://github.com/gbif/portal-web</url>
+    <developerConnection>scm:git:git@github.com:gbif/portal-web.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
 
   <properties>
 
@@ -84,20 +91,6 @@
     <httpclient.version>4.2.3</httpclient.version>
     <commons-lang3.version>3.1</commons-lang3.version>
   </properties>
-
-  <scm>
-    <connection>scm:svn:http://gbif-portal.googlecode.com/svn/portal-web/trunk</connection>
-    <developerConnection>scm:svn:https://gbif-portal.googlecode.com/svn/portal-web/trunk</developerConnection>
-    <url>http://code.google.com/p/gbif-portal/source/browse/#svn/portal-web/trunk</url>
-  </scm>
-
-  <distributionManagement>
-    <site>
-      <id>gbif-site</id>
-      <name>Site for the GBIF Portal project</name>
-      <url>scp://tools.gbif.org:/var/www/html/sites/portal/portal-web</url>
-    </site>
-  </distributionManagement>
 
   <build>
     <defaultGoal>jetty:run</defaultGoal>
