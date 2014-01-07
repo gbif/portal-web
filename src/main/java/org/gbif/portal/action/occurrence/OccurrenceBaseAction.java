@@ -156,18 +156,18 @@ public class OccurrenceBaseAction extends BaseAction {
       throw new ReferentialIntegrityException(Occurrence.class, id, "Missing dataset " + occ.getDatasetKey());
     }
     // load name usage nub object
-    if (occ.getNubKey() != null) {
-      nub = usageService.get(occ.getNubKey(), getLocale());
+    if (occ.getTaxonKey() != null) {
+      nub = usageService.get(occ.getTaxonKey(), getLocale());
       if (nub == null) {
-        throw new ReferentialIntegrityException(Occurrence.class, id, "Missing nub usage " + occ.getNubKey());
+        throw new ReferentialIntegrityException(Occurrence.class, id, "Missing nub usage " + occ.getTaxonKey());
       }
     }
     // TODO: load metrics for occurrence once implemented
     metrics = null;
     // construct partial gathering date if occurrenceDate was empty and there is at least a year or month
-    if (occ.getOccurrenceDate() == null && (occ.getOccurrenceYear() != null || occ.getOccurrenceMonth() != null)) {
+    if (occ.getEventDate() == null && (occ.getYear() != null || occ.getMonth() != null)) {
       partialGatheringDate =
-        constructPartialGatheringDate(occ.getOccurrenceYear(), occ.getOccurrenceMonth(), occ.getOccurrenceDay());
+        constructPartialGatheringDate(occ.getYear(), occ.getMonth(), occ.getDay());
     }
   }
 }
