@@ -556,25 +556,25 @@
           <drupal.db.url>
           <portal.application.secret>
       -->
-      <id>staging</id>
+      <id>dev</id>
       <properties>
         <cargo.context>portal</cargo.context>
         <devMode>false</devMode>
         <notDevMode>true</notDevMode>
-        <baseurl>http://portaldev.gbif.org</baseurl>
-        <servername>http://portaldev.gbif.org</servername>
+        <baseurl>http://appdev.gbif.org:8080/portal</baseurl>
+        <servername>http://appdev.gbif.org</servername>
         <drupal.url>http://portaldev.gbif.org</drupal.url>
-        <url.includeContext>false</url.includeContext>
-        <registry.ws.url>http://apidev.gbif.org/</registry.ws.url>
-        <checklistbank.ws.url>http://apidev.gbif.org/</checklistbank.ws.url>
-        <checklistbank.search.ws.url>http://apidev.gbif.org/species/</checklistbank.search.ws.url>
+        <url.includeContext>true</url.includeContext>
+        <registry.ws.url>http://appdev.gbif.org:8080/registry-ws</registry.ws.url>
+        <checklistbank.ws.url>http://appdev.gbif.org:8080/checklistbank-ws</checklistbank.ws.url>
+        <checklistbank.search.ws.url>http://appdev.gbif.org:8080/checklistbank-ws</checklistbank.search.ws.url>
         <checklistbank.match.ws.url>http://apidev.gbif.org/species/match/</checklistbank.match.ws.url>
-        <occurrence.ws.url>http://apidev.gbif.org/</occurrence.ws.url>
-        <occurrence-download.ws.url>http://staging.gbif.org:8080/occurrence-download-ws/</occurrence-download.ws.url>
-        <occurrence-download.ws.url.for.public.link>http://apidev.gbif.org/</occurrence-download.ws.url.for.public.link>
-        <tile-server.url>http://apidev.gbif.org/map</tile-server.url>
+        <occurrence.ws.url>http://appdev.gbif.org:8080/occurrence-ws</occurrence.ws.url>
+        <occurrence-download.ws.url>http://appdev.gbif.org:8080/occurrence-download-ws/</occurrence-download.ws.url>
+        <occurrence-download.ws.url.for.public.link>http://appdev.gbif.org:8080/occurrence-download-ws</occurrence-download.ws.url.for.public.link>
+        <tile-server.url>http://appdev.gbif.org:8080/map</tile-server.url>
         <image-cache.url>http://apidev.gbif.org/image</image-cache.url>
-        <metrics.ws.url>http://apidev.gbif.org/</metrics.ws.url>
+        <metrics.ws.url>http://appdev.gbif.org:8080/metrics-ws</metrics.ws.url>
         <drupal.cookiename>SESS751c3c6f031b889581268415447c0191</drupal.cookiename>
         <drupal.db.url>jdbc:mysql://nerf.gbif.org:3306/drupal_devel?useUnicode=true&amp;characterEncoding=UTF8&amp;characterSetResults=UTF8</drupal.db.url>
         <drupal.db.username>drupal_devel</drupal.db.username>
