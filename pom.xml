@@ -562,12 +562,12 @@
         <devMode>false</devMode>
         <notDevMode>true</notDevMode>
         <baseurl>http://appdev.gbif.org:8080/portal</baseurl>
-        <servername>http://appdev.gbif.org</servername>
+        <servername>http://appdev.gbif.org:8080</servername>
         <drupal.url>http://portaldev.gbif.org</drupal.url>
         <url.includeContext>true</url.includeContext>
         <registry.ws.url>http://appdev.gbif.org:8080/registry-ws</registry.ws.url>
         <checklistbank.ws.url>http://appdev.gbif.org:8080/checklistbank-ws</checklistbank.ws.url>
-        <checklistbank.search.ws.url>http://appdev.gbif.org:8080/checklistbank-ws</checklistbank.search.ws.url>
+        <checklistbank.search.ws.url>http://appdev.gbif.org:8080/checklistbank-search-ws</checklistbank.search.ws.url>
         <checklistbank.match.ws.url>http://apidev.gbif.org/species/match/</checklistbank.match.ws.url>
         <occurrence.ws.url>http://appdev.gbif.org:8080/occurrence-ws</occurrence.ws.url>
         <occurrence-download.ws.url>http://appdev.gbif.org:8080/occurrence-download-ws/</occurrence-download.ws.url>

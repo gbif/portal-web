@@ -123,7 +123,7 @@ public class Config {
    * Gets the server name parameter from the properties.
    */
   private static String getServerName(Properties properties) {
-    // prefer system variable if existing, required (e.g.) by selenim
+    // prefer system variable if existing, required (e.g.) by selenium
     String serverName;
     try {
       serverName = URI.create(System.getProperty(SERVERNAME)).toString();
