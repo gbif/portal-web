@@ -63,7 +63,7 @@
     <checklistbank-ws-client.version>2.4</checklistbank-ws-client.version>
     <registry-ws-client.version>2.9</registry-ws-client.version>
     <occurrence-download-ws-client.version>0.12-SNAPSHOT</occurrence-download-ws-client.version>
-    <occurrence-ws-client.version>0.11</occurrence-ws-client.version>
+    <occurrence-ws-client.version>0.16-SNAPSHOT</occurrence-ws-client.version>
     <metrics-ws-client.version>0.11</metrics-ws-client.version>
     <drupal-mybatis.version>0.10</drupal-mybatis.version>
     <gbif-common.version>0.15-SNAPSHOT</gbif-common.version>
