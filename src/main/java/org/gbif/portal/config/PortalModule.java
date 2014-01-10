@@ -3,8 +3,7 @@ package org.gbif.portal.config;
 import org.gbif.checklistbank.ws.client.guice.ChecklistBankWsClientModule;
 import org.gbif.drupal.guice.DrupalMyBatisModule;
 import org.gbif.metrics.ws.client.guice.MetricsWsClientModule;
-import org.gbif.occurrence.ws.client.guice.OccurrenceWsClientModule;
-import org.gbif.occurrencestore.download.ws.client.guice.OccurrenceDownloadWsClientModule;
+import org.gbif.occurrence.ws.client.OccurrenceWsClientModule;
 import org.gbif.registry.ws.client.guice.RegistryWsClientModule;
 import org.gbif.utils.file.properties.PropertiesUtil;
 
@@ -31,10 +30,7 @@ public class PortalModule extends AbstractModule {
       // bind checklist bank api. Select either the mybatis or the ws-client api implementation:
       install(new ChecklistBankWsClientModule(properties));
 
-      // bind the occurrence download service
-      install(new OccurrenceDownloadWsClientModule(properties));
-
-      // bind the occurrence service
+      // bind the occurrence (and occurrence download) service
       install(new OccurrenceWsClientModule(properties));
 
       // bind the metrics service
