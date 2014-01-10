@@ -87,4 +87,19 @@ public class DetailAction extends OccurrenceBaseAction {
 
     return SUCCESS;
   }
+
+  /**
+   * Retrieve value for Term in fields map. Currently expecting only DwcTerm.
+   *
+   * @param term Term
+   *
+   * @return value for Term in fields map, or null if it doesn't exist
+   */
+  public String retrieveTerm(String term) {
+    DwcTerm t = DwcTerm.valueOf(term);
+    if (t != null && occ != null && occ.getFields() != null) {
+      return occ.getField(t);
+    }
+    return null;
+  }
 }

@@ -25,6 +25,7 @@
   <#assign titleRight=""/>
 </#if>
 
+<#assign locality = action.retrieveTerm('locality') />
 
 <@common.article id="location" title=title titleRight=titleRight class="map">
   <#if showMap>
@@ -33,7 +34,7 @@
     </div>
     <div class="right">
       <h3>Locality</h3>
-        <p class="no_bottom">${occ.locality!}<#if occ.country??>, <a href="<@s.url value='/country/${occ.country.iso2LetterCode}'/>">${occ.country.title}</a></#if></p>
+        <p class="no_bottom">${locality!}<#if occ.country??>, <a href="<@s.url value='/country/${occ.country.iso2LetterCode}'/>">${occ.country.title}</a></#if></p>
         <p class="light_note">${occ.longitude}, ${occ.latitude}</p>
 
   <#else>
@@ -58,9 +59,9 @@
         <p>${occ.county}</p>
     </#if>
 
-    <#if occ.locality??>
+    <#if locality??>
         <h3>Locality</h3>
-        <p>${occ.locality}</p>
+        <p>${locality}</p>
     </#if>
   </#if>
 
@@ -89,24 +90,28 @@
         <a href="<@s.url value='/dataset/${dataset.key}'/>" title="">${dataset.title}</a>
       </p>
 
-      <#if occ.institutionCode??>
+      <#assign institutionCode = action.retrieveTerm('institutionCode') />
+      <#if institutionCode??>
         <h3>Institution code</h3>
-        <p>${occ.institutionCode}</p>
+        <p>${institutionCode}</p>
       </#if>
 
-      <#if occ.collectionCode??>
-        <h3>Collection code</h3>
-        <p>${occ.collectionCode}</p>
+      <#assign collectionCode = action.retrieveTerm('collectionCode') />
+      <#if collectionCode??>
+          <h3>Collection code</h3>
+          <p>${collectionCode}</p>
       </#if>
+
     </div>
 
     <div class="right">
       <h3>GBIF ID</h3>
       <p>${id?c}</p>
 
-      <#if occ.catalogNumber??>
-        <h3>Catalog number</h3>
-        <p>${occ.catalogNumber}</p>
+      <#assign catalogNumber = action.retrieveTerm('catalogNumber') />
+      <#if catalogNumber??>
+          <h3>Catalog number</h3>
+          <p>${catalogNumber}</p>
       </#if>
 
       <#list occ.identifiers as i>
@@ -121,15 +126,16 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
 </#assign>
 <@common.article id="taxonomy" title=title>
     <div class="left">
-      <#if occ.nubKey??>
+      <#if occ.taxonKey??>
         <h3>Identified as ${occ.rank!"species"}</h3>
-        <p><a href="<@s.url value='/species/${occ.nubKey?c}'/>">${occ.scientificName}</a></p>
+        <p><a href="<@s.url value='/species/${occ.taxonKey?c}'/>">${occ.scientificName}</a></p>
 
         <#if occ.identificationNotes??>
           <h3>Notes</h3>
           <p>${occ.identificationNotes}</p>
         </#if>
 
+        <#-- TODO Refactored Occurrence does not have getHigherClassificationMap(), so fix and comment-out this block
         <h3>Taxonomic classification</h3>
         <#assign classification=occ.higherClassificationMap />
         <ul class="taxonomy last-horizontal-line">
@@ -137,6 +143,7 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
             <li<#if !key_has_next> class="last"</#if>><a href="<@s.url value='/species/${key?c}'/>">${classification.get(key)}</a></li>
           </#list>
         </ul>
+        -->
       </#if>
     </div>
     <div class="right">
@@ -163,10 +170,10 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
       <h3>Basis of record</h3>
       <p><@s.text name="enum.basisofrecord.${occ.basisOfRecord!'UNKNOWN'}"/></p>
 
-      <#if occ.occurrenceDate?? || partialGatheringDate?has_content >
+      <#if occ.eventDate?? || partialGatheringDate?has_content >
         <h3>Gathering date </h3>
-        <#if occ.occurrenceDate??>
-            <p>${occ.occurrenceDate?datetime?string.medium}</p>
+        <#if occ.eventDate??>
+            <p>${occ.eventDate?datetime?string.medium}</p>
         <#elseif partialGatheringDate?has_content >
             <p>${partialGatheringDate}</p>
         </#if>
