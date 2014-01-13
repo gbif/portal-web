@@ -73,11 +73,11 @@ public class DetailAction extends OccurrenceBaseAction {
       VerbatimOccurrence v = verbatimService.getVerbatim(id);
       for (String group : DwcTerm.GROUPS) {
         for (DwcTerm t : DwcTerm.listByGroup(group)) {
-          if (v.getFields().containsKey(t.simpleName())) {
+          if (v.getFields().containsKey(t)) {
             if (!verbatim.containsKey(group)) {
               verbatim.put(group, new TreeMap<String, String>());
             }
-            verbatim.get(group).put(t.simpleName(), v.getFields().get(t.simpleName()));
+            verbatim.get(group).put(t.simpleName(), v.getFields().get(t));
           }
         }
       }
