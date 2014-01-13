@@ -572,7 +572,7 @@
         <occurrence.ws.url>http://appdev.gbif.org:8080/occurrence-ws</occurrence.ws.url>
         <occurrence-download.ws.url>http://appdev.gbif.org:8080/occurrence-download-ws/</occurrence-download.ws.url>
         <occurrence-download.ws.url.for.public.link>http://appdev.gbif.org:8080/occurrence-download-ws</occurrence-download.ws.url.for.public.link>
-        <tile-server.url>http://appdev.gbif.org:8080/map</tile-server.url>
+        <tile-server.url>http://appdev.gbif.org:8080/tile-server/</tile-server.url>
         <image-cache.url>http://apidev.gbif.org/image</image-cache.url>
         <metrics.ws.url>http://appdev.gbif.org:8080/metrics-ws</metrics.ws.url>
         <drupal.cookiename>SESS751c3c6f031b889581268415447c0191</drupal.cookiename>
