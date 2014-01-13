@@ -135,7 +135,6 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
           <p>${occ.identificationNotes}</p>
         </#if>
 
-        <#-- TODO Refactored Occurrence does not have getHigherClassificationMap(), so fix and comment-out this block
         <h3>Taxonomic classification</h3>
         <#assign classification=occ.higherClassificationMap />
         <ul class="taxonomy last-horizontal-line">
@@ -143,7 +142,7 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
             <li<#if !key_has_next> class="last"</#if>><a href="<@s.url value='/species/${key?c}'/>">${classification.get(key)}</a></li>
           </#list>
         </ul>
-        -->
+
       </#if>
     </div>
     <div class="right">
