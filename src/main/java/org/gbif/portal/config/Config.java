@@ -43,11 +43,10 @@ public class Config {
   private String wsClbSearch;
   private String wsClbSuggest;
   private String wsOcc;
+  private String wsOccPublic;
   private String wsOccCatalogNumberSearch;
   private String wsOccCollectorNameSearch;
   private String wsOccSearch;
-  private String wsOccDownload;
-  private String wsOccDownloadForPublicLink;
   private String wsReg;
   private String wsRegSearch;
   private String wsRegSuggest;
@@ -83,9 +82,8 @@ public class Config {
       cfg.wsRegSearch = cfg.wsReg + "dataset/search";
       cfg.wsRegSuggest = cfg.wsReg + "dataset/suggest";
       cfg.wsOcc = getPropertyUrl(properties, "occurrence.ws.url", true);
+      cfg.wsOccPublic = getPropertyUrl(properties, "occurrence.ws.url.public", true);
       cfg.wsOccSearch = cfg.wsOcc + OCC_SEARCH_PATH;
-      cfg.wsOccDownload = getPropertyUrl(properties, "occurrencedownload.ws.url", true);
-      cfg.wsOccDownloadForPublicLink = getPropertyUrl(properties, "occurrencedownload.ws.url.for.public.link", true);
       cfg.maxOccDowloadSize = Integer.parseInt(properties.getProperty("occurrencedownload.size.limit"));
       cfg.maxOccSearchOffset = Integer.parseInt(properties.getProperty("occurrence.search.maxoffset"));
       cfg.wsMetrics = getPropertyUrl(properties, "metrics.ws.url", true);
@@ -202,17 +200,13 @@ public class Config {
     return wsOccCollectorNameSearch;
   }
 
-  public String getWsOccDownload() {
-    return wsOccDownload;
-  }
-
   /**
    * Get the occurrence download web service url that uses the public API used in links.
-   * 
+   *
    * @return the occurrence download web service url that uses the public API
    */
-  public String getWsOccDownloadForPublicLink() {
-    return wsOccDownloadForPublicLink;
+  public String getWsOccPublic() {
+    return wsOccPublic;
   }
 
   /**

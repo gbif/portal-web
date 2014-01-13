@@ -126,7 +126,7 @@
               <#assign queryParams=action.getQueryParams(download.request.predicate)!""/>
               <#assign searchLink='/occurrence/search'/>
               <#if queryParams?has_content>
-                <#assign searchLink='/occurrence/search?'+ queryParams!""/>                
+                <#assign searchLink='/occurrence/search?'+ queryParams!""/>
               </#if>
               <table class="table">
               <#if !download.request.predicate?has_content>
@@ -153,18 +153,18 @@
           <dt>Status</dt>
           <dd>
             <#if download.available>
-              <!-- cfg.wsOccDownload is not public, but needed for authentication. Therefore wsOccDownloadForPublicLink was created which is public -->
-              Ready for <a href="${cfg.wsOccDownloadForPublicLink}occurrence/download/request/${download.key}.zip">download</a>
+              <!-- cfg.wsOcc is not public, but needed for authentication. Therefore wsOccPublic was created which is public -->
+              Ready for <a href="${cfg.wsOccPublic}occurrence/download/request/${download.key}.zip">download</a>
               <#if download.size?has_content>(${action.getHumanRedeableBytesSize(download.getSize())} </#if>
               <#if download.totalRecords?has_content>${download.totalRecords} records - </#if>
-              <#if download.numberDatasets?has_content>${download.numberDatasets} datasets)</#if>               
+              <#if download.numberDatasets?has_content>${download.numberDatasets} datasets)</#if>
             <#elseif showCancel && action.isDownloadRunning(download.status)>
               Still running. Do you want to <a href="<@s.url value='/user/download/cancel?key=${download.key}'/>">cancel</a> the query?
             <#else>
               <@s.text name="enum.downloadstatus.${download.status}" />
             </#if>
           </dd>
-                    
+
           <dt>Created</dt>
           <dd>${download.created?date?string.medium}</dd>
 

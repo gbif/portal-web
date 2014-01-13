@@ -538,8 +538,7 @@
         <checklistbank.search.ws.url>http://api.gbif.org/species/</checklistbank.search.ws.url>
         <checklistbank.match.ws.url>http://api.gbif.org/species/match/</checklistbank.match.ws.url>
         <occurrence.ws.url>http://api.gbif.org/</occurrence.ws.url>
-        <occurrence-download.ws.url>http://jawa.gbif.org:8080/b_occurrence-download-ws/</occurrence-download.ws.url>
-        <occurrence-download.ws.url.for.public.link>http://api.gbif.org/</occurrence-download.ws.url.for.public.link>
+        <occurrence.ws.url.public>http://api.gbif.org/</occurrence.ws.url.public>
         <tile-server.url>http://api.gbif.org/map</tile-server.url>
         <image-cache.url>http://api.gbif.org/image</image-cache.url>
         <metrics.ws.url>http://api.gbif.org/</metrics.ws.url>
@@ -570,8 +569,7 @@
         <checklistbank.search.ws.url>http://appdev.gbif.org:8080/checklistbank-search-ws</checklistbank.search.ws.url>
         <checklistbank.match.ws.url>http://apidev.gbif.org/species/match/</checklistbank.match.ws.url>
         <occurrence.ws.url>http://appdev.gbif.org:8080/occurrence-ws</occurrence.ws.url>
-        <occurrence-download.ws.url>http://appdev.gbif.org:8080/occurrence-download-ws/</occurrence-download.ws.url>
-        <occurrence-download.ws.url.for.public.link>http://appdev.gbif.org:8080/occurrence-download-ws</occurrence-download.ws.url.for.public.link>
+        <occurrence.ws.url.public>http://appdev.gbif.org:8080/occurrence-ws</occurrence.ws.url.public>
         <tile-server.url>http://appdev.gbif.org:8080/tile-server/</tile-server.url>
         <image-cache.url>http://apidev.gbif.org/image</image-cache.url>
         <metrics.ws.url>http://appdev.gbif.org:8080/metrics-ws</metrics.ws.url>

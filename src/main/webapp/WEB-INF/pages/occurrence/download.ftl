@@ -12,15 +12,15 @@
 <@common.article id="started" title="${pageTitle}">
     <div>
       <#if !action.hasFieldErrors()>
-        <!-- cfg.wsOccDownload is not public, but needed for authentication. Therefore wsOccDownloadForPublicLink was created which is public -->
+        <!-- cfg.wsOcc is not public, but needed for authentication. Therefore wsOccPublic was created which is public -->
         <#if download.available>
-          <!-- cfg.wsOccDownload is not public, but needed for authentication. Therefore wsOccDownloadForPublicLink was created which is public -->
-         <p>Your download is ready for <a href="${cfg.wsOccDownloadForPublicLink}occurrence/download/request/${download.key}.zip">download</a> since ${download.modified?datetime?string.short_medium}</p>
+          <!-- cfg.wsOcc is not public, but needed for authentication. Therefore wsOccPublic was created which is public -->
+         <p>Your download is ready for <a href="${cfg.wsOccPublic}occurrence/download/request/${download.key}.zip">download</a> since ${download.modified?datetime?string.short_medium}</p>
          <p>Download information: <#if download.size?has_content>${action.getHumanRedeableBytesSize(download.getSize())} - </#if>
               <#if download.totalRecords?has_content>${download.totalRecords} records - </#if>
               <#if download.numberDatasets?has_content>${download.numberDatasets} datasets</#if>
       <#elseif action.isDownloadRunning(download.status)></p>
-          <p>Your <a href="${cfg.wsOccDownloadForPublicLink}occurrence/download/${key}">download #${key}</a> is running</p>
+          <p>Your <a href="${cfg.wsOccPublic}occurrence/download/${key}">download #${key}</a> is running</p>
           <p>Please expect 10 to 15 minutes for the download to complete. <br/>
            A notification email with a link to download the results will be sent to the following addresses once ready:
             <ul>
