@@ -84,7 +84,7 @@ public class Config {
       cfg.wsOcc = getPropertyUrl(properties, "occurrence.ws.url", true);
       cfg.wsOccPublic = getPropertyUrl(properties, "occurrence.ws.url.public", true);
       cfg.wsOccSearch = cfg.wsOcc + OCC_SEARCH_PATH;
-      cfg.maxOccDowloadSize = Integer.parseInt(properties.getProperty("occurrencedownload.size.limit"));
+      cfg.maxOccDowloadSize = Integer.parseInt(properties.getProperty("occurrence.download.size.limit"));
       cfg.maxOccSearchOffset = Integer.parseInt(properties.getProperty("occurrence.search.maxoffset"));
       cfg.wsMetrics = getPropertyUrl(properties, "metrics.ws.url", true);
       cfg.wsOccCatalogNumberSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + CATALOG_NUMBER_PATH;

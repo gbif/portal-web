@@ -54,7 +54,7 @@
     <devMode>true</devMode>
     <notDevMode>false</notDevMode>
     <google.analytics />
-    <occurrencedownload.size.limit>-1</occurrencedownload.size.limit>
+    <occurrence.download.size.limit>-1</occurrence.download.size.limit>
     <occurrence.search.maxoffset>10000</occurrence.search.maxoffset>
 
     <!-- dependency versions -->

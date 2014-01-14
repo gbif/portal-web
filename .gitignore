@@ -2,6 +2,8 @@
 *.iml
 .idea
 target/
+# auto enerated css files
+src/main/webapp/css/*.css
 
 # Package Files #
 *.jar
