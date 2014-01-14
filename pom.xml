@@ -560,10 +560,10 @@
         <cargo.context>portal</cargo.context>
         <devMode>false</devMode>
         <notDevMode>true</notDevMode>
-        <baseurl>http://appdev.gbif.org:8080/portal</baseurl>
-        <servername>http://appdev.gbif.org:8080</servername>
+        <baseurl>http://appdev.gbif.org</baseurl>
+        <servername>http://appdev.gbif.org</servername>
         <drupal.url>http://portaldev.gbif.org</drupal.url>
-        <url.includeContext>true</url.includeContext>
+        <url.includeContext>false</url.includeContext>
         <registry.ws.url>http://appdev.gbif.org:8080/registry-ws</registry.ws.url>
         <checklistbank.ws.url>http://appdev.gbif.org:8080/checklistbank-ws</checklistbank.ws.url>
         <checklistbank.search.ws.url>http://appdev.gbif.org:8080/checklistbank-search-ws</checklistbank.search.ws.url>
