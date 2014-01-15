@@ -20,7 +20,6 @@ public class SpeciesDetailSeleniumIT extends SeleniumTestBase {
     LOG.debug("Assert content exists...");
     WebElement infoband = driver.findElement(By.id("infoband"));
     WebElement content = driver.findElement(By.id("content"));
-    WebElement map = driver.findElement(By.className("map"));
 
     assertEquals("Expected infoband name wrong", "Sciurus vulgaris Linnaeus, 1758",
       infoband.findElement(By.cssSelector("h1")).getText());
