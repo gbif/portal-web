@@ -5,6 +5,7 @@ import org.gbif.api.model.registry.Organization;
 import org.gbif.api.service.occurrence.VerbatimOccurrenceService;
 import org.gbif.api.service.registry.OrganizationService;
 import org.gbif.dwc.terms.DwcTerm;
+import org.gbif.portal.action.occurrence.util.MockOccurrenceFactory;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -70,7 +71,12 @@ public class DetailAction extends OccurrenceBaseAction {
     verbatim = Maps.newLinkedHashMap();
     try {
       fragmentExists = occurrenceService.getFragment(id) != null;
-      VerbatimOccurrence v = verbatimService.getVerbatim(id);
+
+      // check if the mock occurrence should be loaded
+      // TODO: revert change when moving to production
+      VerbatimOccurrence v =
+        (id == -1000000000) ? MockOccurrenceFactory.getMockOccurrence() : verbatimService.getVerbatim(id);
+
       for (String group : DwcTerm.GROUPS) {
         for (DwcTerm t : DwcTerm.listByGroup(group)) {
           if (v.getFields().containsKey(t)) {

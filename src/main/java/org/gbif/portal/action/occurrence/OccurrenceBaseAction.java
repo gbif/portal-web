@@ -8,6 +8,7 @@ import org.gbif.api.service.checklistbank.NameUsageService;
 import org.gbif.api.service.occurrence.OccurrenceService;
 import org.gbif.api.service.registry.DatasetService;
 import org.gbif.portal.action.BaseAction;
+import org.gbif.portal.action.occurrence.util.MockOccurrenceFactory;
 import org.gbif.portal.exception.NotFoundException;
 import org.gbif.portal.exception.ReferentialIntegrityException;
 
@@ -146,7 +147,11 @@ public class OccurrenceBaseAction extends BaseAction {
     if (id == null) {
       throw new NotFoundException("No occurrence id given");
     }
-    occ = occurrenceService.get(id);
+
+    // check if the mock occurrence should be loaded
+    // TODO: remove once in production
+    occ = (id == -1000000000) ? MockOccurrenceFactory.getMockOccurrence() : occurrenceService.get(id);
+
     if (occ == null) {
       throw new NotFoundException("No occurrence found with id " + id);
     }
