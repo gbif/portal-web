@@ -2,9 +2,10 @@ package org.gbif.portal.action.occurrence;
 
 import org.gbif.api.model.occurrence.VerbatimOccurrence;
 import org.gbif.api.model.registry.Organization;
-import org.gbif.api.service.occurrence.VerbatimOccurrenceService;
 import org.gbif.api.service.registry.OrganizationService;
 import org.gbif.dwc.terms.DwcTerm;
+import org.gbif.dwc.terms.GbifTerm;
+import org.gbif.dwc.terms.Term;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -23,8 +24,6 @@ public class DetailAction extends OccurrenceBaseAction {
 
   @Inject
   private OrganizationService organizationService;
-  @Inject
-  private VerbatimOccurrenceService verbatimService;
 
   private Organization publisher;
   private Map<String, Map<String, String>> verbatim;
@@ -70,7 +69,7 @@ public class DetailAction extends OccurrenceBaseAction {
     verbatim = Maps.newLinkedHashMap();
     try {
       fragmentExists = occurrenceService.getFragment(id) != null;
-      VerbatimOccurrence v = verbatimService.getVerbatim(id);
+      VerbatimOccurrence v = occurrenceService.getVerbatim(id);
       for (String group : DwcTerm.GROUPS) {
         for (DwcTerm t : DwcTerm.listByGroup(group)) {
           if (v.getFields().containsKey(t)) {
@@ -81,6 +80,28 @@ public class DetailAction extends OccurrenceBaseAction {
           }
         }
       }
+      // now add all non dwc terms
+      Map<String, String> gbif = new TreeMap<String, String>();
+      Map<String, String> others = new TreeMap<String, String>();
+      for (Map.Entry<Term, String> field : v.getFields().entrySet()) {
+        Term t = field.getKey();
+        if (t instanceof DwcTerm) {
+          // skip, its in the map already
+        } else {
+          if (t instanceof GbifTerm) {
+            gbif.put(t.simpleName(), field.getValue());
+          } else {
+            others.put(t.simpleName(), field.getValue());
+          }
+        }
+      }
+      if (!gbif.isEmpty()) {
+        verbatim.put("GBIF", gbif);
+      }
+      if (!others.isEmpty()) {
+        verbatim.put("Other", others);
+      }
+
     } catch (Exception e) {
       LOG.error("Can't load verbatim data for occurrence {}: {}", id, e);
     }

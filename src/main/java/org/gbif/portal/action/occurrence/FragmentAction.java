@@ -1,9 +1,8 @@
 package org.gbif.portal.action.occurrence;
 
-import org.gbif.portal.exception.NotFoundException;
 import org.gbif.api.service.occurrence.OccurrenceService;
-import org.gbif.api.service.occurrence.VerbatimOccurrenceService;
 import org.gbif.portal.action.BaseAction;
+import org.gbif.portal.exception.NotFoundException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,8 +17,6 @@ public class FragmentAction extends BaseAction {
   private static final Logger LOG = LoggerFactory.getLogger(FragmentAction.class);
   @Inject
   protected OccurrenceService occurrenceService;
-  @Inject
-  private VerbatimOccurrenceService verbatimService;
 
   private InputStream stream;
   private Integer id;
