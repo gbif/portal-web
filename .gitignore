@@ -9,3 +9,6 @@ src/main/webapp/css/*.css
 *.jar
 *.war
 *.ear
+.classpath
+.project
+.settings/org.eclipse.jdt.core.prefs

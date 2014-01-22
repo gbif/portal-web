@@ -67,7 +67,7 @@
     <metrics-ws-client.version>0.13-SNAPSHOT</metrics-ws-client.version>
     <drupal-mybatis.version>0.10</drupal-mybatis.version>
     <gbif-common.version>0.15-SNAPSHOT</gbif-common.version>
-    <gbif-common-ws.version>0.11</gbif-common-ws.version>
+    <gbif-common-ws.version>0.13-SNAPSHOT</gbif-common-ws.version>
 
     <freemarker.version>2.3.20</freemarker.version>
     <guice.version>3.0</guice.version>
@@ -545,6 +545,9 @@
         <drupal.cookiename>SESS751c3c6f031b889581268415447c0191</drupal.cookiename>
         <drupal.db.url>jdbc:mysql://nerf.gbif.org:3306/drupal_live?useUnicode=true&amp;characterEncoding=UTF8&amp;characterSetResults=UTF8</drupal.db.url>
         <drupal.db.username>drupal_live</drupal.db.username>
+        <httpTimeout>60000</httpTimeout>
+		<maxHttpConnections>100</maxHttpConnections>
+		<maxHttpConnectionsPerRoute>100</maxHttpConnectionsPerRoute>
       </properties>
     </profile>
 
@@ -576,6 +579,9 @@
         <drupal.cookiename>SESS751c3c6f031b889581268415447c0191</drupal.cookiename>
         <drupal.db.url>jdbc:mysql://nerf.gbif.org:3306/drupal_devel?useUnicode=true&amp;characterEncoding=UTF8&amp;characterSetResults=UTF8</drupal.db.url>
         <drupal.db.username>drupal_devel</drupal.db.username>
+        <httpTimeout>60000</httpTimeout>
+		<maxHttpConnections>100</maxHttpConnections>
+		<maxHttpConnectionsPerRoute>100</maxHttpConnectionsPerRoute>
       </properties>
     </profile>
 
