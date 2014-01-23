@@ -25,7 +25,7 @@ public class SearchActionTest {
   public static void first() {
     // initiate SearchAction
     Injector injector = ActionTestUtil.initTestInjector();
-    sa = injector.getInstance(org.gbif.portal.action.dataset.SearchAction.class);
+    sa = injector.getInstance(SearchAction.class);
   }
 
   @Before
@@ -95,7 +95,7 @@ public class SearchActionTest {
 
   /**
    * Create a test DatasetSearchResult populated without any (solr) highlighting.
-   * 
+   *
    * @return populated test object
    */
   private DatasetSearchResult populateTestDatasetSearchResult() {
