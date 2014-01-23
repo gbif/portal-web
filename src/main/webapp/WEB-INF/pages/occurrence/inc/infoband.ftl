@@ -10,7 +10,13 @@
 -->
 
 <content tag="infoband">
-  <h1>Occurrence ID: ${id?c}</h1>
+  <#-- display occurrence id in source data. If not provided show GBIF generated occurrence id instead -->
+  <#assign occurrenceID = action.retrieveTerm('occurrenceID')! />
+  <#if occurrenceID?has_content>
+    <h1>Occurrence ID: ${occurrenceID}</h1>
+  <#else>
+    <h1>GBIF ID: ${id?c}</h1>
+  </#if>
 
   <h3><@s.text name="enum.basisofrecord.${occ.basisOfRecord!'UNKNOWN'}"/> of
     <#if occ.taxonKey??>
@@ -19,7 +25,7 @@
       a name which cant be interpreted. <br/>
       Please see the <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">verbatim version</a> for source details
     </#if>
-    from <a href="<@s.url value='/dataset/${dataset.key!}'/>">${dataset.title!"???"}</a> dataset.
+    from <a href="<@s.url value='/dataset/${dataset.key!}'/>">${dataset.title!"???"}</a> dataset, modified ${occ.modified?date?string.medium}.
   </h3>
 </content>
 

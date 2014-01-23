@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Creates a new mock Occurrence object, and populates all its possible fields.
- * All verbatim fields (inclufor all 9 DwC groups), validations, and interpreted fields are populated.
+ * All verbatim fields (for all 10 DwC groups), validations, and interpreted fields are populated.
  */
 public class MockOccurrenceFactory {
 
@@ -61,6 +61,7 @@ public class MockOccurrenceFactory {
     // populate fields
     populateVerbatimDwcRecordTerms();
     populateVerbatimDwcOccurrenceTerms();
+    populateMaterialSampleTerms();
     populateVerbatimDwcEventTerms();
     populateVerbatimDwcLocationTerms();
     populateVerbatimDwcGeologicalConceptTerms();
@@ -105,7 +106,7 @@ public class MockOccurrenceFactory {
     mockOccurrence.setIdentificationDate(new Date());
     mockOccurrence.setLongitude(-95.86519);
     mockOccurrence.setLatitude(29.91973);
-    mockOccurrence.setCoordinateAccurracy(0.00001);
+    mockOccurrence.setCoordinateAccurracy(0.1);
     mockOccurrence.setGeodeticDatum("WGS84");
     mockOccurrence.setAltitude(1000);
     mockOccurrence.setAltitudeAccurracy(1);
@@ -146,7 +147,7 @@ public class MockOccurrenceFactory {
     mockOccurrence.getFields().put(DcTerm.type, "PhysicalObject");
     mockOccurrence.getFields().put(DcTerm.modified, "1963-03-08T14:07-0600");
     mockOccurrence.getFields().put(DcTerm.language, "en" );
-    mockOccurrence.getFields().put(DcTerm.rights, "http://creativecommons.org/licenses/by-sa/3.0/");
+    mockOccurrence.getFields().put(DcTerm.rights, "CC0");
     mockOccurrence.getFields().put(DcTerm.rightsHolder, "The Regents of the University of California.");
     mockOccurrence.getFields().put(DcTerm.accessRights, "Not-for-profit use only");
     mockOccurrence.getFields().put(DcTerm.bibliographicCitation, "Ctenomys sociabilis (MVZ 165861)");
@@ -170,9 +171,37 @@ public class MockOccurrenceFactory {
    * @see org.gbif.dwc.terms.DwcTerm#GROUP_OCCURRENCE
    */
   private static void populateVerbatimDwcOccurrenceTerms() {
-    mockOccurrence.getFields().put(DwcTerm.recordedBy, "Jane Smith");
     mockOccurrence.getFields().put(DwcTerm.catalogNumber, "88");
     mockOccurrence.getFields().put(DwcTerm.occurrenceID, "urn:catalog:MVZ:Mammals:88");
+    mockOccurrence.getFields().put(DwcTerm.occurrenceRemarks, "found dead on road");
+    mockOccurrence.getFields().put(DwcTerm.recordNumber, "OPP 7101");
+    mockOccurrence.getFields().put(DwcTerm.recordedBy, "Jane Smith");
+    mockOccurrence.getFields().put(DwcTerm.individualID, "Smedley");
+    mockOccurrence.getFields().put(DwcTerm.individualCount, "25");
+    mockOccurrence.getFields().put(DwcTerm.sex, "female");
+    mockOccurrence.getFields().put(DwcTerm.lifeStage, "adult");
+    mockOccurrence.getFields().put(DwcTerm.reproductiveCondition, "pregnant");
+    mockOccurrence.getFields().put(DwcTerm.behavior, "roosting");
+    mockOccurrence.getFields().put(DwcTerm.establishmentMeans, "native");
+    mockOccurrence.getFields().put(DwcTerm.occurrenceStatus, "present");
+    mockOccurrence.getFields().put(DwcTerm.preparations, "DNA extract");
+    mockOccurrence.getFields().put(DwcTerm.disposition, "missing");
+    mockOccurrence.getFields().put(DwcTerm.otherCatalogNumbers, "NPS YELLO6778");
+    mockOccurrence.getFields().put(DwcTerm.previousIdentifications, "Anthus sp., field ID by G. Iglesias");
+    mockOccurrence.getFields().put(DwcTerm.associatedMedia, "http://arctos.database.museum/P7291179.JPG");
+    mockOccurrence.getFields().put(DwcTerm.associatedReferences, "http://www.sciencemag.orgcontent/abstract//261");
+    mockOccurrence.getFields().put(DwcTerm.associatedOccurrences, "sibling of FMNH:Mammal:1234");
+    mockOccurrence.getFields().put(DwcTerm.associatedSequences, "GenBank: U34853.1");
+    mockOccurrence.getFields().put(DwcTerm.associatedTaxa, "host: Quercus alba");
+  }
+
+  /**
+   * Populate all material sample terms with mock values.
+   *
+   * @see org.gbif.dwc.terms.DwcTerm#MaterialSample
+   */
+  private static void populateMaterialSampleTerms() {
+    mockOccurrence.getFields().put(DwcTerm.materialSampleID, "MatSam8");
   }
 
   /**
@@ -181,10 +210,22 @@ public class MockOccurrenceFactory {
    * @see org.gbif.dwc.terms.DwcTerm#GROUP_EVENT
    */
   private static void populateVerbatimDwcEventTerms() {
+    mockOccurrence.getFields().put(DwcTerm.eventID, "Grinnell Resurvey Mammals - EID1");
+    mockOccurrence.getFields().put(DwcTerm.samplingProtocol, "mist net");
+    mockOccurrence.getFields().put(DwcTerm.samplingEffort, "40 trap-nights");
+    mockOccurrence.getFields().put(DwcTerm.eventDate, "2012-01-30");
+    mockOccurrence.getFields().put(DwcTerm.eventTime, "14:07-0600");
+    mockOccurrence.getFields().put(DwcTerm.startDayOfYear, "1");
+    mockOccurrence.getFields().put(DwcTerm.endDayOfYear, "366");
     mockOccurrence.getFields().put(DwcTerm.year, "2012");
     mockOccurrence.getFields().put(DwcTerm.month, "01");
     mockOccurrence.getFields().put(DwcTerm.day, "30");
-    mockOccurrence.getFields().put(DwcTerm.eventDate, "2012-01-30");
+    mockOccurrence.getFields().put(DwcTerm.verbatimEventDate, "spring 2012");
+    mockOccurrence.getFields().put(DwcTerm.habitat, "oak savanna");
+    mockOccurrence.getFields().put(DwcTerm.fieldNumber, "RV Sol 87-03-08");
+    mockOccurrence.getFields().put(DwcTerm.fieldNotes, "notes available in Grinnell-Miller Library");
+    mockOccurrence.getFields().put(DwcTerm.eventRemarks, "after the recent rains the river is nearly at flood stage");
+
   }
 
   /**
@@ -193,10 +234,50 @@ public class MockOccurrenceFactory {
    * @see org.gbif.dwc.terms.DwcTerm#GROUP_LOCATION
    */
   private static void populateVerbatimDwcLocationTerms() {
+    mockOccurrence.getFields().put(DwcTerm.locationID, "L_A:44");
+    mockOccurrence.getFields().put(DwcTerm.higherGeographyID, "TGN: 1002002");
+    mockOccurrence.getFields().put(DwcTerm.higherGeography, "South America; Argentina");
     mockOccurrence.getFields().put(DwcTerm.continent, "North America");
+    mockOccurrence.getFields().put(DwcTerm.waterBody, "Baltic Sea");
+    mockOccurrence.getFields().put(DwcTerm.islandGroup, "Above Lake Aloha");
+    mockOccurrence.getFields().put(DwcTerm.island, "Isla Victoria");
     mockOccurrence.getFields().put(DwcTerm.country, "USA");
+    mockOccurrence.getFields().put(DwcTerm.countryCode, "AR");
     mockOccurrence.getFields().put(DwcTerm.stateProvince, "California");
-    mockOccurrence.getFields().put(DwcTerm.locality, "Above Lake Aloha");
+    mockOccurrence.getFields().put(DwcTerm.county, "Los Lagos");
+    mockOccurrence.getFields().put(DwcTerm.municipality, "Holzminden");
+    mockOccurrence.getFields().put(DwcTerm.locality, "Bariloche, 25 km NNE via Ruta Nacional 40 (=Ruta 237)");
+    mockOccurrence.getFields().put(DwcTerm.verbatimLocality, "25 km NNE Bariloche por R. Nac. 237");
+    mockOccurrence.getFields().put(DwcTerm.verbatimElevation, "100-200 m");
+    mockOccurrence.getFields().put(DwcTerm.minimumElevationInMeters, "100");
+    mockOccurrence.getFields().put(DwcTerm.maximumElevationInMeters, "200");
+    mockOccurrence.getFields().put(DwcTerm.verbatimDepth, "100-200 m");
+    mockOccurrence.getFields().put(DwcTerm.minimumDepthInMeters, "100");
+    mockOccurrence.getFields().put(DwcTerm.maximumDepthInMeters, "200");
+    mockOccurrence.getFields().put(DwcTerm.minimumDistanceAboveSurfaceInMeters, "0");
+    mockOccurrence.getFields().put(DwcTerm.maximumDistanceAboveSurfaceInMeters, "-1.5");
+    mockOccurrence.getFields().put(DwcTerm.locationAccordingTo, "Getty Thesaurus of Geographic Names");
+    mockOccurrence.getFields().put(DwcTerm.locationRemarks, "under water since 2005");
+    mockOccurrence.getFields().put(DwcTerm.verbatimCoordinates, "41 05 54S 121 05 34W");
+    mockOccurrence.getFields().put(DwcTerm.verbatimLatitude, "41 05 54.03S");
+    mockOccurrence.getFields().put(DwcTerm.verbatimLongitude, "121d 10 34 W");
+    mockOccurrence.getFields().put(DwcTerm.verbatimCoordinateSystem, "decimal degrees");
+    mockOccurrence.getFields().put(DwcTerm.verbatimSRS, "EPSG:4326");
+    mockOccurrence.getFields().put(DwcTerm.decimalLatitude, "-41.0983423");
+    mockOccurrence.getFields().put(DwcTerm.decimalLongitude, "-121.1761111");
+    mockOccurrence.getFields().put(DwcTerm.geodeticDatum, "WGS84");
+    mockOccurrence.getFields().put(DwcTerm.coordinateUncertaintyInMeters, "30");
+    mockOccurrence.getFields().put(DwcTerm.coordinatePrecision, "0.00001");
+    mockOccurrence.getFields().put(DwcTerm.pointRadiusSpatialFit, "1");
+    mockOccurrence.getFields().put(DwcTerm.footprintWKT, "POLYGON ((10 20, 11 20, 11 21, 10 21, 10 20))");
+    mockOccurrence.getFields().put(DwcTerm.footprintSRS, "PRIMEM[Greenwich,0]");
+    mockOccurrence.getFields().put(DwcTerm.footprintSpatialFit, "1");
+    mockOccurrence.getFields().put(DwcTerm.georeferencedBy, "Kristina Yamamoto (MVZ)");
+    mockOccurrence.getFields().put(DwcTerm.georeferencedDate, "1963-03-08T14:07-0600");
+    mockOccurrence.getFields().put(DwcTerm.georeferenceProtocol, "Georeferencing Quick Reference Guide");
+    mockOccurrence.getFields().put(DwcTerm.georeferenceSources, "USGS 1:24000 Florence Montana Quad");
+    mockOccurrence.getFields().put(DwcTerm.georeferenceVerificationStatus, "requires verification");
+    mockOccurrence.getFields().put(DwcTerm.geologicalContextID, "stratigraphy:1");
   }
 
   /**
@@ -205,7 +286,24 @@ public class MockOccurrenceFactory {
    * @see org.gbif.dwc.terms.DwcTerm#GROUP_GEOLOGICALCONTEXT
    */
   private static void populateVerbatimDwcGeologicalConceptTerms() {
-    // TODO
+    mockOccurrence.getFields().put(DwcTerm.geologicalContextID, "stratigraphy:1");
+    mockOccurrence.getFields().put(DwcTerm.earliestEonOrLowestEonothem, "Phanerozoic");
+    mockOccurrence.getFields().put(DwcTerm.latestEonOrHighestEonothem, "Proterozoic");
+    mockOccurrence.getFields().put(DwcTerm.earliestEraOrLowestErathem, "Cenozoic");
+    mockOccurrence.getFields().put(DwcTerm.latestEraOrHighestErathem, "Mesozoic");
+    mockOccurrence.getFields().put(DwcTerm.earliestPeriodOrLowestSystem, "Neogene");
+    mockOccurrence.getFields().put(DwcTerm.latestPeriodOrHighestSystem, "Quaternary");
+    mockOccurrence.getFields().put(DwcTerm.earliestEpochOrLowestSeries, "Ibexian Series");
+    mockOccurrence.getFields().put(DwcTerm.latestEpochOrHighestSeries, "Pleistocene");
+    mockOccurrence.getFields().put(DwcTerm.earliestAgeOrLowestStage, "Skullrockian");
+    mockOccurrence.getFields().put(DwcTerm.latestAgeOrHighestStage, "Boreal");
+    mockOccurrence.getFields().put(DwcTerm.lowestBiostratigraphicZone, "N. Atlantic Conodont");
+    mockOccurrence.getFields().put(DwcTerm.highestBiostratigraphicZone, "Midcontinent Condonot");
+    mockOccurrence.getFields().put(DwcTerm.lithostratigraphicTerms, "shale lithosome");
+    mockOccurrence.getFields().put(DwcTerm.group, "Lithosome");
+    mockOccurrence.getFields().put(DwcTerm.formation, "House Limestone");
+    mockOccurrence.getFields().put(DwcTerm.member, "Hellnmaria Member");
+    mockOccurrence.getFields().put(DwcTerm.bed, "hiatus");
   }
 
 
@@ -215,7 +313,14 @@ public class MockOccurrenceFactory {
    * @see org.gbif.dwc.terms.DwcTerm#GROUP_IDENTIFICATION
    */
   private static void populateVerbatimDwcIdentificationTerms() {
+    mockOccurrence.getFields().put(DwcTerm.identificationID, "ID_ID:2");
     mockOccurrence.getFields().put(DwcTerm.identifiedBy, "John Smith");
+    mockOccurrence.getFields().put(DwcTerm.dateIdentified, "1963-03-08T14:07-0600");
+    mockOccurrence.getFields().put(DwcTerm.identificationReferences, "Aves del Patagonico. Christie et al. 2004.");
+    mockOccurrence.getFields().put(DwcTerm.identificationVerificationStatus, "4");
+    mockOccurrence.getFields().put(DwcTerm.identificationRemarks, "Distinguished on the lengths of the uñas.");
+    mockOccurrence.getFields().put(DwcTerm.identificationQualifier, "aff. agrifolia var. oxyadenia");
+    mockOccurrence.getFields().put(DwcTerm.typeStatus, "holotype of Ctenomys sociabilis. Pearson O. P.");
   }
 
   /**
@@ -224,15 +329,39 @@ public class MockOccurrenceFactory {
    * @see org.gbif.dwc.terms.DwcTerm#GROUP_TAXON
    */
   private static void populateVerbatimDwcTaxonTerms() {
+    mockOccurrence.getFields().put(DwcTerm.taxonID, "8fa58e08-08de-4ac1-b69c-1235340b7001");
+    mockOccurrence.getFields().put(DwcTerm.scientificNameID, "urn:lsid:ipni.org:names:37829-1:1.3");
+    mockOccurrence.getFields().put(DwcTerm.acceptedNameUsageID , "8fa58e08-08de-4ac1-b69c-1235340b7001");
+    mockOccurrence.getFields().put(DwcTerm.parentNameUsageID, "8fa58e08-08de-4ac1-b69c-1235340b7001");
+    mockOccurrence.getFields().put(DwcTerm.originalNameUsageID, "http://species.gbif.org/1753");
+    mockOccurrence.getFields().put(DwcTerm.nameAccordingToID, "doi:10.1016/S0269-915X(97)80026-2");
+    mockOccurrence.getFields().put(DwcTerm.namePublishedInID, "http://hdl.handle.net/10199/7");
+    mockOccurrence.getFields().put(DwcTerm.taxonConceptID, "http://hdl.handle.net/10199/7");
     mockOccurrence.getFields().put(DwcTerm.scientificName, "Caracara cheriway");
-    mockOccurrence.getFields().put(DwcTerm.scientificNameAuthorship, "Jacquin, 1784");
+    mockOccurrence.getFields().put(DwcTerm.acceptedNameUsage, "Caracara cheriway, Jacquin, 1784");
+    mockOccurrence.getFields().put(DwcTerm.parentNameUsage, "Caracara");
+    mockOccurrence.getFields().put(DwcTerm.originalNameUsage, "Caracara cheriway");
+    mockOccurrence.getFields().put(DwcTerm.nameAccordingTo, "Werner Greuter 2008");
+    mockOccurrence.getFields().put(DwcTerm.namePublishedIn, "Pearson O. P. 1985. Historia Natural, 5(37):388");
+    mockOccurrence.getFields().put(DwcTerm.namePublishedInYear, "1985");
+    mockOccurrence.getFields().put(DwcTerm.higherClassification, "Animalia;Chordata;Aves;Falconiformes;Falconidae");
     mockOccurrence.getFields().put(DwcTerm.kingdom, "Animalia");
     mockOccurrence.getFields().put(DwcTerm.phylum, "Chordata");
     mockOccurrence.getFields().put(DwcTerm.class_, "Aves");
     mockOccurrence.getFields().put(DwcTerm.order, "Falconiformes");
     mockOccurrence.getFields().put(DwcTerm.family, "Falconidae");
     mockOccurrence.getFields().put(DwcTerm.genus, "Caracara");
+    mockOccurrence.getFields().put(DwcTerm.subgenus, "Caracara");
     mockOccurrence.getFields().put(DwcTerm.specificEpithet, "cheriway");
+    mockOccurrence.getFields().put(DwcTerm.infraspecificEpithet, "cheriway");
+    mockOccurrence.getFields().put(DwcTerm.taxonRank, "species");
+    mockOccurrence.getFields().put(DwcTerm.verbatimTaxonRank, "sp.");
+    mockOccurrence.getFields().put(DwcTerm.scientificNameAuthorship, "Jacquin, 1784");
+    mockOccurrence.getFields().put(DwcTerm.vernacularName, "American Eagle");
+    mockOccurrence.getFields().put(DwcTerm.nomenclaturalCode, "ICBN");
+    mockOccurrence.getFields().put(DwcTerm.taxonomicStatus, "accepted");
+    mockOccurrence.getFields().put(DwcTerm.nomenclaturalStatus, "nom. ambig.");
+    mockOccurrence.getFields().put(DwcTerm.taxonRemarks, "this name is a misspelling in common use");
   }
 
   /**
@@ -241,7 +370,13 @@ public class MockOccurrenceFactory {
    * @see org.gbif.dwc.terms.DwcTerm#GROUP_RESOURCERELATIONSHIP
    */
   private static void populateVerbatimDwcResourceRelationshipTerms() {
-    // TODO
+    mockOccurrence.getFields().put(DwcTerm.resourceRelationshipID, "sub_to_related:1");
+    mockOccurrence.getFields().put(DwcTerm.resourceID, "sub:1");
+    mockOccurrence.getFields().put(DwcTerm.relatedResourceID, "related:1");
+    mockOccurrence.getFields().put(DwcTerm.relationshipOfResource, "valid synonym of");
+    mockOccurrence.getFields().put(DwcTerm.relationshipAccordingTo, "Julie Woodruff");
+    mockOccurrence.getFields().put(DwcTerm.relationshipEstablishedDate, "1963-03-08T14:07-0600");
+    mockOccurrence.getFields().put(DwcTerm.relationshipRemarks, "mother and offspring collected from the same nest");
   }
 
   /**
@@ -250,7 +385,15 @@ public class MockOccurrenceFactory {
    * @see org.gbif.dwc.terms.DwcTerm#GROUP_MEASUREMENTORFACT
    */
   private static void populateVerbatimDwcMeasurementOrFactTerms() {
-    // TODO
+    mockOccurrence.getFields().put(DwcTerm.measurementID, "MeasurementOrFact:1");
+    mockOccurrence.getFields().put(DwcTerm.measurementType, "tail length");
+    mockOccurrence.getFields().put(DwcTerm.measurementValue, "45");
+    mockOccurrence.getFields().put(DwcTerm.measurementAccuracy, "0.01");
+    mockOccurrence.getFields().put(DwcTerm.measurementUnit, "cm");
+    mockOccurrence.getFields().put(DwcTerm.measurementDeterminedDate, "1963-03-08T14:07-0600");
+    mockOccurrence.getFields().put(DwcTerm.measurementDeterminedBy, "Julie Woodruff");
+    mockOccurrence.getFields().put(DwcTerm.measurementMethod, "minimum convex polygon around burrow entrances");
+    mockOccurrence.getFields().put(DwcTerm.measurementRemarks, "tip of tail missing");
   }
 
   /**

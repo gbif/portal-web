@@ -84,8 +84,69 @@ div.map {
     input[type="radio"] { margin: 0 3px 0 0; }
   }
 }
+// Copy of the above #content article.map, modified slightly to work with widened occurrence detail page
+// TODO: remove once css problems with new widened occurrence detail page are resolved
+#content article.occurrenceMap {
+  // Full screen maps go on top of everything, but not popups
+  z-index: 10000;
 
+  div.map {
+    position: absolute;
+    top: -19px; left: 2px;
+    .size(627px, 423px);
 
+    z-index: 100000;
+  }
+
+  .content {
+    height: auto;
+  }
+
+  .right {
+    margin-left: 627px;
+
+    .inner {
+      overflow: auto;
+      height: 313px;
+    }
+  }
+
+  .map_container {
+    position:relative;
+    display:inline;
+    .size(627px, 423px);
+  }
+
+  .zoom_in {
+    top: -13px;
+    background: url("../img/icons/zoom.png") no-repeat 0 0;
+    &:hover { cursor: pointer; }
+  }
+
+  .zoom_out {
+    top: 15px;
+    background: url("../img/icons/zoom.png") no-repeat 0 -32px;
+    &:hover { cursor: pointer; }
+  }
+
+  .zoom_fs {
+    top: 43px;
+    background: url("../img/icons/zoom.png") no-repeat 0 -64px;
+    &:hover { cursor: pointer; }
+  }
+
+  .zoom_in, .zoom_out, .zoom_fs {
+    position: absolute;
+    left: 8px;
+    .size(26px);
+    z-index: 200000;
+  }
+
+  .leaflet-control-layers-base {
+    padding: 3px;
+    input[type="radio"] { margin: 0 3px 0 0; }
+  }
+}
 
 
 

@@ -3,6 +3,7 @@ package org.gbif.portal.action.occurrence;
 import org.gbif.api.model.occurrence.VerbatimOccurrence;
 import org.gbif.api.model.registry.Organization;
 import org.gbif.api.service.registry.OrganizationService;
+import org.gbif.dwc.terms.DcTerm;
 import org.gbif.dwc.terms.DwcTerm;
 import org.gbif.dwc.terms.GbifTerm;
 import org.gbif.dwc.terms.Term;
@@ -34,6 +35,8 @@ public class DetailAction extends OccurrenceBaseAction {
   @Override
   public String execute() {
     loadDetail();
+    // load verbatim terms (organized by group)
+    verbatim();
     // load publisher
     if (dataset.getOwningOrganizationKey() != null) {
       publisher = organizationService.get(dataset.getOwningOrganizationKey());
@@ -64,15 +67,13 @@ public class DetailAction extends OccurrenceBaseAction {
   public String verbatim() {
     LOG.debug("Loading raw details for occurrence id [{}]", id);
 
-    loadDetail();
-
     // prepare verbatim map
     verbatim = Maps.newLinkedHashMap();
     try {
       fragmentExists = occurrenceService.getFragment(id) != null;
       // check if the mock occurrence should be loaded
       // TODO: revert change when moving to production
-      VerbatimOccurrence v = id == -1000000000 ? MockOccurrenceFactory.getMockOccurrence() : occurrenceService.getVerbatim(id);
+      VerbatimOccurrence v = id == -1000000000 ? MockOccurrenceFactory.getMockOccurrence() : occurrenceService.get(id);
 
       for (String group : DwcTerm.GROUPS) {
         for (DwcTerm t : DwcTerm.listByGroup(group)) {
@@ -121,6 +122,10 @@ public class DetailAction extends OccurrenceBaseAction {
    * @return value for Term in fields map, or null if it doesn't exist
    */
   public String retrieveTerm(String term) {
+    // special case for Dc.rights
+    if (term.equals("rights")) {
+      return occ.getField(DcTerm.rights);
+    }
     DwcTerm t = DwcTerm.valueOf(term);
     if (t != null && occ != null && occ.getFields() != null) {
       return occ.getField(t);
