@@ -19,6 +19,7 @@ import org.gbif.api.service.checklistbank.DatasetMetricsService;
 import org.gbif.api.service.metrics.CubeService;
 import org.gbif.api.service.registry.DatasetService;
 import org.gbif.api.service.registry.OrganizationService;
+import org.gbif.api.vocabulary.Country;
 import org.gbif.api.vocabulary.EndpointType;
 import org.gbif.api.vocabulary.Extension;
 import org.gbif.api.vocabulary.Kingdom;
@@ -28,13 +29,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 
 /**
@@ -54,6 +60,25 @@ public class DetailAction extends DatasetBaseAction {
     .build();
   private static final Set<EndpointType> METADATA_CODES = ImmutableSet.<EndpointType>builder()
     .add(EndpointType.EML).add(EndpointType.OAI_PMH).build();
+
+  // allows reg ex replacement of names in geographic descriptions (reuse the pattern for performance)
+  private static final Map<String, Country> COUNTRY_MAP = Maps.newHashMap();
+  private static final Pattern COUNTRY_REG_EX = Pattern.compile(countryTitleRegEx(), Pattern.CASE_INSENSITIVE);
+
+  /**
+   * Builds a regular expression from all the country names, to allow replacement as links.
+   */
+  private static String countryTitleRegEx() {
+    ImmutableList.Builder<String> b = ImmutableList.builder();
+    for (Country c : Country.values()) {
+      if (c==null || Strings.isNullOrEmpty(c.getTitle())) {
+        continue;
+      }
+      b.add(c.getTitle());
+      COUNTRY_MAP.put(c.getTitle().toLowerCase(), c);
+    }
+    return "\\b(" + Joiner.on("|").join(b.build()) + ")\\b";
+  }
 
   private final List<Contact> preferredContacts = Lists.newArrayList();
   private final List<Contact> otherContacts = Lists.newArrayList();
@@ -77,6 +102,7 @@ public class DetailAction extends DatasetBaseAction {
   @Override
   public String execute() {
     loadDetail();
+    insertCountryLinks();
     populateContacts(member.getContacts());
     populateLinks(member.getEndpoints());
     // only datasets with a key (internal) can have constituents
@@ -172,6 +198,47 @@ public class DetailAction extends DatasetBaseAction {
 
   public boolean isRenderMaps() {
     return renderMaps;
+  }
+
+  /**
+   * Creates html links to country pages if country names are found.
+   */
+  private void insertCountryLinks() {
+    final String countryUrl = getBaseUrl() + "/country/";
+
+    // main description
+    if (!Strings.isNullOrEmpty(getDataset().getDescription())) {
+      Matcher m = COUNTRY_REG_EX.matcher(getDataset().getDescription());
+      StringBuffer sb = new StringBuffer();
+      while (m.find()) {
+        Country c = COUNTRY_MAP.get(m.group(1).toLowerCase());
+        String replacement;
+        if (c != null) {
+          replacement = "<a href='" + countryUrl + c.getIso2LetterCode() + "'>" + m.group(1) + "</a>";
+        } else {
+          replacement = m.group(1);
+        }
+        m.appendReplacement(sb, replacement);
+      }
+      m.appendTail(sb);
+      getDataset().setDescription(sb.toString());
+    }
+
+    // spatial coverage
+    for (GeospatialCoverage gc : getDataset().getGeographicCoverages()) {
+      // There are not yet any links to the actual countries
+      if (!Strings.isNullOrEmpty(gc.getDescription())) {
+        Matcher m = COUNTRY_REG_EX.matcher(gc.getDescription());
+        StringBuffer sb = new StringBuffer();
+        while (m.find()) {
+          Country c = COUNTRY_MAP.get(m.group(1));
+          String replacement = "<a href='" + countryUrl + c.getIso2LetterCode() + "'>" + m.group(1) + "</a>";
+          m.appendReplacement(sb, replacement);
+        }
+        m.appendTail(sb);
+        gc.setDescription(sb.toString());
+      }
+    }
   }
 
   /**
