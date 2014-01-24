@@ -9,6 +9,8 @@ import org.gbif.api.model.registry.search.DatasetSearchResult;
 import org.gbif.api.service.occurrence.OccurrenceSearchService;
 import org.gbif.api.vocabulary.BasisOfRecord;
 import org.gbif.api.vocabulary.Country;
+import org.gbif.dwc.terms.DcTerm;
+import org.gbif.dwc.terms.DwcTerm;
 import org.gbif.portal.action.BaseSearchAction;
 import org.gbif.portal.action.occurrence.util.FiltersActionHelper;
 import org.gbif.portal.action.occurrence.util.ParameterValidationError;
@@ -46,6 +48,8 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   private SearchSuggestions<DatasetSearchResult> datasetsSuggestions;
 
   private SearchSuggestions<String> collectorSuggestions;
+
+  private SearchSuggestions<String> recordNumberSuggestions;
 
   private SearchSuggestions<String> catalogNumberSuggestions;
 
@@ -131,7 +135,6 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
     searchRequest.setHighlight(!Strings.isNullOrEmpty(q));
     // issues the search operation
     searchResponse = searchService.search(searchRequest);
-
     // Provide suggestions for catalog numbers and collector names
     provideSuggestions();
 
@@ -165,6 +168,11 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
    */
   public SearchSuggestions<String> getCollectorSuggestions() {
     return collectorSuggestions;
+  }
+
+
+  public SearchSuggestions<String> getRecordNumberSuggestions() {
+    return recordNumberSuggestions;
   }
 
   /**
@@ -327,6 +335,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
     catalogNumberSuggestions = new SearchSuggestions<String>();
     institutionCodeSuggestions = new SearchSuggestions<String>();
     collectionCodeSuggestions = new SearchSuggestions<String>();
+    recordNumberSuggestions = new SearchSuggestions<String>();
   }
 
   /**
@@ -354,6 +363,9 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
       if (searchRequest.getParameters().containsKey(OccurrenceSearchParameter.INSTITUTION_CODE)) {
         institutionCodeSuggestions = filtersActionHelper.processCatalogNumberSuggestions(request);
       }
+      if (searchRequest.getParameters().containsKey(OccurrenceSearchParameter.RECORD_NUMBER)) {
+        recordNumberSuggestions = filtersActionHelper.processRecordNumbersSuggestions(request);
+      }
     }
   }
 
@@ -364,5 +376,23 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   private boolean validateSearchParameters() {
     validationErrors = filtersActionHelper.validateSearchParameters(request, OCC_VALIDATION_DISCARDED);
     return validationErrors.isEmpty();
+  }
+
+  /**
+   * Retrieve value for Term in fields map. Currently expecting only DwcTerm.
+   * 
+   * @param term Term
+   * @return value for Term in fields map, or null if it doesn't exist
+   */
+  public String retrieveTerm(String term, Occurrence occ) {
+    // special case for Dc.rights
+    if (term.equals("rights")) {
+      return occ.getField(DcTerm.rights);
+    }
+    DwcTerm t = DwcTerm.valueOf(term);
+    if (t != null && occ != null && occ.getFields() != null) {
+      return occ.getField(t);
+    }
+    return null;
   }
 }

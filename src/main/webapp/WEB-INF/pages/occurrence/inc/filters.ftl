@@ -384,6 +384,22 @@
      </#list>       
   </script>
   
+  <script type="text/template" id="RECORD_NUMBER-suggestions-template">  
+    <#list recordNumberSuggestions.suggestions?keys as name>            
+      <div class="suggestionBox" data-suggestion="${name}">         
+       <#assign suggestions = recordNumberSuggestions.suggestions[name]>
+         <#if suggestions?has_content>
+          <div class="warningBox"> <span class="warningCounter">!</span>The collector name  <strong>"${name}"</strong> didn't match any existing record.You can select one from the list below to try improving your search results.</div>                               
+          <#list suggestions as suggestion>
+              <input id="searchResult${suggestion}" type="radio" value="${suggestion}" name="RECORD_NUMBER" class="suggestion" data-suggestion="${name}"/>
+              <label for="searchResult${suggestion}">${suggestion}</label>                
+              </br>                                                    
+          </#list>           
+         </#if>                  
+      </div>               
+     </#list>       
+  </script>
+  
   
   <script type="text/template" id="CATALOG_NUMBER-suggestions-template">  
     <#list catalogNumberSuggestions.suggestions?keys as name>            

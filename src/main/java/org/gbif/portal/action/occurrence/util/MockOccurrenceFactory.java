@@ -15,6 +15,7 @@ import org.gbif.dwc.terms.DwcTerm;
 
 import java.util.Date;
 import java.util.UUID;
+
 import javax.validation.constraints.NotNull;
 
 /**
@@ -103,15 +104,15 @@ public class MockOccurrenceFactory {
     mockOccurrence.setGenus("Caracara");
     mockOccurrence.setSubgenus("Ichthydium (Furficulichthys) Schwank, 1990");
     mockOccurrence.setSpecies("Caracara cheriway (Jacquin, 1784)");
-    mockOccurrence.setIdentificationDate(new Date());
+    mockOccurrence.setDateIdentified(new Date());
     mockOccurrence.setLongitude(-95.86519);
     mockOccurrence.setLatitude(29.91973);
-    mockOccurrence.setCoordinateAccurracy(0.1);
+    mockOccurrence.setCoordinateAccuracy(0.1);
     mockOccurrence.setGeodeticDatum("WGS84");
     mockOccurrence.setAltitude(1000);
-    mockOccurrence.setAltitudeAccurracy(1);
+    mockOccurrence.setAltitudeAccuracy(1);
     mockOccurrence.setDepth(500);
-    mockOccurrence.setDepthAccurracy(1);
+    mockOccurrence.setDepthAccuracy(1);
     mockOccurrence.setContinent(Continent.NORTH_AMERICA);
     mockOccurrence.setCountry(Country.UNITED_KINGDOM);
     mockOccurrence.setStateProvince("California");
@@ -140,13 +141,13 @@ public class MockOccurrenceFactory {
 
   /**
    * Populate all 19 record level terms with mock values.
-   *
+   * 
    * @see org.gbif.dwc.terms.DwcTerm#GROUP_RECORD
    */
   private static void populateVerbatimDwcRecordTerms() {
     mockOccurrence.getFields().put(DcTerm.type, "PhysicalObject");
     mockOccurrence.getFields().put(DcTerm.modified, "1963-03-08T14:07-0600");
-    mockOccurrence.getFields().put(DcTerm.language, "en" );
+    mockOccurrence.getFields().put(DcTerm.language, "en");
     mockOccurrence.getFields().put(DcTerm.rights, "CC0");
     mockOccurrence.getFields().put(DcTerm.rightsHolder, "The Regents of the University of California.");
     mockOccurrence.getFields().put(DcTerm.accessRights, "Not-for-profit use only");
@@ -167,7 +168,7 @@ public class MockOccurrenceFactory {
 
   /**
    * Populate all occurrence terms with mock values.
-   *
+   * 
    * @see org.gbif.dwc.terms.DwcTerm#GROUP_OCCURRENCE
    */
   private static void populateVerbatimDwcOccurrenceTerms() {
@@ -197,7 +198,7 @@ public class MockOccurrenceFactory {
 
   /**
    * Populate all material sample terms with mock values.
-   *
+   * 
    * @see org.gbif.dwc.terms.DwcTerm#MaterialSample
    */
   private static void populateMaterialSampleTerms() {
@@ -206,7 +207,7 @@ public class MockOccurrenceFactory {
 
   /**
    * Populate all event terms with mock values.
-   *
+   * 
    * @see org.gbif.dwc.terms.DwcTerm#GROUP_EVENT
    */
   private static void populateVerbatimDwcEventTerms() {
@@ -230,7 +231,7 @@ public class MockOccurrenceFactory {
 
   /**
    * Populate all location terms with mock values.
-   *
+   * 
    * @see org.gbif.dwc.terms.DwcTerm#GROUP_LOCATION
    */
   private static void populateVerbatimDwcLocationTerms() {
@@ -282,7 +283,7 @@ public class MockOccurrenceFactory {
 
   /**
    * Populate all geological concept terms with mock values.
-   *
+   * 
    * @see org.gbif.dwc.terms.DwcTerm#GROUP_GEOLOGICALCONTEXT
    */
   private static void populateVerbatimDwcGeologicalConceptTerms() {
@@ -309,7 +310,7 @@ public class MockOccurrenceFactory {
 
   /**
    * Populate all identification terms with mock values.
-   *
+   * 
    * @see org.gbif.dwc.terms.DwcTerm#GROUP_IDENTIFICATION
    */
   private static void populateVerbatimDwcIdentificationTerms() {
@@ -325,13 +326,13 @@ public class MockOccurrenceFactory {
 
   /**
    * Populate all taxon terms with mock values.
-   *
+   * 
    * @see org.gbif.dwc.terms.DwcTerm#GROUP_TAXON
    */
   private static void populateVerbatimDwcTaxonTerms() {
     mockOccurrence.getFields().put(DwcTerm.taxonID, "8fa58e08-08de-4ac1-b69c-1235340b7001");
     mockOccurrence.getFields().put(DwcTerm.scientificNameID, "urn:lsid:ipni.org:names:37829-1:1.3");
-    mockOccurrence.getFields().put(DwcTerm.acceptedNameUsageID , "8fa58e08-08de-4ac1-b69c-1235340b7001");
+    mockOccurrence.getFields().put(DwcTerm.acceptedNameUsageID, "8fa58e08-08de-4ac1-b69c-1235340b7001");
     mockOccurrence.getFields().put(DwcTerm.parentNameUsageID, "8fa58e08-08de-4ac1-b69c-1235340b7001");
     mockOccurrence.getFields().put(DwcTerm.originalNameUsageID, "http://species.gbif.org/1753");
     mockOccurrence.getFields().put(DwcTerm.nameAccordingToID, "doi:10.1016/S0269-915X(97)80026-2");
@@ -366,7 +367,7 @@ public class MockOccurrenceFactory {
 
   /**
    * Populate all resource relationship terms with mock values.
-   *
+   * 
    * @see org.gbif.dwc.terms.DwcTerm#GROUP_RESOURCERELATIONSHIP
    */
   private static void populateVerbatimDwcResourceRelationshipTerms() {
@@ -381,7 +382,7 @@ public class MockOccurrenceFactory {
 
   /**
    * Populate all measurement or fact terms with mock values.
-   *
+   * 
    * @see org.gbif.dwc.terms.DwcTerm#GROUP_MEASUREMENTORFACT
    */
   private static void populateVerbatimDwcMeasurementOrFactTerms() {
@@ -398,7 +399,7 @@ public class MockOccurrenceFactory {
 
   /**
    * Return the populated mock Occurrence object.
-   *
+   * 
    * @return the populated mock Occurrence object
    */
   @NotNull

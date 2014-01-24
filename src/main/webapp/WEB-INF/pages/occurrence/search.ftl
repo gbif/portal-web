@@ -104,6 +104,7 @@
     <#assign showScientificName =  table.hasSummaryField('SCIENTIFIC_NAME')>
     <#assign showCollectionCode =  table.hasSummaryField('COLLECTION_CODE')>
     <#assign showCollectorName =  table.hasSummaryField('COLLECTOR_NAME')>
+    <#assign showRecordNumber =  table.hasSummaryField('RECORD_NUMBER')>
     <#assign showDataset =  table.hasSummaryField('DATASET')>
     <#assign showLocation =  table.hasColumn('LOCATION')>
     <#assign showDate =  table.hasColumn('DATE')>
@@ -137,6 +138,7 @@
                     <li><input type="checkbox" name="summary" value="COLLECTION_CODE" id="chk-COLLECTION_CODE" <#if showCollectionCode>checked</#if>/> <label for="chk-COLLECTION_CODE">Collection code</label></li>
                     <li><input type="checkbox" name="summary" value="INSTITUTION" id="chk-INSTITUTION" <#if showInstitution>checked</#if>/> <label for="chk-INSTITUTION">Institution</label></li>
                     <li><input type="checkbox" name="summary" value="COLLECTOR_NAME" id="chk-COLLECTOR_NAME" <#if showCollectorName>checked</#if>/> <label for="chk-COLLECTOR_NAME">Collector name</label></li>
+                    <li><input type="checkbox" name="summary" value="RECORD_NUMBER" id="chk-RECORD_NUMBER" <#if showRecordNumber>checked</#if>/> <label for="chk-RECORD_NUMBER">Record number</label></li>
                     <li><input type="checkbox" name="summary" value="SCIENTIFIC_NAME" id="chk-SCIENTIFIC_NAME" <#if showScientificName>checked</#if>/> <label for="chk-SCIENTIFIC_NAME">Scientific name</label></li>                    
                     <li><input type="checkbox" name="summary" value="DATASET" id="chk-DATASET" <#if showDataset>checked</#if>/> <label for="chk-DATASET">Dataset</label></li>
                     <li><input type="checkbox" name="summary" value="MODIFIED" id="chk-MODIFIED" <#if showModified>checked</#if>/> <label for="chk-MODIFIED">Date last modified</label></li>
@@ -158,6 +160,7 @@
                     <li><a tabindex="-1" href="#" data-placeholder="Type a country name..." data-filter="COUNTRY" title="Country" data-template-filter="template-simple-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Country</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a country name..." data-filter="PUBLISHING_COUNTRY" title="Publishing country" data-template-filter="template-simple-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Publishing country</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a collector name..." data-filter="COLLECTOR_NAME" title="Collector name" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value collector_name_autosuggest auto_add" class="filter-control">Collector</a></li>
+                    <li><a tabindex="-1" href="#" data-placeholder="Type a record number..." data-filter="RECORD_NUMBER" title="Record number" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value record_number_autosuggest auto_add" class="filter-control">Record number</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a name..." data-filter="BASIS_OF_RECORD" title="Basis Of Record" data-template-filter="template-basis-of-record-filter" data-template-summary="template-filter" class="filter-control">Basis of record</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a dataset name..." data-filter="DATASET_KEY" title="Dataset" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value dataset_autosuggest auto_add" class="filter-control">Dataset</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="" data-filter="DATE" title="Collection date" data-template-filter="template-date-compare-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Collection date</a></li>
@@ -198,19 +201,22 @@
                 <#if showOccurrenceKey>
                   <span class="code">${occ.key?c}</span>
                 </#if>
-                <#if showCatalogNumber && occ.catalogNumber?has_content><#if showOccurrenceKey>· </#if><span class="catalog">Cat. ${occ.catalogNumber!}</span></#if>
-                <#if showCollectorName && occ.collectorName?has_content>
-                  <div class="code">Collector: ${occ.collectorName}</div>
+                <#if showCatalogNumber &&  action.retrieveTerm('catalogNumber',occ)?has_content><#if showOccurrenceKey>· </#if><span class="catalog">Cat. ${action.retrieveTerm('catalogNumber',occ)!}</span></#if>
+                <#if showCollectorName && action.retrieveTerm('recordedBy',occ)?has_content>
+                  <div class="code">Collector: ${action.retrieveTerm('recordedBy',occ)}</div>
                 </#if>
-                <#if showCollectionCode && occ.collectionCode?has_content>
-                  <div class="code">Collection: ${occ.collectionCode}</div>
+                <#if showCollectionCode && action.retrieveTerm('collectionCode',occ)?has_content>
+                  <div class="code">Collection: ${action.retrieveTerm('collectionCode',occ)}</div>
                 </#if>
-                <#if showInstitution && occ.institutionCode?has_content>
-                  <div class="code">Institution: ${occ.institutionCode}</div>
+                <#if showInstitution && action.retrieveTerm('institutionCode',occ)?has_content>
+                  <div class="code">Institution: ${action.retrieveTerm('institutionCode',occ)}</div>
                 </#if>
                 <#if showModified && occ.modified?has_content>
                   <div class="code">Date last modified: ${occ.modified?string("yyyy-MM-dd")}</div>
-                </#if>                
+                </#if>
+                <#if showRecordNumber && action.retrieveTerm('recordNumber',occ)?has_content>
+                  <div class="code">Record number: ${action.retrieveTerm('recordNumber',occ)}</div>
+                </#if>                                 
               </div>
               <#if showScientificName && occ.scientificName?has_content><a class="title" href="<@s.url value='/occurrence/${occ.key?c}'/>">${occ.scientificName}</a></#if>
               <#if showDataset && occ.datasetKey?has_content>
@@ -247,10 +253,10 @@
           </#if>
           <#if showDate>
             <td class="date">
-              <#if occ.occurrenceMonth?has_content || occ.occurrenceYear?has_content>
-                <#if occ.occurrenceMonth?has_content>${occ.occurrenceMonth!?c}<#else>-</#if>
+              <#if occ.month?has_content || occ.year?has_content>
+                <#if occ.month?has_content>${occ.month!?c}<#else>-</#if>
                 /
-                <#if occ.occurrenceYear?has_content>${occ.occurrenceYear!?c}<#else>-</#if>
+                <#if occ.year?has_content>${occ.year!?c}<#else>-</#if>
               <#else>
                 N/A
               </#if>

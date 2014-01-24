@@ -16,6 +16,7 @@ cfg.wsMetrics="${cfg.wsMetrics!}";
 cfg.tileServerBaseUrl="${cfg.tileServerBaseUrl!}";
 cfg.wsOccCatalogNumberSearch = "${cfg.wsOccCatalogNumberSearch!}";
 cfg.wsOccCollectorNameSearch = "${cfg.wsOccCollectorNameSearch!}";
+cfg.wsOccRecordNumberSearch = "${cfg.wsOccRecordNumberSearch!}";
 cfg.wsOccCollectionCodeSearch = "${cfg.wsOccCollectionCodeSearch!}";
 cfg.wsOccInstitutionCodeSearch = "${cfg.wsOccInstitutionCodeSearch!}";
 cfg.wsImageCache = "${cfg.wsImageCache!}";
