@@ -38,9 +38,6 @@
 
   <#if show>
   <div class="fullwidth">
-    <#if title?has_content>
-      <h2>${title}</h2>
-    </#if>
 
     <#assign shown = 0/>
     <#list verbatimGroup?keys as term>
@@ -68,6 +65,52 @@
 
 </#macro>
 
+<#macro citationArticle bibliographicCitation dataset publisher rights accessRights rightsHolder prefix="">
+  <@common.article id="legal" title="Citation and licensing" class="mono_line">
+  <div class="fullwidth">
+
+    <#-- Show the record citation (DwC term bibliographic citation).
+    If there is no record citation, show the dataset citation if it exists, plus the default dataset citation -->
+    <#if bibliographicCitation?has_content>
+        <h3>Bibliographic Citation</h3>
+        <p>${bibliographicCitation}</p>
+    <#else>
+      <#if dataset.citation?? && !dataset.citation.text!?ends_with(dataset.title)>
+          <p>The content  of the "Dataset citation provided by the publisher" depends on the metadata supplied by the publisher.
+              In some cases this may be incomplete.  A standard default form for citing is provided as an alternative.
+              We are in transition towards providing more consistent citation text for all datasets.
+          </p>
+
+          <h3>Dataset citation provided by publisher</h3>
+          <p>${dataset.citation.text}</p>
+      </#if>
+
+        <h3>Default citation</h3>
+        <p>${prefix!}<#if publisher??>${publisher.title}:</#if>
+        ${dataset.title}<#if dataset.pubDate?has_content>, ${dataset.pubDate?date?iso_utc}</#if>.
+            <br/>Accessed via ${currentUrl} on ${.now?date?iso_utc}
+        </p>
+    </#if>
+
+    <#if rights?has_content>
+        <h3>Rights</h3>
+        <p>${rights}</p>
+    </#if>
+
+    <#if accessRights?has_content>
+        <h3>Access Rights</h3>
+        <p>${accessRights}</p>
+    </#if>
+
+      <#if rightsHolder?has_content>
+          <h3>Rights holder</h3>
+          <p>${rightsHolder}</p>
+      </#if>
+
+  </div>
+  </@common.article>
+</#macro>
+
 <#assign locality = action.retrieveTerm('locality')! />
 
 <#-- TOTO: needed to work with mock occurrence page, and since there are still css problems -->
@@ -87,9 +130,9 @@
         <p class="no_bottom">${locality!}<#if occ.country??>, <a href="<@s.url value='/country/${occ.country.iso2LetterCode}'/>">${occ.country.title}</a></#if></p>
         <p class="light_note">${occ.longitude}, ${occ.latitude}</p>
 
-    <#if occ.coordinateAccurracy??>
+    <#if occ.coordinateAccuracy??>
       <h3>Coordinate Accuracy</h3>
-      <p>${occ.coordinateAccurracy?string}</p>
+      <p>${occ.coordinateAccuracy?string}</p>
     </#if>
 
     <#if occ.geodeticDatum??>
@@ -127,23 +170,14 @@
 
     <#if occ.altitude??>
       <h3>Altitude</h3>
-      <p>${occ.altitude}m</p>
-    </#if>
-
-    <#if occ.altitudeAccurracy??>
-      <h3>Altitude Accuracy</h3>
-      <p>${occ.altitudeAccurracy?string}</p>
+      <p>${occ.altitude}m<#if occ.altitudeAccuracy??> ± ${occ.altitudeAccuracy?string}</#if></p>
     </#if>
 
     <#if occ.depth??>
       <h3>Depth</h3>
-      <p>${occ.depth}m</p>
+      <p>${occ.depth}m<#if occ.depthAccuracy??> ± ${occ.depthAccuracy?string}</#if></p>
     </#if>
 
-    <#if occ.depthAccurracy??>
-      <h3>Depth Accuracy</h3>
-      <p>${occ.depthAccurracy?string}</p>
-    </#if>
    </div>
 
 <#-- show different set of verbatim terms, depending on whether a map is shown or not. Never show verbatim terms that
@@ -151,14 +185,14 @@ are expected to be interpreted -->
 <#if verbatim["Location"]??>
       <#if showMap>
         <@vList verbatimGroup=verbatim["Location"] title="Additional location terms" exclude=["continent",
-    "stateOrProvince", "countryCode", "country", "county", "maximumDepthInMeters", "minimumDepthInMeters",
+    "stateProvince", "countryCode", "country", "county", "maximumDepthInMeters", "minimumDepthInMeters",
     "maximumElevationInMeters", "minimumElevationInMeters", "locality", "decimalLatitude", "decimalLongitude",
     "verbatimLatitude", "verbatimLongitude", "verbatimDepth", "verbatimElevation", "verbatimLocality",
     "verbatimCoordinates", "verbatimCoordinateSystem", "coordinatePrecision", "coordinateUncertaintyInMeters",
     "geodeticDatum"] />
       <#else>
         <@vList verbatimGroup=verbatim["Location"] title="Additional location terms" exclude=["continent",
-    "stateOrProvince", "countryCode", "country", "county", "maximumDepthInMeters", "minimumDepthInMeters",
+    "stateProvince", "countryCode", "country", "county", "maximumDepthInMeters", "minimumDepthInMeters",
     "maximumElevationInMeters", "minimumElevationInMeters", "locality", "verbatimElevation", "verbatimLocality"] />
       </#if>
 </#if>
@@ -189,29 +223,19 @@ are expected to be interpreted -->
           <p>${collectionCode}</p>
       </#if>
 
-      <#if occ.individualCount??>
-          <h3>Individual Count</h3>
-          <p>${occ.individualCount?string}</p>
-      </#if>
-
-      <#if occ.lifeStage??>
-          <h3>Life Stage</h3>
-          <p>${occ.lifeStage?string?lower_case?cap_first}</p>
-      </#if>
-
-      <#if occ.sex??>
-          <h3>Sex</h3>
-          <p>${occ.sex?string?lower_case?cap_first}</p>
-      </#if>
-
-      <#if occ.establishmentMeans??>
-          <h3>Establishment Means</h3>
-          <p>${occ.establishmentMeans?string?lower_case?cap_first}</p>
-      </#if>
+      <h3>Basis of record</h3>
+      <p><@s.text name="enum.basisofrecord.${occ.basisOfRecord!'UNKNOWN'}"/></p>
 
     </div>
 
     <div class="right">
+
+      <#assign occurrenceID = action.retrieveTerm('occurrenceID')! />
+      <#if occurrenceID?has_content>
+          <h3>Occurrence ID</h3>
+          <p>${occurrenceID}</p>
+      </#if>
+
       <h3>GBIF ID</h3>
       <p>${id?c}</p>
 
@@ -219,6 +243,12 @@ are expected to be interpreted -->
       <#if catalogNumber?has_content>
           <h3>Catalog number</h3>
           <p>${catalogNumber}</p>
+      </#if>
+
+      <#assign otherCatalogNumbers = action.retrieveTerm('otherCatalogNumbers')! />
+      <#if otherCatalogNumbers?has_content>
+          <h3>Other Catalog numbers</h3>
+          <p>${otherCatalogNumbers}</p>
       </#if>
 
       <#list occ.identifiers as i>
@@ -229,16 +259,12 @@ are expected to be interpreted -->
 
   <#if verbatim["Record"]??>
     <#-- show additional record-level group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
-    <#if verbatim?has_content>
-      <@vList verbatimGroup=verbatim["Record"] title="Additional record-level terms" exclude=["institutionCode", "collectionCode", "rights"] />
-    </#if>
+      <@vList verbatimGroup=verbatim["Record"] title="Additional record-level terms" exclude=["institutionCode", "collectionCode", "rights", "basisOfRecord"] />
   </#if>
 
-  <#if verbatim["Occurrence"]??>
-    <#-- show additional occurrence group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
-    <#if verbatim?has_content>
-      <@vList verbatimGroup=verbatim["Occurrence"] title="Additional occurrence terms" exclude=["catalogNumber", "individualCount", "sex", "lifeStage", "establishmentMeans" ] />
-    </#if>
+  <#if verbatim["Other"]??>
+  <#-- show additional DC record-level group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
+      <@vList verbatimGroup=verbatim["Other"] title="Other DC record-level terms" exclude=["rights", "accessRights", "bibliographicCitation", "modified", "references", "rightsHolder"] />
   </#if>
 
 </@common.article>
@@ -279,40 +305,42 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
 
     </div>
     <div class="right">
-      <#if occ.identificationDate??>
+      <#if occ.dateIdentified??>
         <h3>Identification date </h3>
-        <p>${occ.identificationDate?date?string.medium}</p>
+        <p>${occ.dateIdentified?date?string.medium}</p>
       </#if>
 
-      <#if occ.identifierName??>
+      <#if occ.identifiedBy??>
         <h3>Identified by</h3>
         <p>${occ.identifierName}</p>
+      </#if>
+
+      <#assign identifiedBy = action.retrieveTerm('identifiedBy')! />
+      <#if identifiedBy?has_content>
+          <h3>Identitied By</h3>
+          <p>${identifiedBy}</p>
+      </#if>
+
+      <#assign individualID = action.retrieveTerm('individualID')! />
+      <#if individualID?has_content>
+          <h3>Individual ID</h3>
+          <p>${individualID}</p>
       </#if>
     </div>
 
   <#if verbatim["Identification"]??>
-  <#-- show additional identification group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
-    <#if verbatim?has_content>
-      <@vList verbatimGroup=verbatim["Identification"] title="Additional identification terms" exclude=["dateIdentified", "typeStatus"] />
-    </#if>
+    <#-- show additional identification group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
+    <@vList verbatimGroup=verbatim["Identification"] title="Additional identification terms" exclude=["dateIdentified", "typeStatus", "identifiedBy"] />
   </#if>
 
-  <#if verbatim["Taxon"]??>
-  <#-- show additional taxon group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
-    <#if verbatim?has_content>
-        <@vList verbatimGroup=verbatim["Taxon"] title="Additional taxon terms" exclude=["kingdom", "phylum", "class", "order", "family", "genus", "subgenus", "specificEpithet", "scientificName", "higherClassification", "infraspecificEpithet", "verbatimTaxonRank", "taxonRank"] />
-      </#if>
-  </#if>
 </@common.article>
 
-<@common.article id="collection" title="Collection details">
+<@common.article id="occurrence" title="Occurrence details">
   <div class="left">
     <div class="col">
-      <h3>Basis of record</h3>
-      <p><@s.text name="enum.basisofrecord.${occ.basisOfRecord!'UNKNOWN'}"/></p>
 
       <#if occ.eventDate?? || partialGatheringDate?has_content >
-        <h3>Gathering date </h3>
+        <h3>Event date </h3>
         <#if occ.eventDate??>
             <p>${occ.eventDate?datetime?string.medium}</p>
         <#elseif partialGatheringDate?has_content >
@@ -325,14 +353,41 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
         <p>${occ.collectorName}</p>
       </#if>
 
+      <#if occ.individualCount??>
+          <h3>Individual Count</h3>
+          <p>${occ.individualCount?string}</p>
+      </#if>
+
     </div>
+
   </div>
 
-  <#if verbatim["Event"]??>
-  <#-- show additional event group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
-    <#if verbatim?has_content>
-      <@vList verbatimGroup=verbatim["Event"] title="Additional Event terms" exclude=["eventDate"] />
+  <div class="right">
+
+    <#if occ.lifeStage??>
+      <h3>Life Stage</h3>
+      <p>${occ.lifeStage?string?lower_case?cap_first}</p>
     </#if>
+
+    <#if occ.sex??>
+      <h3>Sex</h3>
+      <p>${occ.sex?string?lower_case?cap_first}</p>
+    </#if>
+
+    <#if occ.establishmentMeans??>
+      <h3>Establishment Means</h3>
+      <p>${occ.establishmentMeans?string?lower_case?cap_first}</p>
+    </#if>
+  </div>
+
+  <#if verbatim["Occurrence"]??>
+    <#-- show additional occurrence group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
+    <@vList verbatimGroup=verbatim["Occurrence"] title="Additional occurrence terms" exclude=["catalogNumber", "individualCount", "sex", "lifeStage", "establishmentMeans", "individualID", "occurrenceID", "associatedMedia" ] />
+  </#if>
+
+  <#if verbatim["Event"]??>
+    <#-- show additional event group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
+    <@vList verbatimGroup=verbatim["Event"] title="Additional Event terms" exclude=["eventDate", "year", "month", "day"] />
   </#if>
 
 </@common.article>
@@ -340,39 +395,157 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
 <#if verbatim["GeologicalContext"]??>
   <#-- show additional geological context group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
   <@common.article id="geology" title="Geological context">
-    <#if verbatim?has_content>
-      <@vList verbatimGroup=verbatim["GeologicalContext"] exclude=[] />
+    <@vList verbatimGroup=verbatim["GeologicalContext"] exclude=[] />
+  </@common.article>
+</#if>
+
+<#assign associatedMedia = action.retrieveTerm('associatedMedia')! />
+<#if associatedMedia?? || (occ.media?size > 0) >
+  <@common.article id="media" title="Media">
+
+  <#-- show list of images coming in from DwC associatedMedia. Todo: show actual images -->
+  <#if associatedMedia??>
+    <h3>Associated Media</h3>
+    <p>${associatedMedia}</p>
+  </#if>
+
+  <#-- show list of media. Todo: show actual images -->
+  <#if (occ.media?size > 0)>
+    <#list occ.media as m>
+      <h3>Image #${m_index+1}: ${m.title!"No title"}</h3>
+
+        <#if m.image?has_content>
+        <p><a href="${m.image}">${m.image}</a></p>
+        </#if>
+
+        <#if m.created?has_content>
+        <h3>Taken on</h3>
+        <p>${m.created?date?string.medium}</p>
+        </#if>
+
+        <#if m.creator?has_content>
+        <h3>Photographer</h3>
+        <p>${m.creator}</p>
+        </#if>
+
+        <#if m.publisher?has_content>
+        <h3>Publisher</h3>
+        <p>${m.publisher}</p>
+        </#if>
+
+        <#if m.description?has_content>
+        <h3>Description</h3>
+        <p>${m.description}</p>
+        </#if>
+
+        <#if m.license?has_content>
+        <h3>Copyright</h3>
+        <p>${m.license}</p>
+        </#if>
+
+      <a href="${m.image}" class="read_more">Read more</a>
+      </#list>
     </#if>
   </@common.article>
 </#if>
 
-<#if verbatim["ResourceRelationship"]??>
-<#-- show additional resource relationship group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
-<@common.article id="resourceRelationship" title="Resource Relationship">
-  <#if verbatim?has_content>
-        <@vList verbatimGroup=verbatim["ResourceRelationship"] exclude=[] />
-      </#if>
-</@common.article>
-</#if>
-
-<#if verbatim["MeasurementOrFact"]??>
-<#-- show additional measurement or fact group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
+<#if (occ.facts?size > 0) >
   <@common.article id="measurementOrFact" title="Measurement or fact">
-    <#if verbatim?has_content>
-      <@vList verbatimGroup=verbatim["MeasurementOrFact"] exclude=[] />
+
+  <#-- show list of FactOrMeasurement. -->
+    <#if (occ.facts?size > 0)>
+      <#list occ.facts as fom>
+      <h3>Fact or Measurement #${fom_index+1}: ${fom.type!"Type unknown"}</h3>
+
+        <#if fom.value?has_content>
+        <p>${fom.value}</p>
+        </#if>
+
+        <#if fom.unit?has_content>
+        <h3>Unit</h3>
+        <p>${fom.unit}</p>
+        </#if>
+
+        <#if fom.accuracy?has_content>
+        <h3>Accuracy</h3>
+        <p>${fom.accuracy}</p>
+        </#if>
+
+        <#if fom.method?has_content>
+        <h3>Method</h3>
+        <p>${fom.method}</p>
+        </#if>
+
+        <#if fom.determinedBy?has_content>
+        <h3>Determined By</h3>
+        <p>${fom.determinedBy}</p>
+        </#if>
+
+        <#if fom.determinedDate?has_content>
+        <h3>Date Determined</h3>
+        <p>${fom.determinedDate}</p>
+        </#if>
+
+        <#if fom.remarks?has_content>
+        <h3>Remarks</h3>
+        <p>${fom.remarks}</p>
+        </#if>
+
+      </#list>
     </#if>
   </@common.article>
 </#if>
 
-<#assign rts = action.retrieveTerm('rights')! />
-<#if rts??>
-  <@common.citationArticle rights=rts!"" dataset=dataset publisher=publisher />
-<#else>
-  <@common.citationArticle rights=dataset.rights!"" dataset=dataset publisher=publisher />
+<#if (occ.relations?size > 0) >
+  <@common.article id="resourceRelationship" title="Resource Relationship">
+
+  <#-- show list of FactOrMeasurement. -->
+    <#if (occ.relations?size > 0)>
+      <#list occ.relations as r>
+      <h3>Occurrence relation #${r_index+1}: ${r.id!"ID unknown"}</h3>
+
+        <#if r.occurrenceId?has_content>
+        <p>${r.occurrenceId}</p>
+        </#if>
+
+        <#if r.type?has_content>
+        <p>${r.type}</p>
+        </#if>
+
+        <#if r.relatedOccurrenceId?has_content>
+        <p>${r.relatedOccurrenceId}</p>
+        </#if>
+
+        <#if r.accordingTo?has_content>
+        <h3>According to</h3>
+        <p>${r.accordingTo}</p>
+        </#if>
+
+        <#if r.establishedDate?has_content>
+        <h3>Date established</h3>
+        <p>${r.establishedDate}</p>
+        </#if>
+
+        <#if r.remarks?has_content>
+        <h3>Remarks</h3>
+        <p>${r.remarks}</p>
+        </#if>
+
+      </#list>
+    </#if>
+  </@common.article>
 </#if>
 
+<#assign rights = action.retrieveTerm('rights')!"" />
+<#assign bibliographicCitation = action.retrieveTerm('bibliographicCitation')!"" />
+<#assign accessRights = action.retrieveTerm('accessRights')!"" />
+<#assign rightsHolder = action.retrieveTerm('rightsHolder')!"" />
+<@citationArticle bibliographicCitation=bibliographicCitation rights=rights accessRights=accessRights rightsHolder=rightsHolder dataset=dataset publisher=publisher />
 
 <@common.notice title="Further information">
+  <#if occ.modified??>
+  <p>Source record updated ${occ.modified?date?string.medium}</p>
+  </#if>
 <#if occ.lastCrawled??>
   <p>Last crawled ${occ.lastCrawled?date?string.medium}</p>
 </#if>

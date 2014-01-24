@@ -1,11 +1,16 @@
 package org.gbif.portal.action.occurrence.util;
 
+import org.gbif.api.model.common.Identifier;
+import org.gbif.api.model.common.Image;
+import org.gbif.api.model.occurrence.FactOrMeasurment;
 import org.gbif.api.model.occurrence.Occurrence;
+import org.gbif.api.model.occurrence.OccurrenceRelation;
 import org.gbif.api.vocabulary.BasisOfRecord;
 import org.gbif.api.vocabulary.Continent;
 import org.gbif.api.vocabulary.Country;
 import org.gbif.api.vocabulary.EndpointType;
 import org.gbif.api.vocabulary.EstablishmentMeans;
+import org.gbif.api.vocabulary.IdentifierType;
 import org.gbif.api.vocabulary.LifeStage;
 import org.gbif.api.vocabulary.OccurrenceValidationRule;
 import org.gbif.api.vocabulary.Sex;
@@ -67,13 +72,11 @@ public class MockOccurrenceFactory {
     populateVerbatimDwcGeologicalConceptTerms();
     populateVerbatimDwcIdentificationTerms();
     populateVerbatimDwcTaxonTerms();
-    populateVerbatimDwcResourceRelationshipTerms();
-    populateVerbatimDwcMeasurementOrFactTerms();
 
-    // TODO populate identifiers
-    // TODO populate media
-    // TODO populate facts
-    // TODO populate relations
+    populateIdentifierList();
+    populateMediaList();
+    populateFactOrMeasurementList();
+    populateOccurrenceRelationList();
   }
 
   /**
@@ -365,35 +368,62 @@ public class MockOccurrenceFactory {
   }
 
   /**
-   * Populate all resource relationship terms with mock values.
-   *
-   * @see org.gbif.dwc.terms.DwcTerm#GROUP_RESOURCERELATIONSHIP
+   * Populate a list of Identifier with mock values.
    */
-  private static void populateVerbatimDwcResourceRelationshipTerms() {
-    mockOccurrence.getFields().put(DwcTerm.resourceRelationshipID, "sub_to_related:1");
-    mockOccurrence.getFields().put(DwcTerm.resourceID, "sub:1");
-    mockOccurrence.getFields().put(DwcTerm.relatedResourceID, "related:1");
-    mockOccurrence.getFields().put(DwcTerm.relationshipOfResource, "valid synonym of");
-    mockOccurrence.getFields().put(DwcTerm.relationshipAccordingTo, "Julie Woodruff");
-    mockOccurrence.getFields().put(DwcTerm.relationshipEstablishedDate, "1963-03-08T14:07-0600");
-    mockOccurrence.getFields().put(DwcTerm.relationshipRemarks, "mother and offspring collected from the same nest");
+  private static void populateIdentifierList() {
+    Identifier id1 = new Identifier();
+    id1.setIdentifier("http://lsid.tdwg.org/summary/urn:catalog:MVZ:Mammals:88");
+    id1.setType(IdentifierType.LSID);
+    id1.setTitle("LSID for Record");
+    mockOccurrence.getIdentifiers().add(id1);
   }
 
   /**
-   * Populate all measurement or fact terms with mock values.
-   *
-   * @see org.gbif.dwc.terms.DwcTerm#GROUP_MEASUREMENTORFACT
+   * Populate a list of Image with mock values.
    */
-  private static void populateVerbatimDwcMeasurementOrFactTerms() {
-    mockOccurrence.getFields().put(DwcTerm.measurementID, "MeasurementOrFact:1");
-    mockOccurrence.getFields().put(DwcTerm.measurementType, "tail length");
-    mockOccurrence.getFields().put(DwcTerm.measurementValue, "45");
-    mockOccurrence.getFields().put(DwcTerm.measurementAccuracy, "0.01");
-    mockOccurrence.getFields().put(DwcTerm.measurementUnit, "cm");
-    mockOccurrence.getFields().put(DwcTerm.measurementDeterminedDate, "1963-03-08T14:07-0600");
-    mockOccurrence.getFields().put(DwcTerm.measurementDeterminedBy, "Julie Woodruff");
-    mockOccurrence.getFields().put(DwcTerm.measurementMethod, "minimum convex polygon around burrow entrances");
-    mockOccurrence.getFields().put(DwcTerm.measurementRemarks, "tip of tail missing");
+  private static void populateMediaList() {
+    Image im1 = new Image();
+    im1.setCreated(new Date());
+    im1.setCreator("David Remsen");
+    im1.setDescription("Female Tachycineta albiventer photographed in the Amazon, Brazil, in November 2010");
+    im1.setImage("http://farm6.static.flickr.com/5127/5242866958_98afd8cbce_o.jpg");
+    im1.setLicense("http://creativecommons.org/licenses/by-nc-sa/2.0/deed.en");
+    im1.setLink("http://en.wikipedia.org/wiki/White-winged_Swallow");
+    im1.setPublisher("Encyclopedia of Life");
+    im1.setTitle("Andorinha-do-rio (Tachycineta albiventer)");
+    mockOccurrence.getMedia().add(im1);
+  }
+
+  /**
+   * Populate list of FactOrMeasurement with mock values.
+   */
+  private static void populateFactOrMeasurementList() {
+    FactOrMeasurment fom1 = new FactOrMeasurment();
+    fom1.setId("MeasurementOrFact:1");
+    fom1.setType("tail length");
+    fom1.setValue("45");
+    fom1.setAccuracy("0.01");
+    fom1.setUnit("cm");
+    fom1.setDeterminedDate("1963-03-08T14:07-0600");
+    fom1.setDeterminedBy("Julie Woodruff");
+    fom1.setMethod("minimum convex polygon around burrow entrances");
+    fom1.setRemarks("tip of tail missing");
+    mockOccurrence.getFacts().add(fom1);
+  }
+
+  /**
+   * Populate a list of OccurrenceRelation with mock values.
+   */
+  private static void populateOccurrenceRelationList() {
+    OccurrenceRelation or1 = new OccurrenceRelation();
+    or1.setId("sub_to_related:1");
+    or1.setOccurrenceId(100);
+    or1.setRelatedOccurrenceId(900);
+    or1.setType("valid synonym of");
+    or1.setAccordingTo("Julie Woodruff");
+    or1.setEstablishedDate("1963-03-08T14:07-0600");
+    or1.setRemarks("mother and offspring collected from the same nest");
+    mockOccurrence.getRelations().add(or1);
   }
 
   /**
