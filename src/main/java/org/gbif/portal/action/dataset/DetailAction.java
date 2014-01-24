@@ -231,7 +231,7 @@ public class DetailAction extends DatasetBaseAction {
         Matcher m = COUNTRY_REG_EX.matcher(gc.getDescription());
         StringBuffer sb = new StringBuffer();
         while (m.find()) {
-          Country c = COUNTRY_MAP.get(m.group(1));
+          Country c = COUNTRY_MAP.get(m.group(0).toLowerCase());
           String replacement = "<a href='" + countryUrl + c.getIso2LetterCode() + "'>" + m.group(1) + "</a>";
           m.appendReplacement(sb, replacement);
         }

@@ -34,8 +34,7 @@ public class DetailAction extends OccurrenceBaseAction {
 
   @Override
   public String execute() {
-    loadDetail();
-    // load verbatim terms (organized by group)
+    // load occurrence, including all verbatim terms (organized by group)
     verbatim();
     // load publisher
     if (dataset.getOwningOrganizationKey() != null) {
@@ -66,6 +65,9 @@ public class DetailAction extends OccurrenceBaseAction {
 
   public String verbatim() {
     LOG.debug("Loading raw details for occurrence id [{}]", id);
+
+    // load occurrence
+    loadDetail();
 
     // prepare verbatim map
     verbatim = Maps.newLinkedHashMap();
