@@ -31,7 +31,7 @@
     <#list verbatim[group]?keys as term>
       <div class="row <#if term_index==0>first</#if> <#if term_index % 2 == 0>odd<#else>even</#if> <#if !term_has_next>last</#if>">
         <h4>${term}</h4>
-        <div class="value">${verbatim[group].get(term)}</div>
+        <div class="value">${verbatim[group].get(term)!"Value is null"}</div>
       </div>
     </#list>
   </div>
