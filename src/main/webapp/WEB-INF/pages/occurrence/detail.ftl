@@ -53,10 +53,10 @@
           </div>
           <div class="value">${verbatimGroup.get(term)}</div>
           <#if shown%columns==columns-1 || !term_has_next >
-          <#-- end of row -->
-        </div>
-      </#if>
-    </div>
+            <#-- end of row -->
+            </div>
+          </#if>
+          </div>
     <#assign shown = shown + 1/>
     </#if>
   </#list>
@@ -126,25 +126,51 @@
       <iframe id="mapframe" name="mapframe" src="${cfg.tileServerBaseUrl!}/point.html?&style=grey-blue&point=${occ.latitude?c},${occ.longitude?c}&lat=${occ.latitude?c}&lng=${occ.longitude?c}&zoom=8" height="100%" width="100%" frameborder="0"/></iframe>
     </div>
     <div class="right">
+
+      <#if occ.continent??>
+        <h3>Continent</h3>
+        <p><@s.text name="enum.continent.${occ.continent!'UNKNOWN'}"/></p>
+      </#if>
+
+      <#if occ.country??>
+        <h3>Country</h3>
+        <p><a href="<@s.url value='/country/${occ.country.iso2LetterCode}'/>">${occ.country.title}</a></p>
+      </#if>
+
+      <#if occ.stateProvince??>
+        <h3>State/Province</h3>
+        <p>${occ.stateProvince}</p>
+      </#if>
+
+      <#if occ.county??>
+        <h3>County</h3>
+        <p>${occ.county}</p>
+      </#if>
+
+      <#if occ.waterBody??>
+        <h3>Water Body</h3>
+        <p>${occ.waterBody}</p>
+      </#if>
+
       <h3>Locality</h3>
         <p class="no_bottom">${locality!}<#if occ.country??>, <a href="<@s.url value='/country/${occ.country.iso2LetterCode}'/>">${occ.country.title}</a></#if></p>
         <p class="light_note">${occ.longitude}, ${occ.latitude}</p>
 
-    <#if occ.coordinateAccuracy??>
-      <h3>Coordinate Accuracy</h3>
-      <p>${occ.coordinateAccuracy?string}</p>
-    </#if>
+      <#if occ.coordinateAccuracy??>
+        <h3>Coordinate Accuracy</h3>
+        <p>${occ.coordinateAccuracy?string}</p>
+      </#if>
 
-    <#if occ.geodeticDatum??>
-      <h3>Geodetic Datum</h3>
-      <p>${occ.geodeticDatum}</p>
-    </#if>
+      <#if occ.geodeticDatum??>
+        <h3>Geodetic Datum</h3>
+        <p>${occ.geodeticDatum}</p>
+      </#if>
 
   <#else>
     <div class="fullwidth">
     <#if occ.continent??>
         <h3>Continent</h3>
-        <p>${occ.continent}</p>
+        <p><@s.text name="enum.continent.${occ.continent!'UNKNOWN'}"/></p>
     </#if>
 
     <#if occ.country??>
@@ -160,6 +186,11 @@
     <#if occ.county??>
         <h3>County</h3>
         <p>${occ.county}</p>
+    </#if>
+
+    <#if occ.waterBody??>
+        <h3>Water Body</h3>
+        <p>${occ.waterBody}</p>
     </#if>
 
     <#if locality?has_content>
@@ -189,11 +220,12 @@ are expected to be interpreted -->
     "maximumElevationInMeters", "minimumElevationInMeters", "locality", "decimalLatitude", "decimalLongitude",
     "verbatimLatitude", "verbatimLongitude", "verbatimDepth", "verbatimElevation", "verbatimLocality",
     "verbatimCoordinates", "verbatimCoordinateSystem", "coordinatePrecision", "coordinateUncertaintyInMeters",
-    "geodeticDatum"] />
+    "geodeticDatum", "waterBody"] />
       <#else>
         <@vList verbatimGroup=verbatim["Location"] title="Additional location terms" exclude=["continent",
     "stateProvince", "countryCode", "country", "county", "maximumDepthInMeters", "minimumDepthInMeters",
-    "maximumElevationInMeters", "minimumElevationInMeters", "locality", "verbatimElevation", "verbatimLocality"] />
+    "maximumElevationInMeters", "minimumElevationInMeters", "locality", "verbatimElevation", "verbatimLocality",
+    "waterBody"] />
       </#if>
 </#if>
 
@@ -225,6 +257,18 @@ are expected to be interpreted -->
 
       <h3>Basis of record</h3>
       <p><@s.text name="enum.basisofrecord.${occ.basisOfRecord!'UNKNOWN'}"/></p>
+
+      <#assign disposition = action.retrieveTerm('disposition')! />
+      <#if disposition?has_content>
+          <h3>Disposition</h3>
+          <p>${disposition}</p>
+      </#if>
+
+      <#assign preparations = action.retrieveTerm('preparations')! />
+      <#if preparations?has_content>
+          <h3>Preparations</h3>
+          <p>${preparations}</p>
+      </#if>
 
     </div>
 
@@ -382,7 +426,7 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
 
   <#if verbatim["Occurrence"]??>
     <#-- show additional occurrence group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
-    <@vList verbatimGroup=verbatim["Occurrence"] title="Additional occurrence terms" exclude=["catalogNumber", "individualCount", "sex", "lifeStage", "establishmentMeans", "individualID", "occurrenceID", "associatedMedia" ] />
+    <@vList verbatimGroup=verbatim["Occurrence"] title="Additional occurrence terms" exclude=["catalogNumber", "individualCount", "sex", "lifeStage", "establishmentMeans", "individualID", "occurrenceID", "associatedMedia", "disposition" ] />
   </#if>
 
   <#if verbatim["Event"]??>
