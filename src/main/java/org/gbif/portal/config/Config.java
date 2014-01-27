@@ -15,6 +15,7 @@ import static org.gbif.ws.paths.OccurrencePaths.COLLECTION_CODE_PATH;
 import static org.gbif.ws.paths.OccurrencePaths.COLLECTOR_NAME_PATH;
 import static org.gbif.ws.paths.OccurrencePaths.INSTITUTION_CODE_PATH;
 import static org.gbif.ws.paths.OccurrencePaths.OCC_SEARCH_PATH;
+import static org.gbif.ws.paths.OccurrencePaths.RECORD_NUMBER_PATH;
 
 /**
  * Simple configuration bean to pass the guice binded properties on to the rendering layer.
@@ -46,6 +47,7 @@ public class Config {
   private String wsOccPublic;
   private String wsOccCatalogNumberSearch;
   private String wsOccCollectorNameSearch;
+  private String wsOccRecordNumberSearch;
   private String wsOccSearch;
   private String wsReg;
   private String wsRegSearch;
@@ -91,6 +93,7 @@ public class Config {
       cfg.wsOccCollectorNameSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + COLLECTOR_NAME_PATH;
       cfg.wsOccCollectionCodeSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + COLLECTION_CODE_PATH;
       cfg.wsOccInstitutionCodeSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + INSTITUTION_CODE_PATH;
+      cfg.wsOccRecordNumberSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + RECORD_NUMBER_PATH;
       cfg.tileServerBaseUrl = getPropertyUrl(properties, "tile-server.url", false);
       cfg.wsImageCache = getPropertyUrl(properties, "image-cache.url", false);
       cfg.includeContext = Boolean.parseBoolean(properties.getProperty("struts.url.includeContext"));
@@ -189,6 +192,12 @@ public class Config {
     return wsOccCatalogNumberSearch;
   }
 
+
+  public String getWsOccRecordNumberSearch() {
+    return wsOccRecordNumberSearch;
+  }
+
+
   /**
    * @return the wsOccCollectionCodeSearch
    */
@@ -202,7 +211,7 @@ public class Config {
 
   /**
    * Get the occurrence download web service url that uses the public API used in links.
-   *
+   * 
    * @return the occurrence download web service url that uses the public API
    */
   public String getWsOccPublic() {

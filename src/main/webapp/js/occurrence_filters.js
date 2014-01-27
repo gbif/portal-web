@@ -1660,6 +1660,9 @@ var OccurrenceWidgetManager = (function ($,_) {
             } else if (filterName == "COLLECTOR_NAME") {
               newWidget = new OccurrenceWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindCollectorNameAutosuggest});            
+            } else if (filterName == "RECORD_NUMBER") {
+              newWidget = new OccurrenceWidget();
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindRecordNumberAutosuggest});            
             } else if (filterName == "CATALOG_NUMBER") {
               newWidget = new OccurrenceWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindCatalogNumberAutosuggest});            
@@ -1821,6 +1824,15 @@ var OccurrenceWidgetManager = (function ($,_) {
       bindCollectorNameAutosuggest : function(){        
         $(':input.collector_name_autosuggest').each( function(idx,el){
           $(el).termsAutosuggest(cfg.wsOccCollectorNameSearch, "#content",SUGGEST_LIMIT,buildOnSelectHandler('COLLECTOR_NAME',el));
+        });        
+      },
+      
+      /**
+       * Binds the record number auto-suggest widget used by the RECORD_NUMBER widget.
+       */
+      bindRecordNumberAutosuggest : function(){        
+        $(':input.record_number_autosuggest').each( function(idx,el){
+          $(el).termsAutosuggest(cfg.wsOccRecordNumberSearch, "#content",SUGGEST_LIMIT,buildOnSelectHandler('RECORD_NUMBER',el));
         });        
       },
 

@@ -125,6 +125,14 @@ public class FiltersActionHelper {
     }
   };
 
+  private final Function<String, List<String>> suggestRecordNumbers = new Function<String, List<String>>() {
+
+    @Override
+    public List<String> apply(String input) {
+      return occurrenceSearchService.suggestRecordNumbers(input, SUGGESTIONS_LIMIT);
+    }
+  };
+
   private final Function<String, List<String>> suggestCollectionCodes = new Function<String, List<String>>() {
 
     @Override
@@ -325,8 +333,7 @@ public class FiltersActionHelper {
 
   /**
    * Searches for suggestion to all the CATALOG_NUMBER parameter values, if the input value has an exact match against
-   * any
-   * suggestion, no suggestions are returned for that parameter.
+   * any suggestion, no suggestions are returned for that parameter.
    */
   public SearchSuggestions<String> processCatalogNumberSuggestions(HttpServletRequest request) {
     return processStringSuggestions(request, OccurrenceSearchParameter.CATALOG_NUMBER, suggestCatalogNumbers);
@@ -334,8 +341,7 @@ public class FiltersActionHelper {
 
   /**
    * Searches for suggestion to all the COLLECTION_CODE parameter values, if the input value has an exact match against
-   * any
-   * suggestion, no suggestions are returned for that parameter.
+   * any suggestion, no suggestions are returned for that parameter.
    */
   public SearchSuggestions<String> processCollectionCodeSuggestions(HttpServletRequest request) {
     return processStringSuggestions(request, OccurrenceSearchParameter.COLLECTION_CODE, suggestCollectionCodes);
@@ -344,11 +350,18 @@ public class FiltersActionHelper {
 
   /**
    * Searches for suggestion to all the COLLECTOR_NAME parameter values, if the input value has an exact match against
-   * any
-   * suggestion, no suggestions are returned for that parameter.
+   * any suggestion, no suggestions are returned for that parameter.
    */
   public SearchSuggestions<String> processCollectorSuggestions(HttpServletRequest request) {
     return processStringSuggestions(request, OccurrenceSearchParameter.COLLECTOR_NAME, suggestCollectorNames);
+  }
+
+  /**
+   * Searches for suggestion to all the RECORD_NUMBER parameter values, if the input value has an exact match against
+   * any suggestion, no suggestions are returned for that parameter.
+   */
+  public SearchSuggestions<String> processRecordNumbersSuggestions(HttpServletRequest request) {
+    return processStringSuggestions(request, OccurrenceSearchParameter.RECORD_NUMBER, suggestRecordNumbers);
   }
 
   /**

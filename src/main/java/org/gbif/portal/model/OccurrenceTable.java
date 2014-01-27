@@ -27,7 +27,8 @@ public class OccurrenceTable {
    * Enum that represents the visible information of the summary column in the occurrence page.
    */
   public static enum OccurrenceSummaryField {
-    OCCURRENCE_KEY, CATALOG_NUMBER, COLLECTION_CODE, COLLECTOR_NAME, INSTITUTION, SCIENTIFIC_NAME, DATASET, MODIFIED;
+    OCCURRENCE_KEY, CATALOG_NUMBER, COLLECTION_CODE, COLLECTOR_NAME, INSTITUTION, SCIENTIFIC_NAME, DATASET, MODIFIED,
+    RECORD_NUMBER;
   }
 
   private static final OccurrenceSearchParameter[] OCC_LOCATION_PARAMS = new OccurrenceSearchParameter[] {
@@ -40,9 +41,8 @@ public class OccurrenceTable {
 
   // Default list of summary fields
   private static EnumSet<OccurrenceSummaryField> defaulSummaryFields = EnumSet.of(
-    OccurrenceSummaryField.OCCURRENCE_KEY,
-    OccurrenceSummaryField.CATALOG_NUMBER, OccurrenceSummaryField.SCIENTIFIC_NAME,
-    OccurrenceSummaryField.DATASET);
+    OccurrenceSummaryField.OCCURRENCE_KEY, OccurrenceSummaryField.CATALOG_NUMBER,
+    OccurrenceSummaryField.SCIENTIFIC_NAME, OccurrenceSummaryField.DATASET);
 
 
   // Columns HTTP parameter
@@ -210,6 +210,9 @@ public class OccurrenceTable {
     }
     if (isParameterPresent(searchRequest, OccurrenceSearchParameter.MODIFIED)) {
       fields.add(OccurrenceSummaryField.MODIFIED);
+    }
+    if (isParameterPresent(searchRequest, OccurrenceSearchParameter.RECORD_NUMBER)) {
+      fields.add(OccurrenceSummaryField.RECORD_NUMBER);
     }
     return fields;
   }
