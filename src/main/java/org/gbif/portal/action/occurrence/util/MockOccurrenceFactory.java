@@ -12,7 +12,7 @@ import org.gbif.api.vocabulary.EndpointType;
 import org.gbif.api.vocabulary.EstablishmentMeans;
 import org.gbif.api.vocabulary.IdentifierType;
 import org.gbif.api.vocabulary.LifeStage;
-import org.gbif.api.vocabulary.OccurrenceValidationRule;
+import org.gbif.api.vocabulary.OccurrenceIssue;
 import org.gbif.api.vocabulary.Sex;
 import org.gbif.api.vocabulary.TypeStatus;
 import org.gbif.dwc.terms.DcTerm;
@@ -133,12 +133,12 @@ public class MockOccurrenceFactory {
    * Populate a map of all Occurrence Validations.
    */
   private static void populateOccurrenceValidations() {
-    mockOccurrence.getValidations().put(OccurrenceValidationRule.COORDINATES_OUT_OF_RANGE, true);
-    mockOccurrence.getValidations().put(OccurrenceValidationRule.COUNTRY_COORDINATE_MISMATCH, true);
-    mockOccurrence.getValidations().put(OccurrenceValidationRule.PRESUMED_NEGATED_LATITUDE, true);
-    mockOccurrence.getValidations().put(OccurrenceValidationRule.PRESUMED_NEGATED_LONGITUDE, true);
-    mockOccurrence.getValidations().put(OccurrenceValidationRule.PRESUMED_SWAPPED_COORDINATE, true);
-    mockOccurrence.getValidations().put(OccurrenceValidationRule.ZERO_COORDINATE, true);
+    mockOccurrence.getIssues().add(OccurrenceIssue.COORDINATES_OUT_OF_RANGE);
+    mockOccurrence.getIssues().add(OccurrenceIssue.COUNTRY_COORDINATE_MISMATCH);
+    mockOccurrence.getIssues().add(OccurrenceIssue.PRESUMED_NEGATED_LATITUDE);
+    mockOccurrence.getIssues().add(OccurrenceIssue.PRESUMED_NEGATED_LONGITUDE);
+    mockOccurrence.getIssues().add(OccurrenceIssue.PRESUMED_SWAPPED_COORDINATE);
+    mockOccurrence.getIssues().add(OccurrenceIssue.ZERO_COORDINATE);
   }
 
   /**

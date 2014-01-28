@@ -13,6 +13,6 @@ public class MockOccurrenceFactoryTest {
     Occurrence mock = MockOccurrenceFactory.getMockOccurrence();
     assertEquals(String.valueOf(-1000000000), mock.getKey().toString());
     assertEquals(159, mock.getFields().size());
-    assertEquals(6, mock.getValidations().size());
+    assertEquals(6, mock.getIssues().size());
   }
 }
