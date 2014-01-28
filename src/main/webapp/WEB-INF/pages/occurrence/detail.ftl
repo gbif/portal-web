@@ -25,46 +25,6 @@
   <#assign titleRight=""/>
 </#if>
 
-<#-- Creates a column list of terms, defaults to 2 columns -->
-<#macro vList verbatimGroup exclude title="" columns=2>
-
-  <#-- Are there terms that are not in exclude list? -->
-  <#assign show = false/>
-  <#list verbatimGroup?keys as term>
-    <#if !exclude?seq_contains(term) && verbatimGroup.get(term)??>
-      <#assign show = true/>
-    </#if>
-  </#list>
-
-  <#if show>
-  <div class="fullwidth">
-
-    <#assign shown = 0/>
-    <#list verbatimGroup?keys as term>
-      <#-- do not show terms as listed in the exclude array -->
-      <#if !exclude?seq_contains(term) && verbatimGroup.get(term)??>
-
-        <#if shown%columns==0>
-          <div class="row col${columns}">
-        </#if>
-        <div class="contact">
-          <div class="contactType">
-            ${term}
-          </div>
-          <div class="value">${verbatimGroup.get(term)}</div>
-          <#if shown%columns==columns-1 || !term_has_next >
-            <#-- end of row -->
-            </div>
-          </#if>
-          </div>
-    <#assign shown = shown + 1/>
-    </#if>
-  </#list>
-  </div>
-  </#if>
-
-</#macro>
-
 <#macro citationArticle bibliographicCitation dataset publisher rights accessRights rightsHolder prefix="">
   <@common.article id="legal" title="Citation and licensing" class="mono_line">
   <div class="fullwidth">
@@ -112,6 +72,10 @@
 </#macro>
 
 <#assign locality = action.retrieveTerm('locality')! />
+<#assign county = action.retrieveTerm('county')! />
+<#assign municipality = action.retrieveTerm('municipality')! />
+<#assign island = action.retrieveTerm('island')! />
+<#assign islandGroup = action.retrieveTerm('islandGroup')! />
 
 <#-- TOTO: needed to work with mock occurrence page, and since there are still css problems -->
 <#if id == -1000000000>
@@ -125,7 +89,13 @@
     <div id="map" class="map">
       <iframe id="mapframe" name="mapframe" src="${cfg.tileServerBaseUrl!}/point.html?&style=grey-blue&point=${occ.latitude?c},${occ.longitude?c}&lat=${occ.latitude?c}&lng=${occ.longitude?c}&zoom=8" height="100%" width="100%" frameborder="0"/></iframe>
     </div>
+
     <div class="right">
+    <div class="scrollable330">
+
+      <h3>Locality</h3>
+      <p class="no_bottom">${locality!}<#if occ.country??>, <a href="<@s.url value='/country/${occ.country.iso2LetterCode}'/>">${occ.country.title}</a></#if></p>
+      <p class="light_note">${occ.longitude}, ${occ.latitude}</p>
 
       <#if occ.continent??>
         <h3>Continent</h3>
@@ -142,9 +112,14 @@
         <p>${occ.stateProvince}</p>
       </#if>
 
-      <#if occ.county??>
+      <#if county??>
         <h3>County</h3>
-        <p>${occ.county}</p>
+        <p>${county}</p>
+      </#if>
+
+      <#if municipality??>
+        <h3>Municipality</h3>
+        <p>${municipality}</p>
       </#if>
 
       <#if occ.waterBody??>
@@ -152,9 +127,15 @@
         <p>${occ.waterBody}</p>
       </#if>
 
-      <h3>Locality</h3>
-        <p class="no_bottom">${locality!}<#if occ.country??>, <a href="<@s.url value='/country/${occ.country.iso2LetterCode}'/>">${occ.country.title}</a></#if></p>
-        <p class="light_note">${occ.longitude}, ${occ.latitude}</p>
+      <#if island??>
+        <h3>Island</h3>
+        <p>${island}</p>
+      </#if>
+
+      <#if islandGroup??>
+        <h3>Island Group</h3>
+        <p>${islandGroup}</p>
+      </#if>
 
       <#if occ.coordinateAccuracy??>
         <h3>Coordinate Accuracy</h3>
@@ -166,8 +147,26 @@
         <p>${occ.geodeticDatum}</p>
       </#if>
 
+    <#if occ.altitude??>
+        <h3>Altitude</h3>
+        <p>${occ.altitude}m<#if occ.altitudeAccuracy??> ± ${occ.altitudeAccuracy?string}</#if></p>
+    </#if>
+
+    <#if occ.depth??>
+        <h3>Depth</h3>
+        <p>${occ.depth}m<#if occ.depthAccuracy??> ± ${occ.depthAccuracy?string}</#if></p>
+    </#if>
+
+    </div>
+
   <#else>
     <div class="fullwidth">
+
+    <#if locality?has_content>
+        <h3>Locality</h3>
+        <p>${locality}</p>
+    </#if>
+
     <#if occ.continent??>
         <h3>Continent</h3>
         <p><@s.text name="enum.continent.${occ.continent!'UNKNOWN'}"/></p>
@@ -183,9 +182,14 @@
         <p>${occ.stateProvince}</p>
     </#if>
 
-    <#if occ.county??>
+    <#if county??>
         <h3>County</h3>
-        <p>${occ.county}</p>
+        <p>${county}</p>
+    </#if>
+
+    <#if municipality??>
+        <h3>Municipality</h3>
+        <p>${municipality}</p>
     </#if>
 
     <#if occ.waterBody??>
@@ -193,41 +197,112 @@
         <p>${occ.waterBody}</p>
     </#if>
 
-    <#if locality?has_content>
-        <h3>Locality</h3>
-        <p>${locality}</p>
+    <#if island??>
+        <h3>Island</h3>
+        <p>${island}</p>
     </#if>
-  </#if>
+
+    <#if islandGroup??>
+        <h3>Island Group</h3>
+        <p>${islandGroup}</p>
+    </#if>
 
     <#if occ.altitude??>
-      <h3>Altitude</h3>
-      <p>${occ.altitude}m<#if occ.altitudeAccuracy??> ± ${occ.altitudeAccuracy?string}</#if></p>
+        <h3>Altitude</h3>
+        <p>${occ.altitude}m<#if occ.altitudeAccuracy??> ± ${occ.altitudeAccuracy?string}</#if></p>
     </#if>
 
     <#if occ.depth??>
-      <h3>Depth</h3>
-      <p>${occ.depth}m<#if occ.depthAccuracy??> ± ${occ.depthAccuracy?string}</#if></p>
+        <h3>Depth</h3>
+        <p>${occ.depth}m<#if occ.depthAccuracy??> ± ${occ.depthAccuracy?string}</#if></p>
     </#if>
 
-   </div>
+  </#if>
 
-<#-- show different set of verbatim terms, depending on whether a map is shown or not. Never show verbatim terms that
-are expected to be interpreted -->
-<#if verbatim["Location"]??>
-      <#if showMap>
-        <@vList verbatimGroup=verbatim["Location"] title="Additional location terms" exclude=["continent",
-    "stateProvince", "countryCode", "country", "county", "maximumDepthInMeters", "minimumDepthInMeters",
-    "maximumElevationInMeters", "minimumElevationInMeters", "locality", "decimalLatitude", "decimalLongitude",
-    "verbatimLatitude", "verbatimLongitude", "verbatimDepth", "verbatimElevation", "verbatimLocality",
-    "verbatimCoordinates", "verbatimCoordinateSystem", "coordinatePrecision", "coordinateUncertaintyInMeters",
-    "geodeticDatum", "waterBody"] />
-      <#else>
-        <@vList verbatimGroup=verbatim["Location"] title="Additional location terms" exclude=["continent",
-    "stateProvince", "countryCode", "country", "county", "maximumDepthInMeters", "minimumDepthInMeters",
-    "maximumElevationInMeters", "minimumElevationInMeters", "locality", "verbatimElevation", "verbatimLocality",
-    "waterBody"] />
+   </div>
+<div class="fullwidth fullwidth_under_map">
+
+    <div class="left">
+      <#assign footprintSRS = action.retrieveTerm('footprintSRS')! />
+      <#if footprintSRS?has_content>
+          <h3>Footprint SRS</h3>
+          <p>${footprintSRS}</p>
       </#if>
-</#if>
+      <#assign footprintWKT = action.retrieveTerm('footprintWKT')! />
+      <#if footprintWKT?has_content>
+          <h3>Footprint WKT</h3>
+          <p>${footprintWKT}</p>
+      </#if>
+      <#assign footprintSpatialFit = action.retrieveTerm('footprintSpatialFit')! />
+      <#if footprintSpatialFit?has_content>
+          <h3>Footprint Spatial Fit</h3>
+          <p>${footprintSpatialFit}</p>
+      </#if>
+      <#assign georeferenceProtocol = action.retrieveTerm('georeferenceProtocol')! />
+      <#if georeferenceProtocol?has_content>
+          <h3>Georeference Protocol</h3>
+          <p>${georeferenceProtocol}</p>
+      </#if>
+      <#assign georeferenceSources = action.retrieveTerm('georeferenceSources')! />
+      <#if georeferenceSources?has_content>
+          <h3>Georeference Sources</h3>
+          <p>${georeferenceSources}</p>
+      </#if>
+      <#assign georeferenceVerificationStatus = action.retrieveTerm('georeferenceVerificationStatus')! />
+      <#if georeferenceVerificationStatus?has_content>
+          <h3>Georeference Verification Status</h3>
+          <p>${georeferenceVerificationStatus}</p>
+      </#if>
+      <#assign georeferencedBy = action.retrieveTerm('georeferencedBy')! />
+      <#if georeferencedBy?has_content>
+          <h3>Georeferenced By</h3>
+          <p>${georeferencedBy}</p>
+      </#if>
+      <#assign locationAccordingTo = action.retrieveTerm('locationAccordingTo')! />
+      <#if locationAccordingTo?has_content>
+          <h3>Location According To</h3>
+          <p>${locationAccordingTo}</p>
+      </#if>
+      <#assign locationRemarks = action.retrieveTerm('locationRemarks')! />
+      <#if locationRemarks?has_content>
+          <h3>Location Remarks</h3>
+          <p>${locationRemarks}</p>
+      </#if>
+      <#assign maximumDistanceAboveSurfaceInMeters = action.retrieveTerm('maximumDistanceAboveSurfaceInMeters')! />
+      <#if maximumDistanceAboveSurfaceInMeters?has_content>
+          <h3>Maximum Distance AboveSurface In Meters</h3>
+          <p>${maximumDistanceAboveSurfaceInMeters}</p>
+      </#if>
+      <#assign minimumDistanceAboveSurfaceInMeters = action.retrieveTerm('minimumDistanceAboveSurfaceInMeters')! />
+      <#if minimumDistanceAboveSurfaceInMeters?has_content>
+          <h3>Minimum Distance AboveSurface In Meters</h3>
+          <p>${minimumDistanceAboveSurfaceInMeters}</p>
+      </#if>
+      <#assign pointRadiusSpatialFit = action.retrieveTerm('pointRadiusSpatialFit')! />
+      <#if pointRadiusSpatialFit?has_content>
+          <h3>Point Radius Spatial Fit</h3>
+          <p>${pointRadiusSpatialFit}</p>
+      </#if>
+    </div>
+
+    <div class="right right_under_map">
+      <#assign georeferencedDate = action.retrieveTerm('georeferencedDate')! />
+      <#if georeferencedDate?has_content>
+          <h3>Georeferenced Date</h3>
+          <p>${georeferencedDate}</p>
+      </#if>
+      <#assign higherGeographyID = action.retrieveTerm('higherGeographyID')! />
+      <#if higherGeographyID?has_content>
+          <h3>Higher Geography ID</h3>
+          <p>${higherGeographyID}</p>
+      </#if>
+      <#assign locationID = action.retrieveTerm('locationID')! />
+      <#if locationID?has_content>
+          <h3>Location ID</h3>
+          <p>${locationID}</p>
+      </#if>
+    </div>
+</div>
 
 </@common.article>
 
@@ -238,25 +313,65 @@ are expected to be interpreted -->
         <a href="<@s.url value='/publisher/${publisher.key}'/>" title="">${publisher.title}</a>
       </p>
 
+      <#-- institution code and institution ID on same line -->
+      <#assign institutionCode = action.retrieveTerm('institutionCode')! />
+      <#assign institutionID = action.retrieveTerm('institutionID')! />
+      <#if institutionCode?has_content && institutionID?has_content>
+          <h3>Institution code / ID</h3>
+          <p>${institutionCode} / ${institutionID}</p>
+      <#elseif institutionCode?has_content>
+          <h3>Institution code</h3>
+          <p>${institutionCode}</p>
+      <#elseif institutionID?has_content>
+          <h3>Institution ID</h3>
+          <p>${institutionID}</p>
+      </#if>
+
       <h3>Dataset</h3>
       <p>
         <a href="<@s.url value='/dataset/${dataset.key}'/>" title="">${dataset.title}</a>
       </p>
 
-      <#assign institutionCode = action.retrieveTerm('institutionCode')! />
-      <#if institutionCode?has_content>
-        <h3>Institution code</h3>
-        <p>${institutionCode}</p>
+      <#-- dataset and dataset ID on same line -->
+      <#assign datasetID = action.retrieveTerm('datasetID')! />
+      <#assign datasetName = action.retrieveTerm('datasetName')! />
+      <#if datasetName?has_content && datasetID?has_content>
+          <h3>Dataset Name / ID</h3>
+          <p>${datasetName} / ${datasetID}</p>
+      <#elseif datasetName?has_content>
+          <h3>Dataset Name</h3>
+          <p>${datasetName}</a></p>
+      <#elseif datasetID?has_content>
+          <h3>Dataset ID</h3>
+          <p>${datasetID}</p>
       </#if>
 
+      <#-- collection code and institution ID on same line -->
       <#assign collectionCode = action.retrieveTerm('collectionCode')! />
-      <#if collectionCode?has_content>
-          <h3>Collection code</h3>
-          <p>${collectionCode}</p>
+      <#assign collectionID = action.retrieveTerm('collectionID')! />
+      <#if collectionCode?has_content && collectionID?has_content>
+        <h3>Collection code / ID</h3>
+        <p>${collectionCode} / ${collectionID}</p>
+      <#elseif collectionCode?has_content>
+        <h3>Collection code</h3>
+        <p>${collectionCode}</p>
+      <#elseif collectionID?has_content>
+          <h3>Collection ID</h3>
+          <p>${collectionID}</p>
       </#if>
 
-      <h3>Basis of record</h3>
-      <p><@s.text name="enum.basisofrecord.${occ.basisOfRecord!'UNKNOWN'}"/></p>
+    <#-- basis of record and type on same line -->
+      <#assign type =  action.retrieveTerm('type')! />
+      <#if occ.basisOfRecord?has_content && type?has_content>
+          <h3>Basis of record / type</h3>
+          <p><@s.text name="enum.basisofrecord.${occ.basisOfRecord!'UNKNOWN'}"/> / ${type}</p>
+      <#elseif occ.basisOfRecord?has_content>
+          <h3>Basis of record</h3>
+          <p><@s.text name="enum.basisofrecord.${occ.basisOfRecord!'UNKNOWN'}"/></p>
+      <#elseif type?has_content>
+          <h3>Type</h3>
+          <p>${type}</p>
+      </#if>
 
       <#assign disposition = action.retrieveTerm('disposition')! />
       <#if disposition?has_content>
@@ -268,6 +383,30 @@ are expected to be interpreted -->
       <#if preparations?has_content>
           <h3>Preparations</h3>
           <p>${preparations}</p>
+      </#if>
+
+      <#assign dataGeneralizations = action.retrieveTerm('dataGeneralizations')! />
+      <#if dataGeneralizations?has_content>
+          <h3>Data Generalizations</h3>
+          <p>${dataGeneralizations}</p>
+      </#if>
+
+      <#assign informationWithheld = action.retrieveTerm('informationWithheld')! />
+      <#if informationWithheld?has_content>
+          <h3>Information Withheld</h3>
+          <p>${informationWithheld}</p>
+      </#if>
+
+      <#assign dynamicProperties = action.retrieveTerm('dynamicProperties')! />
+      <#if dynamicProperties?has_content>
+          <h3>Dynamic Properties</h3>
+          <p>${dynamicProperties}</p>
+      </#if>
+
+      <#assign ownerInstitutionCode = action.retrieveTerm('ownerInstitutionCode')! />
+      <#if ownerInstitutionCode?has_content>
+          <h3>Owner Institution Code</h3>
+          <p>${ownerInstitutionCode}</p>
       </#if>
 
     </div>
@@ -299,17 +438,13 @@ are expected to be interpreted -->
         <h3>${i.type}</h3>
         <p>${i.identifier}</p>
       </#list>
+
+      <#assign language = action.retrieveTerm('language')! />
+      <#if language?has_content>
+          <h3>Language</h3>
+          <p>${language}</p>
+      </#if>
     </div>
-
-  <#if verbatim["Record"]??>
-    <#-- show additional record-level group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
-      <@vList verbatimGroup=verbatim["Record"] title="Additional record-level terms" exclude=["institutionCode", "collectionCode", "rights", "basisOfRecord"] />
-  </#if>
-
-  <#if verbatim["Other"]??>
-  <#-- show additional DC record-level group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
-      <@vList verbatimGroup=verbatim["Other"] title="Other DC record-level terms" exclude=["rights", "accessRights", "bibliographicCitation", "modified", "references", "rightsHolder"] />
-  </#if>
 
 </@common.article>
 
@@ -347,6 +482,24 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
           <p>${occ.typifiedName}</p>
       </#if>
 
+      <#assign identificationRemarks = action.retrieveTerm('identificationRemarks')! />
+      <#if identificationRemarks?has_content>
+          <h3>Identification Remarks</h3>
+          <p>${identificationRemarks}</p>
+      </#if>
+
+      <#assign identificationReferences = action.retrieveTerm('identificationReferences')! />
+      <#if identificationReferences?has_content>
+          <h3>Identification References</h3>
+          <p>${identificationReferences}</p>
+      </#if>
+
+      <#assign identificationQualifier = action.retrieveTerm('identificationQualifier')! />
+      <#if identificationQualifier?has_content>
+          <h3>Identification Qualifier</h3>
+          <p>${identificationQualifier}</p>
+      </#if>
+
     </div>
     <div class="right">
       <#if occ.dateIdentified??>
@@ -370,12 +523,19 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
           <h3>Individual ID</h3>
           <p>${individualID}</p>
       </#if>
-    </div>
 
-  <#if verbatim["Identification"]??>
-    <#-- show additional identification group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
-    <@vList verbatimGroup=verbatim["Identification"] title="Additional identification terms" exclude=["dateIdentified", "typeStatus", "identifiedBy"] />
-  </#if>
+      <#assign identificationID = action.retrieveTerm('identificationID')! />
+      <#if identificationID?has_content>
+          <h3>Identification ID</h3>
+          <p>${identificationID}</p>
+      </#if>
+
+      <#assign identificationVerificationStatus = action.retrieveTerm('identificationVerificationStatus')! />
+      <#if identificationVerificationStatus?has_content>
+          <h3>Identification Verification Status</h3>
+          <p>${identificationVerificationStatus}</p>
+      </#if>
+    </div>
 
 </@common.article>
 
@@ -402,6 +562,84 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
           <p>${occ.individualCount?string}</p>
       </#if>
 
+      <#assign associatedOccurrences = action.retrieveTerm('associatedOccurrences')! />
+      <#if associatedOccurrences?has_content>
+          <h3>Associated Occurrences</h3>
+          <p>${associatedOccurrences}</p>
+      </#if>
+
+      <#assign associatedSequences = action.retrieveTerm('associatedSequences')! />
+      <#if associatedSequences?has_content>
+          <h3>Associated Sequences</h3>
+          <p>${associatedSequences}</p>
+      </#if>
+
+      <#assign associatedReferences = action.retrieveTerm('associatedReferences')! />
+      <#if associatedReferences?has_content>
+          <h3>Associated References</h3>
+          <p>${associatedReferences}</p>
+      </#if>
+
+      <#assign associatedTaxa = action.retrieveTerm('associatedTaxa')! />
+      <#if associatedTaxa?has_content>
+          <h3>Associated Taxa</h3>
+          <p>${associatedTaxa}</p>
+      </#if>
+
+      <#assign occurrenceStatus = action.retrieveTerm('occurrenceStatus')! />
+      <#if occurrenceStatus?has_content>
+          <h3>Occurrence Status</h3>
+          <p>${occurrenceStatus}</p>
+      </#if>
+
+      <#assign behavior = action.retrieveTerm('behavior')! />
+      <#if behavior?has_content>
+          <h3>Behavior</h3>
+          <p>${behavior}</p>
+      </#if>
+
+      <#assign occurrenceRemarks = action.retrieveTerm('occurrenceRemarks')! />
+      <#if occurrenceRemarks?has_content>
+          <h3>Occurrence Remarks</h3>
+          <p>${occurrenceRemarks}</p>
+      </#if>
+
+      <#assign previousIdentifications = action.retrieveTerm('previousIdentifications')! />
+      <#if previousIdentifications?has_content>
+          <h3>Previous Identifications</h3>
+          <p>${previousIdentifications}</p>
+      </#if>
+
+      <#assign eventRemarks = action.retrieveTerm('eventRemarks')! />
+      <#if eventRemarks?has_content>
+          <h3>Event Remarks</h3>
+          <p>${eventRemarks}</p>
+      </#if>
+
+      <#assign fieldNotes = action.retrieveTerm('fieldNotes')! />
+      <#if fieldNotes?has_content>
+          <h3>Field Notes</h3>
+          <p>${fieldNotes}</p>
+      </#if>
+
+      <#assign habitat = action.retrieveTerm('habitat')! />
+      <#if habitat?has_content>
+          <h3>Habitat</h3>
+          <p>${habitat}</p>
+      </#if>
+
+      <#assign samplingProtocol = action.retrieveTerm('samplingProtocol')! />
+      <#if samplingProtocol?has_content>
+          <h3>Sampling Protocol</h3>
+          <p>${samplingProtocol}</p>
+      </#if>
+
+      <#assign samplingEffort = action.retrieveTerm('samplingEffort')! />
+      <#if samplingEffort?has_content>
+          <h3>Sampling Effort</h3>
+          <p>${samplingEffort}</p>
+      </#if>
+
     </div>
 
   </div>
@@ -422,24 +660,190 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
       <h3>Establishment Means</h3>
       <p>${occ.establishmentMeans?string?lower_case?cap_first}</p>
     </#if>
+
+    <#assign occurrenceStatus = action.retrieveTerm('occurrenceStatus')! />
+    <#if occurrenceStatus?has_content>
+        <h3>Occurrence Status</h3>
+        <p>${occurrenceStatus}</p>
+    </#if>
+
+    <#assign recordedBy = action.retrieveTerm('recordedBy')! />
+    <#if recordedBy?has_content>
+        <h3>Recorded By</h3>
+        <p>${recordedBy}</p>
+    </#if>
+
+    <#assign recordNumber = action.retrieveTerm('recordNumber')! />
+    <#if recordNumber?has_content>
+        <h3>Record Number</h3>
+        <p>${recordNumber}</p>
+    </#if>
+
+    <#assign reproductiveCondition = action.retrieveTerm('reproductiveCondition')! />
+    <#if reproductiveCondition?has_content>
+        <h3>Reproductive Condition</h3>
+        <p>${reproductiveCondition}</p>
+    </#if>
+
+    <#assign eventID = action.retrieveTerm('eventID')! />
+    <#if eventID?has_content>
+        <h3>Event ID</h3>
+        <p>${eventID}</p>
+    </#if>
+
+    <#assign fieldNumber = action.retrieveTerm('fieldNumber')! />
+    <#if fieldNumber?has_content>
+        <h3>Field Number</h3>
+        <p>${fieldNumber}</p>
+    </#if>
+
+    <#assign startDayOfYear = action.retrieveTerm('startDayOfYear')! />
+    <#if startDayOfYear?has_content>
+        <h3>Start Day Of Year</h3>
+        <p>${startDayOfYear}</p>
+    </#if>
+
+    <#assign endDayOfYear = action.retrieveTerm('endDayOfYear')! />
+    <#if endDayOfYear?has_content>
+        <h3>End Day Of Year</h3>
+        <p>${endDayOfYear}</p>
+    </#if>
+
+    <#assign eventTime = action.retrieveTerm('eventTime')! />
+    <#if eventTime?has_content>
+        <h3>Event Time</h3>
+        <p>${eventTime}</p>
+    </#if>
+
+    <#assign verbatimEventDate = action.retrieveTerm('verbatimEventDate')! />
+    <#if verbatimEventDate?has_content>
+        <h3>Verbatim Event Date</h3>
+        <p>${verbatimEventDate}</p>
+    </#if>
+
   </div>
-
-  <#if verbatim["Occurrence"]??>
-    <#-- show additional occurrence group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
-    <@vList verbatimGroup=verbatim["Occurrence"] title="Additional occurrence terms" exclude=["catalogNumber", "individualCount", "sex", "lifeStage", "establishmentMeans", "individualID", "occurrenceID", "associatedMedia", "disposition" ] />
-  </#if>
-
-  <#if verbatim["Event"]??>
-    <#-- show additional event group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
-    <@vList verbatimGroup=verbatim["Event"] title="Additional Event terms" exclude=["eventDate", "year", "month", "day"] />
-  </#if>
 
 </@common.article>
 
 <#if verbatim["GeologicalContext"]??>
   <#-- show additional geological context group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
   <@common.article id="geology" title="Geological context">
-    <@vList verbatimGroup=verbatim["GeologicalContext"] exclude=[] />
+    <div class="left">
+
+      <#assign bed = action.retrieveTerm('bed')! />
+      <#if bed?has_content>
+          <h3>Bed</h3>
+          <p>${bed}</p>
+      </#if>
+
+      <#assign formation = action.retrieveTerm('formation')! />
+      <#if formation?has_content>
+          <h3>Formation</h3>
+          <p>${formation}</p>
+      </#if>
+
+      <#assign group = action.retrieveTerm('group')! />
+      <#if group?has_content>
+          <h3>Group</h3>
+          <p>${group}</p>
+      </#if>
+
+      <#assign member = action.retrieveTerm('member')! />
+      <#if member?has_content>
+          <h3>Member</h3>
+          <p>${member}</p>
+      </#if>
+
+      <#assign earliestEonOrLowestEonothem = action.retrieveTerm('earliestEonOrLowestEonothem')! />
+      <#if earliestEonOrLowestEonothem?has_content>
+          <h3>Earliest Eon Or Lowest Eonothem</h3>
+          <p>${earliestEonOrLowestEonothem}</p>
+      </#if>
+
+      <#assign latestEonOrHighestEonothem = action.retrieveTerm('latestEonOrHighestEonothem')! />
+      <#if latestEonOrHighestEonothem?has_content>
+          <h3>Latest Eon Or Highest Eonothem</h3>
+          <p>${latestEonOrHighestEonothem}</p>
+      </#if>
+
+      <#assign earliestEraOrLowestErathem = action.retrieveTerm('earliestEraOrLowestErathem')! />
+      <#if earliestEraOrLowestErathem?has_content>
+          <h3>Earliest Era Or Lowest Erathem</h3>
+          <p>${earliestEraOrLowestErathem}</p>
+      </#if>
+
+      <#assign latestEraOrHighestErathem = action.retrieveTerm('latestEraOrHighestErathem')! />
+      <#if latestEraOrHighestErathem?has_content>
+          <h3>Latest Era Or Highest Erathem</h3>
+          <p>${latestEraOrHighestErathem}</p>
+      </#if>
+
+      <#assign earliestAgeOrLowestStage = action.retrieveTerm('earliestAgeOrLowestStage')! />
+      <#if earliestAgeOrLowestStage?has_content>
+          <h3>Earliest Age Or Lowest Stage</h3>
+          <p>${earliestAgeOrLowestStage}</p>
+      </#if>
+
+      <#assign latestAgeOrHighestStage = action.retrieveTerm('latestAgeOrHighestStage')! />
+      <#if latestAgeOrHighestStage?has_content>
+          <h3>Latest Age Or Highest Stage</h3>
+          <p>${latestAgeOrHighestStage}</p>
+      </#if>
+
+      <#assign earliestEpochOrLowestSeries = action.retrieveTerm('earliestEpochOrLowestSeries')! />
+      <#if earliestEpochOrLowestSeries?has_content>
+          <h3>Earliest Epoch Or Lowest Series</h3>
+          <p>${earliestEpochOrLowestSeries}</p>
+      </#if>
+
+      <#assign latestEpochOrHighestSeries = action.retrieveTerm('latestEpochOrHighestSeries')! />
+      <#if latestEpochOrHighestSeries?has_content>
+          <h3>Latest Epoch Or Highest Series</h3>
+          <p>${latestEpochOrHighestSeries}</p>
+      </#if>
+
+      <#assign earliestPeriodOrLowestSystem = action.retrieveTerm('earliestPeriodOrLowestSystem')! />
+      <#if earliestPeriodOrLowestSystem?has_content>
+          <h3>Earliest Period Or Lowest System</h3>
+          <p>${earliestPeriodOrLowestSystem}</p>
+      </#if>
+
+      <#assign latestPeriodOrHighestSystem = action.retrieveTerm('latestPeriodOrHighestSystem')! />
+      <#if latestPeriodOrHighestSystem?has_content>
+          <h3>Latest Period Or Highest System</h3>
+          <p>${latestPeriodOrHighestSystem}</p>
+      </#if>
+
+      <#assign lowestBiostratigraphicZone = action.retrieveTerm('lowestBiostratigraphicZone')! />
+      <#if lowestBiostratigraphicZone?has_content>
+          <h3>Lowest Biostratigraphic Zone</h3>
+          <p>${lowestBiostratigraphicZone}</p>
+      </#if>
+
+      <#assign highestBiostratigraphicZone = action.retrieveTerm('highestBiostratigraphicZone')! />
+      <#if highestBiostratigraphicZone?has_content>
+          <h3>Highest Biostratigraphic Zone</h3>
+          <p>${highestBiostratigraphicZone}</p>
+      </#if>
+
+    </div>
+
+    <div class="right">
+
+      <#assign geologicalContextID = action.retrieveTerm('geologicalContextID')! />
+      <#if geologicalContextID?has_content>
+          <h3>Geological Context ID</h3>
+          <p>${geologicalContextID}</p>
+      </#if>
+
+      <#assign lithostratigraphicTerms = action.retrieveTerm('lithostratigraphicTerms')! />
+      <#if lithostratigraphicTerms?has_content>
+          <h3>Lithostratigraphic Terms</h3>
+          <p>${lithostratigraphicTerms}</p>
+      </#if>
+
+    </div>
+
   </@common.article>
 </#if>
 

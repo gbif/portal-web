@@ -140,6 +140,14 @@ public class DetailAction extends OccurrenceBaseAction {
     else if (term.equals("rightsHolder")) {
       return occ.getField(DcTerm.rightsHolder);
     }
+    // special case for Dc.type
+    else if (term.equals("type")) {
+      return occ.getField(DcTerm.type);
+    }
+    // special case for Dc.type
+    else if (term.equals("language")) {
+      return occ.getField(DcTerm.language);
+    }
     DwcTerm t = DwcTerm.valueOf(term);
     if (t != null && occ != null && occ.getFields() != null) {
       return occ.getField(t);

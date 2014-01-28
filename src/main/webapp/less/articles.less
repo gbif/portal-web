@@ -288,6 +288,11 @@ For example <article class="featured"> to build a featured data use article
         }
       }
     }
+    // Used on the mock occurrence page
+    .fullwidth_under_map {
+      padding-top: 50px;
+      border-top: none;
+    }
 
     .left {
       float: left;
@@ -458,6 +463,11 @@ For example <article class="featured"> to build a featured data use article
 
     }
 
+    .right_under_map{
+      padding-top: 25px;
+      margin-left: 0px;
+    }
+
     .left.no-border, .right.no-border {
       border: none;
     }
@@ -475,6 +485,16 @@ For example <article class="featured"> to build a featured data use article
     // Scrollable section
     .scrollable {
       height:442px;
+      overflow:auto;
+
+      &.small {
+        height:200px;
+      }
+    }
+
+    // Scrollable section
+    .scrollable330 {
+      height:330px;
       overflow:auto;
 
       &.small {
