@@ -7,12 +7,19 @@ import org.gbif.api.model.registry.Dataset;
 import org.gbif.api.service.checklistbank.NameUsageService;
 import org.gbif.api.service.occurrence.OccurrenceService;
 import org.gbif.api.service.registry.DatasetService;
+import org.gbif.api.vocabulary.Continent;
+import org.gbif.api.vocabulary.Country;
+import org.gbif.dwc.terms.DwcTerm;
 import org.gbif.portal.action.BaseAction;
 import org.gbif.portal.action.occurrence.util.MockOccurrenceFactory;
 import org.gbif.portal.exception.NotFoundException;
 import org.gbif.portal.exception.ReferentialIntegrityException;
 
+import java.util.List;
+import javax.annotation.Nullable;
+
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +41,7 @@ public class OccurrenceBaseAction extends BaseAction {
   protected Dataset dataset;
   protected DatasetMetrics metrics;
   protected String partialGatheringDate;
+  protected List<String> geographicClassification;
 
   public Dataset getDataset() {
     return dataset;
@@ -143,6 +151,45 @@ public class OccurrenceBaseAction extends BaseAction {
     return st.toString();
   }
 
+  /**
+   * From a combination of interpreted and verbatim terms, construct an ordered geographic classification consisting
+   * of the following terms in this order: continent > country > stateProvince > county > municipality.
+   *
+   * @return ordered list representing geographic classification
+   */
+  protected List<String> constructGeographicClassification(@Nullable Continent continent, @Nullable Country country,
+    @Nullable String stateProvince, @Nullable String county, @Nullable String municipality) {
+
+    List<String> classification = Lists.newArrayList();
+
+    // add continent
+    if (continent != null) {
+      classification.add(continent.toString());
+    }
+
+    // add country
+    if (country != null) {
+      classification.add(country.getTitle());
+    }
+
+    // add stateProvince
+    if (stateProvince != null) {
+      classification.add(stateProvince);
+    }
+
+    // add county
+    if (county != null) {
+      classification.add(county);
+    }
+
+    // add municipality
+    if (municipality != null) {
+      classification.add(municipality);
+    }
+
+    return classification;
+  }
+
   protected void loadDetail() {
     if (id == null) {
       throw new NotFoundException("No occurrence id given");
@@ -174,5 +221,20 @@ public class OccurrenceBaseAction extends BaseAction {
       partialGatheringDate =
         constructPartialGatheringDate(occ.getYear(), occ.getMonth(), occ.getDay());
     }
+    // construct geographic classification
+    String county = occ.getField(DwcTerm.county);
+    String municipality = occ.getField(DwcTerm.municipality);
+    geographicClassification =
+      constructGeographicClassification(occ.getContinent(), occ.getCountry(), occ.getStateProvince(), county,
+        municipality);
+  }
+
+  /**
+   * The geographic classification, constructed from continent, country, stateProvince, county, municipality.
+   *
+   * @return geographic classification
+   */
+  public List<String> getGeographicClassification() {
+    return geographicClassification;
   }
 }

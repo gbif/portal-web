@@ -176,7 +176,7 @@ public class MockOccurrenceFactory {
   private static void populateVerbatimDwcOccurrenceTerms() {
     mockOccurrence.getFields().put(DwcTerm.catalogNumber, "88");
     mockOccurrence.getFields().put(DwcTerm.occurrenceID, "urn:catalog:MVZ:Mammals:88");
-    mockOccurrence.getFields().put(DwcTerm.occurrenceRemarks, "found dead on road");
+    mockOccurrence.getFields().put(DwcTerm.occurrenceRemarks, "Found dead on road");
     mockOccurrence.getFields().put(DwcTerm.recordNumber, "OPP 7101");
     mockOccurrence.getFields().put(DwcTerm.recordedBy, "Jane Smith");
     mockOccurrence.getFields().put(DwcTerm.individualID, "Smedley");
@@ -226,8 +226,8 @@ public class MockOccurrenceFactory {
     mockOccurrence.getFields().put(DwcTerm.verbatimEventDate, "spring 2012");
     mockOccurrence.getFields().put(DwcTerm.habitat, "oak savanna");
     mockOccurrence.getFields().put(DwcTerm.fieldNumber, "RV Sol 87-03-08");
-    mockOccurrence.getFields().put(DwcTerm.fieldNotes, "notes available in Grinnell-Miller Library");
-    mockOccurrence.getFields().put(DwcTerm.eventRemarks, "after the recent rains the river is nearly at flood stage");
+    mockOccurrence.getFields().put(DwcTerm.fieldNotes, "Notes available in Grinnell-Miller Library");
+    mockOccurrence.getFields().put(DwcTerm.eventRemarks, "After the recent rains the river is nearly at flood stage");
 
   }
 
@@ -242,7 +242,7 @@ public class MockOccurrenceFactory {
     mockOccurrence.getFields().put(DwcTerm.higherGeography, "South America; Argentina");
     mockOccurrence.getFields().put(DwcTerm.continent, "North America");
     mockOccurrence.getFields().put(DwcTerm.waterBody, "Baltic Sea");
-    mockOccurrence.getFields().put(DwcTerm.islandGroup, "Above Lake Aloha");
+    mockOccurrence.getFields().put(DwcTerm.islandGroup, "Alexander Archipelago");
     mockOccurrence.getFields().put(DwcTerm.island, "Isla Victoria");
     mockOccurrence.getFields().put(DwcTerm.country, "USA");
     mockOccurrence.getFields().put(DwcTerm.countryCode, "AR");
@@ -260,7 +260,7 @@ public class MockOccurrenceFactory {
     mockOccurrence.getFields().put(DwcTerm.minimumDistanceAboveSurfaceInMeters, "0");
     mockOccurrence.getFields().put(DwcTerm.maximumDistanceAboveSurfaceInMeters, "-1.5");
     mockOccurrence.getFields().put(DwcTerm.locationAccordingTo, "Getty Thesaurus of Geographic Names");
-    mockOccurrence.getFields().put(DwcTerm.locationRemarks, "under water since 2005");
+    mockOccurrence.getFields().put(DwcTerm.locationRemarks, "Under water since 2005");
     mockOccurrence.getFields().put(DwcTerm.verbatimCoordinates, "41 05 54S 121 05 34W");
     mockOccurrence.getFields().put(DwcTerm.verbatimLatitude, "41 05 54.03S");
     mockOccurrence.getFields().put(DwcTerm.verbatimLongitude, "121d 10 34 W");
@@ -279,7 +279,7 @@ public class MockOccurrenceFactory {
     mockOccurrence.getFields().put(DwcTerm.georeferencedDate, "1963-03-08T14:07-0600");
     mockOccurrence.getFields().put(DwcTerm.georeferenceProtocol, "Georeferencing Quick Reference Guide");
     mockOccurrence.getFields().put(DwcTerm.georeferenceSources, "USGS 1:24000 Florence Montana Quad");
-    mockOccurrence.getFields().put(DwcTerm.georeferenceVerificationStatus, "requires verification");
+    mockOccurrence.getFields().put(DwcTerm.georeferenceVerificationStatus, "Requires verification");
     mockOccurrence.getFields().put(DwcTerm.geologicalContextID, "stratigraphy:1");
   }
 

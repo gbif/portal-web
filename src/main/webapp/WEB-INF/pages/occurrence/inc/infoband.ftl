@@ -26,7 +26,7 @@
       Please see the <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">verbatim version</a> for source details
     </#if>
     <#if occ.eventDate??>
-      on ${occ.eventDate?date?string.medium}
+      recorded on ${occ.eventDate?date?string.medium}
     </#if>
     from <a href="<@s.url value='/dataset/${dataset.key!}'/>">${dataset.title!"???"}</a> dataset
   </h3>
