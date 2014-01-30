@@ -106,11 +106,11 @@
   </p>
 
   <@api.apiTable auth=false>
-    <@trow url="/parser/name" httpMethod="GET" resp="ParsedName List" respLink="/parser/name?name=Abies%20alba%20Mill.%20sec.%20Markus%20D.&name=Abies%20pinsapo%20var.%20marocana%20(Trab.)%20Ceballos%20%26%20Bolaño%201928" paging=false params=["name"]>
+    <@api.trow url="/parser/name" httpMethod="GET" resp="ParsedName List" respLink="/parser/name?name=Abies%20alba%20Mill.%20sec.%20Markus%20D.&name=Abies%20pinsapo%20var.%20marocana%20(Trab.)%20Ceballos%20%26%20Bolaño%201928" paging=false params=["name"] authRequired="">
       Parses a scientific name string and returns the ParsedName version of it.
       Accepts multiple parameters each with a single name. Make sure you url encode the names properly.
-    </@trow>
-    <@trow url="/parser/name" resp="ParsedName List" httpMethod="POST" paging=false params=["name"]>
+    </@api.trow>
+    <@api.trow url="/parser/name" httpMethod="POST" resp="ParsedName List" respLink="" paging=false params=["name"] authRequired="">
       Parse list of name strings supplied via one of the following media type encodings:
       <ul>
         <li><em>json</em> array of name strings</li>
@@ -118,7 +118,7 @@
         <li><em>multipart/form-data</em> uploaded plain text file</li>
       </ul>
       All text files should be UTF8 encoded with one scientific name per line (please use \n unix new lines).
-    </@trow>
+    </@api.trow>
   </@api.apiTable>
 </@api.article>
 
