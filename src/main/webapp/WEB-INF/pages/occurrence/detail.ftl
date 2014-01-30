@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.occurrence.DetailAction" -->
 <#import "/WEB-INF/macros/common.ftl" as common>
 <#assign showMap=occ.longitude?? && occ.latitude??/>
 <html>
@@ -924,6 +925,19 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
 <p>There may be more details available about this occurrence in the
   <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">verbatim version</a> of the record</p>
 </@common.notice>
+
+
+<#if occ.issues??>
+<@common.notice title="Interpretation issues">
+  <a name="issues"/>
+  <p>GBIF found issues interpreting the <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">verbatim content</a> of this record:</p>
+  <ul>
+  <#list occ.issues as issue>
+    <li><p>${issue.name()?replace("_", " ")?capitalize}</p></li>
+  </#list>
+  </ul>
+</@common.notice>
+</#if>
 
 </body>
 </html>
