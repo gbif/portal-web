@@ -164,7 +164,7 @@ public class OccurrenceBaseAction extends BaseAction {
 
     // add continent
     if (continent != null) {
-      classification.add(continent.toString());
+      classification.add(continent.getTitle());
     }
 
     // add country
