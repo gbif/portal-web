@@ -62,7 +62,6 @@
     <gbif-api.version>0.12-SNAPSHOT</gbif-api.version>
     <checklistbank-ws-client.version>2.6-SNAPSHOT</checklistbank-ws-client.version>
     <registry-ws-client.version>2.13-SNAPSHOT</registry-ws-client.version>
-    <occurrence-download-ws-client.version>0.12-SNAPSHOT</occurrence-download-ws-client.version>
     <occurrence-ws-client.version>0.16-SNAPSHOT</occurrence-ws-client.version>
     <metrics-ws-client.version>0.13-SNAPSHOT</metrics-ws-client.version>
     <drupal-mybatis.version>0.10</drupal-mybatis.version>
@@ -253,11 +252,6 @@
       <groupId>org.gbif.registry</groupId>
       <artifactId>registry-ws-client</artifactId>
       <version>${registry-ws-client.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.gbif.occurrence.download</groupId>
-      <artifactId>occurrence-download-ws-client</artifactId>
-      <version>${occurrence-download-ws-client.version}</version>
     </dependency>
     <dependency>
       <groupId>org.gbif.occurrence</groupId>
