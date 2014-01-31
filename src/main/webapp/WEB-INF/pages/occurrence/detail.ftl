@@ -111,14 +111,24 @@
 <#macro footprint header wkt srs fit>
   <#if wkt?has_content || srs?has_content || fit?has_content>
   <h3>${header}</h3>
-    <#if wkt?has_content>
-    <p>
-    ${wkt}<br/>
-      <#if srs?has_content || fit?has_content>
-          [<#if srs?has_content>SRS=${srs}</#if> <#if fit?has_content>Spatial Fit=${fit}</#if>]
+  <p>
+    <dl>
+      <#if wkt?has_content>
+          <dt>WKT</dt>
+          <dd>${wkt}</dd>
       </#if>
-    </p>
-    </#if>
+
+      <#if srs?has_content>
+        <dt>SRS</dt>
+        <dd>${srs}</dd>
+      </#if>
+
+      <#if fit?has_content>
+        <dt>Spatial Fit</dt>
+        <dd>${fit}</dd>
+      </#if>
+    </dl>
+  </p>
   </#if>
 </#macro>
 
@@ -159,7 +169,7 @@
       </div>
     </div>
     <div class="fullwidth fullwidth_under_map">
-      <div class="left left_under_map">
+      <div class="left left_under_map left_occurrence_detail">
         <@geoClassification header="Geographic Classification" geographicClassification=geographicClassification/>
         <@islandClassification header="Islands" island=island islandGroup=islandGroup />
 
@@ -198,7 +208,7 @@
   </div>
 
   <#else>
-    <div class="fullwidth fullwidth_under_map">
+    <div class="fullwidth fullwidth_under_map left_occurrence_detail">
 
     <div class="left">
       <@kv header="Locality" term='locality' />
@@ -630,7 +640,7 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
 <#if verbatim["GeologicalContext"]??>
   <#-- show additional geological context group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
   <@common.article id="geology" title="Geological context">
-    <div class="left left_geo_classification">
+    <div class="left left_occurrence_detail">
 
       <#assign earliestEonOrLowestEonothem = action.retrieveTerm('earliestEonOrLowestEonothem')! />
       <#assign latestEonOrHighestEonothem = action.retrieveTerm('latestEonOrHighestEonothem')! />
@@ -653,16 +663,17 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
       earliestEpochOrLowestSeries?has_content || latestEpochOrHighestSeries?has_content ||
       earliestAgeOrLowestStage?has_content || latestAgeOrHighestStage?has_content>
         <h3>Stratigraphic Classification</h3>
+          <p>
           <dl>
               <dt>Eon</dt>
               <dd>
                 <#if earliestEonOrLowestEonothem?has_content || latestEonOrHighestEonothem?has_content>
                   <#if earliestEonOrLowestEonothem?has_content && latestEonOrHighestEonothem?has_content>
-                      <p>${earliestEonOrLowestEonothem}&nbsp;/&nbsp;${latestEonOrHighestEonothem}</p>
+                  ${earliestEonOrLowestEonothem}&nbsp;/&nbsp;${latestEonOrHighestEonothem}
                   <#elseif earliestEonOrLowestEonothem?has_content>
-                      <p>${earliestEonOrLowestEonothem}</p>
+                  ${earliestEonOrLowestEonothem}
                   <#elseif latestEonOrHighestEonothem?has_content>
-                      <p>${latestEonOrHighestEonothem}</p>
+                  ${latestEonOrHighestEonothem}
                   </#if>
                 </#if>
               </dd>
@@ -671,11 +682,11 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
               <dd>
                 <#if earliestEraOrLowestErathem?has_content || latestEraOrHighestErathem?has_content>
                   <#if earliestEraOrLowestErathem?has_content && latestEraOrHighestErathem?has_content>
-                      <p>${earliestEraOrLowestErathem}&nbsp;/&nbsp;${latestEraOrHighestErathem}</p>
+                  ${earliestEraOrLowestErathem}&nbsp;/&nbsp;${latestEraOrHighestErathem}
                   <#elseif earliestEraOrLowestErathem?has_content>
-                      <p>${earliestEonOrLowestEonothem}</p>
+                  ${earliestEonOrLowestEonothem}
                   <#elseif latestEraOrHighestErathem?has_content>
-                      <p>${latestEraOrHighestErathem}</p>
+                  ${latestEraOrHighestErathem}
                   </#if>
                 </#if>
               </dd>
@@ -684,11 +695,11 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
               <dd>
                 <#if earliestPeriodOrLowestSystem?has_content || latestPeriodOrHighestSystem?has_content>
                   <#if earliestPeriodOrLowestSystem?has_content && latestPeriodOrHighestSystem?has_content>
-                      <p>${earliestPeriodOrLowestSystem}&nbsp;/&nbsp;${latestPeriodOrHighestSystem}</p>
+                  ${earliestPeriodOrLowestSystem}&nbsp;/&nbsp;${latestPeriodOrHighestSystem}
                   <#elseif earliestPeriodOrLowestSystem?has_content>
-                      <p>${earliestPeriodOrLowestSystem}</p>
+                  ${earliestPeriodOrLowestSystem}
                   <#elseif latestPeriodOrHighestSystem?has_content>
-                      <p>${latestPeriodOrHighestSystem}</p>
+                  ${latestPeriodOrHighestSystem}
                   </#if>
                 </#if>
               </dd>
@@ -697,11 +708,11 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
               <dd>
                 <#if earliestEpochOrLowestSeries?has_content || latestEpochOrHighestSeries?has_content>
                   <#if earliestEpochOrLowestSeries?has_content && latestEpochOrHighestSeries?has_content>
-                      <p>${earliestEpochOrLowestSeries}&nbsp;/&nbsp;${latestEpochOrHighestSeries}</p>
+                  ${earliestEpochOrLowestSeries}&nbsp;/&nbsp;${latestEpochOrHighestSeries}
                   <#elseif earliestEpochOrLowestSeries?has_content>
-                      <p>${earliestEpochOrLowestSeries}</p>
+                  ${earliestEpochOrLowestSeries}
                   <#elseif latestEpochOrHighestSeries?has_content>
-                      <p>${latestEpochOrHighestSeries}</p>
+                  ${latestEpochOrHighestSeries}
                   </#if>
                 </#if>
               </dd>
@@ -710,15 +721,16 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
               <dd>
                 <#if earliestAgeOrLowestStage?has_content || latestAgeOrHighestStage?has_content>
                   <#if earliestAgeOrLowestStage?has_content && latestAgeOrHighestStage?has_content>
-                      <p>${earliestAgeOrLowestStage}&nbsp;/&nbsp;${latestAgeOrHighestStage}</p>
+                  ${earliestAgeOrLowestStage}&nbsp;/&nbsp;${latestAgeOrHighestStage}
                   <#elseif earliestAgeOrLowestStage?has_content>
-                      <p>${earliestAgeOrLowestStage}</p>
+                  ${earliestAgeOrLowestStage}
                   <#elseif latestAgeOrHighestStage?has_content>
-                      <p>${latestAgeOrHighestStage}</p>
+                  ${latestAgeOrHighestStage}
                   </#if>
                 </#if>
               </dd>
           </dl>
+          </p>
       </#if>
 
       <#assign lowestBiostratigraphicZone = action.retrieveTerm('lowestBiostratigraphicZone')! />
