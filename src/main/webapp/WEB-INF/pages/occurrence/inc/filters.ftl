@@ -92,10 +92,36 @@
           <h4 class="title"><%= title %></h4>
           <div class="filter">
             <h4 class="title">Select </h4>
-            <ul class="basis-of-record">
+            <ul class="multi-select">
               <#list basisOfRecords as basisOfRecord>         
                 <li key="${basisOfRecord}"><a>${action.getFilterTitle('basisOfRecord',basisOfRecord)}</a></li>         
               </#list>
+            </ul>            
+          </div>
+          <div class="center">
+            <a class="button candy_blue_button apply" title="<%= title %>" data-action="add-new-filter" data-filter="<%= paramName %>" apply-function="applyOccurrenceFilters"><span>Apply</span></a>
+          </div>
+          <a class="close"></a>
+        </div>
+        <div class="summary_view">          
+          
+        </div>
+      </td>
+    </tr>
+  </script>
+  
+   <script type="text/template" id="template-type-status-filter">
+    <tr class="filter">
+      <td colspan="4">
+        <a class="edit" style="display:none;"/>
+        <div class="inner filter_view">
+          <h4 class="title"><%= title %></h4>
+          <div class="filter">
+            <h4 class="title">Select </h4>
+            <ul class="multi-select">            
+             <#list typeStatuses as itemValue>         
+               <li key="${itemValue}"><a>${action.getFilterTitle('typeStatus',itemValue)}</a></li>         
+             </#list>
             </ul>            
           </div>
           <div class="center">
@@ -562,7 +588,9 @@
                   <label for="spatialIssues">with known coordinate issues</label> <input type="checkbox" name="SPATIAL_ISSUES" id="spatialIssues" value="true" <#if action.isInFilter('SPATIAL_ISSUES', 'true')> checked</#if> <#if action.isInFilter('GEOREFERENCED', 'false')> disabled</#if>/>
                 </fieldset>
               </div>
+              <div style="display:table">
                 <a class="button candy_blue_button apply left" title="<%= title %>" data-action="add-new-bbox-filter" data-filter="<%= paramName %>"><span>Apply</span></a>
+               </div>
            </div>                             
            <a class="close"></a>     
         </div>

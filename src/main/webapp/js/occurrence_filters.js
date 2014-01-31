@@ -1506,23 +1506,22 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
   return InnerOccurrenceDateComparatorWidget;
 })(jQuery,_,OccurrenceWidget);
 
-
 /**
- * Basis of Record widget. Displays a multi-select list with the basis of record values.
+ * Type status widget. Displays a multi-select list with the basis of record values.
  */
-var OccurrenceBasisOfRecordWidget = (function ($,_,OccurrenceWidget) {
-  var InnerOccurrenceBasisOfRecordWidget = function () {        
+var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
+  var InnerOccurrenceMultiSelectWidget = function () {        
   }; 
   //Inherits everything from OccurrenceWidget
-  InnerOccurrenceBasisOfRecordWidget.prototype = $.extend(true,{}, new OccurrenceWidget());
+  InnerOccurrenceMultiSelectWidget.prototype = $.extend(true,{}, new OccurrenceWidget());
 
   /**
    * Re-defines the showFilters function, iterates over the selection list to get the selected values and then show them as filters. 
    */
-  InnerOccurrenceBasisOfRecordWidget.prototype.showFilters = function() {
+  InnerOccurrenceMultiSelectWidget.prototype.showFilters = function() {
     if(this.filterElement != null) {
       var self = this;
-      this.filterElement.find(".basis-of-record > li").each( function() {
+      this.filterElement.find(".multi-select > li").each( function() {
         $(this).removeClass("selected");
         for(var i=0; i < self.filters.length; i++) {
           if(self.filters[i].value == $(this).attr("key") && !$(this).hasClass("selected")) {
@@ -1536,10 +1535,10 @@ var OccurrenceBasisOfRecordWidget = (function ($,_,OccurrenceWidget) {
   /**
    * Executes addtional bindings: binds click event of each basis of record element.
    */
-  InnerOccurrenceBasisOfRecordWidget.prototype.executeAdditionalBindings = function(){
+  InnerOccurrenceMultiSelectWidget.prototype.executeAdditionalBindings = function(){
     if(this.filterElement != null) {
       var self = this;
-      this.filterElement.find(".basis-of-record > li").click( function() {
+      this.filterElement.find(".multi-select > li").click( function() {
         if ($(this).hasClass("selected")) {
           self.removeFilter({value:$(this).attr("key"),key:null});
           $(this).removeClass("selected");
@@ -1550,9 +1549,8 @@ var OccurrenceBasisOfRecordWidget = (function ($,_,OccurrenceWidget) {
       });
     }
   };
-  return InnerOccurrenceBasisOfRecordWidget;
+  return InnerOccurrenceMultiSelectWidget;
 })(jQuery,_,OccurrenceWidget);
-
 /**
  * Object that controls the creation and default behavior of OccurrenceWidget and OccurrenceFilterWidget instances.
  * Manage how each filter widget should be bound to a occurrence widget instance, additionally controls what occurrence parameter is mapped to an specific widget.
@@ -1682,7 +1680,10 @@ var OccurrenceWidgetManager = (function ($,_) {
               newWidget = new OccurrenceMonthWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});            
             } else if (filterName == "BASIS_OF_RECORD") {
-              newWidget = new OccurrenceBasisOfRecordWidget();
+              newWidget = new OccurrenceMultiSelectWidget();
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});              
+            } else if (filterName == "TYPE_STATUS") {
+              newWidget = new OccurrenceMultiSelectWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});              
             } else if (filterName == "COUNTRY" || filterName == "PUBLISHING_COUNTRY") {
               newWidget = new OccurrenceWidget();

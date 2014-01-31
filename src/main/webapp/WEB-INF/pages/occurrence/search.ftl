@@ -105,12 +105,13 @@
     <#assign showCollectionCode =  table.hasSummaryField('COLLECTION_CODE')>
     <#assign showCollectorName =  table.hasSummaryField('COLLECTOR_NAME')>
     <#assign showRecordNumber =  table.hasSummaryField('RECORD_NUMBER')>
+    <#assign showTypeStatus =  table.hasSummaryField('TYPE_STATUS')>
+    <#assign showInstitution =  table.hasSummaryField('INSTITUTION')>
+    <#assign showModified =  table.hasSummaryField('MODIFIED')>
     <#assign showDataset =  table.hasSummaryField('DATASET')>
     <#assign showLocation =  table.hasColumn('LOCATION')>
     <#assign showDate =  table.hasColumn('DATE')>
-    <#assign showBasisOfRecord =  table.hasColumn('BASIS_OF_RECORD')>
-    <#assign showInstitution =  table.hasSummaryField('INSTITUTION')>
-    <#assign showModified =  table.hasSummaryField('MODIFIED')>
+    <#assign showBasisOfRecord =  table.hasColumn('BASIS_OF_RECORD')>    
     <table class="results">
       <#if !action.hasErrors()>        
         <tr class="header">
@@ -142,6 +143,7 @@
                     <li><input type="checkbox" name="summary" value="SCIENTIFIC_NAME" id="chk-SCIENTIFIC_NAME" <#if showScientificName>checked</#if>/> <label for="chk-SCIENTIFIC_NAME">Scientific name</label></li>                    
                     <li><input type="checkbox" name="summary" value="DATASET" id="chk-DATASET" <#if showDataset>checked</#if>/> <label for="chk-DATASET">Dataset</label></li>
                     <li><input type="checkbox" name="summary" value="MODIFIED" id="chk-MODIFIED" <#if showModified>checked</#if>/> <label for="chk-MODIFIED">Date last modified</label></li>
+                    <li><input type="checkbox" name="summary" value="TYPE_STATUS" id="chk-TYPE_STATUS" <#if showTypeStatus>checked</#if>/> <label for="chk-TYPE_STATUS">Type status</label></li>
                   </ul>
                   <div style="width:100px;" class="buttonContainer"><a href="#" class="button" id="applyConfiguration" style="width:30px;margin:auto"><span>Apply</span></a><div>
                 </div>
@@ -172,6 +174,7 @@
                     <li><a tabindex="-1" href="#" data-placeholder="Type an collection code..." data-filter="COLLECTION_CODE" title="Collection code" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value collection_code_autosuggest auto_add" class="filter-control">Collection code</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type an altitude..." data-filter="ALTITUDE" title="Altitude" data-template-filter="template-compare-filter" data-template-summary="template-filter" data-input-classes="value auto_add" class="filter-control">Altitude</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a depth..." data-filter="DEPTH" title="Depth" data-template-filter="template-compare-filter" data-template-summary="template-filter" data-input-classes="value auto_add" class="filter-control">Depth</a></li>
+                    <li><a tabindex="-1" href="#" data-placeholder="Type a name..." data-filter="TYPE_STATUS" title="Type status" data-template-filter="template-type-status-filter" data-template-summary="template-filter" class="filter-control">Type status</a></li>
                   </ul>
                   <input type="hidden" id="nubTaxonomyKey" value="${nubTaxonomyKey}"/>
                 </div>
@@ -216,6 +219,9 @@
                 </#if>
                 <#if showRecordNumber && action.retrieveTerm('recordNumber',occ)?has_content>
                   <div class="code">Record number: ${action.retrieveTerm('recordNumber',occ)}</div>
+                </#if>                   
+                 <#if showTypeStatus && occ.typeStatus?has_content>
+                  <div class="code">Type status: ${action.getFilterTitle('typeStatus',occ.typeStatus)!}</div>
                 </#if>                                 
               </div>
               <#if showScientificName && occ.scientificName?has_content><a class="title" href="<@s.url value='/occurrence/${occ.key?c}'/>">${occ.scientificName}</a></#if>
