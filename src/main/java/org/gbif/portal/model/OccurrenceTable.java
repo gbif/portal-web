@@ -28,7 +28,7 @@ public class OccurrenceTable {
    */
   public static enum OccurrenceSummaryField {
     OCCURRENCE_KEY, CATALOG_NUMBER, COLLECTION_CODE, COLLECTOR_NAME, INSTITUTION, SCIENTIFIC_NAME, DATASET, MODIFIED,
-    RECORD_NUMBER;
+    RECORD_NUMBER, TYPE_STATUS;
   }
 
   private static final OccurrenceSearchParameter[] OCC_LOCATION_PARAMS = new OccurrenceSearchParameter[] {
@@ -213,6 +213,9 @@ public class OccurrenceTable {
     }
     if (isParameterPresent(searchRequest, OccurrenceSearchParameter.RECORD_NUMBER)) {
       fields.add(OccurrenceSummaryField.RECORD_NUMBER);
+    }
+    if (isParameterPresent(searchRequest, OccurrenceSearchParameter.TYPE_STATUS)) {
+      fields.add(OccurrenceSummaryField.TYPE_STATUS);
     }
     return fields;
   }

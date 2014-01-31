@@ -9,6 +9,7 @@ import org.gbif.api.model.registry.search.DatasetSearchResult;
 import org.gbif.api.service.occurrence.OccurrenceSearchService;
 import org.gbif.api.vocabulary.BasisOfRecord;
 import org.gbif.api.vocabulary.Country;
+import org.gbif.api.vocabulary.TypeStatus;
 import org.gbif.dwc.terms.DcTerm;
 import org.gbif.dwc.terms.DwcTerm;
 import org.gbif.portal.action.BaseSearchAction;
@@ -147,6 +148,13 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
    */
   public BasisOfRecord[] getBasisOfRecords() {
     return filtersActionHelper.getBasisOfRecords();
+  }
+
+  /**
+   * Returns the list of {@link TypeS} literals.
+   */
+  public TypeStatus[] getTypeStatuses() {
+    return TypeStatus.values();
   }
 
   /**

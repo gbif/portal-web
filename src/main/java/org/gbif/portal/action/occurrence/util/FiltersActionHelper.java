@@ -183,6 +183,12 @@ public class FiltersActionHelper {
    */
   private static final String BASIS_OF_RECORD_KEY = "enum.basisofrecord.";
 
+
+  /**
+   * Constant that contains the prefix of a key to get a TypeStatus label from the resource bundle file.
+   */
+  private static final String TYPE_STATUS_KEY = "enum.typestatus.";
+
   @Inject
   public FiltersActionHelper(DatasetService datasetService, NameUsageService nameUsageService,
     NameUsageSearchService nameUsageSearchService, NameUsageMatchingService nameUsageMatchingService,
@@ -261,6 +267,8 @@ public class FiltersActionHelper {
         return StringEscapeUtils.escapeEcmaScript(getScientificName(filterValue));
       } else if (parameter == OccurrenceSearchParameter.BASIS_OF_RECORD) {
         return LocalizedTextUtil.findDefaultText(BASIS_OF_RECORD_KEY + filterValue, getLocale());
+      } else if (parameter == OccurrenceSearchParameter.TYPE_STATUS) {
+        return LocalizedTextUtil.findDefaultText(TYPE_STATUS_KEY + filterValue, getLocale());
       } else if (parameter == OccurrenceSearchParameter.DATASET_KEY) {
         return StringEscapeUtils.escapeEcmaScript(getDatasetTitle(filterValue));
       } else if (parameter == OccurrenceSearchParameter.GEOMETRY) {
