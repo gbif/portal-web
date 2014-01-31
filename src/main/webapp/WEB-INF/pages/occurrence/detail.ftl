@@ -159,7 +159,7 @@
       </div>
     </div>
     <div class="fullwidth fullwidth_under_map">
-      <div class="left">
+      <div class="left left_under_map">
         <@geoClassification header="Geographic Classification" geographicClassification=geographicClassification/>
         <@islandClassification header="Islands" island=island islandGroup=islandGroup />
 
@@ -630,96 +630,106 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
 <#if verbatim["GeologicalContext"]??>
   <#-- show additional geological context group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
   <@common.article id="geology" title="Geological context">
-    <div class="left">
+    <div class="left left_geo_classification">
 
       <#assign earliestEonOrLowestEonothem = action.retrieveTerm('earliestEonOrLowestEonothem')! />
       <#assign latestEonOrHighestEonothem = action.retrieveTerm('latestEonOrHighestEonothem')! />
-      <#if earliestEonOrLowestEonothem?has_content || latestEonOrHighestEonothem?has_content>
-        <#if earliestEonOrLowestEonothem?has_content && latestEonOrHighestEonothem?has_content>
-          <h3>Earliest Eon Or Lowest Eonothem / Latest Eon Or Highest Eonothem</h3>
-          <p>${earliestEonOrLowestEonothem}&nbsp;/&nbsp;${latestEonOrHighestEonothem}</p>
-        <#elseif earliestEonOrLowestEonothem?has_content>
-          <h3>Earliest Eon Or Lowest Eonothem</h3>
-          <p>${earliestEonOrLowestEonothem}</p>
-        <#elseif latestEonOrHighestEonothem?has_content>
-          <h3>Latest Eon Or Highest Eonothem</h3>
-          <p>${latestEonOrHighestEonothem}</p>
-        </#if>
-      </#if>
 
       <#assign earliestEraOrLowestErathem = action.retrieveTerm('earliestEraOrLowestErathem')! />
       <#assign latestEraOrHighestErathem = action.retrieveTerm('latestEraOrHighestErathem')! />
-      <#if earliestEraOrLowestErathem?has_content || latestEraOrHighestErathem?has_content>
-        <#if earliestEraOrLowestErathem?has_content && latestEraOrHighestErathem?has_content>
-            <h3>Earliest Era Or Lowest Erathem / Latest Era Or Highest Erathem</h3>
-            <p>${earliestEraOrLowestErathem}&nbsp;/&nbsp;${latestEraOrHighestErathem}</p>
-        <#elseif earliestEraOrLowestErathem?has_content>
-            <h3>Earliest Era Or Lowest Erathem</h3>
-            <p>${earliestEonOrLowestEonothem}</p>
-        <#elseif latestEraOrHighestErathem?has_content>
-            <h3>Latest Era Or Highest Erathem</h3>
-            <p>${latestEraOrHighestErathem}</p>
-        </#if>
-      </#if>
 
       <#assign earliestPeriodOrLowestSystem = action.retrieveTerm('earliestPeriodOrLowestSystem')! />
       <#assign latestPeriodOrHighestSystem = action.retrieveTerm('latestPeriodOrHighestSystem')! />
-      <#if earliestPeriodOrLowestSystem?has_content || latestPeriodOrHighestSystem?has_content>
-        <#if earliestPeriodOrLowestSystem?has_content && latestPeriodOrHighestSystem?has_content>
-            <h3>Earliest Period Or Lowest System / Latest Period Or Highest System</h3>
-            <p>${earliestPeriodOrLowestSystem}&nbsp;/&nbsp;${latestPeriodOrHighestSystem}</p>
-        <#elseif earliestPeriodOrLowestSystem?has_content>
-            <h3>Earliest Period Or Lowest System</h3>
-            <p>${earliestPeriodOrLowestSystem}</p>
-        <#elseif latestPeriodOrHighestSystem?has_content>
-            <h3>Latest Period Or Highest System</h3>
-            <p>${latestPeriodOrHighestSystem}</p>
-        </#if>
-      </#if>
 
       <#assign earliestEpochOrLowestSeries = action.retrieveTerm('earliestEpochOrLowestSeries')! />
       <#assign latestEpochOrHighestSeries = action.retrieveTerm('latestEpochOrHighestSeries')! />
-      <#if earliestEpochOrLowestSeries?has_content || latestEpochOrHighestSeries?has_content>
-        <#if earliestEpochOrLowestSeries?has_content && latestEpochOrHighestSeries?has_content>
-            <h3>Earliest Epoch Or Lowest Series / Latest Epoch Or Highest Series</h3>
-            <p>${earliestEpochOrLowestSeries}&nbsp;/&nbsp;${latestEpochOrHighestSeries}</p>
-        <#elseif earliestEpochOrLowestSeries?has_content>
-            <h3>Earliest Epoch Or Lowest Series</h3>
-            <p>${earliestEpochOrLowestSeries}</p>
-        <#elseif latestEpochOrHighestSeries?has_content>
-            <h3>Latest Epoch Or Highest Series</h3>
-            <p>${latestEpochOrHighestSeries}</p>
-        </#if>
-      </#if>
-
 
       <#assign earliestAgeOrLowestStage = action.retrieveTerm('earliestAgeOrLowestStage')! />
       <#assign latestAgeOrHighestStage = action.retrieveTerm('latestAgeOrHighestStage')! />
-      <#if earliestAgeOrLowestStage?has_content || latestAgeOrHighestStage?has_content>
-        <#if earliestAgeOrLowestStage?has_content && latestAgeOrHighestStage?has_content>
-            <h3>Earliest Age Or Lowest Stage / Latest Age Or Highest Stage</h3>
-            <p>${earliestAgeOrLowestStage}&nbsp;/&nbsp;${latestAgeOrHighestStage}</p>
-        <#elseif earliestAgeOrLowestStage?has_content>
-            <h3>Earliest Age Or Lowest Stage</h3>
-            <p>${earliestAgeOrLowestStage}</p>
-        <#elseif latestAgeOrHighestStage?has_content>
-            <h3>Latest Age Or Highest Stage</h3>
-            <p>${latestAgeOrHighestStage}</p>
-        </#if>
-      </#if>
 
+      <#if earliestEonOrLowestEonothem?has_content || latestEonOrHighestEonothem?has_content ||
+      earliestEraOrLowestErathem?has_content || latestEraOrHighestErathem?has_content ||
+      earliestPeriodOrLowestSystem?has_content || latestPeriodOrHighestSystem?has_content ||
+      earliestEpochOrLowestSeries?has_content || latestEpochOrHighestSeries?has_content ||
+      earliestAgeOrLowestStage?has_content || latestAgeOrHighestStage?has_content>
+        <h3>Stratigraphic Classification</h3>
+          <dl>
+              <dt>Eon</dt>
+              <dd>
+                <#if earliestEonOrLowestEonothem?has_content || latestEonOrHighestEonothem?has_content>
+                  <#if earliestEonOrLowestEonothem?has_content && latestEonOrHighestEonothem?has_content>
+                      <p>${earliestEonOrLowestEonothem}&nbsp;/&nbsp;${latestEonOrHighestEonothem}</p>
+                  <#elseif earliestEonOrLowestEonothem?has_content>
+                      <p>${earliestEonOrLowestEonothem}</p>
+                  <#elseif latestEonOrHighestEonothem?has_content>
+                      <p>${latestEonOrHighestEonothem}</p>
+                  </#if>
+                </#if>
+              </dd>
+
+              <dt>Era</dt>
+              <dd>
+                <#if earliestEraOrLowestErathem?has_content || latestEraOrHighestErathem?has_content>
+                  <#if earliestEraOrLowestErathem?has_content && latestEraOrHighestErathem?has_content>
+                      <p>${earliestEraOrLowestErathem}&nbsp;/&nbsp;${latestEraOrHighestErathem}</p>
+                  <#elseif earliestEraOrLowestErathem?has_content>
+                      <p>${earliestEonOrLowestEonothem}</p>
+                  <#elseif latestEraOrHighestErathem?has_content>
+                      <p>${latestEraOrHighestErathem}</p>
+                  </#if>
+                </#if>
+              </dd>
+
+              <dt>Period</dt>
+              <dd>
+                <#if earliestPeriodOrLowestSystem?has_content || latestPeriodOrHighestSystem?has_content>
+                  <#if earliestPeriodOrLowestSystem?has_content && latestPeriodOrHighestSystem?has_content>
+                      <p>${earliestPeriodOrLowestSystem}&nbsp;/&nbsp;${latestPeriodOrHighestSystem}</p>
+                  <#elseif earliestPeriodOrLowestSystem?has_content>
+                      <p>${earliestPeriodOrLowestSystem}</p>
+                  <#elseif latestPeriodOrHighestSystem?has_content>
+                      <p>${latestPeriodOrHighestSystem}</p>
+                  </#if>
+                </#if>
+              </dd>
+
+              <dt>Epoch</dt>
+              <dd>
+                <#if earliestEpochOrLowestSeries?has_content || latestEpochOrHighestSeries?has_content>
+                  <#if earliestEpochOrLowestSeries?has_content && latestEpochOrHighestSeries?has_content>
+                      <p>${earliestEpochOrLowestSeries}&nbsp;/&nbsp;${latestEpochOrHighestSeries}</p>
+                  <#elseif earliestEpochOrLowestSeries?has_content>
+                      <p>${earliestEpochOrLowestSeries}</p>
+                  <#elseif latestEpochOrHighestSeries?has_content>
+                      <p>${latestEpochOrHighestSeries}</p>
+                  </#if>
+                </#if>
+              </dd>
+
+              <dt>Age</dt>
+              <dd>
+                <#if earliestAgeOrLowestStage?has_content || latestAgeOrHighestStage?has_content>
+                  <#if earliestAgeOrLowestStage?has_content && latestAgeOrHighestStage?has_content>
+                      <p>${earliestAgeOrLowestStage}&nbsp;/&nbsp;${latestAgeOrHighestStage}</p>
+                  <#elseif earliestAgeOrLowestStage?has_content>
+                      <p>${earliestAgeOrLowestStage}</p>
+                  <#elseif latestAgeOrHighestStage?has_content>
+                      <p>${latestAgeOrHighestStage}</p>
+                  </#if>
+                </#if>
+              </dd>
+          </dl>
+      </#if>
 
       <#assign lowestBiostratigraphicZone = action.retrieveTerm('lowestBiostratigraphicZone')! />
       <#assign highestBiostratigraphicZone = action.retrieveTerm('highestBiostratigraphicZone')! />
       <#if lowestBiostratigraphicZone?has_content || highestBiostratigraphicZone?has_content>
+        <h3>Biostratigraphic Zone</h3>
         <#if lowestBiostratigraphicZone?has_content && highestBiostratigraphicZone?has_content>
-            <h3>Lowest Biostratigraphic Zone / Highest Biostratigraphic Zone</h3>
             <p>${lowestBiostratigraphicZone}&nbsp;/&nbsp;${highestBiostratigraphicZone}</p>
         <#elseif lowestBiostratigraphicZone?has_content>
-            <h3>Lowest Biostratigraphic Zone</h3>
             <p>${lowestBiostratigraphicZone}</p>
         <#elseif highestBiostratigraphicZone?has_content>
-            <h3>Highest Biostratigraphic Zone</h3>
             <p>${highestBiostratigraphicZone}</p>
         </#if>
       </#if>
