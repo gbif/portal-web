@@ -132,9 +132,54 @@
   </#if>
 </#macro>
 
+<#macro georeferenced header georeferencedDate georeferencedBy georeferenceProtocol georeferenceSources georeferenceVerificationStatus>
+  <#if georeferencedDate?has_content || georeferencedBy?has_content || georeferenceProtocol?has_content || georeferenceSources?has_content || georeferenceVerificationStatus?has_content>
+  <h3>${header}</h3>
+  <p>
+  <dl>
+    <#if georeferencedDate?has_content || georeferencedBy?has_content>
+        <dt>Georeferenced</dt>
+        <dd>
+          <#if georeferencedDate?has_content && georeferencedBy?has_content>
+            ${georeferencedDate}&nbsp;by&nbsp;${georeferencedBy}
+          <#elseif georeferencedDate?has_content>
+            ${georeferencedDate}
+          <#elseif georeferencedBy?has_content>
+            By&nbsp;${georeferencedBy}
+          </#if>
+        </dd>
+    </#if>
+
+    <#if georeferenceProtocol?has_content>
+      <dt>Protocol</dt>
+      <dd>${georeferenceProtocol}</dd>
+    </#if>
+
+    <#if georeferenceSources?has_content>
+        <dt>Sources</dt>
+        <dd>${georeferenceSources}</dd>
+    </#if>
+
+    <#if georeferenceVerificationStatus?has_content>
+        <dt>Status</dt>
+        <dd>${georeferenceVerificationStatus}</dd>
+    </#if>
+  </dl>
+  </p>
+  </#if>
+</#macro>
+
 <#assign locality = action.retrieveTerm('locality')! />
 <#assign island = action.retrieveTerm('island')! />
 <#assign islandGroup = action.retrieveTerm('islandGroup')! />
+<#assign footprintWKT = action.retrieveTerm('footprintWKT')! />
+<#assign footprintSRS = action.retrieveTerm('footprintSRS')! />
+<#assign footprintSpatialFit = action.retrieveTerm('footprintSpatialFit')! />
+<#assign georeferencedDate = action.retrieveTerm('georeferencedDate')! />
+<#assign georeferencedBy = action.retrieveTerm('georeferencedBy')! />
+<#assign georeferenceProtocol = action.retrieveTerm('georeferenceProtocol')! />
+<#assign georeferenceSources = action.retrieveTerm('georeferenceSources')! />
+<#assign georeferenceVerificationStatus = action.retrieveTerm('georeferenceVerificationStatus')! />
 
 <@common.article id="location" title=title titleRight=titleRight class="occurrenceMap">
   <#if showMap>
@@ -161,28 +206,10 @@
       <div class="left left_under_map left_occurrence_detail">
         <@geoClassification header="Geographic Classification" geographicClassification=geographicClassification/>
         <@islandClassification header="Islands" island=island islandGroup=islandGroup />
-
         <@kv header="Habitat" term='habitat' />
-
-        <#assign footprintWKT = action.retrieveTerm('footprintWKT')! />
-        <#assign footprintSRS = action.retrieveTerm('footprintSRS')! />
-        <#assign footprintSpatialFit = action.retrieveTerm('footprintSpatialFit')! />
         <@footprint header="Footprint" wkt=footprintWKT srs=footprintSRS fit=footprintSpatialFit />
-
-        <#assign georeferencedDate = action.retrieveTerm('georeferencedDate')! />
-        <#assign georeferencedBy = action.retrieveTerm('georeferencedBy')! />
-        <#if georeferencedDate?has_content && georeferencedBy?has_content>
-          <@kv header="Georeferenced" value=georeferencedDate  + " by " + georeferencedBy />
-        <#elseif georeferencedDate?has_content>
-          <@kv header="Georeferenced" value=georeferencedDate />
-        <#elseif georeferencedBy?has_content>
-          <@kv header="Georeferenced" value=georeferencedBy />
-       </#if>
-
-       <@kv header="Georeference Protocol" term='georeferenceProtocol' />
-       <@kv header="Georeference Sources" term='georeferenceSources' />
-       <@kv header="Georeference Verification Status" term='georeferenceVerificationStatus' />
-       <@kv header="Remarks" term='locationRemarks' />
+        <@georeferenced header="Georeference" georeferencedDate=georeferencedDate georeferencedBy=georeferencedBy georeferenceProtocol=georeferenceProtocol georeferenceSources=georeferenceSources georeferenceVerificationStatus=georeferenceVerificationStatus />
+        <@kv header="Remarks" term='locationRemarks' />
      </div>
 
      <div class="right right_under_map">
@@ -200,30 +227,11 @@
       <@kv header="Altitude" value=occ.altitude plusMinus=occ.altitudeAccuracy?string />
       <@kv header="Depth" value=occ.depth plusMinus=occ.depthAccuracy?string />
       <@kv header="Water Body" value=occ.waterBody />
-
       <@geoClassification header="Geographic Classification" geographicClassification=geographicClassification/>
       <@islandClassification header="Islands" island=island islandGroup=islandGroup />
-
       <@kv header="Habitat" term='habitat' />
-
-      <#assign footprintWKT = action.retrieveTerm('footprintWKT')! />
-      <#assign footprintSRS = action.retrieveTerm('footprintSRS')! />
-      <#assign footprintSpatialFit = action.retrieveTerm('footprintSpatialFit')! />
       <@footprint header="Footprint" wkt=footprintWKT srs=footprintSRS fit=footprintSpatialFit />
-
-      <#assign georeferencedDate = action.retrieveTerm('georeferencedDate')! />
-      <#assign georeferencedBy = action.retrieveTerm('georeferencedBy')! />
-      <#if georeferencedDate?has_content && georeferencedBy?has_content>
-        <@kv header="Georeferenced" value=georeferencedDate  + " by " + georeferencedBy />
-      <#elseif georeferencedDate?has_content>
-        <@kv header="Georeferenced" value=georeferencedDate />
-      <#elseif georeferencedBy?has_content>
-        <@kv header="Georeferenced" value="By " + georeferencedBy />
-      </#if>
-
-      <@kv header="Georeference Protocol" term='georeferenceProtocol' />
-      <@kv header="Georeference Sources" term='georeferenceSources' />
-      <@kv header="Georeference Verification Status" term='georeferenceVerificationStatus' />
+      <@georeferenced header="Georeference" georeferencedDate=georeferencedDate georeferencedBy=georeferencedBy georeferenceProtocol=georeferenceProtocol georeferenceSources=georeferenceSources georeferenceVerificationStatus=georeferenceVerificationStatus />
       <@kv header="Remarks" term='locationRemarks' />
     </div>
     <div class="right right_under_map">
