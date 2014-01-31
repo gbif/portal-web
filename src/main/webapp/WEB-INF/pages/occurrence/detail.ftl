@@ -96,7 +96,7 @@
   </#if>
 </#macro>
 
-<#macro kv header value="" term="">
+<#macro kv header value="" term="" plusMinus="">
   <#assign retrieved = "" />
   <#if term?has_content>
     <#assign retrieved = action.retrieveTerm(term)!"" />
@@ -104,7 +104,7 @@
   <#if retrieved?has_content || value?has_content>
     <h3>${header}</h3>
     <#-- retrieve value from term, otherwise use incoming value -->
-    <p><#if retrieved?has_content>${retrieved}<#else>${value}</#if></p>
+    <p><#if retrieved?has_content>${retrieved}<#else>${value}<#if plusMinus?has_content>m&nbsp;±&nbsp;${plusMinus}</#if></#if></p>
   </#if>
 </#macro>
 
@@ -149,20 +149,9 @@
       <p class="no_bottom">${locality!}<#if occ.country??><#if locality?has_content>, </#if><a href="<@s.url value='/country/${occ.country.iso2LetterCode}'/>">${occ.country.title}</a></#if></p>
       <p class="light_note">${occ.longitude}, ${occ.latitude} <#if occ.coordinateAccuracy??> ± ${occ.coordinateAccuracy?string}</#if></p>
 
-      <#if occ.waterBody??>
-        <h3>Water Body</h3>
-        <p>${occ.waterBody}</p>
-      </#if>
-
-      <#if occ.altitude??>
-        <h3>Altitude</h3>
-        <p>${occ.altitude}m<#if occ.altitudeAccuracy??> ± ${occ.altitudeAccuracy?string}</#if></p>
-      </#if>
-
-      <#if occ.depth??>
-        <h3>Depth</h3>
-        <p>${occ.depth}m<#if occ.depthAccuracy??> ± ${occ.depthAccuracy?string}</#if></p>
-      </#if>
+      <@kv header="Water Body" value=occ.waterBody />
+      <@kv header="Altitude" value=occ.altitude plusMinus=occ.altitudeAccuracy?string />
+      <@kv header="Depth" value=occ.depth plusMinus=occ.depthAccuracy?string />
 
       <#-- TODO: maximum distance above surface with accuracy, see http://dev.gbif.org/issues/browse/POR-1746 -->
 
@@ -173,11 +162,7 @@
         <@geoClassification header="Geographic Classification" geographicClassification=geographicClassification/>
         <@islandClassification header="Islands" island=island islandGroup=islandGroup />
 
-        <#assign habitat = action.retrieveTerm('habitat')! />
-        <#if habitat?has_content>
-            <h3>Habitat</h3>
-            <p>${habitat}</p>
-        </#if>
+        <@kv header="Habitat" term='habitat' />
 
         <#assign footprintWKT = action.retrieveTerm('footprintWKT')! />
         <#assign footprintSRS = action.retrieveTerm('footprintSRS')! />
@@ -212,30 +197,14 @@
 
     <div class="left">
       <@kv header="Locality" term='locality' />
-
-      <#if occ.altitude??>
-          <h3>Altitude</h3>
-          <p>${occ.altitude}m<#if occ.altitudeAccuracy??> ± ${occ.altitudeAccuracy?string}</#if></p>
-      </#if>
-
-      <#if occ.depth??>
-          <h3>Depth</h3>
-          <p>${occ.depth}m<#if occ.depthAccuracy??> ± ${occ.depthAccuracy?string}</#if></p>
-      </#if>
-
-      <#if occ.waterBody??>
-          <h3>Water Body</h3>
-          <p>${occ.waterBody}</p>
-      </#if>
+      <@kv header="Altitude" value=occ.altitude plusMinus=occ.altitudeAccuracy?string />
+      <@kv header="Depth" value=occ.depth plusMinus=occ.depthAccuracy?string />
+      <@kv header="Water Body" value=occ.waterBody />
 
       <@geoClassification header="Geographic Classification" geographicClassification=geographicClassification/>
       <@islandClassification header="Islands" island=island islandGroup=islandGroup />
 
-      <#assign habitat = action.retrieveTerm('habitat')! />
-      <#if habitat?has_content>
-          <h3>Habitat</h3>
-          <p>${habitat}</p>
-      </#if>
+      <@kv header="Habitat" term='habitat' />
 
       <#assign footprintWKT = action.retrieveTerm('footprintWKT')! />
       <#assign footprintSRS = action.retrieveTerm('footprintSRS')! />
@@ -277,11 +246,6 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
         <h3>Identified as ${occ.rank!"species"}</h3>
         <p><a href="<@s.url value='/species/${occ.taxonKey?c}'/>">${occ.scientificName}</a><#if identificationQualifier?has_content>&nbsp;[${identificationQualifier}]</#if></p>
 
-        <#if occ.identificationNotes??>
-          <h3>Notes</h3>
-          <p>${occ.identificationNotes}</p>
-        </#if>
-
         <h3>Taxonomic classification</h3>
         <#assign classification=occ.higherClassificationMap />
         <ul class="taxonomy last-horizontal-line">
@@ -296,23 +260,9 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
           <p><@s.text name="enum.typestatus.${occ.typeStatus!'UNKNOWN'}"/><#if occ.typifiedName??>&nbsp;of&nbsp;${occ.typifiedName}</#if></p>
       </#if>
 
-      <#assign previousIdentifications = action.retrieveTerm('previousIdentifications')! />
-      <#if previousIdentifications?has_content>
-          <h3>Previous Identifications</h3>
-          <p>${previousIdentifications}</p>
-      </#if>
-
-      <#assign identificationReferences = action.retrieveTerm('identificationReferences')! />
-      <#if identificationReferences?has_content>
-          <h3>References</h3>
-          <p>${identificationReferences}</p>
-      </#if>
-
-      <#assign identificationRemarks = action.retrieveTerm('identificationRemarks')! />
-      <#if identificationRemarks?has_content>
-          <h3>Remarks</h3>
-          <p>${identificationRemarks}</p>
-      </#if>
+      <@kv header="Previous Identifications" term='previousIdentifications' />
+      <@kv header="References" term='identificationReferences' />
+      <@kv header="Remarks" term='identificationRemarks' />
 
     </div>
     <div class="right">
@@ -326,23 +276,9 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
         <@kv header="Identified" value="By " + identifiedBy />
       </#if>
 
-      <#assign individualID = action.retrieveTerm('individualID')! />
-      <#if individualID?has_content>
-          <h3>Individual ID</h3>
-          <p>${individualID}</p>
-      </#if>
-
-      <#assign identificationID = action.retrieveTerm('identificationID')! />
-      <#if identificationID?has_content>
-          <h3>Identification ID</h3>
-          <p>${identificationID}</p>
-      </#if>
-
-      <#assign identificationVerificationStatus = action.retrieveTerm('identificationVerificationStatus')! />
-      <#if identificationVerificationStatus?has_content>
-          <h3>Verification Status</h3>
-          <p>${identificationVerificationStatus}</p>
-      </#if>
+      <@kv header="Individual ID" term='individualID' />
+      <@kv header="Identification ID" term='identificationID' />
+      <@kv header="Verification Status" term='identificationVerificationStatus' />
     </div>
 
 </@common.article>
@@ -367,52 +303,13 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
         </#if>
       </#if>
 
-      <#if occ.collectorName??>
-        <h3>Collector name</h3>
-        <p>${occ.collectorName}</p>
-      </#if>
-
-      <#assign associatedOccurrences = action.retrieveTerm('associatedOccurrences')! />
-      <#if associatedOccurrences?has_content>
-          <h3>Associated Occurrences</h3>
-          <p>${associatedOccurrences}</p>
-      </#if>
-
-      <#assign associatedSequences = action.retrieveTerm('associatedSequences')! />
-      <#if associatedSequences?has_content>
-          <h3>Associated Sequences</h3>
-          <p>${associatedSequences}</p>
-      </#if>
-
-      <#assign associatedReferences = action.retrieveTerm('associatedReferences')! />
-      <#if associatedReferences?has_content>
-          <h3>Associated References</h3>
-          <p>${associatedReferences}</p>
-      </#if>
-
-      <#assign associatedTaxa = action.retrieveTerm('associatedTaxa')! />
-      <#if associatedTaxa?has_content>
-          <h3>Associated Taxa</h3>
-          <p>${associatedTaxa}</p>
-      </#if>
-
-      <#assign samplingProtocol = action.retrieveTerm('samplingProtocol')! />
-      <#if samplingProtocol?has_content>
-          <h3>Sampling Protocol</h3>
-          <p>${samplingProtocol}</p>
-      </#if>
-
-      <#assign samplingEffort = action.retrieveTerm('samplingEffort')! />
-      <#if samplingEffort?has_content>
-          <h3>Sampling Effort</h3>
-          <p>${samplingEffort}</p>
-      </#if>
-
-        <#assign fieldNotes = action.retrieveTerm('fieldNotes')! />
-        <#if fieldNotes?has_content>
-            <h3>Field Notes</h3>
-            <p>${fieldNotes}</p>
-        </#if>
+      <@kv header="Associated Occurrences" term='associatedOccurrences' />
+      <@kv header="Associated Sequences" term='associatedSequences' />
+      <@kv header="Associated References" term='associatedReferences' />
+      <@kv header="Associated Taxa" term='associatedTaxa' />
+      <@kv header="Sampling Protocol" term='samplingProtocol' />
+      <@kv header="Sampling Effort" term='samplingEffort' />
+      <@kv header="Field Notes" term='fieldNotes' />
 
       <#-- Combine occurrence remarks and event remarks under the same heading Remarks -->
       <#assign occurrenceRemarks = action.retrieveTerm('occurrenceRemarks')! />
@@ -434,63 +331,16 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
   </div>
 
   <div class="right">
-
-    <#if occ.lifeStage??>
-      <h3>Life Stage</h3>
-      <p>${occ.lifeStage?string?lower_case?cap_first}</p>
-    </#if>
-
-    <#if occ.sex??>
-      <h3>Sex</h3>
-      <p>${occ.sex?string?lower_case?cap_first}</p>
-    </#if>
-
-    <#if occ.establishmentMeans??>
-      <h3>Establishment Means</h3>
-      <p>${occ.establishmentMeans?string?lower_case?cap_first}</p>
-    </#if>
-
-    <#assign reproductiveCondition = action.retrieveTerm('reproductiveCondition')! />
-    <#if reproductiveCondition?has_content>
-        <h3>Reproductive Condition</h3>
-        <p>${reproductiveCondition}</p>
-    </#if>
-
-    <#if occ.individualCount??>
-        <h3>Individual Count</h3>
-        <p>${occ.individualCount?string}</p>
-    </#if>
-
-    <#assign behavior = action.retrieveTerm('behavior')! />
-    <#if behavior?has_content>
-        <h3>Behavior</h3>
-        <p>${behavior}</p>
-    </#if>
-
-    <#assign occurrenceStatus = action.retrieveTerm('occurrenceStatus')! />
-    <#if occurrenceStatus?has_content>
-        <h3>Occurrence Status</h3>
-        <p>${occurrenceStatus}</p>
-    </#if>
-
-    <#assign recordNumber = action.retrieveTerm('recordNumber')! />
-    <#if recordNumber?has_content>
-        <h3>Record Number</h3>
-        <p>${recordNumber}</p>
-    </#if>
-
-    <#assign eventID = action.retrieveTerm('eventID')! />
-    <#if eventID?has_content>
-        <h3>Event ID</h3>
-        <p>${eventID}</p>
-    </#if>
-
-    <#assign fieldNumber = action.retrieveTerm('fieldNumber')! />
-    <#if fieldNumber?has_content>
-        <h3>Field Number</h3>
-        <p>${fieldNumber}</p>
-    </#if>
-
+    <@kv header="Life Stage" value=occ.lifeStage?string?lower_case?cap_first />
+    <@kv header="Sex" value=occ.sex?string?lower_case?cap_first />
+    <@kv header="Establishment Means" value=occ.establishmentMeans?string?lower_case?cap_first />
+    <@kv header="Reproductive Condition" term='reproductiveCondition' />
+    <@kv header="Individual Count" value=occ.individualCount />
+    <@kv header="Behavior" term='behavior' />
+    <@kv header="Occurrence Status" term='occurrenceStatus' />
+    <@kv header="Record Number" term='recordNumber' />
+    <@kv header="Event ID" term='eventID' />
+    <@kv header="Field Number" term='fieldNumber' />
   </div>
 
 </@common.article>
@@ -498,9 +348,7 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
 <@common.article id="source" title="Source details">
 <div class="left">
     <h3>Data publisher</h3>
-    <p>
-        <a href="<@s.url value='/publisher/${publisher.key}'/>" title="">${publisher.title}</a>
-    </p>
+    <p><a href="<@s.url value='/publisher/${publisher.key}'/>" title="">${publisher.title}</a></p>
 
   <#-- institution code and institution ID on same line -->
   <#assign institutionCode = action.retrieveTerm('institutionCode')! />
@@ -516,16 +364,10 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
       <p>${institutionID}</p>
   </#if>
 
-  <#assign ownerInstitutionCode = action.retrieveTerm('ownerInstitutionCode')! />
-  <#if ownerInstitutionCode?has_content>
-      <h3>Owner Institution Code</h3>
-      <p>${ownerInstitutionCode}</p>
-  </#if>
+  <@kv header="Owner Institution Code" term='ownerInstitutionCode' />
 
-    <h3>Dataset</h3>
-    <p>
-        <a href="<@s.url value='/dataset/${dataset.key}'/>" title="">${dataset.title}</a>
-    </p>
+  <h3>Dataset</h3>
+  <p><a href="<@s.url value='/dataset/${dataset.key}'/>" title="">${dataset.title}</a></p>
 
 <#-- dataset and dataset ID on same line -->
   <#assign datasetID = action.retrieveTerm('datasetID')! />
@@ -568,71 +410,29 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
       <p>${type}</p>
   </#if>
 
-  <#assign disposition = action.retrieveTerm('disposition')! />
-  <#if disposition?has_content>
-      <h3>Disposition</h3>
-      <p>${disposition}</p>
-  </#if>
-
-  <#assign preparations = action.retrieveTerm('preparations')! />
-  <#if preparations?has_content>
-      <h3>Preparations</h3>
-      <p>${preparations}</p>
-  </#if>
-
-  <#assign dataGeneralizations = action.retrieveTerm('dataGeneralizations')! />
-  <#if dataGeneralizations?has_content>
-      <h3>Data Generalizations</h3>
-      <p>${dataGeneralizations}</p>
-  </#if>
-
-  <#assign informationWithheld = action.retrieveTerm('informationWithheld')! />
-  <#if informationWithheld?has_content>
-      <h3>Information Withheld</h3>
-      <p>${informationWithheld}</p>
-  </#if>
-
-  <#assign dynamicProperties = action.retrieveTerm('dynamicProperties')! />
-  <#if dynamicProperties?has_content>
-      <h3>Dynamic Properties</h3>
-      <p>${dynamicProperties}</p>
-  </#if>
-
+  <@kv header="Disposition" term='disposition' />
+  <@kv header="Preparations" term='preparations' />
+  <@kv header="Data Generalizations" term='dataGeneralizations' />
+  <@kv header="Information Withheld" term='informationWithheld' />
+  <@kv header="Dynamic Properties" term='dynamicProperties' />
 </div>
 
 <div class="right">
 
-  <#assign occurrenceID = action.retrieveTerm('occurrenceID')! />
-  <#if occurrenceID?has_content>
-      <h3>Occurrence ID</h3>
-      <p>${occurrenceID}</p>
-  </#if>
+  <@kv header="Occurrence ID" term='occurrenceID' />
 
-    <h3>GBIF ID</h3>
-    <p>${id?c}</p>
+  <h3>GBIF ID</h3>
+  <p>${id?c}</p>
 
-  <#assign catalogNumber = action.retrieveTerm('catalogNumber')! />
-  <#if catalogNumber?has_content>
-      <h3>Catalog number</h3>
-      <p>${catalogNumber}</p>
-  </#if>
-
-  <#assign otherCatalogNumbers = action.retrieveTerm('otherCatalogNumbers')! />
-  <#if otherCatalogNumbers?has_content>
-      <h3>Other Catalog numbers</h3>
-      <p>${otherCatalogNumbers}</p>
-  </#if>
+  <@kv header="Catalog number" term='catalogNumber' />
+  <@kv header="Other Catalog numbers" term='otherCatalogNumbers' />
 
   <#list occ.identifiers as i>
       <h3>${i.type}</h3>
       <p>${i.identifier}</p>
   </#list>
 
-  <#assign language = action.retrieveTerm('language')! />
-  <#if language?has_content>
-      <h3>Language</h3>
-      <p>${language}</p>
-  </#if>
+  <@kv header="Language" term='language' />
 </div>
 
 </@common.article>
@@ -746,46 +546,15 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
         </#if>
       </#if>
 
-      <#assign bed = action.retrieveTerm('bed')! />
-      <#if bed?has_content>
-          <h3>Bed</h3>
-          <p>${bed}</p>
-      </#if>
-
-      <#assign formation = action.retrieveTerm('formation')! />
-      <#if formation?has_content>
-          <h3>Formation</h3>
-          <p>${formation}</p>
-      </#if>
-
-      <#assign group = action.retrieveTerm('group')! />
-      <#if group?has_content>
-          <h3>Group</h3>
-          <p>${group}</p>
-      </#if>
-
-      <#assign member = action.retrieveTerm('member')! />
-      <#if member?has_content>
-          <h3>Member</h3>
-          <p>${member}</p>
-      </#if>
-
+      <@kv header="Bed" term='bed' />
+      <@kv header="Formation" term='formation' />
+      <@kv header="Group" term='group' />
+      <@kv header="Member" term='member' />
     </div>
 
     <div class="right">
-
-      <#assign geologicalContextID = action.retrieveTerm('geologicalContextID')! />
-      <#if geologicalContextID?has_content>
-          <h3>Geological Context ID</h3>
-          <p>${geologicalContextID}</p>
-      </#if>
-
-      <#assign lithostratigraphicTerms = action.retrieveTerm('lithostratigraphicTerms')! />
-      <#if lithostratigraphicTerms?has_content>
-          <h3>Lithostratigraphic Terms</h3>
-          <p>${lithostratigraphicTerms}</p>
-      </#if>
-
+      <@kv header="Geological Context ID" term='geologicalContextID' />
+      <@kv header="Lithostratigraphic Terms" term='lithostratigraphicTerms' />
     </div>
 
   </@common.article>
