@@ -473,70 +473,50 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
         <h3>Stratigraphic Classification</h3>
           <p>
           <dl>
+            <#if earliestEonOrLowestEonothem?has_content || latestEonOrHighestEonothem?has_content>
               <dt>Eon</dt>
               <dd>
-                <#if earliestEonOrLowestEonothem?has_content || latestEonOrHighestEonothem?has_content>
-                  <#if earliestEonOrLowestEonothem?has_content && latestEonOrHighestEonothem?has_content>
-                  ${earliestEonOrLowestEonothem}&nbsp;/&nbsp;${latestEonOrHighestEonothem}
-                  <#elseif earliestEonOrLowestEonothem?has_content>
-                  ${earliestEonOrLowestEonothem}
-                  <#elseif latestEonOrHighestEonothem?has_content>
-                  ${latestEonOrHighestEonothem}
-                  </#if>
-                </#if>
+                  ${earliestEonOrLowestEonothem!}
+                  <#if earliestEonOrLowestEonothem?has_content && latestEonOrHighestEonothem?has_content>-</#if>
+                  ${latestEonOrHighestEonothem!}
               </dd>
+            </#if>
 
+            <#if earliestEraOrLowestErathem?has_content || latestEraOrHighestErathem?has_content>
               <dt>Era</dt>
               <dd>
-                <#if earliestEraOrLowestErathem?has_content || latestEraOrHighestErathem?has_content>
-                  <#if earliestEraOrLowestErathem?has_content && latestEraOrHighestErathem?has_content>
-                  ${earliestEraOrLowestErathem}&nbsp;/&nbsp;${latestEraOrHighestErathem}
-                  <#elseif earliestEraOrLowestErathem?has_content>
-                  ${earliestEonOrLowestEonothem}
-                  <#elseif latestEraOrHighestErathem?has_content>
-                  ${latestEraOrHighestErathem}
-                  </#if>
-                </#if>
+                  ${earliestEonOrLowestEonothem!}
+                  <#if earliestEraOrLowestErathem?has_content && latestEraOrHighestErathem?has_content>-</#if>
+                  ${latestEraOrHighestErathem!}
               </dd>
+            </#if>
 
+            <#if earliestPeriodOrLowestSystem?has_content || latestPeriodOrHighestSystem?has_content>
               <dt>Period</dt>
               <dd>
-                <#if earliestPeriodOrLowestSystem?has_content || latestPeriodOrHighestSystem?has_content>
-                  <#if earliestPeriodOrLowestSystem?has_content && latestPeriodOrHighestSystem?has_content>
-                  ${earliestPeriodOrLowestSystem}&nbsp;/&nbsp;${latestPeriodOrHighestSystem}
-                  <#elseif earliestPeriodOrLowestSystem?has_content>
-                  ${earliestPeriodOrLowestSystem}
-                  <#elseif latestPeriodOrHighestSystem?has_content>
-                  ${latestPeriodOrHighestSystem}
-                  </#if>
-                </#if>
+                  ${earliestPeriodOrLowestSystem!}
+                  <#if earliestPeriodOrLowestSystem?has_content && latestPeriodOrHighestSystem?has_content>-</#if>
+                  ${latestPeriodOrHighestSystem!}
               </dd>
+            </#if>
 
+            <#if earliestEpochOrLowestSeries?has_content || latestEpochOrHighestSeries?has_content>
               <dt>Epoch</dt>
               <dd>
-                <#if earliestEpochOrLowestSeries?has_content || latestEpochOrHighestSeries?has_content>
-                  <#if earliestEpochOrLowestSeries?has_content && latestEpochOrHighestSeries?has_content>
-                  ${earliestEpochOrLowestSeries}&nbsp;/&nbsp;${latestEpochOrHighestSeries}
-                  <#elseif earliestEpochOrLowestSeries?has_content>
-                  ${earliestEpochOrLowestSeries}
-                  <#elseif latestEpochOrHighestSeries?has_content>
-                  ${latestEpochOrHighestSeries}
-                  </#if>
-                </#if>
+                  ${earliestEpochOrLowestSeries!}
+                  <#if earliestEpochOrLowestSeries?has_content && latestEpochOrHighestSeries?has_content>-</#if>
+                  ${latestEpochOrHighestSeries!}
               </dd>
+            </#if>
 
+            <#if earliestAgeOrLowestStage?has_content || latestAgeOrHighestStage?has_content>
               <dt>Age</dt>
               <dd>
-                <#if earliestAgeOrLowestStage?has_content || latestAgeOrHighestStage?has_content>
-                  <#if earliestAgeOrLowestStage?has_content && latestAgeOrHighestStage?has_content>
-                  ${earliestAgeOrLowestStage}&nbsp;/&nbsp;${latestAgeOrHighestStage}
-                  <#elseif earliestAgeOrLowestStage?has_content>
-                  ${earliestAgeOrLowestStage}
-                  <#elseif latestAgeOrHighestStage?has_content>
-                  ${latestAgeOrHighestStage}
-                  </#if>
-                </#if>
+                  ${earliestAgeOrLowestStage!}
+                  <#if earliestAgeOrLowestStage?has_content && latestAgeOrHighestStage?has_content>-</#if>
+                  ${latestAgeOrHighestStage!}
               </dd>
+            </#if>
           </dl>
           </p>
       </#if>

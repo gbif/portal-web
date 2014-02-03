@@ -15,19 +15,20 @@
   <#if occurrenceID?has_content>
     <h1>${occurrenceID}</h1>
   <#else>
-    <h1>GBIF ID: ${id?c}</h1>
+    <h1>GBIF: ${id?c}</h1>
   </#if>
 
   <h3><@s.text name="enum.basisofrecord.${occ.basisOfRecord!'UNKNOWN'}"/> of
     <#if occ.taxonKey??>
       <a href="<@s.url value='/species/${occ.taxonKey?c}'/>">${occ.scientificName}</a>
     <#else>
-      a name which cant be interpreted. <br/>
-      Please see the <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">verbatim version</a> for source details
+      a name which cant be <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">interpreted</a>
     </#if>
     <#if occ.eventDate??>
       recorded on ${occ.eventDate!?date?string.medium}
     </#if>
+  </h3>
+  <h3>
     from <a href="<@s.url value='/dataset/${dataset.key!}'/>">${dataset.title!"???"}</a> dataset
   </h3>
 </content>
