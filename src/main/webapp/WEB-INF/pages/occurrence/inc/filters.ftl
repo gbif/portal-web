@@ -117,8 +117,8 @@
         <div class="inner filter_view">
           <h4 class="title"><%= title %></h4>
           <div class="filter">
-            <h4 class="title">Select </h4>
-            <ul class="multi-select">            
+            <h4 class="title">Select </h4>            
+            <ul class="multi-select" style="height:300px !important; overflow:scroll !important; padding-bottom:10px !important;">            
              <#list typeStatuses as itemValue>         
                <li key="${itemValue}"><a>${action.getFilterTitle('typeStatus',itemValue)}</a></li>         
              </#list>
