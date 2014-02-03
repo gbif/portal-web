@@ -75,7 +75,8 @@ public class DetailAction extends OccurrenceBaseAction {
       fragmentExists = occurrenceService.getFragment(id) != null;
       // check if the mock occurrence should be loaded
       // TODO: revert change when moving to production
-      VerbatimOccurrence v = id == -1000000000 ? MockOccurrenceFactory.getMockOccurrence() : occurrenceService.get(id);
+      VerbatimOccurrence v =
+        id == -1000000000 ? MockOccurrenceFactory.getMockOccurrence() : occurrenceService.getVerbatim(id);
 
       for (String group : DwcTerm.GROUPS) {
         for (DwcTerm t : DwcTerm.listByGroup(group)) {
@@ -113,7 +114,7 @@ public class DetailAction extends OccurrenceBaseAction {
       LOG.error("Can't load verbatim data for occurrence {}: {}", id, e);
     }
 
-    return SUCCESS;
+     return SUCCESS;
   }
 
   /**

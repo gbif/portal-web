@@ -192,11 +192,11 @@
 
       <h3>Locality</h3>
       <p class="no_bottom">${locality!}<#if occ.country??><#if locality?has_content>, </#if><a href="<@s.url value='/country/${occ.country.iso2LetterCode}'/>">${occ.country.title}</a></#if></p>
-      <p class="light_note">${occ.longitude}, ${occ.latitude} <#if occ.coordinateAccuracy??> ± ${occ.coordinateAccuracy?string}</#if></p>
+      <p class="light_note">${occ.longitude}, ${occ.latitude} <#if occ.coordinateAccuracy??> ± ${occ.coordinateAccuracy!?string}</#if></p>
 
       <@kv header="Water Body" value=occ.waterBody />
-      <@kv header="Altitude" value=occ.altitude plusMinus=occ.altitudeAccuracy?string />
-      <@kv header="Depth" value=occ.depth plusMinus=occ.depthAccuracy?string />
+      <@kv header="Altitude" value=occ.altitude plusMinus=occ.altitudeAccuracy!?string />
+      <@kv header="Depth" value=occ.depth plusMinus=occ.depthAccuracy!?string />
 
       <#-- TODO: maximum distance above surface with accuracy, see http://dev.gbif.org/issues/browse/POR-1746 -->
 
@@ -224,8 +224,8 @@
 
     <div class="left">
       <@kv header="Locality" term='locality' />
-      <@kv header="Altitude" value=occ.altitude plusMinus=occ.altitudeAccuracy?string />
-      <@kv header="Depth" value=occ.depth plusMinus=occ.depthAccuracy?string />
+      <@kv header="Altitude" value=occ.altitude plusMinus=occ.altitudeAccuracy!?string />
+      <@kv header="Depth" value=occ.depth plusMinus=occ.depthAccuracy!?string />
       <@kv header="Water Body" value=occ.waterBody />
       <@geoClassification header="Geographic Classification" geographicClassification=geographicClassification/>
       <@islandClassification header="Islands" island=island islandGroup=islandGroup />
@@ -277,9 +277,9 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
 
       <#assign identifiedBy = action.retrieveTerm('identifiedBy')! />
       <#if occ.dateIdentified?? && identifiedBy?has_content>
-        <@kv header="Identified" value=occ.dateIdentified?date?string.medium!  + " by " + identifiedBy />
+        <@kv header="Identified" value=occ.dateIdentified!?date?string.medium!  + " by " + identifiedBy />
       <#elseif occ.dateIdentified??>
-        <@kv header="Identified" value=occ.dateIdentified?date?string.medium! />
+        <@kv header="Identified" value=occ.dateIdentified!?date?string.medium! />
       <#elseif identifiedBy?has_content>
         <@kv header="Identified" value="By " + identifiedBy />
       </#if>
@@ -301,7 +301,7 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
       <#if occ.eventDate?? || partialGatheringDate?has_content || recordedBy?has_content || verbatimEventDate?has_content >
         <h3>Recorded</h3>
         <#if occ.eventDate??>
-          <p>${occ.eventDate?datetime?string.medium}<#if recordedBy?has_content>&nbsp;by&nbsp;${recordedBy}</#if></p>
+          <p>${occ.eventDate!?datetime?string.medium}<#if recordedBy?has_content>&nbsp;by&nbsp;${recordedBy}</#if></p>
         <#elseif partialGatheringDate?has_content >
           <p>${partialGatheringDate}<#if recordedBy?has_content>&nbsp;by&nbsp;${recordedBy}</#if></p>
         <#elseif verbatimEventDate?has_content >
@@ -339,9 +339,9 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
   </div>
 
   <div class="right">
-    <@kv header="Life Stage" value=occ.lifeStage?string?lower_case?cap_first />
-    <@kv header="Sex" value=occ.sex?string?lower_case?cap_first />
-    <@kv header="Establishment Means" value=occ.establishmentMeans?string?lower_case?cap_first />
+    <@kv header="Life Stage" value=occ.lifeStage!?string?lower_case?cap_first />
+    <@kv header="Sex" value=occ.sex!?string?lower_case?cap_first />
+    <@kv header="Establishment Means" value=occ.establishmentMeans!?string?lower_case?cap_first />
     <@kv header="Reproductive Condition" term='reproductiveCondition' />
     <@kv header="Individual Count" value=occ.individualCount />
     <@kv header="Behavior" term='behavior' />
