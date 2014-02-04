@@ -691,18 +691,17 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
 <#assign rightsHolder = action.retrieveTerm('rightsHolder')!"" />
 <@citationArticle bibliographicCitation=bibliographicCitation rights=rights accessRights=accessRights rightsHolder=rightsHolder dataset=dataset publisher=publisher />
 
-<@common.notice title="Further information">
-  <#if occ.modified??>
-  <p>Source record updated ${occ.modified?date?string.medium}</p>
-  </#if>
-<#if occ.lastCrawled??>
-  <p>Last crawled ${occ.lastCrawled?date?string.medium}</p>
-</#if>
-<#if occ.lastInterpreted??>
-  <p>Last interpreted ${occ.lastInterpreted?date?string.medium}</p>
-</#if>
-<p>There may be more details available about this occurrence in the
-  <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">verbatim version</a> of the record</p>
+<@common.notice title="Record history">
+  <p>
+    This record was last modified in GBIF on ${occ.lastInterpreted?date?string.medium}.
+    The source was last visited by GBIF on ${occ.lastCrawled?date?string.medium}.
+    <#if occ.modified??>
+      It was last updated by the publisher on ${occ.modified?date?string.medium}.
+    </#if>
+  </p>
+  <p>A record will be modified by GBIF when either the source record has been changed by the publisher, or improvements in the GBIF processing warrant an update.</p>
+
+  <p>There may be more details available about this occurrence in the <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">verbatim version</a> of the record</p>
 </@common.notice>
 
 
