@@ -705,7 +705,7 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
 </@common.notice>
 
 
-<#if occ.issues??>
+<#if occ.issues?has_content>
 <@common.notice title="Interpretation issues">
   <a name="issues"/>
   <p>GBIF found issues interpreting the <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">verbatim content</a> of this record:</p>
