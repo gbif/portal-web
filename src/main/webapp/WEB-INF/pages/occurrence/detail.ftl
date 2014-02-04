@@ -773,12 +773,13 @@ member?has_content || geologicalContextID?has_content || lithostratigraphicTerms
       The source was last visited by GBIF on ${occ.lastCrawled?date?string.medium}.
     </#if>
     <#if occ.modified??>
-      It was last updated by the publisher on ${occ.modified?date?string.medium}.
+      It was last updated according to the publisher on ${occ.modified?date?string.medium}.
     </#if>
   </p>
-  <p>A record will be modified by GBIF when either the source record has been changed by the publisher, or improvements in the GBIF processing warrant an update.</p>
-
-  <p>There may be more details available about this occurrence in the <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">verbatim version</a> of the record</p>
+  <p>
+    A record will be modified by GBIF when either the source record has been changed by the publisher, or improvements in the GBIF processing warrant an update.
+    There may be more details available about this occurrence in the <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">verbatim version</a> of the record.
+  </p>
 </@common.notice>
 
 
