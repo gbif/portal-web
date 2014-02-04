@@ -696,7 +696,7 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
     This record was last modified in GBIF on ${occ.lastInterpreted?date?string.medium}.
     The source was last visited by GBIF on ${occ.lastCrawled?date?string.medium}.
     <#if occ.modified??>
-      It was last updated by the publisher on ${occ.modified?date?string.medium}.
+      It was last updated according to the publisher on ${occ.modified?date?string.medium}.
     </#if>
   </p>
   <p>
