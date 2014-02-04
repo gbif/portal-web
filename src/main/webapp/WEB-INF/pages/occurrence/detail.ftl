@@ -96,15 +96,11 @@
   </#if>
 </#macro>
 
-<#macro kv header value="" term="" plusMinus="">
-  <#assign retrieved = "" />
-  <#if term?has_content>
-    <#assign retrieved = action.retrieveTerm(term)!"" />
-  </#if>
-  <#if retrieved?has_content || value?has_content>
+<#macro kv header value="" plusMinus="">
+  <#if value?has_content>
     <h3>${header}</h3>
     <#-- retrieve value from term, otherwise use incoming value -->
-    <p><#if retrieved?has_content>${retrieved}<#else>${value}<#if plusMinus?has_content>m&nbsp;±&nbsp;${plusMinus}</#if></#if></p>
+    <p>${value}<#if plusMinus?has_content>m&nbsp;±&nbsp;${plusMinus}</#if></p>
   </#if>
 </#macro>
 
@@ -180,161 +176,209 @@
 <#assign georeferenceProtocol = action.retrieveTerm('georeferenceProtocol')! />
 <#assign georeferenceSources = action.retrieveTerm('georeferenceSources')! />
 <#assign georeferenceVerificationStatus = action.retrieveTerm('georeferenceVerificationStatus')! />
+<#assign habitat = action.retrieveTerm('habitat')! />
+<#assign locationRemarks = action.retrieveTerm('locationRemarks')! />
+<#assign higherGeographyID = action.retrieveTerm('higherGeographyID')! />
+<#assign locationID = action.retrieveTerm('locationID')! />
+<#assign locationAccordingTo = action.retrieveTerm('locationAccordingTo')! />
 
-<@common.article id="location" title=title titleRight=titleRight class="occurrenceMap">
-  <#if showMap>
+<#-- Location block consists of max 25 terms/fields. At least 1 has to be present for block to appear -->
+<#if locality?has_content || island?has_content || islandGroup?has_content || footprintWKT?has_content ||
+footprintSRS?has_content || footprintSpatialFit?has_content || georeferencedDate?has_content ||
+georeferencedBy?has_content || georeferenceProtocol?has_content || georeferenceSources?has_content ||
+georeferenceVerificationStatus?has_content || habitat?has_content || locationRemarks?has_content ||
+higherGeographyID?has_content || locationID?has_content || locationAccordingTo?has_content ||
+occ.latitude?has_content || occ.longitude?has_content || occ.country?has_content || occ.waterBody?has_content ||
+occ.altitude?has_content || occ.altitudeAccuracy?has_content || occ.depth?has_content ||
+occ.depthAccuracy?has_content || (geographicClassification.size > 0) >
+  <@common.article id="location" title=title titleRight=titleRight class="occurrenceMap">
+    <#if showMap>
     <div id="map" class="map">
-      <iframe id="mapframe" name="mapframe" src="${cfg.tileServerBaseUrl!}/point.html?&style=grey-blue&point=${occ.latitude?c},${occ.longitude?c}&lat=${occ.latitude?c}&lng=${occ.longitude?c}&zoom=8" height="100%" width="100%" frameborder="0"/></iframe>
+        <iframe id="mapframe" name="mapframe" src="${cfg.tileServerBaseUrl!}/point.html?&style=grey-blue&point=${occ.latitude?c},${occ.longitude?c}&lat=${occ.latitude?c}&lng=${occ.longitude?c}&zoom=8" height="100%" width="100%" frameborder="0"/></iframe>
     </div>
 
     <div class="right">
-     <div class="scrollable330">
+        <div class="scrollable330">
 
-      <h3>Locality</h3>
-      <p class="no_bottom">${locality!}<#if occ.country??><#if locality?has_content>, </#if><a href="<@s.url value='/country/${occ.country.iso2LetterCode}'/>">${occ.country.title}</a></#if></p>
-      <p class="light_note">${occ.longitude}, ${occ.latitude} <#if occ.coordinateAccuracy??> ± ${occ.coordinateAccuracy!?string}</#if></p>
+            <h3>Locality</h3>
+            <p class="no_bottom">${locality!}<#if occ.country??><#if locality?has_content>, </#if><a href="<@s.url value='/country/${occ.country.iso2LetterCode}'/>">${occ.country.title}</a></#if></p>
+            <p class="light_note">${occ.longitude}, ${occ.latitude} <#if occ.coordinateAccuracy??> ± ${occ.coordinateAccuracy!?string}</#if></p>
 
-      <@kv header="Water Body" value=occ.waterBody />
-      <@kv header="Altitude" value=occ.altitude plusMinus=occ.altitudeAccuracy!?string />
-      <@kv header="Depth" value=occ.depth plusMinus=occ.depthAccuracy!?string />
+          <@kv header="Water Body" value=occ.waterBody />
+          <@kv header="Altitude" value=occ.altitude plusMinus=occ.altitudeAccuracy!?string />
+          <@kv header="Depth" value=occ.depth plusMinus=occ.depthAccuracy!?string />
 
-      <#-- TODO: maximum distance above surface with accuracy, see http://dev.gbif.org/issues/browse/POR-1746 -->
+        <#-- TODO: maximum distance above surface with accuracy, see http://dev.gbif.org/issues/browse/POR-1746 -->
 
-      </div>
+        </div>
     </div>
     <div class="fullwidth fullwidth_under_map">
-      <div class="left left_under_map left_occurrence_detail">
-        <@geoClassification header="Geographic Classification" geographicClassification=geographicClassification/>
+        <div class="left left_under_map left_occurrence_detail">
+          <@geoClassification header="Geographic Classification" geographicClassification=geographicClassification/>
         <@islandClassification header="Islands" island=island islandGroup=islandGroup />
-        <@kv header="Habitat" term='habitat' />
+        <@kv header="Habitat" value=habitat />
         <@footprint header="Footprint" wkt=footprintWKT srs=footprintSRS fit=footprintSpatialFit />
         <@georeferenced header="Georeference" georeferencedDate=georeferencedDate georeferencedBy=georeferencedBy georeferenceProtocol=georeferenceProtocol georeferenceSources=georeferenceSources georeferenceVerificationStatus=georeferenceVerificationStatus />
-        <@kv header="Remarks" term='locationRemarks' />
-     </div>
+        <@kv header="Remarks" value=locationRemarks />
+        </div>
 
-     <div class="right right_under_map">
-       <@kv header="Higher Geography ID" term='higherGeographyID' />
-       <@kv header="Location ID" term='locationID' />
-       <@kv header="Location According To" term='locationAccordingTo' />
-     </div>
-  </div>
+        <div class="right right_under_map">
+          <@kv header="Higher Geography ID" value=higherGeographyID />
+       <@kv header="Location ID" value=locationID />
+       <@kv header="Location According To" value=locationAccordingTo />
+        </div>
+    </div>
 
-  <#else>
+    <#else>
     <div class="fullwidth fullwidth_under_map left_occurrence_detail">
 
-    <div class="left">
-      <@kv header="Locality" term='locality' />
+        <div class="left">
+          <@kv header="Locality" value=locality />
       <@kv header="Altitude" value=occ.altitude plusMinus=occ.altitudeAccuracy!?string />
       <@kv header="Depth" value=occ.depth plusMinus=occ.depthAccuracy!?string />
       <@kv header="Water Body" value=occ.waterBody />
       <@geoClassification header="Geographic Classification" geographicClassification=geographicClassification/>
       <@islandClassification header="Islands" island=island islandGroup=islandGroup />
-      <@kv header="Habitat" term='habitat' />
+      <@kv header="Habitat" value=habitat />
       <@footprint header="Footprint" wkt=footprintWKT srs=footprintSRS fit=footprintSpatialFit />
       <@georeferenced header="Georeference" georeferencedDate=georeferencedDate georeferencedBy=georeferencedBy georeferenceProtocol=georeferenceProtocol georeferenceSources=georeferenceSources georeferenceVerificationStatus=georeferenceVerificationStatus />
-      <@kv header="Remarks" term='locationRemarks' />
+      <@kv header="Remarks" value=locationRemarks />
+        </div>
+        <div class="right right_under_map">
+          <@kv header="Higher Geography ID" value=higherGeographyID />
+      <@kv header="Location ID" value=locationID />
+      <@kv header="Location According To" value=locationAccordingTo />
+        </div>
     </div>
-    <div class="right right_under_map">
-      <@kv header="Higher Geography ID" term='higherGeographyID' />
-       <@kv header="Location ID" term='locationID' />
-       <@kv header="Location According To" term='locationAccordingTo' />
-    </div>
-  </div>
-  </#if>
+    </#if>
+  </@common.article>
+</#if>
 
-</@common.article>
+<#assign previousIdentifications = action.retrieveTerm('previousIdentifications')! />
+<#assign identificationReferences = action.retrieveTerm('identificationReferences')! />
+<#assign identificationRemarks = action.retrieveTerm('identificationRemarks')! />
+<#assign individualID = action.retrieveTerm('individualID')! />
+<#assign identificationID = action.retrieveTerm('identificationID')! />
+<#assign identificationVerificationStatus = action.retrieveTerm('identificationVerificationStatus')! />
 
-<#assign title>
-Identification details <span class='subtitle'>According to <a href="<@s.url value='/dataset/${nubDatasetKey}'/>">GBIF Backbone Taxonomy</a></span>
-</#assign>
-<@common.article id="taxonomy" title=title>
-    <div class="left">
-      <#if occ.taxonKey??>
-        <#assign identificationQualifier = action.retrieveTerm('identificationQualifier')! />
+<#-- Identification block consists of various terms/fields. At least 1 has to be present for block to appear -->
+<#if occ.taxonKey?? || occ.typeStatus?has_content || occ.dateIdentified?has_content ||
+previousIdentifications?has_content || identificationReferences?has_content || identificationRemarks?has_content ||
+individualID?has_content || identificationID?has_content || identificationVerificationStatus?has_content>
+  <#assign title>
+  Identification details <span class='subtitle'>According to <a href="<@s.url value='/dataset/${nubDatasetKey}'/>">GBIF Backbone Taxonomy</a></span>
+  </#assign>
+  <@common.article id="taxonomy" title=title>
+  <div class="left">
+    <#if occ.taxonKey??>
+      <#assign identificationQualifier = action.retrieveTerm('identificationQualifier')! />
         <h3>Identified as ${occ.rank!"species"}</h3>
         <p><a href="<@s.url value='/species/${occ.taxonKey?c}'/>">${occ.scientificName}</a><#if identificationQualifier?has_content>&nbsp;[${identificationQualifier}]</#if></p>
 
         <h3>Taxonomic classification</h3>
-        <#assign classification=occ.higherClassificationMap />
+      <#assign classification=occ.higherClassificationMap />
         <ul class="taxonomy last-horizontal-line">
           <#list classification?keys as key>
-            <li<#if !key_has_next> class="last"</#if>><a href="<@s.url value='/species/${key?c}'/>">${classification.get(key)}</a></li>
+              <li<#if !key_has_next> class="last"</#if>><a href="<@s.url value='/species/${key?c}'/>">${classification.get(key)}</a></li>
           </#list>
         </ul>
-      </#if>
+    </#if>
 
-      <#if occ.typeStatus??>
-          <h3>Type Status</h3>
-          <p><@s.text name="enum.typestatus.${occ.typeStatus!'UNKNOWN'}"/><#if occ.typifiedName??>&nbsp;of&nbsp;${occ.typifiedName}</#if></p>
-      </#if>
+    <#if occ.typeStatus??>
+        <h3>Type Status</h3>
+        <p><@s.text name="enum.typestatus.${occ.typeStatus!'UNKNOWN'}"/><#if occ.typifiedName??>&nbsp;of&nbsp;${occ.typifiedName}</#if></p>
+    </#if>
 
-      <@kv header="Previous Identifications" term='previousIdentifications' />
-      <@kv header="References" term='identificationReferences' />
-      <@kv header="Remarks" term='identificationRemarks' />
+    <@kv header="Previous Identifications" value=previousIdentifications />
+    <@kv header="References" value=identificationReferences />
+    <@kv header="Remarks" value=identificationRemarks />
 
-    </div>
-    <div class="right">
+  </div>
+  <div class="right">
 
-      <#assign identifiedBy = action.retrieveTerm('identifiedBy')! />
       <#if occ.dateIdentified?? && identifiedBy?has_content>
-        <@kv header="Identified" value=occ.dateIdentified!?date?string.medium!  + " by " + identifiedBy />
-      <#elseif occ.dateIdentified??>
-        <@kv header="Identified" value=occ.dateIdentified!?date?string.medium! />
-      <#elseif identifiedBy?has_content>
-        <@kv header="Identified" value="By " + identifiedBy />
-      </#if>
+    <@kv header="Identified" value=occ.dateIdentified!?date?string.medium!  + " by " + identifiedBy />
+  <#elseif occ.dateIdentified??>
+    <@kv header="Identified" value=occ.dateIdentified!?date?string.medium! />
+  <#elseif identifiedBy?has_content>
+    <@kv header="Identified" value="By " + identifiedBy />
+  </#if>
 
-      <@kv header="Individual ID" term='individualID' />
-      <@kv header="Identification ID" term='identificationID' />
-      <@kv header="Verification Status" term='identificationVerificationStatus' />
-    </div>
+      <@kv header="Individual ID" value=individualID />
+      <@kv header="Identification ID" value=identificationID />
+      <@kv header="Verification Status" value=identificationVerificationStatus />
+  </div>
 
-</@common.article>
+  </@common.article>
+</#if>
 
-<@common.article id="occurrence" title="Occurrence details">
+
+<#assign recordedBy = action.retrieveTerm('recordedBy')! />
+<#assign verbatimEventDate = action.retrieveTerm('verbatimEventDate')! />
+<#assign occurrenceRemarks = action.retrieveTerm('occurrenceRemarks')! />
+<#assign eventRemarks = action.retrieveTerm('eventRemarks')! />
+<#assign associatedOccurrences = action.retrieveTerm('associatedOccurrences')! />
+<#assign associatedSequences = action.retrieveTerm('associatedSequences')! />
+<#assign associatedReferences = action.retrieveTerm('associatedReferences')! />
+<#assign associatedTaxa = action.retrieveTerm('associatedTaxa')! />
+<#assign samplingProtocol = action.retrieveTerm('samplingProtocol')! />
+<#assign samplingEffort = action.retrieveTerm('samplingEffort')! />
+<#assign fieldNotes = action.retrieveTerm('fieldNotes')! />
+<#assign reproductiveCondition = action.retrieveTerm('reproductiveCondition')! />
+<#assign behavior = action.retrieveTerm('behavior')! />
+<#assign occurrenceStatus = action.retrieveTerm('occurrenceStatus')! />
+<#assign recordNumber = action.retrieveTerm('recordNumber')! />
+<#assign eventID = action.retrieveTerm('eventID')! />
+<#assign fieldNumber = action.retrieveTerm('fieldNumber')! />
+
+<#-- Occurrence block consists of various terms/fields. At least 1 has to be present for block to appear -->
+<#if occ.lifeStage?has_content || occ.sex?has_content || occ.establishmentMeans?has_content ||
+occ.individualCount?has_content ||recordedBy?has_content || verbatimEventDate?has_content ||
+occurrenceRemarks?has_content || eventRemarks?has_content || associatedOccurrences?has_content ||
+associatedSequences?has_content || associatedReferences?has_content || associatedTaxa?has_content ||
+samplingProtocol?has_content || samplingEffort?has_content || fieldNotes?has_content ||
+reproductiveCondition?has_content || behavior?has_content || occurrenceStatus?has_content || recordNumber?has_content ||
+eventID?has_content || fieldNumber?has_content>
+  <@common.article id="occurrence" title="Occurrence details">
   <div class="left">
-    <div class="col">
+      <div class="col">
 
       <#-- Show event date, partial event date, or verbatim event date in that order of priority + the recorder -->
-      <#assign recordedBy = action.retrieveTerm('recordedBy')! />
-      <#assign verbatimEventDate = action.retrieveTerm('verbatimEventDate')! />
-      <#if occ.eventDate?? || partialGatheringDate?has_content || recordedBy?has_content || verbatimEventDate?has_content >
-        <h3>Recorded</h3>
-        <#if occ.eventDate??>
-          <p>${occ.eventDate!?datetime?string.medium}<#if recordedBy?has_content>&nbsp;by&nbsp;${recordedBy}</#if></p>
-        <#elseif partialGatheringDate?has_content >
-          <p>${partialGatheringDate}<#if recordedBy?has_content>&nbsp;by&nbsp;${recordedBy}</#if></p>
-        <#elseif verbatimEventDate?has_content >
-            <p>${verbatimEventDate}<#if recordedBy?has_content>&nbsp;by&nbsp;${recordedBy}</#if></p>
-        <#else>
-          <p>By&nbsp;${recordedBy}</p>
+        <#if occ.eventDate?? || partialGatheringDate?has_content || recordedBy?has_content || verbatimEventDate?has_content >
+            <h3>Recorded</h3>
+          <#if occ.eventDate??>
+              <p>${occ.eventDate!?datetime?string.medium}<#if recordedBy?has_content>&nbsp;by&nbsp;${recordedBy}</#if></p>
+          <#elseif partialGatheringDate?has_content >
+              <p>${partialGatheringDate}<#if recordedBy?has_content>&nbsp;by&nbsp;${recordedBy}</#if></p>
+          <#elseif verbatimEventDate?has_content >
+              <p>${verbatimEventDate}<#if recordedBy?has_content>&nbsp;by&nbsp;${recordedBy}</#if></p>
+          <#else>
+              <p>By&nbsp;${recordedBy}</p>
+          </#if>
         </#if>
-      </#if>
 
-      <@kv header="Associated Occurrences" term='associatedOccurrences' />
-      <@kv header="Associated Sequences" term='associatedSequences' />
-      <@kv header="Associated References" term='associatedReferences' />
-      <@kv header="Associated Taxa" term='associatedTaxa' />
-      <@kv header="Sampling Protocol" term='samplingProtocol' />
-      <@kv header="Sampling Effort" term='samplingEffort' />
-      <@kv header="Field Notes" term='fieldNotes' />
+        <@kv header="Associated Occurrences" value=associatedOccurrences />
+        <@kv header="Associated Sequences" value=associatedSequences />
+        <@kv header="Associated References" value=associatedReferences />
+        <@kv header="Associated Taxa" value=associatedTaxa />
+        <@kv header="Sampling Protocol" value=samplingProtocol />
+        <@kv header="Sampling Effort" value=samplingEffort />
+        <@kv header="Field Notes" value=fieldNotes />
 
       <#-- Combine occurrence remarks and event remarks under the same heading Remarks -->
-      <#assign occurrenceRemarks = action.retrieveTerm('occurrenceRemarks')! />
-      <#assign eventRemarks = action.retrieveTerm('eventRemarks')! />
-      <#if occurrenceRemarks?has_content || eventRemarks?has_content>
-        <h3>Remarks</h3>
-        <#if occurrenceRemarks?has_content && eventRemarks?has_content>
-          <p>${occurrenceRemarks}</p>
-          <p>${eventRemarks}</p>
-        <#elseif occurrenceRemarks?has_content>
-          <p>${occurrenceRemarks}</p>
-        <#else>
-          <p>${eventRemarks}</p>
+        <#if occurrenceRemarks?has_content || eventRemarks?has_content>
+            <h3>Remarks</h3>
+          <#if occurrenceRemarks?has_content && eventRemarks?has_content>
+              <p>${occurrenceRemarks}</p>
+              <p>${eventRemarks}</p>
+          <#elseif occurrenceRemarks?has_content>
+              <p>${occurrenceRemarks}</p>
+          <#else>
+              <p>${eventRemarks}</p>
+          </#if>
         </#if>
-      </#if>
 
-    </div>
+      </div>
 
   </div>
 
@@ -342,208 +386,239 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
     <@kv header="Life Stage" value=occ.lifeStage!?string?lower_case?cap_first />
     <@kv header="Sex" value=occ.sex!?string?lower_case?cap_first />
     <@kv header="Establishment Means" value=occ.establishmentMeans!?string?lower_case?cap_first />
-    <@kv header="Reproductive Condition" term='reproductiveCondition' />
+    <@kv header="Reproductive Condition" value=reproductiveCondition />
     <@kv header="Individual Count" value=occ.individualCount />
-    <@kv header="Behavior" term='behavior' />
-    <@kv header="Occurrence Status" term='occurrenceStatus' />
-    <@kv header="Record Number" term='recordNumber' />
-    <@kv header="Event ID" term='eventID' />
-    <@kv header="Field Number" term='fieldNumber' />
+    <@kv header="Behavior" value=behavior />
+    <@kv header="Occurrence Status" value=occurrenceStatus />
+    <@kv header="Record Number" value=recordNumber />
+    <@kv header="Event ID" value=eventID />
+    <@kv header="Field Number" value=fieldNumber />
   </div>
 
-</@common.article>
+  </@common.article>
+</#if>
 
-<@common.article id="source" title="Source details">
-<div class="left">
-    <h3>Data publisher</h3>
-    <p><a href="<@s.url value='/publisher/${publisher.key}'/>" title="">${publisher.title}</a></p>
+
+<#assign institutionCode = action.retrieveTerm('institutionCode')! />
+<#assign institutionID = action.retrieveTerm('institutionID')! />
+<#assign datasetID = action.retrieveTerm('datasetID')! />
+<#assign datasetName = action.retrieveTerm('datasetName')! />
+<#assign collectionCode = action.retrieveTerm('collectionCode')! />
+<#assign collectionID = action.retrieveTerm('collectionID')! />
+<#assign type =  action.retrieveTerm('type')! />
+<#assign ownerInstitutionCode =  action.retrieveTerm('ownerInstitutionCode')! />
+<#assign disposition =  action.retrieveTerm('disposition')! />
+<#assign preparations =  action.retrieveTerm('preparations')! />
+<#assign dataGeneralizations =  action.retrieveTerm('dataGeneralizations')! />
+<#assign informationWithheld =  action.retrieveTerm('informationWithheld')! />
+<#assign dynamicProperties =  action.retrieveTerm('dynamicProperties')! />
+<#assign occurrenceID =  action.retrieveTerm('occurrenceID')! />
+<#assign catalogNumber =  action.retrieveTerm('catalogNumber')! />
+<#assign otherCatalogNumbers =  action.retrieveTerm('otherCatalogNumbers')! />
+<#assign language =  action.retrieveTerm('language')! />
+
+<#-- Source block consists of various terms/fields. At least 1 has to be present for block to appear -->
+<#if occ.basisOfRecord?has_content || occ.identifiers?has_content || institutionCode?has_content ||
+institutionID?has_content || datasetID?has_content || datasetName?has_content || collectionCode?has_content ||
+collectionID?has_content || type?has_content || ownerInstitutionCode?has_content || disposition?has_content ||
+preparations?has_content || dataGeneralizations?has_content || informationWithheld?has_content ||
+dynamicProperties?has_content || occurrenceID?has_content || catalogNumber?has_content ||
+otherCatalogNumbers?has_content || language?has_content>
+  <@common.article id="source" title="Source details">
+  <div class="left">
+      <h3>Data publisher</h3>
+      <p><a href="<@s.url value='/publisher/${publisher.key}'/>" title="">${publisher.title}</a></p>
 
   <#-- institution code and institution ID on same line -->
-  <#assign institutionCode = action.retrieveTerm('institutionCode')! />
-  <#assign institutionID = action.retrieveTerm('institutionID')! />
-  <#if institutionCode?has_content && institutionID?has_content>
-      <h3>Institution code / ID</h3>
-      <p>${institutionCode} / ${institutionID}</p>
-  <#elseif institutionCode?has_content>
-      <h3>Institution code</h3>
-      <p>${institutionCode}</p>
-  <#elseif institutionID?has_content>
-      <h3>Institution ID</h3>
-      <p>${institutionID}</p>
-  </#if>
+    <#if institutionCode?has_content && institutionID?has_content>
+        <h3>Institution code / ID</h3>
+        <p>${institutionCode} / ${institutionID}</p>
+    <#elseif institutionCode?has_content>
+        <h3>Institution code</h3>
+        <p>${institutionCode}</p>
+    <#elseif institutionID?has_content>
+        <h3>Institution ID</h3>
+        <p>${institutionID}</p>
+    </#if>
 
-  <@kv header="Owner Institution Code" term='ownerInstitutionCode' />
+    <@kv header="Owner Institution Code" value=ownerInstitutionCode />
 
-  <h3>Dataset</h3>
-  <p><a href="<@s.url value='/dataset/${dataset.key}'/>" title="">${dataset.title}</a></p>
+      <h3>Dataset</h3>
+      <p><a href="<@s.url value='/dataset/${dataset.key}'/>" title="">${dataset.title}</a></p>
 
-<#-- dataset and dataset ID on same line -->
-  <#assign datasetID = action.retrieveTerm('datasetID')! />
-  <#assign datasetName = action.retrieveTerm('datasetName')! />
-  <#if datasetName?has_content && datasetID?has_content>
-      <h3>Dataset Name / ID</h3>
-      <p>${datasetName} / ${datasetID}</p>
-  <#elseif datasetName?has_content>
-      <h3>Dataset Name</h3>
-      <p>${datasetName}</a></p>
-  <#elseif datasetID?has_content>
-      <h3>Dataset ID</h3>
-      <p>${datasetID}</p>
-  </#if>
+  <#-- dataset and dataset ID on same line -->
+    <#if datasetName?has_content && datasetID?has_content>
+        <h3>Dataset Name / ID</h3>
+        <p>${datasetName} / ${datasetID}</p>
+    <#elseif datasetName?has_content>
+        <h3>Dataset Name</h3>
+        <p>${datasetName}</a></p>
+    <#elseif datasetID?has_content>
+        <h3>Dataset ID</h3>
+        <p>${datasetID}</p>
+    </#if>
 
-<#-- collection code and institution ID on same line -->
-  <#assign collectionCode = action.retrieveTerm('collectionCode')! />
-  <#assign collectionID = action.retrieveTerm('collectionID')! />
-  <#if collectionCode?has_content && collectionID?has_content>
-      <h3>Collection code / ID</h3>
-      <p>${collectionCode} / ${collectionID}</p>
-  <#elseif collectionCode?has_content>
-      <h3>Collection code</h3>
-      <p>${collectionCode}</p>
-  <#elseif collectionID?has_content>
-      <h3>Collection ID</h3>
-      <p>${collectionID}</p>
-  </#if>
+  <#-- collection code and institution ID on same line -->
+    <#if collectionCode?has_content && collectionID?has_content>
+        <h3>Collection code / ID</h3>
+        <p>${collectionCode} / ${collectionID}</p>
+    <#elseif collectionCode?has_content>
+        <h3>Collection code</h3>
+        <p>${collectionCode}</p>
+    <#elseif collectionID?has_content>
+        <h3>Collection ID</h3>
+        <p>${collectionID}</p>
+    </#if>
 
-<#-- basis of record and type on same line -->
-  <#assign type =  action.retrieveTerm('type')! />
-  <#if occ.basisOfRecord?has_content && type?has_content>
-      <h3>Basis of record / type</h3>
-      <p><@s.text name="enum.basisofrecord.${occ.basisOfRecord!'UNKNOWN'}"/> / ${type}</p>
-  <#elseif occ.basisOfRecord?has_content>
-      <h3>Basis of record</h3>
-      <p><@s.text name="enum.basisofrecord.${occ.basisOfRecord!'UNKNOWN'}"/></p>
-  <#elseif type?has_content>
-      <h3>Type</h3>
-      <p>${type}</p>
-  </#if>
+  <#-- basis of record and type on same line -->
+    <#if occ.basisOfRecord?has_content && type?has_content>
+        <h3>Basis of record / type</h3>
+        <p><@s.text name="enum.basisofrecord.${occ.basisOfRecord!'UNKNOWN'}"/> / ${type}</p>
+    <#elseif occ.basisOfRecord?has_content>
+        <h3>Basis of record</h3>
+        <p><@s.text name="enum.basisofrecord.${occ.basisOfRecord!'UNKNOWN'}"/></p>
+    <#elseif type?has_content>
+        <h3>Type</h3>
+        <p>${type}</p>
+    </#if>
 
-  <@kv header="Disposition" term='disposition' />
-  <@kv header="Preparations" term='preparations' />
-  <@kv header="Data Generalizations" term='dataGeneralizations' />
-  <@kv header="Information Withheld" term='informationWithheld' />
-  <@kv header="Dynamic Properties" term='dynamicProperties' />
-</div>
+    <@kv header="Disposition" value=disposition />
+    <@kv header="Preparations" value=preparations />
+    <@kv header="Data Generalizations" value=dataGeneralizations />
+    <@kv header="Information Withheld" value=informationWithheld />
+    <@kv header="Dynamic Properties" value=dynamicProperties />
+  </div>
 
-<div class="right">
+  <div class="right">
 
-  <@kv header="Occurrence ID" term='occurrenceID' />
+    <@kv header="Occurrence ID" value=occurrenceID />
 
-  <h3>GBIF ID</h3>
-  <p>${id?c}</p>
+      <h3>GBIF ID</h3>
+      <p>${id?c}</p>
 
-  <@kv header="Catalog number" term='catalogNumber' />
-  <@kv header="Other Catalog numbers" term='otherCatalogNumbers' />
+    <@kv header="Catalog number" value=catalogNumber />
+    <@kv header="Other Catalog numbers" value=otherCatalogNumbers />
 
-  <#list occ.identifiers as i>
-      <h3>${i.type}</h3>
-      <p>${i.identifier}</p>
-  </#list>
+    <#list occ.identifiers as i>
+        <h3>${i.type}</h3>
+        <p>${i.identifier}</p>
+    </#list>
 
-  <@kv header="Language" term='language' />
-</div>
+    <@kv header="Language" value=language />
+  </div>
 
-</@common.article>
+  </@common.article>
+</#if>
 
-<#if verbatim["GeologicalContext"]??>
-  <#-- show additional geological context group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
+<#assign earliestEonOrLowestEonothem = action.retrieveTerm('earliestEonOrLowestEonothem')! />
+<#assign latestEonOrHighestEonothem = action.retrieveTerm('latestEonOrHighestEonothem')! />
+<#assign earliestEraOrLowestErathem = action.retrieveTerm('earliestEraOrLowestErathem')! />
+<#assign latestEraOrHighestErathem = action.retrieveTerm('latestEraOrHighestErathem')! />
+<#assign earliestPeriodOrLowestSystem = action.retrieveTerm('earliestPeriodOrLowestSystem')! />
+<#assign latestPeriodOrHighestSystem = action.retrieveTerm('latestPeriodOrHighestSystem')! />
+<#assign earliestEpochOrLowestSeries = action.retrieveTerm('earliestEpochOrLowestSeries')! />
+<#assign latestEpochOrHighestSeries = action.retrieveTerm('latestEpochOrHighestSeries')! />
+<#assign earliestAgeOrLowestStage = action.retrieveTerm('earliestAgeOrLowestStage')! />
+<#assign latestAgeOrHighestStage = action.retrieveTerm('latestAgeOrHighestStage')! />
+<#assign lowestBiostratigraphicZone = action.retrieveTerm('lowestBiostratigraphicZone')! />
+<#assign highestBiostratigraphicZone = action.retrieveTerm('highestBiostratigraphicZone')! />
+<#assign bed = action.retrieveTerm('bed')! />
+<#assign formation = action.retrieveTerm('formation')! />
+<#assign group = action.retrieveTerm('group')! />
+<#assign member = action.retrieveTerm('member')! />
+<#assign geologicalContextID = action.retrieveTerm('geologicalContextID')! />
+<#assign lithostratigraphicTerms = action.retrieveTerm('lithostratigraphicTerms')! />
+
+<#-- Geology block consists of various terms/fields. At least 1 has to be present for block to appear -->
+<#if earliestEonOrLowestEonothem?has_content ||
+latestEonOrHighestEonothem?has_content || earliestEraOrLowestErathem?has_content ||
+latestEraOrHighestErathem?has_content || earliestPeriodOrLowestSystem?has_content ||
+latestPeriodOrHighestSystem?has_content || earliestEpochOrLowestSeries?has_content ||
+latestEpochOrHighestSeries?has_content || earliestAgeOrLowestStage?has_content ||
+latestAgeOrHighestStage?has_content || lowestBiostratigraphicZone?has_content ||
+highestBiostratigraphicZone?has_content || bed?has_content || formation?has_content || group?has_content ||
+member?has_content || geologicalContextID?has_content || lithostratigraphicTerms?has_content>
+<#-- show additional geological context group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
   <@common.article id="geology" title="Geological context">
-    <div class="left left_occurrence_detail">
+  <div class="left left_occurrence_detail">
 
-      <#assign earliestEonOrLowestEonothem = action.retrieveTerm('earliestEonOrLowestEonothem')! />
-      <#assign latestEonOrHighestEonothem = action.retrieveTerm('latestEonOrHighestEonothem')! />
-
-      <#assign earliestEraOrLowestErathem = action.retrieveTerm('earliestEraOrLowestErathem')! />
-      <#assign latestEraOrHighestErathem = action.retrieveTerm('latestEraOrHighestErathem')! />
-
-      <#assign earliestPeriodOrLowestSystem = action.retrieveTerm('earliestPeriodOrLowestSystem')! />
-      <#assign latestPeriodOrHighestSystem = action.retrieveTerm('latestPeriodOrHighestSystem')! />
-
-      <#assign earliestEpochOrLowestSeries = action.retrieveTerm('earliestEpochOrLowestSeries')! />
-      <#assign latestEpochOrHighestSeries = action.retrieveTerm('latestEpochOrHighestSeries')! />
-
-      <#assign earliestAgeOrLowestStage = action.retrieveTerm('earliestAgeOrLowestStage')! />
-      <#assign latestAgeOrHighestStage = action.retrieveTerm('latestAgeOrHighestStage')! />
-
-      <#if earliestEonOrLowestEonothem?has_content || latestEonOrHighestEonothem?has_content ||
-      earliestEraOrLowestErathem?has_content || latestEraOrHighestErathem?has_content ||
-      earliestPeriodOrLowestSystem?has_content || latestPeriodOrHighestSystem?has_content ||
-      earliestEpochOrLowestSeries?has_content || latestEpochOrHighestSeries?has_content ||
-      earliestAgeOrLowestStage?has_content || latestAgeOrHighestStage?has_content>
+    <#if earliestEonOrLowestEonothem?has_content || latestEonOrHighestEonothem?has_content ||
+    earliestEraOrLowestErathem?has_content || latestEraOrHighestErathem?has_content ||
+    earliestPeriodOrLowestSystem?has_content || latestPeriodOrHighestSystem?has_content ||
+    earliestEpochOrLowestSeries?has_content || latestEpochOrHighestSeries?has_content ||
+    earliestAgeOrLowestStage?has_content || latestAgeOrHighestStage?has_content>
         <h3>Stratigraphic Classification</h3>
-          <p>
-          <dl>
-            <#if earliestEonOrLowestEonothem?has_content || latestEonOrHighestEonothem?has_content>
+        <p>
+        <dl>
+          <#if earliestEonOrLowestEonothem?has_content || latestEonOrHighestEonothem?has_content>
               <dt>Eon</dt>
               <dd>
-                  ${earliestEonOrLowestEonothem!}
-                  <#if earliestEonOrLowestEonothem?has_content && latestEonOrHighestEonothem?has_content>-</#if>
-                  ${latestEonOrHighestEonothem!}
+              ${earliestEonOrLowestEonothem!}
+                <#if earliestEonOrLowestEonothem?has_content && latestEonOrHighestEonothem?has_content>-</#if>
+              ${latestEonOrHighestEonothem!}
               </dd>
-            </#if>
+          </#if>
 
-            <#if earliestEraOrLowestErathem?has_content || latestEraOrHighestErathem?has_content>
+          <#if earliestEraOrLowestErathem?has_content || latestEraOrHighestErathem?has_content>
               <dt>Era</dt>
               <dd>
-                  ${earliestEonOrLowestEonothem!}
-                  <#if earliestEraOrLowestErathem?has_content && latestEraOrHighestErathem?has_content>-</#if>
-                  ${latestEraOrHighestErathem!}
+              ${earliestEonOrLowestEonothem!}
+                <#if earliestEraOrLowestErathem?has_content && latestEraOrHighestErathem?has_content>-</#if>
+              ${latestEraOrHighestErathem!}
               </dd>
-            </#if>
+          </#if>
 
-            <#if earliestPeriodOrLowestSystem?has_content || latestPeriodOrHighestSystem?has_content>
+          <#if earliestPeriodOrLowestSystem?has_content || latestPeriodOrHighestSystem?has_content>
               <dt>Period</dt>
               <dd>
-                  ${earliestPeriodOrLowestSystem!}
-                  <#if earliestPeriodOrLowestSystem?has_content && latestPeriodOrHighestSystem?has_content>-</#if>
-                  ${latestPeriodOrHighestSystem!}
+              ${earliestPeriodOrLowestSystem!}
+                <#if earliestPeriodOrLowestSystem?has_content && latestPeriodOrHighestSystem?has_content>-</#if>
+              ${latestPeriodOrHighestSystem!}
               </dd>
-            </#if>
+          </#if>
 
-            <#if earliestEpochOrLowestSeries?has_content || latestEpochOrHighestSeries?has_content>
+          <#if earliestEpochOrLowestSeries?has_content || latestEpochOrHighestSeries?has_content>
               <dt>Epoch</dt>
               <dd>
-                  ${earliestEpochOrLowestSeries!}
-                  <#if earliestEpochOrLowestSeries?has_content && latestEpochOrHighestSeries?has_content>-</#if>
-                  ${latestEpochOrHighestSeries!}
+              ${earliestEpochOrLowestSeries!}
+                <#if earliestEpochOrLowestSeries?has_content && latestEpochOrHighestSeries?has_content>-</#if>
+              ${latestEpochOrHighestSeries!}
               </dd>
-            </#if>
+          </#if>
 
-            <#if earliestAgeOrLowestStage?has_content || latestAgeOrHighestStage?has_content>
+          <#if earliestAgeOrLowestStage?has_content || latestAgeOrHighestStage?has_content>
               <dt>Age</dt>
               <dd>
-                  ${earliestAgeOrLowestStage!}
-                  <#if earliestAgeOrLowestStage?has_content && latestAgeOrHighestStage?has_content>-</#if>
-                  ${latestAgeOrHighestStage!}
+              ${earliestAgeOrLowestStage!}
+                <#if earliestAgeOrLowestStage?has_content && latestAgeOrHighestStage?has_content>-</#if>
+              ${latestAgeOrHighestStage!}
               </dd>
-            </#if>
-          </dl>
-          </p>
-      </#if>
+          </#if>
+        </dl>
+        </p>
+    </#if>
 
-      <#assign lowestBiostratigraphicZone = action.retrieveTerm('lowestBiostratigraphicZone')! />
-      <#assign highestBiostratigraphicZone = action.retrieveTerm('highestBiostratigraphicZone')! />
-      <#if lowestBiostratigraphicZone?has_content || highestBiostratigraphicZone?has_content>
+    <#if lowestBiostratigraphicZone?has_content || highestBiostratigraphicZone?has_content>
         <h3>Biostratigraphic Zone</h3>
-        <#if lowestBiostratigraphicZone?has_content && highestBiostratigraphicZone?has_content>
-            <p>${lowestBiostratigraphicZone}&nbsp;/&nbsp;${highestBiostratigraphicZone}</p>
-        <#elseif lowestBiostratigraphicZone?has_content>
-            <p>${lowestBiostratigraphicZone}</p>
-        <#elseif highestBiostratigraphicZone?has_content>
-            <p>${highestBiostratigraphicZone}</p>
-        </#if>
+      <#if lowestBiostratigraphicZone?has_content && highestBiostratigraphicZone?has_content>
+          <p>${lowestBiostratigraphicZone}&nbsp;/&nbsp;${highestBiostratigraphicZone}</p>
+      <#elseif lowestBiostratigraphicZone?has_content>
+          <p>${lowestBiostratigraphicZone}</p>
+      <#elseif highestBiostratigraphicZone?has_content>
+          <p>${highestBiostratigraphicZone}</p>
       </#if>
+    </#if>
 
-      <@kv header="Bed" term='bed' />
-      <@kv header="Formation" term='formation' />
-      <@kv header="Group" term='group' />
-      <@kv header="Member" term='member' />
-    </div>
+    <@kv header="Bed" value=bed />
+    <@kv header="Formation" value=formation />
+    <@kv header="Group" value=group />
+    <@kv header="Member" value=member />
+  </div>
 
-    <div class="right">
-      <@kv header="Geological Context ID" term='geologicalContextID' />
-      <@kv header="Lithostratigraphic Terms" term='lithostratigraphicTerms' />
-    </div>
+  <div class="right">
+    <@kv header="Geological Context ID" value=geologicalContextID />
+      <@kv header="Lithostratigraphic Terms" value=lithostratigraphicTerms />
+  </div>
 
   </@common.article>
 </#if>
@@ -694,7 +769,9 @@ Identification details <span class='subtitle'>According to <a href="<@s.url valu
 <@common.notice title="Record history">
   <p>
     This record was last modified in GBIF on ${occ.lastInterpreted?date?string.medium}.
-    The source was last visited by GBIF on ${occ.lastCrawled?date?string.medium}.
+    <#if occ.lastCrawled?has_content>
+      The source was last visited by GBIF on ${occ.lastCrawled?date?string.medium}.
+    </#if>
     <#if occ.modified??>
       It was last updated by the publisher on ${occ.modified?date?string.medium}.
     </#if>
