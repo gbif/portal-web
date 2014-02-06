@@ -1,6 +1,6 @@
 <#--
 A macro to create a cube metrics table that should be populated with data asynchroneously
-with the help of occ_metrics.js
+with the help of metrics.js
 -->
 <#macro kingdomRow kingdom usageId="" class="">
   <tr <#if usageId?has_content>data-kingdom="${usageId}"</#if> <#if class?has_content>class="${class}"</#if> >

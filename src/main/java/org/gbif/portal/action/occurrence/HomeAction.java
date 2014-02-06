@@ -34,11 +34,11 @@ public class HomeAction extends BaseAction {
   private Integer numGeoreferenced;
 
   private Integer numOccurrences;
-  
-  private Map<Kingdom, Long> kingdomCounts; 
-  
+
+  private Map<Kingdom, Long> kingdomCounts;
+
   private Map<BasisOfRecord, Long> borCounts;
-  
+
   private Map<Integer, Long> yearCounts;
 
   @Inject
@@ -50,7 +50,7 @@ public class HomeAction extends BaseAction {
 
   @Override
   public String execute() {
-    numGeoreferenced = (int) occurrenceCubeService.get(new ReadBuilder().at(OccurrenceCube.IS_GEOREFERENCED, true));
+    numGeoreferenced = (int) occurrenceCubeService.get(new ReadBuilder().at(OccurrenceCube.GEOREFERENCED, true));
     numOccurrences = (int) occurrenceCubeService.get(new ReadBuilder());
     borCounts = occurrenceDistributionIndexService.getBasisOfRecordCounts();
     kingdomCounts = occurrenceDistributionIndexService.getKingdomCounts();

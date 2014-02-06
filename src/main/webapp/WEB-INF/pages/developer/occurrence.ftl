@@ -129,7 +129,7 @@
   </p>
 
   <@api.apiTable auth=false paging=false>
-    <@trowM url="/occurrence/counts/datasets" resp="UUID Counts" respLink="/occurrence/counts/datasets?country=DE" params=["country","nubKey"]>Returns occurrence counts for datasets that cover a given taxon or country.</@trowM>
+    <@trowM url="/occurrence/counts/datasets" resp="UUID Counts" respLink="/occurrence/counts/datasets?country=DE" params=["country","taxonKey"]>Returns occurrence counts for datasets that cover a given taxon or country.</@trowM>
     <@trowM url="/occurrence/counts/countries" resp="Country Counts" respLink="/occurrence/counts/countries?publishingCountry=DE" params=["publishingCountry"]>Returns occurrence counts for all countries covered by the data published by the given country.</@trowM>
     <@trowM url="/occurrence/counts/publishingCountry" resp="Country Counts" respLink="/occurrence/counts/publishing_countries?country=DE" params=["country"]>Returns occurrence counts for all countries that publish data about the given country.</@trowM>
   </@api.apiTable>
@@ -153,12 +153,11 @@
   "collectorName": "The person who recorded the occurrence.",
   "basisOfRecord": "Basis of record, as defined in our <a href='http://builds.gbif.org/view/Common/job/gbif-api/site/apidocs/org/gbif/api/vocabulary/BasisOfRecord.html' target='_blank'>BasisOfRecord enum</a>",
   "taxonKey": "A taxon key from the GBIF backbone. All included and synonym taxa are included in the search, so a search for aves with taxonKey=212 (i.e. <a href='http://api.gbif.org/v0.9/occurrence/search?taxonKey=212' target='_blank'>/occurrence/search?taxonKey=212</a>) will match all birds, no matter which species.",
-  "nubKey": "Same as <a href='#taxonKey'>taxon key</a>, a taxon id from the GBIF backbone.",
   "georeferenced": "Limits searches to occurrence records which contain a value in both latitude and longitude (i.e. georeferenced=true limits to occurrence records with coordinate values and georeferenced=false limits to occurrence records without coordinate values).",
   "geometry": "Searches for occurrences inside a polygon described in Well Known Text (WKT) format. A WKT shape written as POLYGON ((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1)) would be queried as is, i.e. <a href='http://api.gbif.org/v0.9/occurrence/search?geometry=POLYGON((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1))' target='_blank'>/occurrence/search?geometry=POLYGON((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1))</a>.",
   "spatialIssues": "Includes/excludes occurrence records which contain spatial issues (as determined in our record interpretation), i.e. spatialIssues=true returns only those records with spatial issues while spatialIssues=false includes only records without spatial issues. The absence of this parameter returns any record with or without spatial issues.",
   "q" : "Simple search parameter. The value for this parameter can be a simple word or a phrase.",
-  "limit": "The maximum number of results to return. This can't be greater than 300, any value greater is set to 300.",    
+  "limit": "The maximum number of results to return. This can't be greater than 300, any value greater is set to 300.",
   "from" : "The minimum year for which to return occurrences.",
   "to" : "The maximum year for which to return occurrences."
 } />

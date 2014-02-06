@@ -1,30 +1,20 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.dataset.StatsAction" -->
 <html>
 <head>
   <title>${dataset.title} - Metrics</title>
   <#assign total = metrics.usagesCount />
   <content tag="extra_scripts">
+    <script type="text/javascript" src="<@s.url value='/js/metrics.js'/>"></script>
     <script type="text/javascript" charset="utf-8">
         $(function() {
           <#if total! gt 0>
               var total = ${total?c};
               console.debug( "TOTAL: " + total );
 
-              function setupPie(legend) {
-                var pieId = legend.attr("id") + "pie";
-                $(legend).before("<div id='" +pieId+ "' class='multipie'></div>");
-                var values = [];
-                $("li span.number", legend).each(function() {
-                    values.push( Math.round($(this).attr("data-cnt") * 100 / total))
-                });
-                console.debug(pieId + ": " + values);
-                $("#"+pieId).bindMultiPie(36.5, values);
-                $(legend).addMultiLegend();
-              }
-
               // basics
-              setupPie($("#synonyms"));
-              setupPie($("#kingdoms"));
-              setupPie($("#ranks"));
+              $("#synonyms").setupPie();
+              $("#kingdoms").setupPie();
+              $("#ranks").setupPie();
 
               // overlap
               $("#pieNub").bindPie(36.5, Math.floor(${metrics.nubCoveragePct}));

@@ -15,7 +15,7 @@
   <#if occurrenceID?has_content>
     <h1>${occurrenceID}</h1>
   <#else>
-    <h1>GBIF: ${id?c}</h1>
+    <h1>GBIF ${id?c}</h1>
   </#if>
 
   <h3><@s.text name="enum.basisofrecord.${occ.basisOfRecord!'UNKNOWN'}"/> of

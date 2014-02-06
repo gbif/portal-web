@@ -51,8 +51,7 @@ public class DetailAction extends DatasetBaseAction {
 
   private static final List<Extension> EXTENSIONS = ImmutableList.copyOf(Extension.values());
   private static final List<Kingdom> KINGDOMS = ImmutableList.of(Kingdom.ANIMALIA, Kingdom.ARCHAEA, Kingdom.BACTERIA,
-    Kingdom.CHROMISTA,
-    Kingdom.FUNGI, Kingdom.PLANTAE, Kingdom.PROTOZOA, Kingdom.VIRUSES, Kingdom.INCERTAE_SEDIS);
+    Kingdom.CHROMISTA, Kingdom.FUNGI, Kingdom.PLANTAE, Kingdom.PROTOZOA, Kingdom.VIRUSES, Kingdom.INCERTAE_SEDIS);
 
   private static final Set<EndpointType> DATA_CODES = ImmutableSet.<EndpointType>builder()
     .add(EndpointType.BIOCASE).add(EndpointType.TAPIR).add(EndpointType.DIGIR).add(EndpointType.DIGIR_MANIS)

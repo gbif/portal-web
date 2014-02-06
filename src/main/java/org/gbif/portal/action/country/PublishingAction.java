@@ -40,7 +40,7 @@ public class PublishingAction extends CountryBaseAction {
 
     // calc other countries metrics
     long inCountryRecords = cubeService.get(
-      new ReadBuilder().at(OccurrenceCube.HOST_COUNTRY, country).at(OccurrenceCube.COUNTRY, country)
+      new ReadBuilder().at(OccurrenceCube.PUBLISHING_COUNTRY, country).at(OccurrenceCube.COUNTRY, country)
       );
     otherCountryRecords = getBy().getOccurrenceRecords() - inCountryRecords;
     otherCountryPercentage = 100d * otherCountryRecords / getBy().getOccurrenceRecords();
