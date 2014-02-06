@@ -96,11 +96,11 @@
   </#if>
 </#macro>
 
-<#macro kv header value="" plusMinus="">
+<#macro kv header value="" plusMinus="" unit="">
   <#if value?has_content>
     <h3>${header}</h3>
     <#-- retrieve value from term, otherwise use incoming value -->
-    <p>${value}<#if plusMinus?has_content>m&nbsp;±&nbsp;${plusMinus}</#if></p>
+    <p>${value}${unit!}<#if plusMinus?has_content>m&nbsp;±&nbsp;${plusMinus}</#if></p>
   </#if>
 </#macro>
 
@@ -205,8 +205,8 @@ occ.depthAccuracy?has_content || (geographicClassification.size > 0) >
             <p class="light_note">${occ.longitude}, ${occ.latitude} <#if occ.coordinateAccuracy??> ± ${occ.coordinateAccuracy!?string}</#if></p>
 
           <@kv header="Water Body" value=occ.waterBody />
-          <@kv header="Altitude" value=occ.altitude plusMinus=occ.altitudeAccuracy!?string />
-          <@kv header="Depth" value=occ.depth plusMinus=occ.depthAccuracy!?string />
+          <@kv header="Altitude" value=occ.altitude unit="m" plusMinus=occ.altitudeAccuracy!?string />
+          <@kv header="Depth" value=occ.depth unit="m" plusMinus=occ.depthAccuracy!?string />
 
         <#-- TODO: maximum distance above surface with accuracy, see http://dev.gbif.org/issues/browse/POR-1746 -->
 
@@ -234,8 +234,8 @@ occ.depthAccuracy?has_content || (geographicClassification.size > 0) >
 
         <div class="left">
           <@kv header="Locality" value=locality />
-      <@kv header="Altitude" value=occ.altitude plusMinus=occ.altitudeAccuracy!?string />
-      <@kv header="Depth" value=occ.depth plusMinus=occ.depthAccuracy!?string />
+      <@kv header="Altitude" value=occ.altitude unit="m" plusMinus=occ.altitudeAccuracy!?string />
+      <@kv header="Depth" value=occ.depth unit="m" plusMinus=occ.depthAccuracy!?string />
       <@kv header="Water Body" value=occ.waterBody />
       <@geoClassification header="Geographic Classification" geographicClassification=geographicClassification/>
       <@islandClassification header="Islands" island=island islandGroup=islandGroup />
