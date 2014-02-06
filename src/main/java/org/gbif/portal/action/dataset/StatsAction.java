@@ -73,7 +73,7 @@ public class StatsAction extends DetailAction {
         }
       }
     } catch (IllegalArgumentException e) {
-      LOG.error("Cant get metrics", e);
+      LOG.error("Cant get kingdom metrics", e);
     }
 
     try {
@@ -84,18 +84,18 @@ public class StatsAction extends DetailAction {
         }
       }
     } catch (IllegalArgumentException e) {
-      LOG.error("Cant get metrics", e);
+      LOG.error("Cant get BoR metrics", e);
     }
 
     try {
-      for (TypeStatus k : TypeStatus.values()) {
+        for (TypeStatus k : TypeStatus.values()) {
         long cnt = occurrenceCubeService.get( readBuilder().at(OccurrenceCube.TYPE_STATUS, k) );
         if (cnt > 0) {
           countByTypes.put(k, cnt);
         }
       }
     } catch (IllegalArgumentException e) {
-      LOG.error("Cant get metrics", e);
+      LOG.error("Cant get types metrics", e);
     }
 
     try {
@@ -106,7 +106,7 @@ public class StatsAction extends DetailAction {
         }
       }
     } catch (IllegalArgumentException e) {
-      LOG.error("Cant get metrics", e);
+      LOG.error("Cant get issue metrics", e);
     }
   }
 

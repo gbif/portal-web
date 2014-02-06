@@ -36,6 +36,11 @@
   <#return x?replace("\r\n", "<br/>")?replace("\r", "<br/>")?replace("\n", "<br/>") />
 </#function>
 
+<#function enumLabel x>
+  <#return x.name()?replace("_"," ")?lower_case?cap_first />
+</#function>
+
+
 <#--
   Truncates the string if too long and adds a more link
 -->
@@ -84,7 +89,7 @@
 
 <#--
   a popup help along the lines of this:
-  http://dev.gbif.org/issues/secure/attachment/11424/gbif_help_links.png 
+  http://dev.gbif.org/issues/secure/attachment/11424/gbif_help_links.png
 -->
 <#macro explanation message label remarks="" title="Help">
   <#if message?has_content>

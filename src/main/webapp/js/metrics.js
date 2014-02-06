@@ -1,5 +1,4 @@
-$.fn.setupPie = function(){
-  var total = _sumTotal();
+$.fn.setupPie = function(total){
   var pieId = this.attr("id") + "pie";
   $(this).before("<div id='" +pieId+ "' class='multipie'></div>");
   var values = [];
@@ -8,14 +7,6 @@ $.fn.setupPie = function(){
   });
   $("#"+pieId).bindMultiPie(36.5, values);
   $(this).addMultiLegend();
-
-  function _sumTotal() {
-    var total = 0;
-    $("li span.number", this).each(function() {
-      total = total + $(this).attr("data-cnt");
-    });
-    return total;
-  }
 }
 
 

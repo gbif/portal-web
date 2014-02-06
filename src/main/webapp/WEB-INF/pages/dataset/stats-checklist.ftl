@@ -12,9 +12,9 @@
               console.debug( "TOTAL: " + total );
 
               // basics
-              $("#synonyms").setupPie();
-              $("#kingdoms").setupPie();
-              $("#ranks").setupPie();
+              $("#synonyms").setupPie(total);
+              $("#kingdoms").setupPie(total);
+              $("#ranks").setupPie(total);
 
               // overlap
               $("#pieNub").bindPie(36.5, Math.floor(${metrics.nubCoveragePct}));

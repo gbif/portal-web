@@ -1,5 +1,7 @@
 <#-- @ftlvariable name="" type="org.gbif.portal.action.dataset.StatsAction" -->
+<#import "/WEB-INF/macros/common.ftl" as common>
 <#import "/WEB-INF/macros/occ_metrics.ftl" as metrics>
+
 <html>
 <head>
   <title>${dataset.title} - Metrics</title>
@@ -11,10 +13,10 @@
         $('table.metrics').occMetrics();
 <#if numOccurrences! gt 0>
         // basics
-        $("#kingdoms").setupPie();
-        $("#bor").setupPie();
-        $("#types").setupPie();
-        $("#issues").setupPie();
+        $("#kingdoms").setupPie(${numOccurrences?c});
+        $("#bor").setupPie(${numOccurrences?c});
+        $("#types").setupPie(${numOccurrences?c});
+        $("#issues").setupPie(${numOccurrences?c});
 </#if>
       });
     </script>
@@ -48,6 +50,10 @@
             <h3>Type specimen</h3>
             <div id="types" class="pieMultiLegend">
               <ul>
+                <#list countByTypes?keys as k>
+                  <#assign val=countByTypes(k) />
+                  <li><a href="<@s.url value='/occurrence/search?dataset_key=${id}&type_status=${k}'/>">${common.enumLabel(k)}</a> <span class="number" data-cnt="${val?c}">${val}</span></li>
+                </#list>
               </ul>
             </div>
 
@@ -55,6 +61,10 @@
             <h3>Basis of record</h3>
             <div id="bor" class="pieMultiLegend">
               <ul>
+                <#list countByBor?keys as k>
+                  <#assign val=countByBor(k) />
+                  <li><a href="<@s.url value='/occurrence/search?dataset_key=${id}&basis_of_record=${k}'/>">${common.enumLabel(k)}</a> <span class="number" data-cnt="${val?c}">${val}</span></li>
+                </#list>
               </ul>
             </div>
           <#else>
@@ -68,11 +78,9 @@
           <#if countByIssues?has_content>
             <div id="issues" class="pieMultiLegend">
               <ul>
-                <#list sortedMetricRanks as r>
-                  <#if countByRank(r) gt 0>
-                    <#assign cnt = metrics.countByRank(r)!0 />
-                    <li><a href="<@s.url value='/occurrence/search?dataset_key=${id}&rank=${r}'/>"><@s.text name="enum.rank.${r}"/> <span class="number" data-cnt="${cnt?c}">${cnt}</span></a></li>
-                  </#if>
+                <#list countByIssues?keys as k>
+                  <#assign val=countByIssues(k) />
+                  <li><a href="#">${common.enumLabel(k)}</a> <span class="number" data-cnt="${val?c}">${val}</span></li>
                 </#list>
               </ul>
             </div>
@@ -85,7 +93,7 @@
 
   </@common.article>
 
-  <@common.article id="metrics" title="basis of record by kingdom">
+  <@common.article id="metrics" title="Basis of record by Kingdom">
       <div class="fullwidth">
         <p>
           <@metrics.metricsTable baseAddress="datasetKey=${id}"/>
