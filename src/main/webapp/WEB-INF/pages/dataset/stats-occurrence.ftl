@@ -26,12 +26,11 @@
   <#assign tab="stats"/>
   <#include "/WEB-INF/pages/dataset/inc/infoband.ftl">
 
-  <@common.article id="metrics" title="Basic Metrics by">
+  <@common.article id="metrics" title="Single dimensions">
     <div class="fullwidth">
       <ul class="pies">
         <li><h3>Kingdoms</h3>
           <#if countByKingdom?has_content>
-            <p>Number of records within kingdoms of the GBIF Backbone.</p>
             <div id="kingdoms" class="pieMultiLegend">
               <ul>
                 <#list countByKingdom?keys as k>
@@ -47,19 +46,19 @@
         <li>
           <#if countByTypes?has_content>
             <h3>Type specimen</h3>
-            <p>Number of type specimens.</p>
             <div id="types" class="pieMultiLegend">
               <ul>
               </ul>
             </div>
 
-          <#else>
+          <#elseif countByBor?has_content>
             <h3>Basis of record</h3>
-            <p>Number of records per basis of record.</p>
             <div id="bor" class="pieMultiLegend">
               <ul>
               </ul>
             </div>
+          <#else>
+            <p>This dataset does not publish a basis of record.</p>
           </#if>
         </li>
 
@@ -67,7 +66,6 @@
         <li>
           <h3>Interpretation Issues</h3>
           <#if countByIssues?has_content>
-            <p>Number of records having GBIF interpretation issues.</p>
             <div id="issues" class="pieMultiLegend">
               <ul>
                 <#list sortedMetricRanks as r>
@@ -87,7 +85,7 @@
 
   </@common.article>
 
-  <@common.article id="metrics" title="Overview by kingdom and basis of record">
+  <@common.article id="metrics" title="basis of record by kingdom">
       <div class="fullwidth">
         <p>
           <@metrics.metricsTable baseAddress="datasetKey=${id}"/>
