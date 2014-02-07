@@ -8,7 +8,7 @@
   <!--[if lte IE 8]><link rel="stylesheet" href="<@s.url value='/js/vendor/leaflet/leaflet.ie.css'/>" /><![endif]-->
   <script type="text/javascript" src="<@s.url value='/js/vendor/leaflet/leaflet.js'/>"></script>
   <script type="text/javascript" src="<@s.url value='/js/map.js'/>"></script>
-  <script type="text/javascript" src="<@s.url value='/js/occ_metrics.js'/>"></script>
+  <script type="text/javascript" src="<@s.url value='/js/metrics.js'/>"></script>
   <script type="text/javascript">
       $(function() {
           $("#mapBy").append(
