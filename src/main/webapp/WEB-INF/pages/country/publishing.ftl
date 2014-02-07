@@ -6,16 +6,19 @@
   <link rel="stylesheet" href="<@s.url value='/css/bootstrap-tables.css'/>" type="text/css" media="all"/>
   <link rel="stylesheet" href="<@s.url value='/js/vendor/leaflet/leaflet.css'/>" />
   <!--[if lte IE 8]><link rel="stylesheet" href="<@s.url value='/js/vendor/leaflet/leaflet.ie.css'/>" /><![endif]-->
-  <script type="text/javascript" src="<@s.url value='/js/vendor/leaflet/leaflet.js'/>"></script>
-  <script type="text/javascript" src="<@s.url value='/js/map.js'/>"></script>
-  <script type="text/javascript" src="<@s.url value='/js/metrics.js'/>"></script>
-  <script type="text/javascript">
+  <content tag="extra_scripts">
+    <script type="text/javascript" src="<@s.url value='/js/vendor/leaflet/leaflet.js'/>"></script>
+    <script type="text/javascript" src="<@s.url value='/js/map.js'/>"></script>
+    <script type="text/javascript" src="<@s.url value='/js/metrics.js'/>"></script>
+    <script type="text/javascript">
       $(function() {
-          $("#mapBy").append(
-            '<iframe id="mapByFrame" name="map" src="${cfg.tileServerBaseUrl!}/index.html?type=PUBLISHING_COUNTRY&key=${isocode}" allowfullscreen height="100%" width="100%" frameborder="0"/></iframe>'
-          );
+        $("#mapBy").append(
+          '<iframe id="mapByFrame" name="map" src="${cfg.tileServerBaseUrl!}/index.html?type=PUBLISHING_COUNTRY&key=${isocode}" allowfullscreen height="100%" width="100%" frameborder="0"/></iframe>'
+        );
+        $('table.metrics').occMetrics();
       });
-  </script>
+    </script>
+  </content>
 </head>
 <body>
 
