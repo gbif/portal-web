@@ -559,7 +559,7 @@
         <notDevMode>true</notDevMode>
         <baseurl>http://www.gbif-uat.org</baseurl>
         <servername>http://www.gbif-uat.org</servername>
-        <drupal.url>http://www.gbif-uat.gbif.org</drupal.url>
+        <drupal.url>http://www.gbif-uat.org</drupal.url>
         <url.includeContext>false</url.includeContext>
         <registry.ws.url>http://api.gbif-uat.org/v0.9/</registry.ws.url>
         <checklistbank.ws.url>http://api.gbif-uat.org/v0.9/</checklistbank.ws.url>
