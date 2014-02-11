@@ -142,7 +142,7 @@
                     <li><input type="checkbox" name="summary" value="RECORD_NUMBER" id="chk-RECORD_NUMBER" <#if showRecordNumber>checked</#if>/> <label for="chk-RECORD_NUMBER">Record number</label></li>
                     <li><input type="checkbox" name="summary" value="SCIENTIFIC_NAME" id="chk-SCIENTIFIC_NAME" <#if showScientificName>checked</#if>/> <label for="chk-SCIENTIFIC_NAME">Scientific name</label></li>                    
                     <li><input type="checkbox" name="summary" value="DATASET" id="chk-DATASET" <#if showDataset>checked</#if>/> <label for="chk-DATASET">Dataset</label></li>
-                    <li><input type="checkbox" name="summary" value="LAST_INTERPRETED" id="chk-LAST_INTERPRETED" <#if showLastInterpreted>checked</#if>/> <label for="chk-LAST_INTERPRETED">Date last modified</label></li>
+                    <li><input type="checkbox" name="summary" value="LAST_INTERPRETED" id="chk-LAST_INTERPRETED" <#if showLastInterpreted>checked</#if>/> <label for="chk-LAST_INTERPRETED">Date last modified in GBIF</label></li>
                     <li><input type="checkbox" name="summary" value="TYPE_STATUS" id="chk-TYPE_STATUS" <#if showTypeStatus>checked</#if>/> <label for="chk-TYPE_STATUS">Type status</label></li>
                   </ul>
                   <div style="width:100px;" class="buttonContainer"><a href="#" class="button" id="applyConfiguration" style="width:30px;margin:auto"><span>Apply</span></a><div>
@@ -166,7 +166,7 @@
                     <li><a tabindex="-1" href="#" data-placeholder="Type a name..." data-filter="BASIS_OF_RECORD" title="Basis Of Record" data-template-filter="template-basis-of-record-filter" data-template-summary="template-filter" class="filter-control">Basis of record</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a dataset name..." data-filter="DATASET_KEY" title="Dataset" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value dataset_autosuggest auto_add" class="filter-control">Dataset</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="" data-filter="EVENT_DATE" title="Collection date" data-template-filter="template-date-compare-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Collection date</a></li>
-                    <li><a tabindex="-1" href="#" data-placeholder="" data-filter="LAST_INTERPRETED" title="Date last interpreted" data-template-filter="template-date-compare-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Date last modified</a></li>
+                    <li><a tabindex="-1" href="#" data-placeholder="" data-filter="LAST_INTERPRETED" title="Date last interpreted" data-template-filter="template-date-compare-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Date last modified in GBIF</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a year..." data-filter="YEAR" title="Occurrence year" data-template-filter="template-compare-filter" data-template-summary="template-filter" data-input-classes="value auto_add temporal" class="filter-control">Year</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Select a month..." data-filter="MONTH" title="Occurrence month" data-template-filter="template-month-filter" data-template-summary="template-filter" data-input-classes="value auto_add" class="filter-control">Month</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a catalogue number..." data-filter="CATALOG_NUMBER" title="Catalog number" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value catalog_number_autosuggest auto_add" class="filter-control">Catalogue number</a></li>
@@ -214,8 +214,8 @@
                 <#if showInstitution && action.retrieveTerm('institutionCode',occ)?has_content>
                   <div class="code">Institution: ${action.retrieveTerm('institutionCode',occ)}</div>
                 </#if>
-                <#if showLastInterpreted && occ.modified?has_content>
-                  <div class="code">Date last modified: ${occ.lastInterpreted?string("yyyy-MM-dd")}</div>
+                <#if showLastInterpreted && occ.lastInterpreted?has_content>
+                  <div class="code">Date last modified in GBIF: ${occ.lastInterpreted?string("yyyy-MM-dd")}</div>
                 </#if>
                 <#if showRecordNumber && action.retrieveTerm('recordNumber',occ)?has_content>
                   <div class="code">Record number: ${action.retrieveTerm('recordNumber',occ)}</div>
