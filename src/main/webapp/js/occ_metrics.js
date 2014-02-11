@@ -20,7 +20,7 @@ $(window).ready(function() {
     var address = "?" + baseAddress;
 
     if ($target.closest("tr").attr("data-kingdom") != null) {
-      address = address + "&nubKey=" + $target.closest("tr").attr("data-kingdom");
+      address = address + "&taxonKey=" + $target.closest("tr").attr("data-kingdom");
     }
 
     if ($target.closest("td").attr("data-bor") != null) {
@@ -28,7 +28,7 @@ $(window).ready(function() {
     }
 
     if ($target.hasClass("geo")) {
-      address = address + "&georeferenced=true";
+      address = address + "&HAS_COORDINATE=true";
     }
     var ws = cfg.wsMetrics + 'occurrence/count' + address;
     //console.debug(ws);

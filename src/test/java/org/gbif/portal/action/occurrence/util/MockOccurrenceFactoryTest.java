@@ -12,7 +12,7 @@ public class MockOccurrenceFactoryTest {
   public void testMock() {
     Occurrence mock = MockOccurrenceFactory.getMockOccurrence();
     assertEquals(String.valueOf(-1000000000), mock.getKey().toString());
-    assertEquals(159, mock.getFields().size());
+    assertEquals(159, mock.getVerbatimFields().size());
     assertEquals(6, mock.getIssues().size());
   }
 }

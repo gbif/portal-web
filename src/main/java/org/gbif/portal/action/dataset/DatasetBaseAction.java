@@ -304,7 +304,7 @@ public class DatasetBaseAction extends MemberBaseAction<Dataset> {
         numOccurrences = occurrenceCubeService.get(new ReadBuilder().at(OccurrenceCube.DATASET_KEY, id));
         numGeoreferencedOccurrences =
           occurrenceCubeService.get(new ReadBuilder().at(OccurrenceCube.DATASET_KEY, id).at(
-            OccurrenceCube.IS_GEOREFERENCED, true));
+            OccurrenceCube.GEOREFERENCED, true));
       } catch (Exception e) {
         LOG.error("Failed to load occurrence metrics for dataset {}", id, e);
       }

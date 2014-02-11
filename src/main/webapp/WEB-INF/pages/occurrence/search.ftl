@@ -26,7 +26,7 @@
       var filtersFromRequest = new Object();   
       var countryList = [<#list countries as country><#if country.official>{label:"${country.title}",iso2Lettercode:"${country.iso2LetterCode}"}<#if country_has_next>,</#if></#if></#list>];
       function addFilters(filtersFromRequest,filterKey,filterValue,filterLabel) {
-        if(filterKey == 'SPATIAL_ISSUES' || filterKey == 'GEOREFERENCED'){
+        if(filterKey == 'SPATIAL_ISSUES' || filterKey == 'HAS_COORDINATE'){
           filtersFromRequest[filterKey].push({ label: filterLabel, value:filterValue, key: null, paramName: filterKey, submitted: true, hidden:true });
         } else {
           filtersFromRequest[filterKey].push({ label: filterLabel, value:filterValue, key: filterValue, paramName: filterKey, submitted: true, hidden:false });
@@ -103,7 +103,7 @@
     <#assign showCatalogNumber =  table.hasSummaryField('CATALOG_NUMBER')>
     <#assign showScientificName =  table.hasSummaryField('SCIENTIFIC_NAME')>
     <#assign showCollectionCode =  table.hasSummaryField('COLLECTION_CODE')>
-    <#assign showCollectorName =  table.hasSummaryField('COLLECTOR_NAME')>
+    <#assign showCollectorName =  table.hasSummaryField('RECORDED_BY')>
     <#assign showRecordNumber =  table.hasSummaryField('RECORD_NUMBER')>
     <#assign showTypeStatus =  table.hasSummaryField('TYPE_STATUS')>
     <#assign showInstitution =  table.hasSummaryField('INSTITUTION')>
@@ -129,7 +129,7 @@
                   <ul id="occurrence_columns">
                     <li><input type="checkbox" name="columns" value="LOCATION" id="chk-LOCATION" <#if showLocation>checked</#if>/> <label for="chk-LOCATION">Location</label></li>
                     <li><input type="checkbox" name="columns" value="BASIS_OF_RECORD" id="chk-BASIS_OF_RECORD" <#if showBasisOfRecord>checked</#if>/> <label for="chk-BASIS_OF_RECORD">Basis of record</label></li>
-                    <li><input type="checkbox" name="columns" value="DATE" id="chk-DATE" <#if showDate>checked</#if>/> <label for="chk-DATE">Date</label></li>                    
+                    <li><input type="checkbox" name="columns" value="DATE" id="chk-DATE" <#if showDate>checked</#if>/> <label for="chk-DATE">Date</label></li>
                     <li class="divider"><input type="checkbox" name="columns" value="SUMMARY" id="chk-SUMMARY" class="visibility:hidden;" checked/></li>
                   </ul>
                   <h4>Summary fields</h4>
@@ -138,7 +138,7 @@
                     <li><input type="checkbox" name="summary" value="CATALOG_NUMBER" id="chk-CATALOG_NUMBER" <#if showCatalogNumber>checked</#if>/> <label for="chk-CATALOG_NUMBER">Catalogue number</label></li>
                     <li><input type="checkbox" name="summary" value="COLLECTION_CODE" id="chk-COLLECTION_CODE" <#if showCollectionCode>checked</#if>/> <label for="chk-COLLECTION_CODE">Collection code</label></li>
                     <li><input type="checkbox" name="summary" value="INSTITUTION" id="chk-INSTITUTION" <#if showInstitution>checked</#if>/> <label for="chk-INSTITUTION">Institution</label></li>
-                    <li><input type="checkbox" name="summary" value="COLLECTOR_NAME" id="chk-COLLECTOR_NAME" <#if showCollectorName>checked</#if>/> <label for="chk-COLLECTOR_NAME">Collector name</label></li>
+                    <li><input type="checkbox" name="summary" value="RECORDED_BY" id="chk-RECORDED_BY" <#if showCollectorName>checked</#if>/> <label for="chk-RECORDED_BY">Collector name</label></li>
                     <li><input type="checkbox" name="summary" value="RECORD_NUMBER" id="chk-RECORD_NUMBER" <#if showRecordNumber>checked</#if>/> <label for="chk-RECORD_NUMBER">Record number</label></li>
                     <li><input type="checkbox" name="summary" value="SCIENTIFIC_NAME" id="chk-SCIENTIFIC_NAME" <#if showScientificName>checked</#if>/> <label for="chk-SCIENTIFIC_NAME">Scientific name</label></li>                    
                     <li><input type="checkbox" name="summary" value="DATASET" id="chk-DATASET" <#if showDataset>checked</#if>/> <label for="chk-DATASET">Dataset</label></li>
@@ -156,23 +156,23 @@
                   <ul>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a scientific name..." data-filter="TAXON_KEY"  title="Scientific name" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value species_autosuggest auto_add" class="filter-control">Scientific name</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Select a location..." data-filter="GEOMETRY" title="Location" data-template-filter="map-template-filter" data-template-summary="template-summary-location" class="filter-control">Location</a></li>
-                    <!--Next li is a place holder to map GEOREFERENCED to the bounding box widget-->
-                    <li style="display:none;"><a tabindex="-1" href="#" data-filter="GEOREFERENCED" title="Bounding Box" data-template-filter="map-template-filter" data-template-summary="template-filter" class="filter-control">Location</a></li>
+                    <!--Next li is a place holder to map HAS_COORDINATE to the bounding box widget-->
+                    <li style="display:none;"><a tabindex="-1" href="#" data-filter="HAS_COORDINATE" title="Bounding Box" data-template-filter="map-template-filter" data-template-summary="template-filter" class="filter-control">Location</a></li>
                     <li style="display:none;"><a tabindex="-1" href="#" data-filter="SPATIAL_ISSUES" title="Bounding Box" data-template-filter="map-template-filter" data-template-summary="template-filter" class="filter-control">Location</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a country name..." data-filter="COUNTRY" title="Country" data-template-filter="template-simple-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Country</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a country name..." data-filter="PUBLISHING_COUNTRY" title="Publishing country" data-template-filter="template-simple-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Publishing country</a></li>
-                    <li><a tabindex="-1" href="#" data-placeholder="Type a collector name..." data-filter="COLLECTOR_NAME" title="Collector name" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value collector_name_autosuggest auto_add" class="filter-control">Collector</a></li>
+                    <li><a tabindex="-1" href="#" data-placeholder="Type a collector name..." data-filter="RECORDED_BY" title="Recorded by" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value collector_name_autosuggest auto_add" class="filter-control">Collector</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a record number..." data-filter="RECORD_NUMBER" title="Record number" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value record_number_autosuggest auto_add" class="filter-control">Record number</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a name..." data-filter="BASIS_OF_RECORD" title="Basis Of Record" data-template-filter="template-basis-of-record-filter" data-template-summary="template-filter" class="filter-control">Basis of record</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a dataset name..." data-filter="DATASET_KEY" title="Dataset" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value dataset_autosuggest auto_add" class="filter-control">Dataset</a></li>
-                    <li><a tabindex="-1" href="#" data-placeholder="" data-filter="DATE" title="Collection date" data-template-filter="template-date-compare-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Collection date</a></li>
+                    <li><a tabindex="-1" href="#" data-placeholder="" data-filter="EVENT_DATE" title="Collection date" data-template-filter="template-date-compare-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Collection date</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="" data-filter="MODIFIED" title="Date last modified" data-template-filter="template-date-compare-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Date last modified</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a year..." data-filter="YEAR" title="Occurrence year" data-template-filter="template-compare-filter" data-template-summary="template-filter" data-input-classes="value auto_add temporal" class="filter-control">Year</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Select a month..." data-filter="MONTH" title="Occurrence month" data-template-filter="template-month-filter" data-template-summary="template-filter" data-input-classes="value auto_add" class="filter-control">Month</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a catalogue number..." data-filter="CATALOG_NUMBER" title="Catalog number" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value catalog_number_autosuggest auto_add" class="filter-control">Catalogue number</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type an institution code..." data-filter="INSTITUTION_CODE" title="Institution code" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value institution_code_autosuggest auto_add" class="filter-control">Institution code</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type an collection code..." data-filter="COLLECTION_CODE" title="Collection code" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value collection_code_autosuggest auto_add" class="filter-control">Collection code</a></li>
-                    <li><a tabindex="-1" href="#" data-placeholder="Type an altitude..." data-filter="ALTITUDE" title="Altitude" data-template-filter="template-compare-filter" data-template-summary="template-filter" data-input-classes="value auto_add" class="filter-control">Altitude</a></li>
+                    <li><a tabindex="-1" href="#" data-placeholder="Type an elevation..." data-filter="ELEVATION" title="Elevation" data-template-filter="template-compare-filter" data-template-summary="template-filter" data-input-classes="value auto_add" class="filter-control">Elevation</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a depth..." data-filter="DEPTH" title="Depth" data-template-filter="template-compare-filter" data-template-summary="template-filter" data-input-classes="value auto_add" class="filter-control">Depth</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a name..." data-filter="TYPE_STATUS" title="Type status" data-template-filter="template-type-status-filter" data-template-summary="template-filter" class="filter-control">Type status</a></li>
                   </ul>
@@ -234,13 +234,13 @@
             <td class="country">
               <#if occ.country?has_content><div class="country">${occ.country.title!}</div></#if>
               <div class="coordinates">
-                <#if occ.latitude?has_content || occ.longitude?has_content>
-                  <#if occ.latitude?has_content>${occ.latitude!?string("0.00")}<#else>-</#if>/<#if occ.longitude?has_content>${occ.longitude!?string("0.00")}<#else>-</#if>
+                <#if occ.decimalLatitude?has_content || occ.decimalLongitude?has_content>
+                  <#if occ.decimalLatitude?has_content>${occ.decimalLatitude!?string("0.00")}<#else>-</#if>/<#if occ.decimalLongitude?has_content>${occ.decimalLongitude!?string("0.00")}<#else>-</#if>
                 <#else>
                   N/A
                 </#if>
-                <#if occ.altitude?has_content>
-                  <div class="code">Altitude: ${occ.altitude}m</div>
+                <#if occ.elevation?has_content>
+                  <div class="code">Elevation: ${occ.elevation}m</div>
                 </#if>
                 <#if occ.depth?has_content>
                   <div class="code">Depth: ${occ.depth}m</div>
@@ -250,7 +250,7 @@
           </#if>
           <#if showBasisOfRecord>
             <td class="kind">
-              <#if occ.basisOfRecord?has_content || occ.longitude?has_content>
+              <#if occ.basisOfRecord?has_content || occ.decimalLongitude?has_content>
           ${action.getFilterTitle('basisOfRecord',occ.basisOfRecord)!}
         <#else>
          N/A

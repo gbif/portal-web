@@ -194,7 +194,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   /**
    * Gets the current year.
    * This value is used by occurrence filters to determine the maximum year that is allowed for the
-   * OccurrenceSearchParamater.DATE.
+   * OccurrenceSearchParamater.EVENT_DATE.
    */
   public int getCurrentYear() {
     return filtersActionHelper.getCurrentYear();
@@ -359,7 +359,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
    */
   private void provideSuggestions() {
     if (searchResponse.getCount() == 0) {
-      if (searchRequest.getParameters().containsKey(OccurrenceSearchParameter.COLLECTOR_NAME)) {
+      if (searchRequest.getParameters().containsKey(OccurrenceSearchParameter.RECORDED_BY)) {
         collectorSuggestions = filtersActionHelper.processCollectorSuggestions(request);
       }
       if (searchRequest.getParameters().containsKey(OccurrenceSearchParameter.CATALOG_NUMBER)) {
@@ -395,11 +395,11 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   public String retrieveTerm(String term, Occurrence occ) {
     // special case for Dc.rights
     if (term.equals("rights")) {
-      return occ.getField(DcTerm.rights);
+      return occ.getVerbatimField(DcTerm.rights);
     }
     DwcTerm t = DwcTerm.valueOf(term);
-    if (t != null && occ != null && occ.getFields() != null) {
-      return occ.getField(t);
+    if (t != null && occ != null && occ.getVerbatimFields() != null) {
+      return occ.getVerbatimField(t);
     }
     return null;
   }

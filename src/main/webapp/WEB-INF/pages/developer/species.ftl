@@ -51,7 +51,7 @@
       particular Checklist including the <a href="<@s.url value='/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c'/>">GBIF Taxonomic Backbone</a>
       which is just called <em>nub</em> in this API.
       Name usages from other checklists with names that also exist in the nub will
-      have a nubKey that points to the related usage in the backbone.
+      have a taxonKey that points to the related usage in the backbone.
   </p>
 
   <@api.apiTable auth=false>

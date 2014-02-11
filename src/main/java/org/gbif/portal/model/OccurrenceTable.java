@@ -27,14 +27,14 @@ public class OccurrenceTable {
    * Enum that represents the visible information of the summary column in the occurrence page.
    */
   public static enum OccurrenceSummaryField {
-    OCCURRENCE_KEY, CATALOG_NUMBER, COLLECTION_CODE, COLLECTOR_NAME, INSTITUTION, SCIENTIFIC_NAME, DATASET, MODIFIED,
+    OCCURRENCE_KEY, CATALOG_NUMBER, COLLECTION_CODE, RECORDED_BY, INSTITUTION, SCIENTIFIC_NAME, DATASET, MODIFIED,
     RECORD_NUMBER, TYPE_STATUS;
   }
 
   private static final OccurrenceSearchParameter[] OCC_LOCATION_PARAMS = new OccurrenceSearchParameter[] {
-    OccurrenceSearchParameter.ALTITUDE, OccurrenceSearchParameter.DEPTH,
-    OccurrenceSearchParameter.LATITUDE, OccurrenceSearchParameter.LONGITUDE, OccurrenceSearchParameter.GEOMETRY,
-    OccurrenceSearchParameter.GEOREFERENCED, OccurrenceSearchParameter.COUNTRY};
+    OccurrenceSearchParameter.ELEVATION, OccurrenceSearchParameter.DEPTH,
+    OccurrenceSearchParameter.DECIMAL_LATITUDE, OccurrenceSearchParameter.DECIMAL_LONGITUDE, OccurrenceSearchParameter.GEOMETRY,
+    OccurrenceSearchParameter.HAS_COORDINATE, OccurrenceSearchParameter.COUNTRY};
 
   private static final OccurrenceSearchParameter[] OCC_DATE_PARAMS = new OccurrenceSearchParameter[] {
     OccurrenceSearchParameter.MONTH, OccurrenceSearchParameter.YEAR};
@@ -199,8 +199,8 @@ public class OccurrenceTable {
     if (isParameterPresent(searchRequest, OccurrenceSearchParameter.COLLECTION_CODE)) {
       fields.add(OccurrenceSummaryField.COLLECTION_CODE);
     }
-    if (isParameterPresent(searchRequest, OccurrenceSearchParameter.COLLECTOR_NAME)) {
-      fields.add(OccurrenceSummaryField.COLLECTOR_NAME);
+    if (isParameterPresent(searchRequest, OccurrenceSearchParameter.RECORDED_BY)) {
+      fields.add(OccurrenceSummaryField.RECORDED_BY);
     }
     if (isParameterPresent(searchRequest, OccurrenceSearchParameter.INSTITUTION_CODE)) {
       fields.add(OccurrenceSummaryField.INSTITUTION);

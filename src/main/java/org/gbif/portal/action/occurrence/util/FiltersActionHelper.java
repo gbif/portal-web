@@ -233,7 +233,7 @@ public class FiltersActionHelper {
   /**
    * Gets the current year.
    * This value is used by occurrence filters to determine the maximum year that is allowed for the
-   * OccurrenceSearchParamater.DATE.
+   * OccurrenceSearchParamater.EVENT_DATE.
    */
   public int getCurrentYear() {
     return Calendar.getInstance().get(Calendar.YEAR);
@@ -273,14 +273,14 @@ public class FiltersActionHelper {
         return StringEscapeUtils.escapeEcmaScript(getDatasetTitle(filterValue));
       } else if (parameter == OccurrenceSearchParameter.GEOMETRY) {
         return getGeometryTitle(filterValue);
-      } else if (parameter == OccurrenceSearchParameter.GEOREFERENCED) {
+      } else if (parameter == OccurrenceSearchParameter.HAS_COORDINATE) {
         return getGeoreferencedTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.COUNTRY
         || parameter == OccurrenceSearchParameter.PUBLISHING_COUNTRY) {
         return StringEscapeUtils.escapeEcmaScript(getCountryTitle(filterValue));
-      } else if (parameter == OccurrenceSearchParameter.DEPTH || parameter == OccurrenceSearchParameter.ALTITUDE) {
+      } else if (parameter == OccurrenceSearchParameter.DEPTH || parameter == OccurrenceSearchParameter.ELEVATION) {
         return getRangeTitle(filterValue, METER);
-      } else if (parameter == OccurrenceSearchParameter.DATE || parameter == OccurrenceSearchParameter.MODIFIED) {
+      } else if (parameter == OccurrenceSearchParameter.EVENT_DATE || parameter == OccurrenceSearchParameter.MODIFIED) {
         return getDateRangeTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.YEAR) {
         return getTemporalRangeTitle(filterValue);
@@ -357,11 +357,11 @@ public class FiltersActionHelper {
 
 
   /**
-   * Searches for suggestion to all the COLLECTOR_NAME parameter values, if the input value has an exact match against
+   * Searches for suggestion to all the RECORDED_BY parameter values, if the input value has an exact match against
    * any suggestion, no suggestions are returned for that parameter.
    */
   public SearchSuggestions<String> processCollectorSuggestions(HttpServletRequest request) {
-    return processStringSuggestions(request, OccurrenceSearchParameter.COLLECTOR_NAME, suggestCollectorNames);
+    return processStringSuggestions(request, OccurrenceSearchParameter.RECORDED_BY, suggestCollectorNames);
   }
 
   /**
@@ -655,7 +655,7 @@ public class FiltersActionHelper {
   }
 
   /**
-   * Searches for suggestion to all the COLLECTOR_NAME parameters, if the input value has an exact match against any
+   * Searches for suggestion to all the RECORDED_BY parameters, if the input value has an exact match against any
    * suggestion, no suggestions are returned for that parameter.
    */
   private SearchSuggestions<String> processStringSuggestions(HttpServletRequest request,

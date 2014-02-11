@@ -222,8 +222,8 @@ public class OccurrenceBaseAction extends BaseAction {
         constructPartialGatheringDate(occ.getYear(), occ.getMonth(), occ.getDay());
     }
     // construct geographic classification
-    String county = occ.getField(DwcTerm.county);
-    String municipality = occ.getField(DwcTerm.municipality);
+    String county = occ.getVerbatimField(DwcTerm.county);
+    String municipality = occ.getVerbatimField(DwcTerm.municipality);
     geographicClassification =
       constructGeographicClassification(occ.getContinent(), occ.getCountry(), occ.getStateProvince(), county,
         municipality);

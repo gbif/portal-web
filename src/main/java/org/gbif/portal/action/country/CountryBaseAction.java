@@ -145,7 +145,7 @@ public class CountryBaseAction extends NodeAction {
   }
 
   protected void buildByMetrics(int numDatasetsToLoad, int numCountriesToLoad) {
-    final long occRecords = cubeService.get(new ReadBuilder().at(OccurrenceCube.HOST_COUNTRY, country));
+    final long occRecords = cubeService.get(new ReadBuilder().at(OccurrenceCube.PUBLISHING_COUNTRY, country));
 
     // we only want the counts here
     PagingRequest p = new PagingRequest(0, 0);
@@ -231,11 +231,11 @@ public class CountryBaseAction extends NodeAction {
   }
 
   private void loadCountryList(Map<Country, Long> cMetrics, boolean isAboutCountry, int limit) {
-    ReadBuilder rb = new ReadBuilder().at(OccurrenceCube.IS_GEOREFERENCED, true);
+    ReadBuilder rb = new ReadBuilder().at(OccurrenceCube.GEOREFERENCED, true);
     if (isAboutCountry) {
       rb.at(OccurrenceCube.COUNTRY, country);
     } else {
-      rb.at(OccurrenceCube.HOST_COUNTRY, country);
+      rb.at(OccurrenceCube.PUBLISHING_COUNTRY, country);
     }
 
     int idx = 0;
@@ -247,7 +247,7 @@ public class CountryBaseAction extends NodeAction {
       // only load the requested page
       if (idx >= getOffset()) {
         if (isAboutCountry) {
-          rb.at(OccurrenceCube.HOST_COUNTRY, metric.getKey());
+          rb.at(OccurrenceCube.PUBLISHING_COUNTRY, metric.getKey());
         } else {
           rb.at(OccurrenceCube.COUNTRY, metric.getKey());
         }

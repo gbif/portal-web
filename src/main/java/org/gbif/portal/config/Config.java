@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import static org.gbif.ws.paths.OccurrencePaths.CATALOG_NUMBER_PATH;
 import static org.gbif.ws.paths.OccurrencePaths.COLLECTION_CODE_PATH;
-import static org.gbif.ws.paths.OccurrencePaths.COLLECTOR_NAME_PATH;
+import static org.gbif.ws.paths.OccurrencePaths.RECORDED_BY_PATH;
 import static org.gbif.ws.paths.OccurrencePaths.INSTITUTION_CODE_PATH;
 import static org.gbif.ws.paths.OccurrencePaths.OCC_SEARCH_PATH;
 import static org.gbif.ws.paths.OccurrencePaths.RECORD_NUMBER_PATH;
@@ -90,7 +90,7 @@ public class Config {
       cfg.maxOccSearchOffset = Integer.parseInt(properties.getProperty("occurrence.search.maxoffset"));
       cfg.wsMetrics = getPropertyUrl(properties, "metrics.ws.url", true);
       cfg.wsOccCatalogNumberSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + CATALOG_NUMBER_PATH;
-      cfg.wsOccCollectorNameSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + COLLECTOR_NAME_PATH;
+      cfg.wsOccCollectorNameSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + RECORDED_BY_PATH;
       cfg.wsOccCollectionCodeSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + COLLECTION_CODE_PATH;
       cfg.wsOccInstitutionCodeSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + INSTITUTION_CODE_PATH;
       cfg.wsOccRecordNumberSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + RECORD_NUMBER_PATH;

@@ -72,7 +72,7 @@ public class PredicateFactoryTest {
     assertEquals("PRESERVED_SPECIMEN", eq.getValue());
 
     // add a third to check an AND is built
-    params.put("LATITUDE", new String[] {"10.07, *"}); // greater than or equals
+    params.put("DECIMAL_LATITUDE", new String[] {"10.07, *"}); // greater than or equals
     p = pf.build(params);
     assertTrue(p instanceof ConjunctionPredicate);
     ConjunctionPredicate cq = (ConjunctionPredicate) p;
@@ -83,7 +83,7 @@ public class PredicateFactoryTest {
     p = iter.next();
     assertTrue(p instanceof GreaterThanOrEqualsPredicate); // the OR'ed scientific names (tested above)
     GreaterThanOrEqualsPredicate gp = (GreaterThanOrEqualsPredicate) p;
-    assertEquals(OccurrenceSearchParameter.LATITUDE, gp.getKey());
+    assertEquals(OccurrenceSearchParameter.DECIMAL_LATITUDE, gp.getKey());
     assertEquals("10.07", gp.getValue());
   }
 
@@ -92,7 +92,7 @@ public class PredicateFactoryTest {
     PredicateFactory pf = new PredicateFactory();
     Map<String, String[]> params = Maps.newHashMap();
 
-    params.put("DATE", new String[] {"1989-09-11, 1991"});
+    params.put("EVENT_DATE", new String[] {"1989-09-11, 1991"});
     Predicate p = pf.build(params);
     assertTrue(p instanceof ConjunctionPredicate);
     ConjunctionPredicate and = (ConjunctionPredicate) p;
@@ -102,12 +102,12 @@ public class PredicateFactoryTest {
 
     p = iter.next();
     GreaterThanOrEqualsPredicate gt = (GreaterThanOrEqualsPredicate) p;
-    assertEquals(OccurrenceSearchParameter.DATE, gt.getKey());
+    assertEquals(OccurrenceSearchParameter.EVENT_DATE, gt.getKey());
     assertEquals("1989-09-11", gt.getValue());
 
     p = iter.next();
     LessThanOrEqualsPredicate lt = (LessThanOrEqualsPredicate) p;
-    assertEquals(OccurrenceSearchParameter.DATE, lt.getKey());
+    assertEquals(OccurrenceSearchParameter.EVENT_DATE, lt.getKey());
     assertEquals("1991-12-31", lt.getValue());
   }
 
@@ -116,11 +116,11 @@ public class PredicateFactoryTest {
     PredicateFactory pf = new PredicateFactory();
     Map<String, String[]> params = Maps.newHashMap();
 
-    params.put("DATE", new String[] {"*,1991"});
+    params.put("EVENT_DATE", new String[] {"*,1991"});
     Predicate p = pf.build(params);
 
     LessThanOrEqualsPredicate lt = (LessThanOrEqualsPredicate) p;
-    assertEquals(OccurrenceSearchParameter.DATE, lt.getKey());
+    assertEquals(OccurrenceSearchParameter.EVENT_DATE, lt.getKey());
     assertEquals("1991-12-31", lt.getValue());
   }
 
@@ -203,10 +203,10 @@ public class PredicateFactoryTest {
     } else if (OccurrenceSearchParameter.MONTH == p) {
       return String.format("%02d", 1 + rnd.nextInt(11));
 
-    } else if (OccurrenceSearchParameter.LONGITUDE == p) {
+    } else if (OccurrenceSearchParameter.DECIMAL_LONGITUDE == p) {
       return Integer.toString(rnd.nextInt(180));
 
-    } else if (OccurrenceSearchParameter.LATITUDE == p) {
+    } else if (OccurrenceSearchParameter.DECIMAL_LATITUDE == p) {
       return Integer.toString(rnd.nextInt(90));
 
     } else if (OccurrenceSearchParameter.COUNTRY == p || OccurrenceSearchParameter.PUBLISHING_COUNTRY == p) {

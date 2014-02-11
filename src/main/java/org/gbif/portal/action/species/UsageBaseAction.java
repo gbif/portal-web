@@ -162,10 +162,10 @@ public class UsageBaseAction extends BaseAction {
     }
 
     try {
-      numOccurrences = occurrenceCubeService.get(new ReadBuilder().at(OccurrenceCube.NUB_KEY, usage.getKey()));
+      numOccurrences = occurrenceCubeService.get(new ReadBuilder().at(OccurrenceCube.TAXON_KEY, usage.getKey()));
       numGeoreferencedOccurrences =
-        occurrenceCubeService.get(new ReadBuilder().at(OccurrenceCube.NUB_KEY, usage.getKey()).at(
-          OccurrenceCube.IS_GEOREFERENCED, true));
+        occurrenceCubeService.get(new ReadBuilder().at(OccurrenceCube.TAXON_KEY, usage.getKey()).at(
+          OccurrenceCube.GEOREFERENCED, true));
     } catch (ServiceUnavailableException e) {
       LOG.error("Failed to load occurrence metrics for usage {}", usage.getKey(), e);
     }

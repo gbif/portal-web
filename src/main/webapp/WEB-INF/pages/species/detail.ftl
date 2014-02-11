@@ -371,7 +371,7 @@
         <#if numGeoreferencedOccurrences gt 0>
           <h3>View records</h3>
           <p>
-            <a href="<@s.url value='/occurrence/search?taxon_key=${usage.key?c}&GEOREFERENCED=true&SPATIAL_ISSUES=false'/>">All ${numGeoreferencedOccurrences} </a>
+            <a href="<@s.url value='/occurrence/search?taxon_key=${usage.key?c}&HAS_COORDINATE=true&SPATIAL_ISSUES=false'/>">All ${numGeoreferencedOccurrences} </a>
             |
             <a href="<@s.url value='/occurrence/search?taxon_key=${usage.key?c}&BOUNDING_BOX=90,-180,-90,180&SPATIAL_ISSUES=false'/>" id='geoOccurrenceSearch'>In viewable area</a>
           </p>

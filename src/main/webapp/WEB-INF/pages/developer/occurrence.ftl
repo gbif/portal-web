@@ -71,7 +71,7 @@
   <p>This API provides services for searching occurrence records that have been indexed by GBIF.</p>
 
   <@api.apiTable auth=false>
-      <@trowS url="" respLink="/occurrence/search?taxonKey=1"  paging=true params=["datasetKey","year","month","latitude","longitude","country","publishingCountry","altitude","depth","institutionCode", "collectionCode", "catalogNumber","collectorName","basisOfRecord","taxonKey","georeferenced","geometry","spatialIssues"]>Full search across all occurrences.
+      <@trowS url="" respLink="/occurrence/search?taxonKey=1"  paging=true params=["datasetKey","year","month","decimalLatitude","decimalLongitude","country","publishingCountry","elevation","depth","institutionCode", "collectionCode", "catalogNumber","collectorName","basisOfRecord","taxonKey","hasCoordinate","geometry","spatialIssues"]>Full search across all occurrences.
       Results are ordered by relevance.</@trowS>
       <@trowS url="/catalog_number" respLink="/occurrence/search/catalog_number?q=122&limit=5" params=["q","limit"]>Search that returns matching catalog numbers.
       Results are ordered by relevance.</@trowS>
@@ -129,7 +129,7 @@
   </p>
 
   <@api.apiTable auth=false paging=false>
-    <@trowM url="/occurrence/counts/datasets" resp="UUID Counts" respLink="/occurrence/counts/datasets?country=DE" params=["country","nubKey"]>Returns occurrence counts for datasets that cover a given taxon or country.</@trowM>
+    <@trowM url="/occurrence/counts/datasets" resp="UUID Counts" respLink="/occurrence/counts/datasets?country=DE" params=["country","taxonKey"]>Returns occurrence counts for datasets that cover a given taxon or country.</@trowM>
     <@trowM url="/occurrence/counts/countries" resp="Country Counts" respLink="/occurrence/counts/countries?publishingCountry=DE" params=["publishingCountry"]>Returns occurrence counts for all countries covered by the data published by the given country.</@trowM>
     <@trowM url="/occurrence/counts/publishingCountry" resp="Country Counts" respLink="/occurrence/counts/publishing_countries?country=DE" params=["country"]>Returns occurrence counts for all countries that publish data about the given country.</@trowM>
   </@api.apiTable>
@@ -141,20 +141,20 @@
   "month": "The month of the year, starting with 1 for January.",
   "date": "Occurrence date in ISO 8601 format: yyyy, yyyy-MM, yyyy-MM-dd, or MM-dd.",
   "modified": "Occurrence modification date in ISO 8601 format: yyyy, yyyy-MM, yyyy-MM-dd, or MM-dd.",
-  "latitude": "Latitude in decimals between -90 and 90 based on WGS 84.",
-  "longitude": "Longitude in decimals between -180 and 180 based on WGS 84.",
+  "decimalLatitude": "Latitude in decimals between -90 and 90 based on WGS 84.",
+  "decimalLongitude": "Longitude in decimals between -180 and 180 based on WGS 84.",
   "country": "The 2-letter country code (as per <a href='http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm' target='_blank'>ISO-3166-1</a>) of the country in which the occurrence was recorded.",
   "publishingCountry" : "The 2-letter country code (as per <a href='http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm' target='_blank'>ISO-3166-1</a>) of the country in which the occurrence was recorded.",
-  "altitude": "Altitude/elevation in meters above sea level.",
-  "depth" : "Depth in meters relative to altitude. For example 10 meters below a lake surface with given altitude.",
+  "elevation": "Elevation/altitude in meters above sea level.",
+  "depth" : "Depth in meters relative to elevation. For example 10 meters below a lake surface with given elevation.",
   "institutionCode" : "An identifier of any form assigned by the source to identify the institution the record belongs to. Not guaranteed to be unique.",
   "collectionCode": "An identifier of any form assigned by the source to identify the physical collection or digital dataset uniquely within the context of an institution.",
   "catalogNumber": "An identifier of any form assigned by the source within a physical collection or digital dataset for the record which may not be unique, but should be fairly unique in combination with the institution and collection code.",
   "collectorName": "The person who recorded the occurrence.",
   "basisOfRecord": "Basis of record, as defined in our <a href='http://builds.gbif.org/view/Common/job/gbif-api/site/apidocs/org/gbif/api/vocabulary/BasisOfRecord.html' target='_blank'>BasisOfRecord enum</a>",
   "taxonKey": "A taxon key from the GBIF backbone. All included and synonym taxa are included in the search, so a search for aves with taxonKey=212 (i.e. <a href='http://api.gbif.org/v0.9/occurrence/search?taxonKey=212' target='_blank'>/occurrence/search?taxonKey=212</a>) will match all birds, no matter which species.",
-  "nubKey": "Same as <a href='#taxonKey'>taxon key</a>, a taxon id from the GBIF backbone.",
-  "georeferenced": "Limits searches to occurrence records which contain a value in both latitude and longitude (i.e. georeferenced=true limits to occurrence records with coordinate values and georeferenced=false limits to occurrence records without coordinate values).",
+  "taxonKey": "Same as <a href='#taxonKey'>taxon key</a>, a taxon id from the GBIF backbone.",
+  "hasCoordinate": "Limits searches to occurrence records which contain a value in both decimal latitude and decimal longitude (i.e. georeferenced=true limits to occurrence records with coordinate values and georeferenced=false limits to occurrence records without coordinate values).",
   "geometry": "Searches for occurrences inside a polygon described in Well Known Text (WKT) format. A WKT shape written as POLYGON ((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1)) would be queried as is, i.e. <a href='http://api.gbif.org/v0.9/occurrence/search?geometry=POLYGON((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1))' target='_blank'>/occurrence/search?geometry=POLYGON((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1))</a>.",
   "spatialIssues": "Includes/excludes occurrence records which contain spatial issues (as determined in our record interpretation), i.e. spatialIssues=true returns only those records with spatial issues while spatialIssues=false includes only records without spatial issues. The absence of this parameter returns any record with or without spatial issues.",
   "q" : "Simple search parameter. The value for this parameter can be a simple word or a phrase.",
@@ -268,7 +268,7 @@
                   &nbsp;&nbsp;"predicate":<br/>
                     &nbsp;&nbsp;{<br/>
                     &nbsp;&nbsp;&nbsp;&nbsp;"type":"lessThanOrEquals",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"key":"ALTITUDE",<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"key":"ELEVATION",<br/>
                     &nbsp;&nbsp;&nbsp;&nbsp;"value":"1000"<br/>
                   &nbsp;&nbsp;}<br/>
                 }<br/>
@@ -304,7 +304,7 @@
                   &nbsp;&nbsp;"predicate":<br/>
                     &nbsp;&nbsp;{<br/>
                     &nbsp;&nbsp;&nbsp;&nbsp;"type":"greaterThanOrEquals",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"key":"ALTITUDE",<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"key":"ELEVATION",<br/>
                     &nbsp;&nbsp;&nbsp;&nbsp;"value":"1000"<br/>
                   &nbsp;&nbsp;}<br/>
                 }<br/>

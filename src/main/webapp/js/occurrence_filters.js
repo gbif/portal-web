@@ -723,7 +723,7 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
           }
         }
       },
-  }
+      }
 
   return InnerOccurrenceWidget;
 })(jQuery,_,OccurrenceWidgetManager);
@@ -895,9 +895,9 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
         var numFilters = self.getFilters().length;        
         var rectangle = new L.Rectangle(bounds,DEFAULT_SHAPE_OPTIONS);
         self.addFilter({label: label, value: self.getPolygonFromRect(rectangle), key: null, paramName: self.getId(), submitted: false, marker: self.mapGeometries.length, targetParam:'BOUNDING_BOX'});      
-        //GEOREFERENCED filters must be removed
-        self.removeFilterByParamName('GEOREFERENCED');      
-        self.filterElement.find(':checkbox[name="GEOREFERENCED"]').removeAttr('checked');      
+        //HAS_COORDINATE filters must be removed
+        self.removeFilterByParamName('HAS_COORDINATE');
+        self.filterElement.find(':checkbox[name="HAS_COORDINATE"]').removeAttr('checked');
         if(numFilters < self.getFilters().length) { //nothing changed
           self.showFilters();              
           rectangle.bindPopup("Bounding box: " + label);
@@ -1035,19 +1035,19 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
   };
 
   /**
-   * Binds the event handler to the .checkbox[name="GEOREFERENCED"].change event.
+   * Binds the event handler to the .checkbox[name="HAS_COORDINATE"].change event.
    */
   InnerOccurrenceLocationWidget.prototype.bindSelectGeoreferecendEvent = function() {
     var self = this;    
-    this.filterElement.find(':checkbox[name="GEOREFERENCED"]').change( function(e) {
-      self.removeFilterByParamName('GEOREFERENCED');      
+    this.filterElement.find(':checkbox[name="HAS_COORDINATE"]').change( function(e) {
+      self.removeFilterByParamName('HAS_COORDINATE');
       if ($(this).attr('checked')) {
         self.filterElement.find(".map_control,.leaflet-control-draw").hide();
         self.removeFilterByParamName(self.getId());
         self.removeAllPolygons();
         var val = $(this).val();
-        self.filters.push({label:val == 'true' ?'Yes':'No',value: val, key: null,paramName:'GEOREFERENCED', submitted: false,hidden:true});
-        self.filterElement.find(':checkbox[name="GEOREFERENCED"][id!=' + $(this).attr('id') + ']').removeAttr('checked');
+        self.filters.push({label:val == 'true' ?'Yes':'No',value: val, key: null,paramName:'HAS_COORDINATE', submitted: false,hidden:true});
+        self.filterElement.find(':checkbox[name="HAS_COORDINATE"][id!=' + $(this).attr('id') + ']').removeAttr('checked');
         if(val == 'false'){
           self.removeFilterByParamName('SPATIAL_ISSUES');
           self.filterElement.find(':checkbox[name="SPATIAL_ISSUES"]').removeAttr('checked');
@@ -1572,7 +1572,7 @@ var OccurrenceWidgetManager = (function ($,_) {
    */
   function getWidgetById(id) {
     var widgetId = id;
-    if(widgetId == 'GEOREFERENCED' || widgetId == 'POLYGON' || widgetId == 'SPATIAL_ISSUES') { //GEOREFERENCED parameter is handled by BOUNDING_BOX widget
+    if(widgetId == 'HAS_COORDINATE' || widgetId == 'POLYGON' || widgetId == 'SPATIAL_ISSUES') { //HAS_COORDINATE parameter is handled by BOUNDING_BOX widget
       widgetId = 'GEOMETRY';
     }
     for (var i=0;i < widgets.length;i++) {
@@ -1647,7 +1647,7 @@ var OccurrenceWidgetManager = (function ($,_) {
           //By examinig the attribute data-filter creates the corresponding OccurreWidget(or subtype) instance.
           //Also the binding function is set as parameter, for instance: elf.bindSpeciesAutosuggest. When a binding function isn't needed a empty function is set:  function(){}.
           var filterName = $(control).attr("data-filter");
-          if (filterName != "GEOREFERENCED") { //these filters are skiped because use the same widget as the bounding box widget
+          if (filterName != "HAS_COORDINATE") { //these filters are skiped because use the same widget as the bounding box widget
             var newWidget;
             if (filterName == "TAXON_KEY") {
               newWidget = new OccurrenceWidget();
@@ -1655,7 +1655,7 @@ var OccurrenceWidgetManager = (function ($,_) {
             } else if (filterName == "DATASET_KEY") {
               newWidget = new OccurrenceWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindDatasetAutosuggest});            
-            } else if (filterName == "COLLECTOR_NAME") {
+            } else if (filterName == "RECORDED_BY") {
               newWidget = new OccurrenceWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindCollectorNameAutosuggest});            
             } else if (filterName == "RECORD_NUMBER") {
@@ -1673,7 +1673,7 @@ var OccurrenceWidgetManager = (function ($,_) {
             } else if (filterName == "GEOMETRY") {
               newWidget = new OccurrenceLocationWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindMap});            
-            } else if (filterName == "DATE" || filterName == "MODIFIED") {
+            } else if (filterName == "EVENT_DATE" || filterName == "MODIFIED") {
               newWidget = new OccurrenceDateComparatorWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});            
             } else if (filterName == "MONTH") {
@@ -1688,7 +1688,7 @@ var OccurrenceWidgetManager = (function ($,_) {
             } else if (filterName == "COUNTRY" || filterName == "PUBLISHING_COUNTRY") {
               newWidget = new OccurrenceWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindCountryAutosuggest});              
-            } else if (filterName == "ALTITUDE" || filterName == "DEPTH" | filterName == "YEAR") {
+            } else if (filterName == "ELEVATION" || filterName == "DEPTH" | filterName == "YEAR") {
               newWidget = new OccurrenceComparatorWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});        
               newWidget.setUnit("m");
@@ -1824,7 +1824,7 @@ var OccurrenceWidgetManager = (function ($,_) {
        */
       bindCollectorNameAutosuggest : function(){        
         $(':input.collector_name_autosuggest').each( function(idx,el){
-          $(el).termsAutosuggest(cfg.wsOccCollectorNameSearch, "#content",SUGGEST_LIMIT,buildOnSelectHandler('COLLECTOR_NAME',el));
+          $(el).termsAutosuggest(cfg.wsOccCollectorNameSearch, "#content",SUGGEST_LIMIT,buildOnSelectHandler('RECORDED_BY',el));
         });        
       },
       

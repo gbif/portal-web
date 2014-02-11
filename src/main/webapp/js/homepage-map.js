@@ -78,7 +78,7 @@ $(function() {
     } else {
   	  var occurrence = occurrences.pop();
     	if (occurrence!==undefined) {
-      	point.setLatLng([occurrence.latitude,occurrence.longitude]);
+      	point.setLatLng([occurrence.decimalLatitude,occurrence.decimalLongitude]);
       	point.unbindPopup(); // avoid memory leak
       	point.bindPopup(
           "<p>Occurrence of <a href='occurrence/" + occurrence.key + "'>" + occurrence.scientificName +"</a></p>" +

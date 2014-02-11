@@ -401,7 +401,7 @@
          <#if suggestions?has_content>
           <div class="warningBox"> <span class="warningCounter">!</span>The collector name  <strong>"${name}"</strong> didn't match any existing record.You can select one from the list below to try improving your search results.</div>                               
           <#list suggestions as suggestion>
-              <input id="searchResult${suggestion}" type="radio" value="${suggestion}" name="COLLECTOR_NAME" class="suggestion" data-suggestion="${name}"/>
+              <input id="searchResult${suggestion}" type="radio" value="${suggestion}" name="RECORDED_BY" class="suggestion" data-suggestion="${name}"/>
               <label for="searchResult${suggestion}">${suggestion}</label>                
               </br>                                                    
           </#list>           
@@ -540,9 +540,9 @@
               <div style="width:300px;">
                 <fieldset class="location_option_geo">
                   <legend>Show only records that are</legend>                
-                  <label for="isGeoreferenced">georeferenced</label> <input type="checkbox" name="GEOREFERENCED" id="isGeoreferenced" value="true" <#if action.isInFilter('GEOREFERENCED', 'true')> checked</#if>/>
+                  <label for="isGeoreferenced">georeferenced</label> <input type="checkbox" name="HAS_COORDINATE" id="isGeoreferenced" value="true" <#if action.isInFilter('HAS_COORDINATE', 'true')> checked</#if>/>
                   <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  <label for="isNotGeoreferenced">not georeferenced</label> <input type="checkbox" name="GEOREFERENCED" id="isNotGeoreferenced" value="false" <#if action.isInFilter('GEOREFERENCED', 'false') && !action.isInFilter('GEOREFERENCED', 'true')> checked</#if>/>
+                  <label for="isNotGeoreferenced">not georeferenced</label> <input type="checkbox" name="HAS_COORDINATE" id="isNotGeoreferenced" value="false" <#if action.isInFilter('HAS_COORDINATE', 'false') && !action.isInFilter('HAS_COORDINATE', 'true')> checked</#if>/>
                 </fieldset>
               </div>                            
               <fieldset class="location_option_geo">  
@@ -583,9 +583,9 @@
               <div style="width:490px;">
                 <fieldset class="location_option_geo" id="spatial_issues">
                   <legend>Show only records</legend>                
-                  <label for="noSpatialIssues">with no known coordinate issues</label> <input type="checkbox" name="SPATIAL_ISSUES" id="noSpatialIssues" value="false" <#if action.isInFilter('SPATIAL_ISSUES', 'false')> checked</#if> <#if action.isInFilter('GEOREFERENCED', 'false')> disabled</#if>/>
+                  <label for="noSpatialIssues">with no known coordinate issues</label> <input type="checkbox" name="SPATIAL_ISSUES" id="noSpatialIssues" value="false" <#if action.isInFilter('SPATIAL_ISSUES', 'false')> checked</#if> <#if action.isInFilter('HAS_COORDINATE', 'false')> disabled</#if>/>
                   <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  <label for="spatialIssues">with known coordinate issues</label> <input type="checkbox" name="SPATIAL_ISSUES" id="spatialIssues" value="true" <#if action.isInFilter('SPATIAL_ISSUES', 'true')> checked</#if> <#if action.isInFilter('GEOREFERENCED', 'false')> disabled</#if>/>
+                  <label for="spatialIssues">with known coordinate issues</label> <input type="checkbox" name="SPATIAL_ISSUES" id="spatialIssues" value="true" <#if action.isInFilter('SPATIAL_ISSUES', 'true')> checked</#if> <#if action.isInFilter('HAS_COORDINATE', 'false')> disabled</#if>/>
                 </fieldset>
               </div>
               <div style="display:table">

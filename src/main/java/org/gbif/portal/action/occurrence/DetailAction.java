@@ -80,18 +80,18 @@ public class DetailAction extends OccurrenceBaseAction {
 
       for (String group : DwcTerm.GROUPS) {
         for (DwcTerm t : DwcTerm.listByGroup(group)) {
-          if (v.getFields().containsKey(t)) {
+          if (v.getVerbatimFields().containsKey(t)) {
             if (!verbatim.containsKey(group)) {
               verbatim.put(group, new TreeMap<String, String>());
             }
-            verbatim.get(group).put(t.simpleName(), v.getFields().get(t));
+            verbatim.get(group).put(t.simpleName(), v.getVerbatimFields().get(t));
           }
         }
       }
       // now add all non dwc terms
       Map<String, String> gbif = new TreeMap<String, String>();
       Map<String, String> others = new TreeMap<String, String>();
-      for (Map.Entry<Term, String> field : v.getFields().entrySet()) {
+      for (Map.Entry<Term, String> field : v.getVerbatimFields().entrySet()) {
         Term t = field.getKey();
         if (t instanceof DwcTerm) {
           // skip, its in the map already
@@ -127,31 +127,31 @@ public class DetailAction extends OccurrenceBaseAction {
   public String retrieveTerm(String term) {
     // special case for Dc.rights
     if (term.equals("rights")) {
-      return occ.getField(DcTerm.rights);
+      return occ.getVerbatimField(DcTerm.rights);
     }
     // special case for Dc.accessRights
     else if (term.equals("accessRights")) {
-      return occ.getField(DcTerm.accessRights);
+      return occ.getVerbatimField(DcTerm.accessRights);
     }
     // special case for Dc.bibliographicCitation
     else if (term.equals("bibliographicCitation")) {
-      return occ.getField(DcTerm.bibliographicCitation);
+      return occ.getVerbatimField(DcTerm.bibliographicCitation);
     }
     // special case for Dc.rightsHolder
     else if (term.equals("rightsHolder")) {
-      return occ.getField(DcTerm.rightsHolder);
+      return occ.getVerbatimField(DcTerm.rightsHolder);
     }
     // special case for Dc.type
     else if (term.equals("type")) {
-      return occ.getField(DcTerm.type);
+      return occ.getVerbatimField(DcTerm.type);
     }
     // special case for Dc.type
     else if (term.equals("language")) {
-      return occ.getField(DcTerm.language);
+      return occ.getVerbatimField(DcTerm.language);
     }
     DwcTerm t = DwcTerm.valueOf(term);
-    if (t != null && occ != null && occ.getFields() != null) {
-      return occ.getField(t);
+    if (t != null && occ != null && occ.getVerbatimFields() != null) {
+      return occ.getVerbatimField(t);
     }
     return null;
   }

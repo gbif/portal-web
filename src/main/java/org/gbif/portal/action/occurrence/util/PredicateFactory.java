@@ -26,8 +26,8 @@ import com.google.common.collect.Range;
  * into a predicate suitable for launching a download service.
  *
  * It understands multi valued parameters and interprets the range format *,100
- * TAXON_KEY=12&ALTITUDE=1000,2000
- * (ALTITUDE >= 1000 AND ALTITUDE <= 1000)
+ * TAXON_KEY=12&ELEVATION=1000,2000
+ * (ELEVATION >= 1000 AND ELEVATION <= 1000)
  */
 public class PredicateFactory {
   private final static String POLYGON = "POLYGON((%s))";
