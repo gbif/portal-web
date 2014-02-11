@@ -1647,7 +1647,7 @@ var OccurrenceWidgetManager = (function ($,_) {
           //By examinig the attribute data-filter creates the corresponding OccurreWidget(or subtype) instance.
           //Also the binding function is set as parameter, for instance: elf.bindSpeciesAutosuggest. When a binding function isn't needed a empty function is set:  function(){}.
           var filterName = $(control).attr("data-filter");
-          if (filterName != "HAS_COORDINATE") { //these filters are skiped because use the same widget as the bounding box widget
+          if (filterName != "HAS_COORDINATE" && filterName != "SPATIAL_ISSUES") { //these filters are skiped because use the same widget as the bounding box widget
             var newWidget;
             if (filterName == "TAXON_KEY") {
               newWidget = new OccurrenceWidget();
@@ -1673,7 +1673,7 @@ var OccurrenceWidgetManager = (function ($,_) {
             } else if (filterName == "GEOMETRY") {
               newWidget = new OccurrenceLocationWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindMap});            
-            } else if (filterName == "EVENT_DATE" || filterName == "MODIFIED") {
+            } else if (filterName == "EVENT_DATE" || filterName == "LAST_INTERPRETED") {
               newWidget = new OccurrenceDateComparatorWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});            
             } else if (filterName == "MONTH") {

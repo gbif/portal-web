@@ -394,7 +394,7 @@
     </ul>
   </script>
   
-  <script type="text/template" id="COLLECTOR_NAME-suggestions-template">  
+  <script type="text/template" id="RECORDED_BY-suggestions-template">  
     <#list collectorSuggestions.suggestions?keys as name>            
       <div class="suggestionBox" data-suggestion="${name}">         
        <#assign suggestions = collectorSuggestions.suggestions[name]>
