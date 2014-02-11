@@ -34,11 +34,11 @@ public class HomeAction extends BaseAction {
   private Integer numGeoreferenced;
 
   private Integer numOccurrences;
-  
-  private Map<Kingdom, Long> kingdomCounts; 
-  
+
+  private Map<Kingdom, Long> kingdomCounts;
+
   private Map<BasisOfRecord, Long> borCounts;
-  
+
   private Map<Integer, Long> yearCounts;
 
   @Inject

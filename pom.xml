@@ -557,19 +557,19 @@
         <cargo.context>portal</cargo.context>
         <devMode>false</devMode>
         <notDevMode>true</notDevMode>
-        <baseurl>http://www.uat.gbif.org</baseurl>
-        <servername>http://www.uat.gbif.org</servername>
+        <baseurl>http://www.gbif-uat.org</baseurl>
+        <servername>http://www.gbif-uat.org</servername>
         <drupal.url>http://www.uat.gbif.org</drupal.url>
         <url.includeContext>false</url.includeContext>
-        <registry.ws.url>http://apiuat.gbif.org/</registry.ws.url>
-        <checklistbank.ws.url>http://apiuat.gbif.org/</checklistbank.ws.url>
-        <checklistbank.search.ws.url>http://apiuat.gbif.org/species/</checklistbank.search.ws.url>
-        <checklistbank.match.ws.url>http://apiuat.gbif.org/species/match/</checklistbank.match.ws.url>
-        <occurrence.ws.url>http://apiuat.gbif.org/</occurrence.ws.url>
-        <occurrence.ws.url.public>http://apiuat.gbif.org/</occurrence.ws.url.public>
-        <tile-server.url>http://apiuat.gbif.org/map</tile-server.url>
-        <image-cache.url>http://apiuat.gbif.org/image</image-cache.url>
-        <metrics.ws.url>http://apiuat.gbif.org/</metrics.ws.url>
+        <registry.ws.url>http://api.gbif-uat.org/v0.9/</registry.ws.url>
+        <checklistbank.ws.url>http://api.gbif-uat.org/v0.9/</checklistbank.ws.url>
+        <checklistbank.search.ws.url>http://api.gbif-uat.org/v0.9/species/</checklistbank.search.ws.url>
+        <checklistbank.match.ws.url>http://api.gbif-uat.org/v0.9/species/match/</checklistbank.match.ws.url>
+        <occurrence.ws.url>http://api.gbif-uat.org/v0.9/</occurrence.ws.url>
+        <occurrence.ws.url.public>http://api.gbif-uat.org/v0.9/</occurrence.ws.url.public>
+        <tile-server.url>http://api.gbif-uat.org/v0.9/map</tile-server.url>
+        <image-cache.url>http://api.gbif-uat.org/v0.9/image</image-cache.url>
+        <metrics.ws.url>http://api.gbif-uat.org/v0.9/</metrics.ws.url>
         <drupal.cookiename>SESS751c3c6f031b889581268415447c0191</drupal.cookiename>
         <drupal.db.url>jdbc:mysql://nerf.gbif.org:3306/drupal_devel?useUnicode=true&amp;characterEncoding=UTF8&amp;characterSetResults=UTF8</drupal.db.url>
         <drupal.db.username>drupal_devel</drupal.db.username>

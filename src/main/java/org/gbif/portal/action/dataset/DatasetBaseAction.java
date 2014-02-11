@@ -66,7 +66,7 @@ public class DatasetBaseAction extends MemberBaseAction<Dataset> {
   @Inject
   protected InstallationService installationService;
   @Inject
-  private CubeService occurrenceCubeService;
+  protected CubeService occurrenceCubeService;
 
   protected DatasetService datasetService;
 
@@ -184,7 +184,7 @@ public class DatasetBaseAction extends MemberBaseAction<Dataset> {
   /**
    * Takes a list of the resource's TaxonomicCoverages, and for each one, creates a new OrganizedTaxonomicCoverage
    * that gets added to this class' list of OrganizedTaxonomicCoverage.
-   * 
+   *
    * @param coverages list of resource's OrganizedTaxonomicCoverage
    */
   @VisibleForTesting
@@ -223,7 +223,7 @@ public class DatasetBaseAction extends MemberBaseAction<Dataset> {
    * Construct the display name from TaxonomicCoverage's scientific name and common name properties. It will look like:
    * scientific name (common name) provided both properties are not null. Otherwise, it will be either the scientific
    * name or common name by themselves.
-   * 
+   *
    * @return constructed display name or an empty string if none could be constructed
    */
   private String createDisplayNameForCoverage(TaxonomicCoverage coverage) {
@@ -252,7 +252,7 @@ public class DatasetBaseAction extends MemberBaseAction<Dataset> {
    * represented in the list, there will be 1 OrganizedTaxonomicCoverage, that has a list of
    * DisplayableTaxonomicCoverage. A DisplayableTaxonomicCoverage is basically the same as TaxonomicCoverage, only that
    * it has a field called display name. The display name is the way the TaxonomicCoverage should be shown in the UI.
-   * 
+   *
    * @param coverages list of TaxonomicCoverages' TaxonomicCoverage
    * @return list of OrganizedTaxonomicCoverage (one for each unique rank represented in the list of
    *         TaxonomicCoverage), or an empty list if none were added

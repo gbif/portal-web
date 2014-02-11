@@ -117,7 +117,7 @@ public class CountryBaseAction extends NodeAction {
   /**
    * populates the about field and optionally also loads the first requested datasets into the datasets property.
    * This allows to only call the index service once effectively and process its response.
-   * 
+   *
    * @param numDatasetsToLoad number of datasets to load, if zero or negative doesnt load any
    */
   protected void buildAboutMetrics(int numDatasetsToLoad, int numCountriesToLoad) {
@@ -180,7 +180,7 @@ public class CountryBaseAction extends NodeAction {
 
   /**
    * Honors the offset paging parameter.
-   * 
+   *
    * @return the number of all datasets having data about this country
    */
   protected int loadAboutDatasetsPage(int limit) {

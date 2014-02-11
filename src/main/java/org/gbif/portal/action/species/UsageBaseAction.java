@@ -123,7 +123,7 @@ public class UsageBaseAction extends BaseAction {
 
   /**
    * Loads a name usage and its checklist by the id parameter.
-   * 
+   *
    * @throws NotFoundException if no usage for the given id can be found
    */
   public void loadUsage() {
@@ -162,10 +162,11 @@ public class UsageBaseAction extends BaseAction {
     }
 
     try {
-      numOccurrences = occurrenceCubeService.get(new ReadBuilder().at(OccurrenceCube.TAXON_KEY, usage.getKey()));
-      numGeoreferencedOccurrences =
-        occurrenceCubeService.get(new ReadBuilder().at(OccurrenceCube.TAXON_KEY, usage.getKey()).at(
-          OccurrenceCube.GEOREFERENCED, true));
+      numOccurrences = occurrenceCubeService.get(new ReadBuilder()
+                                                   .at(OccurrenceCube.TAXON_KEY, usage.getKey()));
+      numGeoreferencedOccurrences = occurrenceCubeService.get(new ReadBuilder()
+                                                                .at(OccurrenceCube.TAXON_KEY, usage.getKey())
+                                                                .at(OccurrenceCube.GEOREFERENCED, true));
     } catch (ServiceUnavailableException e) {
       LOG.error("Failed to load occurrence metrics for usage {}", usage.getKey(), e);
     }
