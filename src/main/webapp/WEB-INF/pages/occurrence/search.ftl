@@ -103,7 +103,7 @@
     <#assign showCatalogNumber =  table.hasSummaryField('CATALOG_NUMBER')>
     <#assign showScientificName =  table.hasSummaryField('SCIENTIFIC_NAME')>
     <#assign showCollectionCode =  table.hasSummaryField('COLLECTION_CODE')>
-    <#assign showCollectorName =  table.hasSummaryField('RECORDED_BY')>
+    <#assign showRecordedBy =  table.hasSummaryField('RECORDED_BY')>
     <#assign showRecordNumber =  table.hasSummaryField('RECORD_NUMBER')>
     <#assign showTypeStatus =  table.hasSummaryField('TYPE_STATUS')>
     <#assign showInstitution =  table.hasSummaryField('INSTITUTION')>
@@ -129,7 +129,7 @@
                   <ul id="occurrence_columns">
                     <li><input type="checkbox" name="columns" value="LOCATION" id="chk-LOCATION" <#if showLocation>checked</#if>/> <label for="chk-LOCATION">Location</label></li>
                     <li><input type="checkbox" name="columns" value="BASIS_OF_RECORD" id="chk-BASIS_OF_RECORD" <#if showBasisOfRecord>checked</#if>/> <label for="chk-BASIS_OF_RECORD">Basis of record</label></li>
-                    <li><input type="checkbox" name="columns" value="DATE" id="chk-DATE" <#if showDate>checked</#if>/> <label for="chk-DATE">Date</label></li>
+                    <li><input type="checkbox" name="columns" value="EVENT_DATE" id="chk-EVENT_DATE" <#if showDate>checked</#if>/> <label for="chk-EVENT_DATE">Date</label></li>
                     <li class="divider"><input type="checkbox" name="columns" value="SUMMARY" id="chk-SUMMARY" class="visibility:hidden;" checked/></li>
                   </ul>
                   <h4>Summary fields</h4>
@@ -138,11 +138,11 @@
                     <li><input type="checkbox" name="summary" value="CATALOG_NUMBER" id="chk-CATALOG_NUMBER" <#if showCatalogNumber>checked</#if>/> <label for="chk-CATALOG_NUMBER">Catalogue number</label></li>
                     <li><input type="checkbox" name="summary" value="COLLECTION_CODE" id="chk-COLLECTION_CODE" <#if showCollectionCode>checked</#if>/> <label for="chk-COLLECTION_CODE">Collection code</label></li>
                     <li><input type="checkbox" name="summary" value="INSTITUTION" id="chk-INSTITUTION" <#if showInstitution>checked</#if>/> <label for="chk-INSTITUTION">Institution</label></li>
-                    <li><input type="checkbox" name="summary" value="RECORDED_BY" id="chk-RECORDED_BY" <#if showCollectorName>checked</#if>/> <label for="chk-RECORDED_BY">Collector name</label></li>
+                    <li><input type="checkbox" name="summary" value="RECORDED_BY" id="chk-RECORDED_BY" <#if showRecordedBy>checked</#if>/> <label for="chk-RECORDED_BY">Collector name</label></li>
                     <li><input type="checkbox" name="summary" value="RECORD_NUMBER" id="chk-RECORD_NUMBER" <#if showRecordNumber>checked</#if>/> <label for="chk-RECORD_NUMBER">Record number</label></li>
                     <li><input type="checkbox" name="summary" value="SCIENTIFIC_NAME" id="chk-SCIENTIFIC_NAME" <#if showScientificName>checked</#if>/> <label for="chk-SCIENTIFIC_NAME">Scientific name</label></li>                    
                     <li><input type="checkbox" name="summary" value="DATASET" id="chk-DATASET" <#if showDataset>checked</#if>/> <label for="chk-DATASET">Dataset</label></li>
-                    <li><input type="checkbox" name="summary" value="LAST_INTERPRETED" id="chk-LAST_INTERPRETED" <#if showLastInterpreted>checked</#if>/> <label for="chk-LAST_INTERPRETED">Date last interpreted</label></li>
+                    <li><input type="checkbox" name="summary" value="LAST_INTERPRETED" id="chk-LAST_INTERPRETED" <#if showLastInterpreted>checked</#if>/> <label for="chk-LAST_INTERPRETED">Date last modified</label></li>
                     <li><input type="checkbox" name="summary" value="TYPE_STATUS" id="chk-TYPE_STATUS" <#if showTypeStatus>checked</#if>/> <label for="chk-TYPE_STATUS">Type status</label></li>
                   </ul>
                   <div style="width:100px;" class="buttonContainer"><a href="#" class="button" id="applyConfiguration" style="width:30px;margin:auto"><span>Apply</span></a><div>
@@ -166,7 +166,7 @@
                     <li><a tabindex="-1" href="#" data-placeholder="Type a name..." data-filter="BASIS_OF_RECORD" title="Basis Of Record" data-template-filter="template-basis-of-record-filter" data-template-summary="template-filter" class="filter-control">Basis of record</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a dataset name..." data-filter="DATASET_KEY" title="Dataset" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value dataset_autosuggest auto_add" class="filter-control">Dataset</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="" data-filter="EVENT_DATE" title="Collection date" data-template-filter="template-date-compare-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Collection date</a></li>
-                    <li><a tabindex="-1" href="#" data-placeholder="" data-filter="LAST_INTERPRETED" title="Date last interpreted" data-template-filter="template-date-compare-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Date last interpreted</a></li>
+                    <li><a tabindex="-1" href="#" data-placeholder="" data-filter="LAST_INTERPRETED" title="Date last interpreted" data-template-filter="template-date-compare-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Date last modified</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a year..." data-filter="YEAR" title="Occurrence year" data-template-filter="template-compare-filter" data-template-summary="template-filter" data-input-classes="value auto_add temporal" class="filter-control">Year</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Select a month..." data-filter="MONTH" title="Occurrence month" data-template-filter="template-month-filter" data-template-summary="template-filter" data-input-classes="value auto_add" class="filter-control">Month</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a catalogue number..." data-filter="CATALOG_NUMBER" title="Catalog number" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value catalog_number_autosuggest auto_add" class="filter-control">Catalogue number</a></li>
@@ -205,7 +205,7 @@
                   <span class="code">${occ.key?c}</span>
                 </#if>
                 <#if showCatalogNumber &&  action.retrieveTerm('catalogNumber',occ)?has_content><#if showOccurrenceKey>· </#if><span class="catalog">Cat. ${action.retrieveTerm('catalogNumber',occ)!}</span></#if>
-                <#if showCollectorName && action.retrieveTerm('recordedBy',occ)?has_content>
+                <#if showRecordedBy && action.retrieveTerm('recordedBy',occ)?has_content>
                   <div class="code">Collector: ${action.retrieveTerm('recordedBy',occ)}</div>
                 </#if>
                 <#if showCollectionCode && action.retrieveTerm('collectionCode',occ)?has_content>
@@ -214,8 +214,8 @@
                 <#if showInstitution && action.retrieveTerm('institutionCode',occ)?has_content>
                   <div class="code">Institution: ${action.retrieveTerm('institutionCode',occ)}</div>
                 </#if>
-                <#if showLastInterpreted && occ.lastInterpreted?has_content>
-                  <div class="code">Date last interpreted: ${occ.lastInterpreted?string("yyyy-MM-dd")}</div>
+                <#if showLastInterpreted && occ.modified?has_content>
+                  <div class="code">Date last modified: ${occ.lastInterpreted?string("yyyy-MM-dd")}</div>
                 </#if>
                 <#if showRecordNumber && action.retrieveTerm('recordNumber',occ)?has_content>
                   <div class="code">Record number: ${action.retrieveTerm('recordNumber',occ)}</div>

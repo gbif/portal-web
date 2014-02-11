@@ -33,7 +33,8 @@ public class OccurrenceTable {
 
   private static final OccurrenceSearchParameter[] OCC_LOCATION_PARAMS = new OccurrenceSearchParameter[] {
     OccurrenceSearchParameter.ELEVATION, OccurrenceSearchParameter.DEPTH,
-    OccurrenceSearchParameter.DECIMAL_LATITUDE, OccurrenceSearchParameter.DECIMAL_LONGITUDE, OccurrenceSearchParameter.GEOMETRY,
+    OccurrenceSearchParameter.DECIMAL_LATITUDE, OccurrenceSearchParameter.DECIMAL_LONGITUDE,
+    OccurrenceSearchParameter.GEOMETRY,
     OccurrenceSearchParameter.HAS_COORDINATE, OccurrenceSearchParameter.COUNTRY};
 
   private static final OccurrenceSearchParameter[] OCC_DATE_PARAMS = new OccurrenceSearchParameter[] {
