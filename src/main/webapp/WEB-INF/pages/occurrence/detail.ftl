@@ -1,6 +1,6 @@
 <#-- @ftlvariable name="" type="org.gbif.portal.action.occurrence.DetailAction" -->
 <#import "/WEB-INF/macros/common.ftl" as common>
-<#assign showMap=occ.longitude?? && occ.latitude??/>
+<#assign showMap=occ.decimalLongitude?? && occ.decimalLatitude??/>
 <html>
 <head>
   <title>Occurrence Detail ${id?c}</title>
@@ -100,7 +100,7 @@
   <#if value?has_content>
     <h3>${header}</h3>
     <#-- retrieve value from term, otherwise use incoming value -->
-    <p>${value}${unit!}<#if plusMinus?has_content>m&nbsp;±&nbsp;${plusMinus}</#if></p>
+    <p>${value}${unit!}<#if plusMinus?has_content>&nbsp;±&nbsp;${plusMinus}${unit!}</#if></p>
   </#if>
 </#macro>
 
@@ -188,13 +188,13 @@ footprintSRS?has_content || footprintSpatialFit?has_content || georeferencedDate
 georeferencedBy?has_content || georeferenceProtocol?has_content || georeferenceSources?has_content ||
 georeferenceVerificationStatus?has_content || habitat?has_content || locationRemarks?has_content ||
 higherGeographyID?has_content || locationID?has_content || locationAccordingTo?has_content ||
-occ.latitude?has_content || occ.longitude?has_content || occ.country?has_content || occ.waterBody?has_content ||
-occ.altitude?has_content || occ.altitudeAccuracy?has_content || occ.depth?has_content ||
+occ.decimalLatitude?has_content || occ.decimalLongitude?has_content || occ.country?has_content || occ.waterBody?has_content ||
+occ.elevation?has_content || occ.elevationAccuracy?has_content || occ.depth?has_content ||
 occ.depthAccuracy?has_content || (geographicClassification.size > 0) >
   <@common.article id="location" title=title titleRight=titleRight class="occurrenceMap">
     <#if showMap>
     <div id="map" class="map">
-        <iframe id="mapframe" name="mapframe" src="${cfg.tileServerBaseUrl!}/point.html?&style=grey-blue&point=${occ.latitude?c},${occ.longitude?c}&lat=${occ.latitude?c}&lng=${occ.longitude?c}&zoom=8" height="100%" width="100%" frameborder="0"/></iframe>
+        <iframe id="mapframe" name="mapframe" src="${cfg.tileServerBaseUrl!}/point.html?&style=grey-blue&point=${occ.decimalLatitude?c},${occ.decimalLongitude?c}&lat=${occ.decimalLatitude?c}&lng=${occ.decimalLongitude?c}&zoom=8" height="100%" width="100%" frameborder="0"/></iframe>
     </div>
 
     <div class="right">
@@ -202,14 +202,12 @@ occ.depthAccuracy?has_content || (geographicClassification.size > 0) >
 
             <h3>Locality</h3>
             <p class="no_bottom">${locality!}<#if occ.country??><#if locality?has_content>, </#if><a href="<@s.url value='/country/${occ.country.iso2LetterCode}'/>">${occ.country.title}</a></#if></p>
-            <p class="light_note">${occ.longitude}, ${occ.latitude} <#if occ.coordinateAccuracy??> ± ${occ.coordinateAccuracy!?string}</#if></p>
+            <p class="light_note">${occ.decimalLongitude}, ${occ.decimalLatitude} <#if occ.coordinateAccuracy??> ± ${occ.coordinateAccuracy!?string}</#if></p>
 
           <@kv header="Water Body" value=occ.waterBody />
-          <@kv header="Altitude" value=occ.altitude unit="m" plusMinus=occ.altitudeAccuracy!?string />
+          <@kv header="Elevation" value=occ.elevation unit="m" plusMinus=occ.elevationAccuracy!?string />
           <@kv header="Depth" value=occ.depth unit="m" plusMinus=occ.depthAccuracy!?string />
-
-        <#-- TODO: maximum distance above surface with accuracy, see http://dev.gbif.org/issues/browse/POR-1746 -->
-
+          <@kv header="Distance Above Surface" value=occ.distanceAboveSurface unit="m" plusMinus=occ.distanceAboveSurfaceAccuracy!?string />
         </div>
     </div>
     <div class="fullwidth fullwidth_under_map">
@@ -234,8 +232,9 @@ occ.depthAccuracy?has_content || (geographicClassification.size > 0) >
 
         <div class="left">
           <@kv header="Locality" value=locality />
-      <@kv header="Altitude" value=occ.altitude unit="m" plusMinus=occ.altitudeAccuracy!?string />
+      <@kv header="Elevation" value=occ.elevation unit="m" plusMinus=occ.elevationAccuracy!?string />
       <@kv header="Depth" value=occ.depth unit="m" plusMinus=occ.depthAccuracy!?string />
+      <@kv header="Distance Above Surface" value=occ.distanceAboveSurface unit="m" plusMinus=occ.distanceAboveSurfaceAccuracy!?string />
       <@kv header="Water Body" value=occ.waterBody />
       <@geoClassification header="Geographic Classification" geographicClassification=geographicClassification/>
       <@islandClassification header="Islands" island=island islandGroup=islandGroup />
