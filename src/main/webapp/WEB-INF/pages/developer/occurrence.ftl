@@ -140,7 +140,7 @@
   "year": "The 4 digit year. A year of 98 will be interpreted as AD 98.",
   "month": "The month of the year, starting with 1 for January.",
   "date": "Occurrence date in ISO 8601 format: yyyy, yyyy-MM, yyyy-MM-dd, or MM-dd.",
-  "modified": "Occurrence modification date in ISO 8601 format: yyyy, yyyy-MM, yyyy-MM-dd, or MM-dd.",
+  "lastInterpreted": "This date the record was last modified in GBIF, in ISO 8601 format: yyyy, yyyy-MM, yyyy-MM-dd, or MM-dd.",
   "latitude": "Latitude in decimals between -90 and 90 based on WGS 84.",
   "longitude": "Longitude in decimals between -180 and 180 based on WGS 84.",
   "country": "The 2-letter country code (as per <a href='http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm' target='_blank'>ISO-3166-1</a>) of the country in which the occurrence was recorded.",

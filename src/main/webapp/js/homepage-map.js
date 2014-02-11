@@ -83,7 +83,7 @@ $(function() {
       	point.bindPopup(
           "<p>Occurrence of <a href='occurrence/" + occurrence.key + "'>" + occurrence.scientificName +"</a></p>" +
           "Published by <a href='publisher/" + occurrence.publisherKey + "'>" + occurrence.publisher +"</a>" +
-          "<p>Last indexed " + moment(occurrence.modified).fromNow() +"</p>");         
+          "<p>Last indexed " + moment(occurrence.lastInterpreted).fromNow() +"</p>");
       	point.addTo(map); // it should already be
     	
     	}

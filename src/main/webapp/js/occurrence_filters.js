@@ -1673,7 +1673,7 @@ var OccurrenceWidgetManager = (function ($,_) {
             } else if (filterName == "GEOMETRY") {
               newWidget = new OccurrenceLocationWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindMap});            
-            } else if (filterName == "EVENT_DATE" || filterName == "MODIFIED") {
+            } else if (filterName == "EVENT_DATE" || filterName == "LAST_INTERPRETED") {
               newWidget = new OccurrenceDateComparatorWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});            
             } else if (filterName == "MONTH") {
