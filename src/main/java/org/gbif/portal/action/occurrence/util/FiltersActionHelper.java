@@ -121,7 +121,7 @@ public class FiltersActionHelper {
 
     @Override
     public List<String> apply(String input) {
-      return occurrenceSearchService.suggestCollectorNames(input, SUGGESTIONS_LIMIT);
+      return occurrenceSearchService.suggestRecordedBy(input, SUGGESTIONS_LIMIT);
     }
   };
 
@@ -280,7 +280,8 @@ public class FiltersActionHelper {
         return StringEscapeUtils.escapeEcmaScript(getCountryTitle(filterValue));
       } else if (parameter == OccurrenceSearchParameter.DEPTH || parameter == OccurrenceSearchParameter.ELEVATION) {
         return getRangeTitle(filterValue, METER);
-      } else if (parameter == OccurrenceSearchParameter.EVENT_DATE || parameter == OccurrenceSearchParameter.MODIFIED) {
+      } else if (parameter == OccurrenceSearchParameter.EVENT_DATE
+        || parameter == OccurrenceSearchParameter.LAST_INTERPRETED) {
         return getDateRangeTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.YEAR) {
         return getTemporalRangeTitle(filterValue);
