@@ -88,6 +88,7 @@ public class DrupalSessionInterceptor extends AbstractInterceptor {
         }
       }
     }
+    LOG.debug("Could not find drupal cookie of name [{}] in session", COOKIE_NAME);
     return null;
   }
 
