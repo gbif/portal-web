@@ -570,7 +570,7 @@
         <tile-server.url>http://api.gbif-uat.org/v0.9/map</tile-server.url>
         <image-cache.url>http://api.gbif-uat.org/v0.9/image</image-cache.url>
         <metrics.ws.url>http://api.gbif-uat.org/v0.9/</metrics.ws.url>
-        <drupal.cookiename>SESS751c3c6f031b889581268415447c0191</drupal.cookiename>
+        <drupal.cookiename>SESS856734e733fa96290033dd67c5c46f95</drupal.cookiename>
         <drupal.db.url>jdbc:mysql://nerf.gbif.org:3306/drupal_devel?useUnicode=true&amp;characterEncoding=UTF8&amp;characterSetResults=UTF8</drupal.db.url>
         <drupal.db.username>drupal_devel</drupal.db.username>
         <httpTimeout>60000</httpTimeout>
@@ -604,7 +604,7 @@
         <tile-server.url>http://appdev.gbif.org:8080/tile-server</tile-server.url>
         <image-cache.url>http://apidev.gbif.org/image</image-cache.url>
         <metrics.ws.url>http://appdev.gbif.org:8080/metrics-ws</metrics.ws.url>
-        <drupal.cookiename>SESS751c3c6f031b889581268415447c0191</drupal.cookiename>
+        <drupal.cookiename>SESSbcbfacaed244049b98b2f1f18757a391</drupal.cookiename>
         <drupal.db.url>jdbc:mysql://nerf.gbif.org:3306/drupal_devel?useUnicode=true&amp;characterEncoding=UTF8&amp;characterSetResults=UTF8</drupal.db.url>
         <drupal.db.username>drupal_devel</drupal.db.username>
         <httpTimeout>60000</httpTimeout>
