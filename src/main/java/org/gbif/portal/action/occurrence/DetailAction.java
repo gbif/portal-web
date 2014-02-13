@@ -90,6 +90,7 @@ public class DetailAction extends OccurrenceBaseAction {
       }
       // now add all non dwc terms
       Map<String, String> gbif = new TreeMap<String, String>();
+      Map<String, String> dc = new TreeMap<String, String>();
       Map<String, String> others = new TreeMap<String, String>();
       for (Map.Entry<Term, String> field : v.getVerbatimFields().entrySet()) {
         Term t = field.getKey();
@@ -98,6 +99,8 @@ public class DetailAction extends OccurrenceBaseAction {
         } else {
           if (t instanceof GbifTerm) {
             gbif.put(t.simpleName(), field.getValue());
+          } else if (t instanceof DcTerm) {
+            dc.put(t.simpleName(), field.getValue());
           } else {
             others.put(t.simpleName(), field.getValue());
           }
@@ -106,6 +109,16 @@ public class DetailAction extends OccurrenceBaseAction {
       if (!gbif.isEmpty()) {
         verbatim.put("GBIF", gbif);
       }
+
+      // All DC terms get added to Record-level group
+      if (!dc.isEmpty()) {
+        // ensure Record-level group exists in verbatim
+        if (!verbatim.containsKey(DwcTerm.GROUP_RECORD)) {
+          verbatim.put(DwcTerm.GROUP_RECORD, new TreeMap<String, String>());
+        }
+        verbatim.get(DwcTerm.GROUP_RECORD).putAll(dc);
+      }
+
       if (!others.isEmpty()) {
         verbatim.put("Other", others);
       }
