@@ -89,7 +89,7 @@
         <span>Free and open access to biodiversity data</span>
       </div>
     </#if>
-    
+
     <nav>
 
       <ul>
@@ -219,6 +219,8 @@
             <li><a href="http://www.gbif.org/resources/2262">Annual Report</a></li>
             <li><a href="http://www.gbif.org/resources/2569">GBIF Strategic Plan</a></li>
             <li><a href="http://www.gbif.org/resources/2970">GBIF Work Programme</a></li>
+            <li><a href='http://links.gbif.org/travel_guidelines.pdf'>GBIF Travel guidelines</a></li>
+
         </ul>
 
         <ul class="last">
