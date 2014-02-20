@@ -207,7 +207,6 @@ occ.depthAccuracy?has_content || (geographicClassification.size > 0) >
           <@kv header="Water Body" value=occ.waterBody />
           <@kv header="Elevation" value=occ.elevation unit="m" plusMinus=occ.elevationAccuracy!?string />
           <@kv header="Depth" value=occ.depth unit="m" plusMinus=occ.depthAccuracy!?string />
-          <@kv header="Distance Above Surface" value=occ.distanceAboveSurface unit="m" plusMinus=occ.distanceAboveSurfaceAccuracy!?string />
         </div>
     </div>
     <div class="fullwidth fullwidth_under_map">
@@ -234,7 +233,6 @@ occ.depthAccuracy?has_content || (geographicClassification.size > 0) >
           <@kv header="Locality" value=locality />
       <@kv header="Elevation" value=occ.elevation unit="m" plusMinus=occ.elevationAccuracy!?string />
       <@kv header="Depth" value=occ.depth unit="m" plusMinus=occ.depthAccuracy!?string />
-      <@kv header="Distance Above Surface" value=occ.distanceAboveSurface unit="m" plusMinus=occ.distanceAboveSurfaceAccuracy!?string />
       <@kv header="Water Body" value=occ.waterBody />
       <@geoClassification header="Geographic Classification" geographicClassification=geographicClassification/>
       <@islandClassification header="Islands" island=island islandGroup=islandGroup />

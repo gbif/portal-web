@@ -110,10 +110,10 @@ public class MockOccurrenceFactory {
     mockOccurrence.setDecimalLongitude(-95.86519);
     mockOccurrence.setDecimalLatitude(29.91973);
     mockOccurrence.setCoordinateAccuracy(0.1);
-    mockOccurrence.setElevation(1000);
-    mockOccurrence.setElevationAccuracy(1);
-    mockOccurrence.setDepth(500);
-    mockOccurrence.setDepthAccuracy(1);
+    mockOccurrence.setElevation(1000.6);
+    mockOccurrence.setElevationAccuracy(1.6);
+    mockOccurrence.setDepth(500.6);
+    mockOccurrence.setDepthAccuracy(1.6);
     mockOccurrence.setContinent(Continent.NORTH_AMERICA);
     mockOccurrence.setCountry(Country.UNITED_KINGDOM);
     mockOccurrence.setStateProvince("California");
@@ -126,8 +126,6 @@ public class MockOccurrenceFactory {
     mockOccurrence.setTypifiedName("Caracara cheriway (Jacquin, 1784)");
     mockOccurrence.setModified(new Date());
     mockOccurrence.setLastInterpreted(new Date());
-    mockOccurrence.setDistanceAboveSurface(10);
-    mockOccurrence.setDistanceAboveSurfaceAccuracy(3);
   }
 
   /**
