@@ -36,6 +36,7 @@ public class DownloadResultAction extends BaseAction {
   public String execute() {
     if (key != null) {
       download = downloadService.get(key);
+      LOG.debug("Fetching key for download [{}] and user [{}]", download, getCurrentUser());
       if (download == null || !download.getRequest().getCreator().equals(getCurrentUser().getUserName())) {
         logAndSetError(DOWNLOAD_EXIST_ERR_KEY);
       } else {
