@@ -39,7 +39,9 @@ public class ExecuteDownloadAction extends BaseAction {
     LOG.info("Predicate build for passing to download [{}]", p);
     emails.add(getCurrentUser().getEmail());
     DownloadRequest download = new DownloadRequest(p, getCurrentUser().getUserName(), emails);
+    LOG.debug("Creating download with DownloadRequest [{}] from service [{}]", download, downloadRequestService);
     key = downloadRequestService.create(download);
+    LOG.debug("Got key [{}] for new download", key);
     return SUCCESS;
   }
 
