@@ -338,7 +338,6 @@ reproductiveCondition?has_content || behavior?has_content || occurrenceStatus?ha
 eventID?has_content || fieldNumber?has_content>
   <@common.article id="occurrence" title="Occurrence details">
   <div class="left">
-      <div class="col">
 
       <#-- Show event date, partial event date, or verbatim event date in that order of priority + the recorder -->
         <#if occ.eventDate?? || partialGatheringDate?has_content || recordedBy?has_content || verbatimEventDate?has_content >
@@ -362,7 +361,7 @@ eventID?has_content || fieldNumber?has_content>
         <@kv header="Sampling Effort" value=samplingEffort />
         <@kv header="Field Notes" value=fieldNotes />
 
-      <#-- Combine occurrence remarks and event remarks under the same heading Remarks -->
+        <#-- Combine occurrence remarks and event remarks under the same heading Remarks -->
         <#if occurrenceRemarks?has_content || eventRemarks?has_content>
             <h3>Remarks</h3>
           <#if occurrenceRemarks?has_content && eventRemarks?has_content>
@@ -374,8 +373,6 @@ eventID?has_content || fieldNumber?has_content>
               <p>${eventRemarks}</p>
           </#if>
         </#if>
-
-      </div>
 
   </div>
 
