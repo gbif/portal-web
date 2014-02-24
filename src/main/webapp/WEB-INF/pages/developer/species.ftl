@@ -25,7 +25,7 @@
     <p>
         Internally we use a Java web service client for the consumption of these HTTP-based, RESTful web services. It
         may be of interest to those coding against the API, and can be found in the <a
-            href="https://code.google.com/p/gbif-ecat/source/browse/checklistbank/trunk/checklistbank-ws-client/"
+            href="https://github.com/gbif/checklistbank/tree/master/checklistbank-ws-client"
             target="_blank">checklistbank-ws-client project</a>.
     </p>
 </div>

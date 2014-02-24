@@ -523,6 +523,7 @@
         <devMode>false</devMode>
         <notDevMode>true</notDevMode>
         <baseurl>http://www.gbif.org</baseurl>
+        <api.baseurl>http://api.gbif.org/v0.9</api.baseurl>
         <servername>http://www.gbif.org</servername>
         <drupal.url>http://www.gbif.org</drupal.url>
         <google.analytics>UA-42057855-1</google.analytics>
@@ -558,6 +559,7 @@
         <devMode>false</devMode>
         <notDevMode>true</notDevMode>
         <baseurl>http://www.gbif-uat.org</baseurl>
+        <api.baseurl>http://api.gbif-uat.org/v0.9</api.baseurl>
         <servername>http://www.gbif-uat.org</servername>
         <drupal.url>http://www.gbif-uat.org</drupal.url>
         <url.includeContext>false</url.includeContext>
@@ -593,6 +595,7 @@
         <devMode>false</devMode>
         <notDevMode>true</notDevMode>
         <baseurl>http://www.gbif-dev.org</baseurl>
+        <api.baseurl>http://api.gbif-dev.org/v0.9</api.baseurl>
         <servername>http://www.gbif-dev.org</servername>
         <drupal.url>http://www.gbif-dev.org</drupal.url>
         <url.includeContext>false</url.includeContext>

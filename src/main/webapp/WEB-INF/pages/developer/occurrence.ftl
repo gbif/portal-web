@@ -19,7 +19,7 @@
     </p>
     <p>
         Internally we use a Java web service client for the consumption of these HTTP-based, RESTful web services. It may
-        be of interest to those coding against the API, and can be found in the <a href="http://code.google.com/p/gbif-occurrencestore/source/browse/occurrence/trunk/occurrence-ws-client/" target="_blank">occurrence-ws-client</a>.
+        be of interest to those coding against the API, and can be found in the <a href="https://github.com/gbif/occurrence/tree/master/occurrence-ws-client" target="_blank">occurrence-ws-client</a>.
     </p>
 </div>
 <div class="right">
@@ -90,14 +90,14 @@
   <p>This API provides services to download occurrence records and retrieve information about those downloads.</p>
   <p>Occurrence downloads are created asynchronously - the user requests a download and, once complete, is sent and email with a link to the resulting file.</p>
   <p>Internally we use a Java web service client for the consumption of these HTTP-based, RESTful web services. It may
-    be of interest to those coding against the API, and can be found in the <a href="http://gbif-occurrencestore.googlecode.com/svn/occurrence-download/trunk/occurrence-download-ws-client/" target="_blank">occurrence-download-ws-client</a>.
+    be of interest to those coding against the API, and can be found in the <a href="https://github.com/gbif/occurrence/tree/master/occurrence-ws-client" target="_blank">occurrence-download-ws-client</a>.
   </p>
 
   <@api.apiTable params=false>
       <@trowD url="/request" resp="Download key" method="POST" authRequired=true>Starts the process of creating a download file. See the <a href="#predicates">predicates</a> section to consult the requests accepted by this service.</@trowD>
       <@trowD url="/request/{key}" resp="Download file" respLink="/occurrence/download/request/0000447-130906152512535" method="GET" authRequired=false>Retrieves the download file if it is available.</@trowD>
       <@trowD url="/request/{key}" method="DELETE" authRequired=true>Cancels the download process.</@trowD>
-      <@trowD url="" method="GET" resp="Download Page" respLink="/occurrence/download" authRequired=true paging=true>Lists all the downloads. This operation can be executed by the role ADMIN only.</@trowD>
+      <@trowD url="" method="GET" resp="Download Page" authRequired=true paging=true>Lists all the downloads. This operation can be executed by the role ADMIN only.</@trowD>
       <@trowD url="/{key}" resp="Download" respLink="/occurrence/download/0000447-130906152512535" method="GET">Retrieves the occurrence download metadata by its unique key.</@trowD>
       <@trowD url="/{key}" method="PUT" authRequired=true>Updates the status of an existing occurrence download. This operation can be executed by the role ADMIN only.</@trowD>
       <@trowD url="/{key}" method="POST" authRequired=true>Creates the metadata about an occurrence download. This operation can be executed by the role ADMIN only.</@trowD>
@@ -111,8 +111,8 @@
 
   <@api.apiTable auth=false paging=false>
       <@trowM url="/count" resp="Count" respLink="/occurrence/count">Returns occurrence counts for a predefined set of dimensions.
-        The supported dimensions are enumerated in the <a href="http://api.gbif.org/v0.9/occurrence/count/schema" target="_blank">/occurrence/count/schema</a> service.
-        An example for the count of georeferenced observations from Canada: <a href="http://api.gbif.org/v0.9/occurrence/count?country=CANADA&georeferenced=true&basisOfRecord=OBSERVATION" target="_blank">/occurrence/count?country=CANADA&georeferenced=true&basisOfRecord=OBSERVATION</a>.
+        The supported dimensions are enumerated in the <a href="${action.cfg.apiBaseUrl}/occurrence/count/schema" target="_blank">/occurrence/count/schema</a> service.
+        An example for the count of georeferenced observations from Canada: <a href="${action.cfg.apiBaseUrl}/occurrence/count?country=CANADA&georeferenced=true&basisOfRecord=OBSERVATION" target="_blank">/occurrence/count?country=CANADA&georeferenced=true&basisOfRecord=OBSERVATION</a>.
         Note that country is the full name, not ISO code. This will change to ISO code in v1.0 of the API.
       </@trowM>
       <@trowM url="/count/schema" resp="Count" respLink="/occurrence/count/schema">List the supported schemas by the occurrence/count service.</@trowM>
@@ -152,9 +152,9 @@
   "catalogNumber": "An identifier of any form assigned by the source within a physical collection or digital dataset for the record which may not be unique, but should be fairly unique in combination with the institution and collection code.",
   "collectorName": "The person who recorded the occurrence.",
   "basisOfRecord": "Basis of record, as defined in our <a href='http://builds.gbif.org/view/Common/job/gbif-api/site/apidocs/org/gbif/api/vocabulary/BasisOfRecord.html' target='_blank'>BasisOfRecord enum</a>",
-  "taxonKey": "A taxon key from the GBIF backbone. All included and synonym taxa are included in the search, so a search for aves with taxonKey=212 (i.e. <a href='http://api.gbif.org/v0.9/occurrence/search?taxonKey=212' target='_blank'>/occurrence/search?taxonKey=212</a>) will match all birds, no matter which species.",
+  "taxonKey": "A taxon key from the GBIF backbone. All included and synonym taxa are included in the search, so a search for aves with taxonKey=212 (i.e. <a href='${action.cfg.apiBaseUrl}/occurrence/search?taxonKey=212' target='_blank'>/occurrence/search?taxonKey=212</a>) will match all birds, no matter which species.",
   "georeferenced": "Limits searches to occurrence records which contain a value in both latitude and longitude (i.e. georeferenced=true limits to occurrence records with coordinate values and georeferenced=false limits to occurrence records without coordinate values).",
-  "geometry": "Searches for occurrences inside a polygon described in Well Known Text (WKT) format. A WKT shape written as POLYGON ((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1)) would be queried as is, i.e. <a href='http://api.gbif.org/v0.9/occurrence/search?geometry=POLYGON((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1))' target='_blank'>/occurrence/search?geometry=POLYGON((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1))</a>.",
+  "geometry": "Searches for occurrences inside a polygon described in Well Known Text (WKT) format. A WKT shape written as POLYGON ((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1)) would be queried as is, i.e. <a href='${action.cfg.apiBaseUrl}/occurrence/search?geometry=POLYGON((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1))' target='_blank'>/occurrence/search?geometry=POLYGON((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1))</a>.",
   "spatialIssues": "Includes/excludes occurrence records which contain spatial issues (as determined in our record interpretation), i.e. spatialIssues=true returns only those records with spatial issues while spatialIssues=false includes only records without spatial issues. The absence of this parameter returns any record with or without spatial issues.",
   "q" : "Simple search parameter. The value for this parameter can be a simple word or a phrase.",
   "limit": "The maximum number of results to return. This can't be greater than 300, any value greater is set to 300.",
@@ -169,7 +169,7 @@
 <@common.article id="predicates" title="Occurrence Download Predicates">
     <div class="fullwidth">
         <p>A download predicate is an query expression to retrieve occurrence record downloads.</p>
-        <p>If you are interested in seeing some examples of how to use the Java API to build predicates, there are some <a href="http://gbif-occurrencestore.googlecode.com/svn/occurrence-download/trunk/occurrence-download-ws/src/test/java/org/gbif/occurrencestore/download/service/HiveQueryVisitorTest.java" target="_blank">test cases</a> that can be used as a reference.</p>
+        <p>If you are interested in seeing some examples of how to use the Java API to build predicates, there are some <a href="https://github.com/gbif/occurrence/blob/master/occurrence-ws/src/test/java/org/gbif/occurrence/download/service/HiveQueryVisitorTest.java" target="_blank">test cases</a> that can be used as a reference.</p>
         <p>The table below lists the supported predicates that can be combined to build download requests.</p>
 
     <table class='table table-bordered table-striped table-params'>

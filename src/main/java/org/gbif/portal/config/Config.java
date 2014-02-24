@@ -39,6 +39,7 @@ public class Config {
   private String drupalCookieName;
   private String serverName;
   private boolean includeContext;
+  private String apiBaseUrl;
   private String tileServerBaseUrl;
   private String wsClb;
   private String wsClbSearch;
@@ -94,6 +95,7 @@ public class Config {
       cfg.wsOccCollectionCodeSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + COLLECTION_CODE_PATH;
       cfg.wsOccInstitutionCodeSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + INSTITUTION_CODE_PATH;
       cfg.wsOccRecordNumberSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + RECORD_NUMBER_PATH;
+      cfg.apiBaseUrl = getPropertyUrl(properties, "api.baseurl", false);
       cfg.tileServerBaseUrl = getPropertyUrl(properties, "tile-server.url", false);
       cfg.wsImageCache = getPropertyUrl(properties, "image-cache.url", false);
       cfg.includeContext = Boolean.parseBoolean(properties.getProperty("struts.url.includeContext"));
@@ -158,6 +160,15 @@ public class Config {
 
   public String getServerName() {
     return serverName;
+  }
+
+  /**
+   * The base URL of the API, including latest version number. E.g. "http://api.gbif-dev.org/v0.9".
+   *
+   * @return base URL of the API
+   */
+  public String getApiBaseUrl() {
+    return apiBaseUrl;
   }
 
   public String getTileServerBaseUrl() {
@@ -244,6 +255,10 @@ public class Config {
 
   public boolean isIncludeContext() {
     return includeContext;
+  }
+
+  public void setApiBaseUrl(String apiBaseUrl) {
+    this.apiBaseUrl = apiBaseUrl;
   }
 
   public void setTileServerBaseUrl(String tileServerBaseUrl) {
