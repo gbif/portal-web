@@ -8,6 +8,7 @@ import org.gbif.api.model.occurrence.search.OccurrenceSearchRequest;
 import org.gbif.api.model.registry.search.DatasetSearchResult;
 import org.gbif.api.service.occurrence.OccurrenceSearchService;
 import org.gbif.api.vocabulary.BasisOfRecord;
+import org.gbif.api.vocabulary.Continent;
 import org.gbif.api.vocabulary.Country;
 import org.gbif.api.vocabulary.TypeStatus;
 import org.gbif.dwc.terms.DcTerm;
@@ -151,6 +152,13 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   }
 
   /**
+   * Returns the list of {@link BasisOfRecord} literals.
+   */
+  public Continent[] getContinents() {
+    return filtersActionHelper.getContinents();
+  }
+
+  /**
    * Returns the list of {@link TypeS} literals.
    */
   public TypeStatus[] getTypeStatuses() {
@@ -202,7 +210,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Suggestions for dataset title search.
-   * 
+   *
    * @return the datasetsSuggestions
    */
   public SearchSuggestions<DatasetSearchResult> getDatasetsSuggestions() {
@@ -251,7 +259,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Suggestions for scientific name search.
-   * 
+   *
    * @return the nameUsagesSuggestions
    */
   public SearchSuggestions<NameUsageSearchResult> getNameUsagesSuggestions() {
@@ -260,7 +268,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Gets the title(name) of a node.
-   * 
+   *
    * @param networkKey node key/UUID
    */
   public String getNetworkTitle(String networkKey) {
@@ -281,7 +289,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Gets the configuration of fields and information to display.
-   * 
+   *
    * @return the table
    */
   public OccurrenceTable getTable() {
@@ -388,7 +396,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Retrieve value for Term in fields map. Currently expecting only DwcTerm.
-   * 
+   *
    * @param term Term
    * @return value for Term in fields map, or null if it doesn't exist
    */

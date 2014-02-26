@@ -4,14 +4,14 @@
   <head>
     <title>Occurrence Search Results</title>
 
-    <content tag="extra_scripts">    
+    <content tag="extra_scripts">
     <link rel="stylesheet" href="<@s.url value='/js/vendor/datepicker/css/datepicker.css'/>"/>
-      
+
 <!--    <link rel="stylesheet" href="<@s.url value='/css/combobox.css?v=2'/>"/>    -->
     <script src='<@s.url value='/js/vendor/jquery.url.js'/>' type='text/javascript'></script>
     <script type="text/javascript" src="<@s.url value='/js/vendor/jquery-ui-1.8.17.min.js'/>"></script>
     <script type="text/javascript" src="<@s.url value='/js/portal_autocomplete.js'/>"></script>
-    
+
     <!--Maps-->
     <link rel="stylesheet" href="<@s.url value='/js/vendor/leaflet/leaflet.css'/>" />
     <link rel="stylesheet" href="<@s.url value='/js/vendor/leaflet/draw/leaflet.draw.css'/>" />
@@ -21,9 +21,9 @@
     <script type="text/javascript" src="<@s.url value='/js/occurrence_filters.js'/>"></script>
     <script type="text/javascript" src="<@s.url value='/js/vendor/datepicker/js/bootstrap-datepicker.js'/>"></script>
     <script type="text/javascript" src="<@s.url value='/js/vendor/inputmask/js/jquery.inputmask.js'/>"></script>
-    <script type="text/javascript" src="<@s.url value='/js/vendor/inputmask/js/jquery.inputmask.date.extensions.js'/>"></script> 
-    <script>                 
-      var filtersFromRequest = new Object();   
+    <script type="text/javascript" src="<@s.url value='/js/vendor/inputmask/js/jquery.inputmask.date.extensions.js'/>"></script>
+    <script>
+      var filtersFromRequest = new Object();
       var countryList = [<#list countries as country><#if country.official>{label:"${country.title}",iso2Lettercode:"${country.iso2LetterCode}"}<#if country_has_next>,</#if></#if></#list>];
       function addFilters(filtersFromRequest,filterKey,filterValue,filterLabel) {
         if(filterKey == 'SPATIAL_ISSUES' || filterKey == 'HAS_COORDINATE'){
@@ -31,13 +31,13 @@
         } else {
           filtersFromRequest[filterKey].push({ label: filterLabel, value:filterValue, key: filterValue, paramName: filterKey, submitted: true, hidden:false });
         }
-      } 
-      <#if filters.keySet().size() gt 0>                   
+      }
+      <#if filters.keySet().size() gt 0>
          <#list filters.keySet() as filterKey>
             filtersFromRequest['${filterKey}'] = new Array();
            <#list filters.get(filterKey) as filterValue>
              //the title is taken from the link that has the filterKey value as its data-filter attribute
-             addFilters(filtersFromRequest,'${filterKey}','${filterValue}','${action.getFilterTitle(filterKey,filterValue)}');                        
+             addFilters(filtersFromRequest,'${filterKey}','${filterValue}','${action.getFilterTitle(filterKey,filterValue)}');
            </#list>
          </#list>
       </#if>
@@ -49,14 +49,14 @@
              $("#emails").show();
          });
        <#if action.showDownload()>
-         $('a.download_button').click(function(event) {             
-            widgetManager.submit({emails:$('#emails').val()}, "<@s.url value='/occurrence/download'/>?");             
+         $('a.download_button').click(function(event) {
+            widgetManager.submit({emails:$('#emails').val()}, "<@s.url value='/occurrence/download'/>?");
          });
        </#if>
       });
     </script>
 
-    <style type="text/css">       
+    <style type="text/css">
         #notifications {
             margin-top: 10px;
             float: right;
@@ -90,7 +90,7 @@
               <li class="single last"><h4>${searchResponse.count!0}</h4>Occurrences</li>
             </ul>
             <a href="#" class="candy_blue_button download_button"><span>Download</span></a>
-          </div>          
+          </div>
         </div>
         </#if>
     </content>
@@ -111,9 +111,9 @@
     <#assign showDataset =  table.hasSummaryField('DATASET')>
     <#assign showLocation =  table.hasColumn('LOCATION')>
     <#assign showDate =  table.hasColumn('DATE')>
-    <#assign showBasisOfRecord =  table.hasColumn('BASIS_OF_RECORD')>    
+    <#assign showBasisOfRecord =  table.hasColumn('BASIS_OF_RECORD')>
     <table class="results">
-      <#if !action.hasErrors()>        
+      <#if !action.hasErrors()>
         <tr class="header">
 
           <td class="summary" colspan="${table.summaryColspan}">
@@ -140,7 +140,7 @@
                     <li><input type="checkbox" name="summary" value="INSTITUTION" id="chk-INSTITUTION" <#if showInstitution>checked</#if>/> <label for="chk-INSTITUTION">Institution</label></li>
                     <li><input type="checkbox" name="summary" value="RECORDED_BY" id="chk-RECORDED_BY" <#if showRecordedBy>checked</#if>/> <label for="chk-RECORDED_BY">Collector name</label></li>
                     <li><input type="checkbox" name="summary" value="RECORD_NUMBER" id="chk-RECORD_NUMBER" <#if showRecordNumber>checked</#if>/> <label for="chk-RECORD_NUMBER">Record number</label></li>
-                    <li><input type="checkbox" name="summary" value="SCIENTIFIC_NAME" id="chk-SCIENTIFIC_NAME" <#if showScientificName>checked</#if>/> <label for="chk-SCIENTIFIC_NAME">Scientific name</label></li>                    
+                    <li><input type="checkbox" name="summary" value="SCIENTIFIC_NAME" id="chk-SCIENTIFIC_NAME" <#if showScientificName>checked</#if>/> <label for="chk-SCIENTIFIC_NAME">Scientific name</label></li>
                     <li><input type="checkbox" name="summary" value="DATASET" id="chk-DATASET" <#if showDataset>checked</#if>/> <label for="chk-DATASET">Dataset</label></li>
                     <li><input type="checkbox" name="summary" value="LAST_INTERPRETED" id="chk-LAST_INTERPRETED" <#if showLastInterpreted>checked</#if>/> <label for="chk-LAST_INTERPRETED">Last modified in GBIF</label></li>
                     <li><input type="checkbox" name="summary" value="TYPE_STATUS" id="chk-TYPE_STATUS" <#if showTypeStatus>checked</#if>/> <label for="chk-TYPE_STATUS">Type status</label></li>
@@ -160,6 +160,9 @@
                     <li style="display:none;"><a tabindex="-1" href="#" data-filter="HAS_COORDINATE" title="Bounding Box" data-template-filter="map-template-filter" data-template-summary="template-filter" class="filter-control">Location</a></li>
                     <li style="display:none;"><a tabindex="-1" href="#" data-filter="SPATIAL_ISSUES" title="Bounding Box" data-template-filter="map-template-filter" data-template-summary="template-filter" class="filter-control">Location</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a country name..." data-filter="COUNTRY" title="Country" data-template-filter="template-simple-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Country</a></li>
+                      <li><a tabindex="-1" href="#" data-placeholder="Type a continent..." data-filter="CONTINENT"
+                             title="Continent" data-template-filter="template-continent-filter"
+                             data-template-summary="template-filter" class="filter-control">Continent</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a country name..." data-filter="PUBLISHING_COUNTRY" title="Publishing country" data-template-filter="template-simple-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Publishing country</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a collector name..." data-filter="RECORDED_BY" title="Collector" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value collector_name_autosuggest auto_add" class="filter-control">Collector</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a record number..." data-filter="RECORD_NUMBER" title="Record number" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value record_number_autosuggest auto_add" class="filter-control">Record number</a></li>
@@ -219,10 +222,10 @@
                 </#if>
                 <#if showRecordNumber && action.retrieveTerm('recordNumber',occ)?has_content>
                   <div class="code">Record number: ${action.retrieveTerm('recordNumber',occ)}</div>
-                </#if>                   
+                </#if>
                  <#if showTypeStatus && occ.typeStatus?has_content>
                   <div class="code">Type status: ${action.getFilterTitle('typeStatus',occ.typeStatus)!}</div>
-                </#if>                                 
+                </#if>
               </div>
               <#if showScientificName && occ.scientificName?has_content><a class="title" href="<@s.url value='/occurrence/${occ.key?c}'/>">${occ.scientificName}</a></#if>
               <#if showDataset && occ.datasetKey?has_content>
@@ -273,19 +276,19 @@
         </#if>
       <#else>
         <tr class="header">
-          <td>          
+          <td>
             <h2>Error processing your search!</h2>
-            <h3>please check your search criteria</h3>                  
+            <h3>please check your search criteria</h3>
            </td>
         </tr>
         <#list action.getValidationErrors() as error>
           <tr class="result error_summary">
-            <td>          
+            <td>
               <div>The value <div class="filter-error">"${error.value}"</div> for the parameter "<@s.text name="search.facet.${error.parameter}"/>" is incorrect.</div>
-              <br/>              
-              <div>Try your <a href='${error.urlWithoutError}'>search</a> without this parameter.</div>                  
+              <br/>
+              <div>Try your <a href='${error.urlWithoutError}'>search</a> without this parameter.</div>
              </td>
-          </tr>  
+          </tr>
         </#list>
       </#if>
     </table>

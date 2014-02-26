@@ -12,15 +12,15 @@
  */
 /**
  * Occurrence filters module.
- * Implements functionality for widgets that follow the structure of templates: 
+ * Implements functionality for widgets that follow the structure of templates:
  * - template-add-filter: simple filter with 1 input.
  * - template-add-date-filter: occurrence date widget.
  * - map-template-filter: bounding box widget filter.
- * 
+ *
  *  Every time a filter is applied/closed a request is sent to the targetUrl parameter.
  *  Parameter "filters" contains a list of predefined filters that would be displayed as applied filters.
  *  The filters parameter must have the form: { title,value, year (valid for date filter only), month (valid for date filter only), key, paramName }
- *  
+ *
  */
 
 //DEFAULT fade(in/out) time
@@ -67,7 +67,7 @@ var predicatePatternMap = { 'lte':'*,%v','gte':'%v,*','eq':'%v','bt':'%v1,%v2' }
  * Truncates a decimal value to 2 decimals length of precision.
  */
 function truncCoord(value) {
-  var newValue = value.toString();        
+  var newValue = value.toString();
   var values = newValue.split('.');
   if (values.length > 1) {
     var decimalValue = values[1];
@@ -75,7 +75,7 @@ function truncCoord(value) {
       decimalValue = decimalValue.slice(0, 6);
     }
     newValue = values[0] + '.' + decimalValue;
-  }        
+  }
   return newValue;
 };
 
@@ -83,7 +83,7 @@ function truncCoord(value) {
  * Base module that contains the base implementation for the occurrence widgets.
  * Contains the implementation for the basic operations: create the HTML control, apply filters, show the applied filters and close/hide the widget.
  */
-var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {  
+var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
 
   /**
    * Utility function that validates if the input string is empty.
@@ -95,7 +95,7 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
   /**
    * Inner object/function used for returning the OccurenceWidget instance.
    */
-  var InnerOccurrenceWidget = function () {        
+  var InnerOccurrenceWidget = function () {
   };
 
   //Prototype object extensions.
@@ -108,8 +108,8 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
 
       /**
        * Initializes the widget.
-       * This function is not invoked during object construction to allow the executions of binding functions 
-       * that usually are not required during object construction. 
+       * This function is not invoked during object construction to allow the executions of binding functions
+       * that usually are not required during object construction.
        */
       init: function(options){
         this.filters = new Array();
@@ -143,7 +143,7 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
           var numValue;
           if(isDecimal){
             numValue = parseFloat(value);
-          }else{            
+          }else{
             if(!this.isUnsignedInteger(value)){
               return false;
             }
@@ -153,7 +153,7 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
             return false;
           }
           var validMinValue = (minValue == null || (numValue >= minValue));
-          var validMaxValue = (maxValue == null || (numValue <= maxValue));          
+          var validMaxValue = (maxValue == null || (numValue <= maxValue));
           return (validMinValue && validMaxValue);
         }
         return true;
@@ -175,19 +175,19 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
       },
 
       /**
-       * Returns the filters that have been applied  by the filter or by reading HTTP parameters. 
+       * Returns the filters that have been applied  by the filter or by reading HTTP parameters.
        */
       getFilters : function(){return this.filters;},
 
       /**
        * Shows the HTML widget.
        */
-      open : function(){    
+      open : function(){
         if (!this.isVisible()) {
           this.filterElement.fadeIn(FADE_TIME);
           this.showFilters();
           this.showEditView();
-          this.toggleApplyButton();          
+          this.toggleApplyButton();
         }
       },
 
@@ -201,9 +201,9 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
       /**
        * Closes (hides) the HTML widget.
        */
-      close : function(){      
-        if (this.filterElement != null) {          
-          this.showSummaryView();          
+      close : function(){
+        if (this.filterElement != null) {
+          this.showSummaryView();
         }
         //removes the filter that haven't been submitted
         this.removeNoSubmittedFilters();
@@ -216,9 +216,9 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
       /**
        * Shows the summary view. Hides the filter edition view.
        */
-      showSummaryView: function() { 
+      showSummaryView: function() {
         if(this.filterElement != null) {
-          var submittedFilters = this.getFiltersBySubmitted(true); 
+          var submittedFilters = this.getFiltersBySubmitted(true);
           if(submittedFilters.length > 0) {
             var filterView = this.filterElement.find('.filter_view');
             if (!this.isCreated()) {
@@ -227,7 +227,7 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
             if (!this.filterElement.is(':visible')) {
               this.filterElement.fadeIn(FADE_TIME);
             }
-            this.initSummaryView($(this.control).attr('title'),submittedFilters);            
+            this.initSummaryView($(this.control).attr('title'),submittedFilters);
             if (filterView.is(':visible')) {
               var self = this;
               filterView.fadeOut(FADE_TIME,function(){ self.filterElement.find('.summary_view').fadeIn(FADE_TIME);});
@@ -240,27 +240,27 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
             this.filterElement.fadeOut(FADE_TIME);
           }
         }
-      }, 
+      },
 
       /**
        * Shows the edit view. Hides the filter summary view.
        */
-      showEditView: function(){   
+      showEditView: function(){
         var self = this;
         if (!this.isCreated()) {
-          this.createHTMLWidget(this.control);          
+          this.createHTMLWidget(this.control);
         }
         this.filterElement.fadeIn(FADE_TIME);
         this.filterElement.find('.summary_view').fadeOut(FADE_TIME,function(){ self.filterElement.find('.filter_view').fadeIn(FADE_TIME, function(){
-          // This is needed to address http://dev.gbif.org/issues/browse/POR-365 
-          // The solution was found 
-          if (map!=null) { 
-            map.invalidateSize(); 
-          }          
+          // This is needed to address http://dev.gbif.org/issues/browse/POR-365
+          // The solution was found
+          if (map!=null) {
+            map.invalidateSize();
+          }
         });});
         self.filterElement.find('.edit').hide();
-        this.showFilters();        
-      }, 
+        this.showFilters();
+      },
 
       /**
        * Remove all the filter whose filter.submitted field is false.
@@ -331,7 +331,7 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
       /**
        * Adds a filter to the list of filters.
        */
-      addFilter : function(filter) {        
+      addFilter : function(filter) {
         if (!this.existsFilter(filter)) {
           this.filters.push(filter);
         }
@@ -344,8 +344,8 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
        */
       bindToControl: function(control) {
         this.control = control;
-        if(!this.getId()){                    
-          this.setId($(control).attr("data-filter"));   
+        if(!this.getId()){
+          this.setId($(control).attr("data-filter"));
           var widget = this;
           widget.create($(control));
           widget.showSummaryView();
@@ -358,10 +358,10 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
 
       /**
        * Limit the size of the text to MAX_LABEL_SIZE.
-       * If the size of the text y greater than MAX_LABEL_SIZE, the size is limited to that max and suspensive points are added at the end. 
+       * If the size of the text y greater than MAX_LABEL_SIZE, the size is limited to that max and suspensive points are added at the end.
        */
       limitLabel: function(label) {
-        var newLabel = label;        
+        var newLabel = label;
         if(newLabel.length >= MAX_LABEL_SIZE){
           newLabel = newLabel.slice(0,MAX_LABEL_SIZE) + SUSPENSIVE_POINTS;
         }
@@ -373,16 +373,16 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
       },
 
       /**
-       * Shows the list of html elements with the css class "filters". 
+       * Shows the list of html elements with the css class "filters".
        */
       showFilters : function() {
-        if(this.filterElement != null) { //widget was created          
+        if(this.filterElement != null) { //widget was created
           var appliedFilters = this.filterElement.find(".appliedFilters");
           //clears the HTML list of filters, the list is rebuilt each time this function is called
-          appliedFilters.empty(); 
+          appliedFilters.empty();
           //HTML element that will hold the list of filters
-          var filtersContainer = $("<ul style='list-style: none;display:block;'></ul>"); 
-          appliedFilters.append(filtersContainer); 
+          var filtersContainer = $("<ul style='list-style: none;display:block;'></ul>");
+          appliedFilters.append(filtersContainer);
           //gets the HTML template for filters
           var templateFilter = _.template($(this.getFilterItemTemplate()).html());
           var self = this;
@@ -391,20 +391,20 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
             if( this.filters[i].hidden == undefined || !this.filters[i].hidden) {
               filterAdded = true;
               //title field used for attribute <INPU title="currentFilter.title">
-              var currentFilter = $.extend(this.filters[i], {title: this.filters[i].label, label:this.limitLabel(this.filters[i].label)});            
+              var currentFilter = $.extend(this.filters[i], {title: this.filters[i].label, label:this.limitLabel(this.filters[i].label)});
               var newFilter = $(templateFilter(currentFilter));
               if( i != this.filters.length - 1){
                 $(newFilter).append('</br>');
               }
               //adds each filter to the list using the HTML template
-              filtersContainer.append(newFilter);   
-              //The click event of element with css class "closeFilter" handles the filter removing and applying the filters 
+              filtersContainer.append(newFilter);
+              //The click event of element with css class "closeFilter" handles the filter removing and applying the filters
               newFilter.find(".closeFilter").click( function(e) {
-                var input = $(this).parent().find(':input[name=' + self.getId() + ']');              
+                var input = $(this).parent().find(':input[name=' + self.getId() + ']');
                 self.removeFilter({value: input.val(), key: input.attr('key'), paramName: input.attr('name')});
                 self.showFilters();
               });
-            }          
+            }
           }
           this.filterElement.find(".appliedFilters,.filtersTitle").toggle(filterAdded);
         }
@@ -415,17 +415,17 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
        */
       create : function(control) {
         if (!this.isCreated()) {
-          this.createHTMLWidget(control);          
+          this.createHTMLWidget(control);
         }
       },
 
       /**
        * Utility function that renders/creates the HTML widget.
        */
-      createHTMLWidget : function(control){        
-        var          
+      createHTMLWidget : function(control){
+        var
         placeholder = $(control).attr("data-placeholder"),
-        templateFilter = $(control).attr("data-template-filter"),        
+        templateFilter = $(control).attr("data-template-filter"),
         inputClasses = $(control).attr("data-input-classes") || {},
         title = $(control).attr("title"),
         template = _.template($("#" + templateFilter).html()),
@@ -433,15 +433,15 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
 
         this.summaryTemplate = $(control).attr("data-template-summary")
 
-        this.filterElement = $(template({title:title, paramName: this.getId(), placeholder: placeholder, inputClasses: inputClasses }));        
+        this.filterElement = $(template({title:title, paramName: this.getId(), placeholder: placeholder, inputClasses: inputClasses }));
         this.filterElement.find(".apply").hide();
         this.widgetContainer.after(this.filterElement);
         this.initSummaryView(title,submittedFilters);
         this.bindEditHover();
         this.bindCloseControl();
         this.bindAddFilterControl();
-        this.bindApplyControl();     
-        this.executeAdditionalBindings();        
+        this.bindApplyControl();
+        this.executeAdditionalBindings();
       },
 
       /**
@@ -454,7 +454,7 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
           $(this).hide();
         });
 
-        this.filterElement.hover( 
+        this.filterElement.hover(
             function(e){
               if(self.filterElement.find('.filter_view').is(':visible')){
                 self.filterElement.find('.edit').hide();
@@ -480,8 +480,8 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
        * Initializes the summary view. It will be hidden by default.
        */
       initSummaryView : function(title,submittedFilters){
-        var sumaryViewTemplate = _.template($("#" + this.summaryTemplate).html());        
-        this.summaryView = this.filterElement.find('.summary_view'); 
+        var sumaryViewTemplate = _.template($("#" + this.summaryTemplate).html());
+        this.summaryView = this.filterElement.find('.summary_view');
         this.summaryView.html('');
         this.summaryView.prepend($(sumaryViewTemplate({paramName: this.getId(), title:title, filters: submittedFilters})));
         this.summaryView.hide();
@@ -506,36 +506,36 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
       /**
        * Removes a filter and then re-display the list of filters.
        */
-      removeFilter :function(filter) {        
+      removeFilter :function(filter) {
         for (var i = 0; i < this.filters.length; i++) {
           if(this.filters[i].value == filter.value){
             var removedFilter = this.filters[i];
-            this.filters.splice(i,1);            
+            this.filters.splice(i,1);
             this.showFilters();
             if(removedFilter.submitted){
               this.filterElement.find(".apply").show();
             }
-            return;            
+            return;
           }
-        }        
+        }
       },
 
       /**
        * Removes filters by the paramName field.
        */
-      removeFilterByParamName :function(paramName) {        
+      removeFilterByParamName :function(paramName) {
         for(var i = 0; i < this.filters.length; i++){
           if(this.filters[i].paramName == paramName){
-            this.filters.splice(i,1);         
+            this.filters.splice(i,1);
             i--; //decrement since length has changed
           }
-        }        
+        }
       },
 
       /**
        * Searches a filter by its value.
        */
-      existsFilter :function(filterP) {        
+      existsFilter :function(filterP) {
         for(var i = 0; i < this.filters.length; i++){
           if(this.filters[i].value == filterP.value){
             return true;
@@ -547,7 +547,7 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
       /**
        * Searches a filter by its value.
        */
-      clearFilters :function() { 
+      clearFilters :function() {
         this.filters = new Array();
         this.showFilters();
         this.toggleApplyButton();
@@ -561,14 +561,14 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
         var self = this;
         this.filterElement.find("a.button[data-action]").click( function(e){
           if(self.filterElement.find(".addFilter").size() != 0) { //has and addFilter control
-            //gets the value of the input field            
-            var input = self.filterElement.find(":input[name=" + self.id + "]:first");                    
-            var value = input.val();            
+            //gets the value of the input field
+            var input = self.filterElement.find(":input[name=" + self.id + "]:first");
+            var value = input.val();
             if (!isBlank(value) && !self.existsFilter({value:value})) {
               var key = null;
               //Auto-complete widgets store the selected key in "key" attribute
               if (input.attr("key") !== undefined) {
-                key = input.attr("key"); 
+                key = input.attr("key");
               }
               if ((typeof(value) != "string") && $.isArray(value)) {
                 var values_idx = 0;
@@ -586,8 +586,8 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
           } else {
             self.manager.applyOccurrenceFilters(false);
           }
-        });  
-      },      
+        });
+      },
 
       /**
        * The add filter control, handler how each individual filter is added to the list of filters.
@@ -597,13 +597,13 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
         var self = this;
         var input = this.filterElement.find(":input[name=" + this.getId() + "]");
         this.bindAutoAddControl(input);
-        this.filterElement.find(".addFilter").click( function(e){          
+        this.filterElement.find(".addFilter").click( function(e){
           self.addFilterControlEvent(self, input);
-        });  
+        });
       },
-      
+
       bindAutoAddControl: function(input){
-        var self = this;        
+        var self = this;
         if ($(input).hasClass('auto_add')) {
           input.keyup(function(event){
             if(event.keyCode == 13){
@@ -618,15 +618,15 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
        */
       bindRemoveFilterEvent : function(){
         var self = this;
-        this.filterElement.find(".closeFilter").each(function(idx,element){      
+        this.filterElement.find(".closeFilter").each(function(idx,element){
           $(element).click(function(e){
             e.preventDefault();
             var
             filterContainer = $(this).parent().parent(),
             li = filterContainer.parent(),
-            input = filterContainer.find(":input[type=hidden]");            
+            input = filterContainer.find(":input[type=hidden]");
             self.removeFilter({key:input.attr("key"), value:input.val(), paramName: input.attr("name")});
-            filterContainer.fadeOut(FADE_TIME, function(){                          
+            filterContainer.fadeOut(FADE_TIME, function(){
               $(this).remove();
               if(li.find("div.filter").length == 0){
                 var ul = li.parent();
@@ -639,7 +639,7 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
               //call the onCloseEvent if any
               self.manager.applyOccurrenceFilters(false);
               self.removeUnusedSuggestionBoxes();
-            });        
+            });
           });
         });
       },
@@ -647,16 +647,16 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
       /**
        * Utility function that validates if the input value is valid (non-blank) and could be added to list of filters.
        */
-      addFilterControlEvent : function (self,input){        
-        //gets the value of the input field            
-        var value = input.val();            
-        if(!isBlank(value)){            
+      addFilterControlEvent : function (self,input){
+        //gets the value of the input field
+        var value = input.val();
+        if(!isBlank(value)){
           var key = null;
           //Auto-complete stores the selected key in "key" attribute
           if (input.attr("key") !== undefined) {
-            key = input.attr("key"); 
+            key = input.attr("key");
           }
-          self.addFilter({label:value,value: value, key:key,paramName:self.getId(), submitted: false});            
+          self.addFilter({label:value,value: value, key:key,paramName:self.getId(), submitted: false});
           self.showFilters();
           input.val('');
         }
@@ -690,22 +690,22 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
       },
 
       /**
-       * Binds the click(checked) event of a suggestion item to perform several actions: 
+       * Binds the click(checked) event of a suggestion item to perform several actions:
        * removed the old filter value, update the occurrence widget, replace the UI content and then adds the filter.
        */
       bindSuggestions: function() {
         var self = this;
-        $('input.suggestion').click( function(e) {          
+        $('input.suggestion').click( function(e) {
           var filterContainer = $('div.filter:has(input[value="'+ $(this).attr('data-suggestion') +'"][type="hidden"])');
-          if (filterContainer) {                         
+          if (filterContainer) {
             var thisValue = $(this).val();
-            var newFilter = {label:$('label[for="searchResult' + thisValue + '"]').text(), paramName:$(this).attr('name'),value:thisValue,key:thisValue, submitted: false};            
+            var newFilter = {label:$('label[for="searchResult' + thisValue + '"]').text(), paramName:$(this).attr('name'),value:thisValue,key:thisValue, submitted: false};
             $(this).attr('checked',true);
             self.replaceFilterValues($(filterContainer).find(":input[type=hidden]").val(),newFilter);
-            self.showSummaryView();            
+            self.showSummaryView();
             //remove the container div
-            $(this).parent().remove();                       
-            self.manager.applyOccurrenceFilters(false);  
+            $(this).parent().remove();
+            self.manager.applyOccurrenceFilters(false);
             return true;
           }
         });
@@ -733,7 +733,7 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
  */
 var OccurrenceMonthWidget = (function ($,_,OccurrenceWidget) {
 
-  var InnerOccurrenceMonthWidget = function () {        
+  var InnerOccurrenceMonthWidget = function () {
   };
 
   //Inherits everything from the OccurrenceWidget module.
@@ -750,30 +750,30 @@ var OccurrenceMonthWidget = (function ($,_,OccurrenceWidget) {
           self.filterElement.find("#maxValue").show();
         } else {
           self.filterElement.find("#maxValue").hide();
-        }     
+        }
       }
-     });       
+     });
   };
 
   /**
    * Executes binding function bound during the object construction.
    */
-  InnerOccurrenceMonthWidget.prototype.executeAdditionalBindings = function() {      
+  InnerOccurrenceMonthWidget.prototype.executeAdditionalBindings = function() {
     this.bindingsExecutor.call();
     this.bindOnPredicateChange();
   };
-  
+
   /**
    * Validates if the date range is:monthMin < monthMax.
    */
-  InnerOccurrenceMonthWidget.prototype.isValidMonthRange = function(monthMin, monthMax) {  
+  InnerOccurrenceMonthWidget.prototype.isValidMonthRange = function(monthMin, monthMax) {
     if(monthMin == 0){
       this.filterElement.find(":input[name=monthMin]:first,#dk_container_monthMin").addClass(ERROR_CLASS);
       return false;
     }
     if(monthMax != null && monthMin > monthMax) {
       this.filterElement.find("#monthRangeErrorMessage").show();
-      this.filterElement.find(":input[name=monthMax]:first,:input[name=monthMin]:first,#dk_container_monthMax,#dk_container_monthMin").addClass(ERROR_CLASS);      
+      this.filterElement.find(":input[name=monthMax]:first,:input[name=monthMin]:first,#dk_container_monthMax,#dk_container_monthMin").addClass(ERROR_CLASS);
       return false;
     }
     return true;
@@ -784,7 +784,7 @@ var OccurrenceMonthWidget = (function ($,_,OccurrenceWidget) {
     var self = this;
     $('.date-dropdown').dropkick(); // adds custom dropdowns
 
-    $(document).on('click','#dk_container_monthMin > [class*="dk"], #dk_container_monthMax > [class*="dk"]', function(e) {      
+    $(document).on('click','#dk_container_monthMin > [class*="dk"], #dk_container_monthMax > [class*="dk"]', function(e) {
       self.filterElement.find("#monthRangeErrorMessage").hide();
     });
 
@@ -792,37 +792,37 @@ var OccurrenceMonthWidget = (function ($,_,OccurrenceWidget) {
       $(el).prepend('<img src="'+((cfg.context+"/img/icons/questionmark.png").replace("//", "/")) +'"/> ').sourcePopover({"title":$(el).attr("title"),"message":$(el).attr("data-message"),"remarks":$(el).attr("data-remarks")});
     });
 
-    this.filterElement.find(".addFilter").click( function(e) { 
-      e.preventDefault();   
+    this.filterElement.find(".addFilter").click( function(e) {
+      e.preventDefault();
       self.filterElement.find('.' + ERROR_CLASS).removeClass(ERROR_CLASS)
       self.filterElement.find("#monthRangeErrorMessage").hide();
-      self.filterElement.find(".month_error").hide();      
-      var monthMin = parseInt(self.filterElement.find(":input[name=monthMin]:first").val());      
+      self.filterElement.find(".month_error").hide();
+      var monthMin = parseInt(self.filterElement.find(":input[name=monthMin]:first").val());
       var monthMax = null;
       var predicate = self.filterElement.find(':input[name=predicate] option:selected').val();
-      var predicateText = self.filterElement.find(':input[name=predicate] option:selected').text();      
-      var label = $(":input[name=monthMin]").find(":selected").text();      
-      
+      var predicateText = self.filterElement.find(':input[name=predicate] option:selected').text();
+      var label = $(":input[name=monthMin]").find(":selected").text();
+
       var isRangeQuery = self.filterElement.find("#maxValue").is(":visible");
       if(isRangeQuery){
         monthMax = parseInt(self.filterElement.find(":input[name=monthMax]:first").val());
         label = label + " and " +  $(":input[name=monthMax]").find(":selected").text();
       }
-     
+
       var rangeValue = null;
       if(predicate == 'bt') { // is between predicate
         rangeValue = predicatePatternMap[predicate].replace('%v1',monthMin).replace('%v2',monthMax);
       } else {
         rangeValue = predicatePatternMap[predicate].replace('%v',monthMin);
       }
-       
-      if(!self.existsFilter({value: rangeValue}) && self.isValidMonthRange(monthMin,monthMax)){                                    
+
+      if(!self.existsFilter({value: rangeValue}) && self.isValidMonthRange(monthMin,monthMax)){
         self.filterElement.find("#monthRangeErrorMessage").hide();
         self.addFilter({label:predicateText + ' ' + label,value: rangeValue, key:null,paramName:self.getId(),submitted: false});
-        self.showFilters();        
-      }      
+        self.showFilters();
+      }
     });
-  }      
+  }
   return InnerOccurrenceMonthWidget;
 })(jQuery,_,OccurrenceWidget);
 
@@ -830,9 +830,9 @@ var OccurrenceMonthWidget = (function ($,_,OccurrenceWidget) {
  * Location widget. Displays a map that allows select a range bounding box area.
  */
 var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
-  var InnerOccurrenceLocationWidget = function () {         
+  var InnerOccurrenceLocationWidget = function () {
     this.mapGeometries = new Array();
-  }; 
+  };
 
   //Inherits everything from the OccurrenceWidget module.
   InnerOccurrenceLocationWidget.prototype = $.extend(true,{}, new OccurrenceWidget());
@@ -843,7 +843,7 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
 
   /**
    * Renumber the property data-marker for each bonding box and polygon.
-   * This is need it 
+   * This is need it
    */
   InnerOccurrenceLocationWidget.prototype.renumberMarkers = function(){
     //renumbering markers
@@ -851,14 +851,14 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
       $(el).attr("data-marker",idx);
     });
   };
-  
-  
+
+
   /**
-   * The bindAddFilterControl function is re-defined to validate and process the coordinates. 
+   * The bindAddFilterControl function is re-defined to validate and process the coordinates.
    */
   InnerOccurrenceLocationWidget.prototype.bindAddFilterControl = function() {
     var self = this;
-    this.filterElement.find(".addFilter").click( function(e) { 
+    this.filterElement.find(".addFilter").click( function(e) {
       e.preventDefault();
       $(".bbox_error").hide();
       self.filterElement.find('.' + ERROR_CLASS).removeClass(ERROR_CLASS);
@@ -886,30 +886,30 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
         self.filterElement.find(":input[name=maxLongitude]:first").addClass(ERROR_CLASS);
         return;
       }
-      
-      var bounds = self.truncateLatLngBounds(new L.LatLngBounds(new L.LatLng(minLat,minLng), new L.LatLng(maxLat,maxLng)));    
+
+      var bounds = self.truncateLatLngBounds(new L.LatLngBounds(new L.LatLng(minLat,minLng), new L.LatLng(maxLat,maxLng)));
       if(self.isValidBBox(bounds)) {
         $(".bbox_error").hide();
         var label = "From " + minLat + ',' + minLng + ' To ' + maxLat + ',' + maxLng;
         self.filterElement.find(".point").val('');
-        var numFilters = self.getFilters().length;        
+        var numFilters = self.getFilters().length;
         var rectangle = new L.Rectangle(bounds,DEFAULT_SHAPE_OPTIONS);
-        self.addFilter({label: label, value: self.getPolygonFromRect(rectangle), key: null, paramName: self.getId(), submitted: false, marker: self.mapGeometries.length, targetParam:'BOUNDING_BOX'});      
+        self.addFilter({label: label, value: self.getPolygonFromRect(rectangle), key: null, paramName: self.getId(), submitted: false, marker: self.mapGeometries.length, targetParam:'BOUNDING_BOX'});
         //HAS_COORDINATE filters must be removed
         self.removeFilterByParamName('HAS_COORDINATE');
         self.filterElement.find(':checkbox[name="HAS_COORDINATE"]').removeAttr('checked');
         if(numFilters < self.getFilters().length) { //nothing changed
-          self.showFilters();              
+          self.showFilters();
           rectangle.bindPopup("Bounding box: " + label);
           self.mapGeometries.push(rectangle);
           defaultMapLayer.addLayer(rectangle);
-        }        
+        }
       } else {
         $(".bbox_error").addClass(ERROR_CLASS).show();
       }
     })
   };
-  
+
   /**
    * Converts a list of lat/lng into a String with the form: lng1 lat1,lng2 lat2...
    */
@@ -917,7 +917,7 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
     var value = "";
     $.each(latLngs, function(idx,el){
       value += truncCoord(latLngs[idx].lng) + " " + truncCoord(latLngs[idx].lat) + ",";
-    });    
+    });
     value += truncCoord(latLngs[0].lng) + " " + truncCoord(latLngs[0].lat);
     return value;
   };
@@ -928,38 +928,38 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
   InnerOccurrenceLocationWidget.prototype.bindAddPolygonEvent = function(){
     var self = this;
     $(document).on("add_polygon", function(e) {
-      var coords =  self.latLngsToPolygon(e.poly.getLatLngs());  
+      var coords =  self.latLngsToPolygon(e.poly.getLatLngs());
       var coordsSplit = coords.split(",");
       self.addFilter({label:coordsSplit[0] + "..." + coordsSplit[coordsSplit.length - 2],value: coords, key:null,paramName:self.getId(), submitted: false, targetParam:'POLYGON', marker: self.mapGeometries.length, hidden:false});
-      self.showFilters();      
+      self.showFilters();
       e.poly.bindPopup('Polygon:' + coords);
       e.mapLayer.addLayer(e.poly);
       self.mapGeometries.push(e.poly);
       self.renumberMarkers();
     });
   };
-  
-  
+
+
   /**
    * Binds the event handler to the add_polygon event.
    */
   InnerOccurrenceLocationWidget.prototype.getPolygonFromRect = function(rect){
-    var latLngs = rect.getLatLngs();            
-    return truncCoord(latLngs[1].lng) + " " + truncCoord(latLngs[1].lat) + "," +  truncCoord(latLngs[0].lng) + " " + truncCoord(latLngs[0].lat) 
+    var latLngs = rect.getLatLngs();
+    return truncCoord(latLngs[1].lng) + " " + truncCoord(latLngs[1].lat) + "," +  truncCoord(latLngs[0].lng) + " " + truncCoord(latLngs[0].lat)
     + "," + truncCoord(latLngs[3].lng) + " " + truncCoord(latLngs[3].lat) + "," + truncCoord(latLngs[2].lng) + " " + truncCoord(latLngs[2].lat) + "," + truncCoord(latLngs[1].lng) + " " + truncCoord(latLngs[1].lat);
   };
-  
-  
+
+
   /**
    * Binds the event handler to the add_polygon event.
    */
   InnerOccurrenceLocationWidget.prototype.truncateLatLngBounds = function(latLngBounds){
-    var southWest = new L.LatLng(truncCoord(latLngBounds.getSouthWest().lat), truncCoord(latLngBounds.getSouthWest().lng)),      
+    var southWest = new L.LatLng(truncCoord(latLngBounds.getSouthWest().lat), truncCoord(latLngBounds.getSouthWest().lng)),
     northEast = new L.LatLng(truncCoord(latLngBounds.getNorthEast().lat), truncCoord(latLngBounds.getNorthEast().lng));
     return new L.LatLngBounds(southWest, northEast);
   };
-  
-  
+
+
   /**
    * Checks if the bounding box is valid.
    */
@@ -972,8 +972,8 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
    * Binds the event handler to the add_bounding_box event.
    */
   InnerOccurrenceLocationWidget.prototype.bindAddBBoxEvent = function() {
-    var self = this;    
-    $(document).on("add_bounding_box",function(e) {      
+    var self = this;
+    $(document).on("add_bounding_box",function(e) {
       var calcLatLngBounds = self.truncateLatLngBounds(e.rect.getBounds());
       //BBoxes with a diagonal and squared distnace less than 1 meter are not valid
       if(!self.isValidBBox(calcLatLngBounds)) {
@@ -983,7 +983,7 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
       var pointsLabel = calcLatLngBounds.getSouthWest().lat + ',' + calcLatLngBounds.getSouthWest().lng + ' To ' + calcLatLngBounds.getNorthEast().lat + ',' + calcLatLngBounds.getNorthEast().lng;
       var label = "From " + pointsLabel;
       self.addFilter({label:label,value: self.getPolygonFromRect(e.rect), key:null,paramName:self.getId(), submitted: false,targetParam:'BOUNDING_BOX',marker: self.mapGeometries.length, hidden:false});
-      self.showFilters();            
+      self.showFilters();
       e.rect.bindPopup("Bounding box: from " + pointsLabel);
       e.mapLayer.addLayer(e.rect);
       self.mapGeometries.push(e.rect);
@@ -995,50 +995,50 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
    * Binds the event handler to the .geo_type.click event.
    */
   InnerOccurrenceLocationWidget.prototype.bindSelectGeoEvent = function() {
-    var self = this;    
-    $(document).on("click",".geo_type", function(e) {      
+    var self = this;
+    $(document).on("click",".geo_type", function(e) {
         var input = $(this).next();
         var firstCoord = input.val().replace("POLYGON((","").replace("))","").split(",")[0].split(" ");
         var marker = parseInt(input.attr('data-marker'));
         map.panTo(new L.LatLng(firstCoord[1], firstCoord[0]));
-        self.mapGeometries[marker].openPopup();      
+        self.mapGeometries[marker].openPopup();
     });
   };
 
   InnerOccurrenceLocationWidget.prototype.getGeometries = function(){ return this.mapGeometries;},
-  
+
   InnerOccurrenceLocationWidget.prototype.addGeometry = function(geometry){ return this.mapGeometries.push(geometry);},
   /**
    * Binds the event handler to the .removeGeo.click event.
    */
   InnerOccurrenceLocationWidget.prototype.bindRemoveGeoEvent = function() {
-    var self = this;    
+    var self = this;
     $(document).on("click",".removeGeo", function(e) {
       var input = $(this).prev();
       var marker = parseInt(input.attr('data-marker'));
       $("#map").trigger('click');
       map.closePopup(); //close popups if any is open
-      map.removeLayer(self.mapGeometries[marker]);      
+      map.removeLayer(self.mapGeometries[marker]);
       self.mapGeometries.splice(marker,1);
       self.renumberMarkers();
-    });    
+    });
   };
-  
+
   /**
    * Removes all the polygons from the map.
    */
   InnerOccurrenceLocationWidget.prototype.removeAllPolygons = function() {
-    var self = this;    
+    var self = this;
     for(var i = 0; i < this.mapGeometries.length; i++) {
-      map.removeLayer(this.mapGeometries[i]);  
-    }    
+      map.removeLayer(this.mapGeometries[i]);
+    }
   };
 
   /**
    * Binds the event handler to the .checkbox[name="HAS_COORDINATE"].change event.
    */
   InnerOccurrenceLocationWidget.prototype.bindSelectGeoreferecendEvent = function() {
-    var self = this;    
+    var self = this;
     this.filterElement.find(':checkbox[name="HAS_COORDINATE"]').change( function(e) {
       self.removeFilterByParamName('HAS_COORDINATE');
       if ($(this).attr('checked')) {
@@ -1053,29 +1053,29 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
           self.filterElement.find(':checkbox[name="SPATIAL_ISSUES"]').removeAttr('checked');
           self.filterElement.find('#spatial_issues > :input').attr('disabled','disabled');
         } else {
-          self.filterElement.find('#spatial_issues > :input').removeAttr('disabled');          
+          self.filterElement.find('#spatial_issues > :input').removeAttr('disabled');
         }
       } else {
         self.filterElement.find(".map_control,.leaflet-control-draw").show();
       }
       if ($(this).attr('id') == 'isNotGeoreferenced') {
-        self.filterElement.find('#spatial_issues > :input').removeAttr('disabled');        
+        self.filterElement.find('#spatial_issues > :input').removeAttr('disabled');
       }
       self.showFilters();
       self.filterElement.find(".apply").show();
     });
   };
-  
+
   /**
    * Binds the event handler to the .checkbox[name="SPATIAL_ISSUES"].change event.
    */
   InnerOccurrenceLocationWidget.prototype.bindSelectSpatialIssuesEvent = function() {
-    var self = this;    
-    this.filterElement.find(':checkbox[name="SPATIAL_ISSUES"]').change( function(e) {  
+    var self = this;
+    this.filterElement.find(':checkbox[name="SPATIAL_ISSUES"]').change( function(e) {
       self.removeFilterByParamName('SPATIAL_ISSUES');
       self.filterElement.find(':checkbox[name="SPATIAL_ISSUES"]').each( function(idx,el) {
         if ($(el).attr('checked')) {
-          self.filters.push({label:$(el).val() == 'true' ?'Yes':'No',value: $(el).val(), key:null,paramName:'SPATIAL_ISSUES', submitted: false, hidden:true});             
+          self.filters.push({label:$(el).val() == 'true' ?'Yes':'No',value: $(el).val(), key:null,paramName:'SPATIAL_ISSUES', submitted: false, hidden:true});
         }
       });
       self.showFilters();
@@ -1086,7 +1086,7 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
   /**
    * Executes binding function bound during the object construction.
    */
-  InnerOccurrenceLocationWidget.prototype.executeAdditionalBindings = function() {    
+  InnerOccurrenceLocationWidget.prototype.executeAdditionalBindings = function() {
     this.bindingsExecutor.call();
     this.bindAddPolygonEvent();
     this.bindAddBBoxEvent();
@@ -1094,23 +1094,23 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
     this.bindRemoveGeoEvent();
     this.bindSelectGeoreferecendEvent();
     this.bindSelectSpatialIssuesEvent();
-  };  
-  
+  };
+
   /**
    * Removes a filter and then re-display the list of filters.
    */
-  InnerOccurrenceLocationWidget.prototype.removeFilter  = function(filter) {        
+  InnerOccurrenceLocationWidget.prototype.removeFilter  = function(filter) {
     for (var i = 0; i < this.filters.length; i++) {
       if(this.filters[i].paramName == filter.paramName && this.filters[i].value == filter.value){
         var removedFilter = this.filters[i];
-        this.filters.splice(i,1);            
+        this.filters.splice(i,1);
         this.showFilters();
         if(removedFilter.submitted){
           this.filterElement.find(".apply").show();
         }
-        return;            
+        return;
       }
-    }        
+    }
   };
 
 
@@ -1122,14 +1122,14 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
  * Comparator widget. Displays an selection list of available comparators (=,>,<) and an input box for the value.
  */
 var OccurrenceComparatorWidget = (function ($,_,OccurrenceWidget) {
-  
-  var InnerOccurrenceComparatorWidget = function () {   
+
+  var InnerOccurrenceComparatorWidget = function () {
     this.unit = "";
-  }; 
-  
+  };
+
   //Inherits everything from the OccurrenceWidget module.
   InnerOccurrenceComparatorWidget.prototype = $.extend(true,{}, new OccurrenceWidget());
-  
+
   /**
    * Validates if the filter value exists for the input predicate.
    */
@@ -1141,18 +1141,18 @@ var OccurrenceComparatorWidget = (function ($,_,OccurrenceWidget) {
           self.filterElement.find("#maxValue").show();
         } else {
           self.filterElement.find("#maxValue").hide();
-        }     
+        }
       }
-     });         
+     });
   };
-  
+
   /**
    * Sets the unit value.
    */
   InnerOccurrenceComparatorWidget.prototype.setUnit = function(unitP){
     this.unit = unitP;
   };
-  
+
   /**
    * Gets the unit value.
    */
@@ -1163,19 +1163,19 @@ var OccurrenceComparatorWidget = (function ($,_,OccurrenceWidget) {
   /**
    * Executes binding function bound during the object construction.
    */
-  InnerOccurrenceComparatorWidget.prototype.executeAdditionalBindings = function() {      
+  InnerOccurrenceComparatorWidget.prototype.executeAdditionalBindings = function() {
     this.bindingsExecutor.call();
-    this.bindOnPredicateChange();    
+    this.bindOnPredicateChange();
     this.bindAutoAddControl(this.filterElement.find(":input[name=" + this.getId() + "Max]"));
   };
 
   /**
-   * The bindAddFilterControl function is re-defined to validate and process the coordinates. 
+   * The bindAddFilterControl function is re-defined to validate and process the coordinates.
    */
-  InnerOccurrenceComparatorWidget.prototype.addFilterControlEvent = function (self,input) {        
-    //gets the value of the input field        
+  InnerOccurrenceComparatorWidget.prototype.addFilterControlEvent = function (self,input) {
+    //gets the value of the input field
     var inputMinValue = this.filterElement.find("input[name=" + this.getId() + "]");
-    var value = inputMinValue.val();     
+    var value = inputMinValue.val();
     var valueMax = null;
     var inputMaxValue = this.filterElement.find("input[name=" + this.getId() + "Max]");
     inputMinValue.removeClass(ERROR_CLASS);
@@ -1194,28 +1194,28 @@ var OccurrenceComparatorWidget = (function ($,_,OccurrenceWidget) {
     } else {
       rangeValue = predicatePatternMap[predicate].replace('%v',value);
     }
-    if(!self.isBlank(value) && !this.existsFilter({value: rangeValue})){            
+    if(!self.isBlank(value) && !this.existsFilter({value: rangeValue})){
       var key = null;
       //Auto-complete stores the selected key in "key" attribute
       if (inputMinValue.attr("key") !== undefined) {
-        key = inputMinValue.attr("key"); 
+        key = inputMinValue.attr("key");
       }
       if(self.isBlank(value) || (!self.isBlank(value) && !self.isValidNumber(value,false,null,null))){
         inputMinValue.addClass(ERROR_CLASS);
         return;
-      } 
-      
+      }
+
       if(isRangeQuery && (self.isBlank(valueMax) || (!self.isBlank(valueMax) && !self.isValidNumber(valueMax,false,null,null)))){
         inputMaxValue.addClass(ERROR_CLASS);
         return;
-      } 
-      var rangePattern = predicatePatternMap[predicate];      
+      }
+      var rangePattern = predicatePatternMap[predicate];
       self.addFilter({label:predicateText + ' ' + label,value: rangeValue, key:key,paramName:self.getId(),submitted: false});
       self.showFilters();
       inputMinValue.val('');
       inputMaxValue.val('');
     }
-  };      
+  };
   return InnerOccurrenceComparatorWidget;
 })(jQuery,_,OccurrenceWidget);
 
@@ -1224,13 +1224,13 @@ var OccurrenceComparatorWidget = (function ($,_,OccurrenceWidget) {
  * Comparator widget. Displays an selection list of available comparators (=,>,<) and an input box for the value.
  */
 var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
-  
-  var InnerOccurrenceDateComparatorWidget = function () {        
-  }; 
-  
+
+  var InnerOccurrenceDateComparatorWidget = function () {
+  };
+
   //Inherits everything from the OccurrenceWidget module.
   InnerOccurrenceDateComparatorWidget.prototype = $.extend(true,{}, new OccurrenceWidget());
-  
+
   /**
    * Validates if the filter value exists for the input predicate.
    */
@@ -1245,28 +1245,28 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
         } else {
           self.filterElement.find(".max_value_cfg").hide();
           self.filterElement.find(".min_value_cfg").show();
-        }     
+        }
       }
      });
-     
+
     //Creates the date formats dropdowns and datepickers
-    self.filterElement.find(":input.date_format").dropkick({ 
+    self.filterElement.find(":input.date_format").dropkick({
       change: function() {
         var selectedViewMode = $(this).find(":selected").val();
         var datePicker = $(this).data("target");
         if(datePicker == "dateFrom"){
-          self.bindDateFromControl(selectedViewMode);        
+          self.bindDateFromControl(selectedViewMode);
         } else {
           self.bindDateToControl(selectedViewMode);
-        }      
+        }
       }
     });
-    
+
     //Shows the date format configuration section
     self.filterElement.find(".configure_dates:first").click(function(e) {
       $('.datepicker').hide();
       e.preventDefault();
-      self.filterElement.find(".date_fmt_cfg:first").show();      
+      self.filterElement.find(".date_fmt_cfg:first").show();
       if(self.isRangeQuery()){
         self.filterElement.find(".max_value_cfg").show();
       } else {
@@ -1283,12 +1283,12 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
   /**
    * Executes binding function bound during the object construction.
    */
-  InnerOccurrenceDateComparatorWidget.prototype.executeAdditionalBindings = function() {      
-    this.bindingsExecutor.call();       
+  InnerOccurrenceDateComparatorWidget.prototype.executeAdditionalBindings = function() {
+    this.bindingsExecutor.call();
     this.bindDateControls('months','months');
     this.bindAutoAddControl(this.filterElement.find(":input[name=" + this.getId() + "Max]"));
   };
-  
+
   /**
    * Checks is the current filter is a range query.
    */
@@ -1297,12 +1297,12 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
   }
 
   /**
-   * The bindAddFilterControl function is re-defined to validate and process the coordinates. 
+   * The bindAddFilterControl function is re-defined to validate and process the coordinates.
    */
-  InnerOccurrenceDateComparatorWidget.prototype.addFilterControlEvent = function (self,input) {        
-    //gets the value of the input field        
+  InnerOccurrenceDateComparatorWidget.prototype.addFilterControlEvent = function (self,input) {
+    //gets the value of the input field
     var inputMinValue = this.filterElement.find("input[name=" + this.getId() + "]");
-    var value = inputMinValue.val();     
+    var value = inputMinValue.val();
     var valueMax = null;
     var inputMaxValue = this.filterElement.find("input[name=" + this.getId() + "Max]");
     inputMinValue.removeClass(ERROR_CLASS);
@@ -1315,7 +1315,7 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
       valueMax = inputMaxValue.val();
       label = value + " and " +  valueMax;
     }
-    
+
     if(!this.validateDateInput(inputMinValue)){
       return;
     }
@@ -1325,42 +1325,42 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
     } else {
       rangeValue = predicatePatternMap[predicate].replace('%v',value);
     }
-    if(!self.isBlank(value) && !this.existsFilter({value: rangeValue})){            
+    if(!self.isBlank(value) && !this.existsFilter({value: rangeValue})){
       var key = null;
       //Auto-complete stores the selected key in "key" attribute
       if (inputMinValue.attr("key") !== undefined) {
-        key = inputMinValue.attr("key"); 
+        key = inputMinValue.attr("key");
       }
       if(self.isBlank(value)){
         inputMinValue.addClass(ERROR_CLASS);
         return;
-      } 
-      
-      if(isRangeQuery && (self.isBlank(valueMax) || !self.validateDateInput(inputMaxValue) || !self.isValidRange())) {        
+      }
+
+      if(isRangeQuery && (self.isBlank(valueMax) || !self.validateDateInput(inputMaxValue) || !self.isValidRange())) {
         inputMaxValue.addClass(ERROR_CLASS);
-        return;        
-      } 
-      
-      var rangePattern = predicatePatternMap[predicate];      
+        return;
+      }
+
+      var rangePattern = predicatePatternMap[predicate];
       self.addFilter({label:predicateText + ' ' + label,value: rangeValue, key:key,paramName:self.getId(),submitted: false});
       self.showFilters();
       inputMinValue.val('');
       inputMaxValue.val('');
     }
-  };     
-  
+  };
+
   /**
    * Validates of the range date is valid.
    */
   InnerOccurrenceDateComparatorWidget.prototype.isValidRange = function() {
     return this.dateTo.date.valueOf() > this.dateFrom.date.valueOf();
   };
-  
+
   /**
    * Gets the date format related to the viewMode parameter.
    */
   InnerOccurrenceDateComparatorWidget.prototype.getDateFormat = function(viewMode) {
-    var defaultFormat = 'yyyy-mm'; 
+    var defaultFormat = 'yyyy-mm';
     if (viewMode == 'months') {
       return defaultFormat;
     } else if (viewMode == 'days') {
@@ -1371,13 +1371,13 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
       return defaultFormat;
     }
   };
-  
-  
+
+
   /**
    * Gets the date format related to the viewMode parameter.
    */
   InnerOccurrenceDateComparatorWidget.prototype.setDateMask = function(viewMode, input) {
-    var defaultFormat = {mask: '9999-99', placeholder: 'yyyy-mm'};    
+    var defaultFormat = {mask: '9999-99', placeholder: 'yyyy-mm'};
     $(input).removeClass(ERROR_CLASS)
     if (viewMode == 'months') {
       $(input).inputmask(defaultFormat);
@@ -1397,11 +1397,11 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
       $(input).attr('placeholder','yyyy-mm');
     }
   };
-  
+
   /**
    * Validates the value of date input control.
    */
-  InnerOccurrenceDateComparatorWidget.prototype.validateDateInput = function(input) { 
+  InnerOccurrenceDateComparatorWidget.prototype.validateDateInput = function(input) {
     var now = new Date();
     var mask = $(input).data('date-mask');
     if(mask == 'yyyy'){
@@ -1421,11 +1421,11 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
       if (monthValue < 0 || monthValue > 12) {
         $(input).addClass(ERROR_CLASS);
         return false;
-      }      
+      }
     }
     return true;
   };
-  
+
   /**
    * Create datepickers components.
    */
@@ -1434,8 +1434,8 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
     this.bindDateToControl(dateToViewMode)
     this.bindOnPredicateChange();
   };
-  
-  
+
+
   /**
    * Create datepickers components.
    */
@@ -1443,21 +1443,21 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
     var nowTemp = new Date();
     var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
     var self = this;
-    if (this.dateTo) {      
+    if (this.dateTo) {
       this.dateTo.remove();
-      $(self.filterElement.find(".max_value")[0]).val('');      
+      $(self.filterElement.find(".max_value")[0]).val('');
     }
-    var maxDate = this.filterElement.find(".max_value");      
-    self.setDateMask(dateToViewMode, maxDate);    
+    var maxDate = this.filterElement.find(".max_value");
+    self.setDateMask(dateToViewMode, maxDate);
     var dateTo = maxDate.datepicker({format:self.getDateFormat(dateToViewMode),viewMode:dateToViewMode,minViewMode:dateToViewMode,endDate:now,
       onRender: function(date) {
         return self.dateFrom && date.valueOf() <= self.dateFrom.date.valueOf() ? 'disabled' : '';
       },
       keyboardNavigation: false
-    }).on('changeDate', function(ev) {      
+    }).on('changeDate', function(ev) {
       var newDate = new Date(ev.date);
-      newDate.setDate(newDate.getDate() - 1);                  
-      self.dateFrom.setEndDate(newDate);      
+      newDate.setDate(newDate.getDate() - 1);
+      self.dateFrom.setEndDate(newDate);
       dateTo.hide();
     }).data('datepicker');
     $(maxDate).keypress(function(){
@@ -1465,19 +1465,19 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
     });
     this.dateTo = dateTo;
   };
-  
-  
+
+
   /**
    * Create datepickers components.
    */
   InnerOccurrenceDateComparatorWidget.prototype.bindDateFromControl = function(dateFromViewMode) {
     var nowTemp = new Date();
     var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-    var self = this;    
+    var self = this;
     if (this.dateFrom) {
       this.dateFrom.remove();
       $(self.filterElement.find(".min_value")[0]).val('');
-    }    
+    }
     var minDate = this.filterElement.find(".min_value");
     self.setDateMask(dateFromViewMode,minDate);
     var dateFrom = minDate.datepicker({format:self.getDateFormat(dateFromViewMode),viewMode:dateFromViewMode,minViewMode:dateFromViewMode,endDate:now,
@@ -1488,7 +1488,7 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
     }).on('changeDate', function(ev) {
       if(this.dateTo){
         var newDate = new Date(ev.date);
-        newDate.setDate(newDate.getDate() + 1);      
+        newDate.setDate(newDate.getDate() + 1);
         self.dateTo.setStartDate(newDate);
       }
       dateFrom.hide();
@@ -1496,13 +1496,13 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
         self.filterElement.find(".max_value")[0].focus();
       }
     }).data('datepicker');
-    
+
     $(minDate).keypress(function(){
       dateFrom.show();
     });
-    this.dateFrom = dateFrom;    
+    this.dateFrom = dateFrom;
   };
-  
+
   return InnerOccurrenceDateComparatorWidget;
 })(jQuery,_,OccurrenceWidget);
 
@@ -1510,13 +1510,13 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
  * Type status widget. Displays a multi-select list with the basis of record values.
  */
 var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
-  var InnerOccurrenceMultiSelectWidget = function () {        
-  }; 
+  var InnerOccurrenceMultiSelectWidget = function () {
+  };
   //Inherits everything from OccurrenceWidget
   InnerOccurrenceMultiSelectWidget.prototype = $.extend(true,{}, new OccurrenceWidget());
 
   /**
-   * Re-defines the showFilters function, iterates over the selection list to get the selected values and then show them as filters. 
+   * Re-defines the showFilters function, iterates over the selection list to get the selected values and then show them as filters.
    */
   InnerOccurrenceMultiSelectWidget.prototype.showFilters = function() {
     if(this.filterElement != null) {
@@ -1530,7 +1530,7 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
         }
       });
     }
-  };   
+  };
 
   /**
    * Executes addtional bindings: binds click event of each basis of record element.
@@ -1555,11 +1555,11 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
  * Object that controls the creation and default behavior of OccurrenceWidget and OccurrenceFilterWidget instances.
  * Manage how each filter widget should be bound to a occurrence widget instance, additionally controls what occurrence parameter is mapped to an specific widget.
  * This object should be instantiated only once in a page (Singleton).
- * 
+ *
  */
 var OccurrenceWidgetManager = (function ($,_) {
 
-  //All the fields are singleton variables  
+  //All the fields are singleton variables
   var widgets;
   var targetUrl;
   var submitOnApply = false;
@@ -1582,11 +1582,11 @@ var OccurrenceWidgetManager = (function ($,_) {
   };
 
   function buildOnSelectHandler(paramName,el){
-    return function (newFilter) {        
+    return function (newFilter) {
       var widget = getWidgetById(paramName);
-      widget.addFilter($.extend({},newFilter,{paramName:paramName,submitted: false}));            
+      widget.addFilter($.extend({},newFilter,{paramName:paramName,submitted: false}));
       widget.showFilters();
-      $(el).val('');        
+      $(el).val('');
     };
   };
 
@@ -1610,7 +1610,7 @@ var OccurrenceWidgetManager = (function ($,_) {
     //Locks the screen
     $("#lock_screen").height($(document).height());
     $("#lock_screen").fadeIn("slow");
-  };  
+  };
 
 
   /**
@@ -1621,13 +1621,13 @@ var OccurrenceWidgetManager = (function ($,_) {
     targetUrl = targetUrlValue;
     submitOnApply = submitOnApplyParam;
     this.bindToWidgetsControl(controlSelector);
-    this.initialize(filters);    
+    this.initialize(filters);
   };
 
-  InnerOccurrenceWidgetManager.prototype = {                 
+  InnerOccurrenceWidgetManager.prototype = {
 
       //Constructor
-      constructor : InnerOccurrenceWidgetManager,           
+      constructor : InnerOccurrenceWidgetManager,
 
       /**
        * Gets the list of widgets.
@@ -1654,66 +1654,70 @@ var OccurrenceWidgetManager = (function ($,_) {
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindSpeciesAutosuggest});
             } else if (filterName == "DATASET_KEY") {
               newWidget = new OccurrenceWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindDatasetAutosuggest});            
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindDatasetAutosuggest});
             } else if (filterName == "RECORDED_BY") {
               newWidget = new OccurrenceWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindCollectorNameAutosuggest});            
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindCollectorNameAutosuggest});
             } else if (filterName == "RECORD_NUMBER") {
               newWidget = new OccurrenceWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindRecordNumberAutosuggest});            
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindRecordNumberAutosuggest});
             } else if (filterName == "CATALOG_NUMBER") {
               newWidget = new OccurrenceWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindCatalogNumberAutosuggest});            
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindCatalogNumberAutosuggest});
             } else if (filterName == "COLLECTION_CODE") {
               newWidget = new OccurrenceWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindCollectionCodeAutosuggest});            
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindCollectionCodeAutosuggest});
             } else if (filterName == "INSTITUTION_CODE") {
               newWidget = new OccurrenceWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindInstitutionCodeAutosuggest});            
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindInstitutionCodeAutosuggest});
             } else if (filterName == "GEOMETRY") {
               newWidget = new OccurrenceLocationWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindMap});            
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindMap});
             } else if (filterName == "EVENT_DATE" || filterName == "LAST_INTERPRETED") {
               newWidget = new OccurrenceDateComparatorWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});            
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
             } else if (filterName == "MONTH") {
               newWidget = new OccurrenceMonthWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});            
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
             } else if (filterName == "BASIS_OF_RECORD") {
               newWidget = new OccurrenceMultiSelectWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});              
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
             } else if (filterName == "TYPE_STATUS") {
               newWidget = new OccurrenceMultiSelectWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});              
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
             } else if (filterName == "COUNTRY" || filterName == "PUBLISHING_COUNTRY") {
               newWidget = new OccurrenceWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindCountryAutosuggest});              
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindCountryAutosuggest});
+            } else if (filterName == "CONTINENT") {
+              newWidget = new OccurrenceMultiSelectWidget();
+              newWidget.init({widgetContainer: widgetContainer, manager: self, bindingsExecutor: function () {
+              }});
             } else if (filterName == "ELEVATION" || filterName == "DEPTH" | filterName == "YEAR") {
               newWidget = new OccurrenceComparatorWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});        
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
               newWidget.setUnit("m");
             } else { //By default creates a simple OccurrenceWidget with an empty binding function
               newWidget = new OccurrenceWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});                      
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
             }
             newWidget.bindToControl(control);
             widgets.push(newWidget);
           }
-        });       
+        });
       },
 
       /**
        * Handles the click event to positioning the dropdown menus relative to the element that shows them.
        */
       centerDropDownMenus: function() {
-        $('a.[data-toggle="dropdown"]').click( function(e){                    
-          // .position() uses position relative to the offset parent, 
+        $('a.[data-toggle="dropdown"]').click( function(e){
+          // .position() uses position relative to the offset parent,
           var pos = $(this).position();
 
           var height = $(this).outerHeight();
 
           // .outerWidth() takes into account border and padding.
-          var width = $(this).outerWidth();          
+          var width = $(this).outerWidth();
 
           //show the menu directly over the placeholder
           $('div.dropdown-menu').css({
@@ -1723,13 +1727,13 @@ var OccurrenceWidgetManager = (function ($,_) {
             right: width + "px"
           });
         });
-      }, 
+      },
 
       /**
        * Binds the configure widget.
        */
       bindConfigureWidget: function() {
-        var self = this; 
+        var self = this;
 
         //Apply the configuration settings
         $('div.configure > div.buttonContainer > #applyConfiguration.button').click( function(){
@@ -1738,8 +1742,8 @@ var OccurrenceWidgetManager = (function ($,_) {
         });
 
         // prevents the dropdown menu to be closed by the boostrap.min.js script
-        $('div.configure').click( function(e) {           
-          e.stopPropagation();          
+        $('div.configure').click( function(e) {
+          e.stopPropagation();
         });
 
         //Ensures that the default values are set everytime the div is shown
@@ -1774,7 +1778,7 @@ var OccurrenceWidgetManager = (function ($,_) {
       /**
        * Iterates over the checkboxes to get the values for columns and summary fiels that must be displayed.
        */
-      getConfigurationParams : function(){       
+      getConfigurationParams : function(){
         var params = {};
         $('#occurrence_columns li :checkbox, #summary_fields li :checkbox').each(function(idx,el){
           if($(el).attr('checked')) {
@@ -1794,91 +1798,91 @@ var OccurrenceWidgetManager = (function ($,_) {
       bindSpeciesAutosuggest: function(){
         $(':input.species_autosuggest').each( function(idx,el){
           $(el).speciesAutosuggest(cfg.wsClbSuggest, SUGGEST_LIMIT, "#nubTaxonomyKey[value]", "#content",buildOnSelectHandler('TAXON_KEY',el));
-        });   
+        });
       },
 
       /**
        * Binds the species auto-suggest widget used by the COUNTRY widget.
        */
-      bindCountryAutosuggest: function(){        
+      bindCountryAutosuggest: function(){
         var self = this;
         $(':text[name="COUNTRY"]').each( function(idx,el){
           $(el).countryAutosuggest(countryList,"#content",buildOnSelectHandler('COUNTRY',el));
-        });  
+        });
         $(':text[name="PUBLISHING_COUNTRY"]').each( function(idx,el){
           $(el).countryAutosuggest(countryList,"#content",buildOnSelectHandler('PUBLISHING_COUNTRY',el));
-        });  
+        });
       },
 
       /**
        * Binds the dataset title auto-suggest widget used by the DATASET_KEY widget.
        */
-      bindDatasetAutosuggest: function(){        
+      bindDatasetAutosuggest: function(){
         $(':input.dataset_autosuggest').each( function(idx,el){
           $(el).datasetAutosuggest(cfg.wsRegSuggest, SUGGEST_LIMIT, 70, "#content", buildOnSelectHandler('DATASET_KEY',el),'OCCURRENCE');
-        });   
+        });
       },
 
       /**
        * Binds the collector name  auto-suggest widget used by the COLLECTOR_NAME widget.
        */
-      bindCollectorNameAutosuggest : function(){        
+      bindCollectorNameAutosuggest : function(){
         $(':input.collector_name_autosuggest').each( function(idx,el){
           $(el).termsAutosuggest(cfg.wsOccCollectorNameSearch, "#content",SUGGEST_LIMIT,buildOnSelectHandler('RECORDED_BY',el));
-        });        
+        });
       },
-      
+
       /**
        * Binds the record number auto-suggest widget used by the RECORD_NUMBER widget.
        */
-      bindRecordNumberAutosuggest : function(){        
+      bindRecordNumberAutosuggest : function(){
         $(':input.record_number_autosuggest').each( function(idx,el){
           $(el).termsAutosuggest(cfg.wsOccRecordNumberSearch, "#content",SUGGEST_LIMIT,buildOnSelectHandler('RECORD_NUMBER',el));
-        });        
+        });
       },
 
       /**
        * Binds the catalog number  auto-suggest widget used by the CATALOG_NUMBER widget.
        */
-      bindCatalogNumberAutosuggest : function(){                
+      bindCatalogNumberAutosuggest : function(){
         $(':input.catalog_number_autosuggest').each( function(idx,el){
           $(el).termsAutosuggest(cfg.wsOccCatalogNumberSearch, "#content",SUGGEST_LIMIT, buildOnSelectHandler('CATALOG_NUMBER',el));
         });
-      },  
+      },
 
       /**
        * Binds the catalog number  auto-suggest widget used by the INSTITUTION_CODE widget.
        */
-      bindInstitutionCodeAutosuggest : function(){                
+      bindInstitutionCodeAutosuggest : function(){
         $(':input.institution_code_autosuggest').each( function(idx,el){
           $(el).termsAutosuggest(cfg.wsOccInstitutionCodeSearch, "#content",SUGGEST_LIMIT, buildOnSelectHandler('INSTITUTION_CODE',el));
         });
-      },  
+      },
 
       /**
        * Binds the catalog number  auto-suggest widget used by the CATALOG_NUMBER widget.
        */
-      bindCollectionCodeAutosuggest : function(){                
+      bindCollectionCodeAutosuggest : function(){
         $(':input.collection_code_autosuggest').each( function(idx,el){
           $(el).termsAutosuggest(cfg.wsOccCollectionCodeSearch, "#content",SUGGEST_LIMIT, buildOnSelectHandler('COLLECTION_CODE',el));
         });
-      },  
+      },
 
       /**
        * Binds the catalog number  auto-suggest widget used by the BBOX widget.
        */
-      bindMap : function() {        
+      bindMap : function() {
         var CONFIG = { // global config var
             minZoom: 0,
             maxZoom: 14,
             center: [0, 0],
             defaultZoom: 1
         };
-        var   
-        cmAttr = 'Nokia',  
+        var
+        cmAttr = 'Nokia',
         cmUrl  = 'http://2.maps.nlp.nokia.com/maptile/2.1/maptile/newest/normal.day.grey/{z}/{x}/{y}/256/png8?app_id=_peU-uCkp-j8ovkzFGNU&app_code=gBoUkAMoxoqIWfxWA5DuMQ';
 
-        var    
+        var
         minimal   = L.tileLayer(cmUrl, {styleId: 997,   attribution: cmAttr});
 
         map = L.map('map', {
@@ -1898,37 +1902,37 @@ var OccurrenceWidgetManager = (function ($,_) {
           marker:false,
           polyline:false
         });
-        map.addControl(drawControl); 
+        map.addControl(drawControl);
 
-        map.on('draw:rectangle-created', function (e) {                            
-          defaultMapLayer.addLayer(e.rect);          
-          var event = jQuery.Event("add_bounding_box");          
+        map.on('draw:rectangle-created', function (e) {
+          defaultMapLayer.addLayer(e.rect);
+          var event = jQuery.Event("add_bounding_box");
           event.map = map;
           event.mapLayer = defaultMapLayer;
           event.rect = e.rect;
-          $(document).trigger(event);            
-        }); 
-        map.on('draw:poly-created', function (e) {                     
+          $(document).trigger(event);
+        });
+        map.on('draw:poly-created', function (e) {
           var event = jQuery.Event("add_polygon");
           event.poly = e.poly;
           event.map = map;
           event.mapLayer = defaultMapLayer;
-          $(document).trigger(event);          
-        }); 
+          $(document).trigger(event);
+        });
       },
 
       /**
        * Applies the selected filters by issuing a request to target url.
        */
-      applyOccurrenceFilters : function(refreshFilters){        
+      applyOccurrenceFilters : function(refreshFilters){
         if (refreshFilters) {
           this.addFiltersFromWidgets();
         }
         //if this.submitOnApply the elements are not submitted
-        if (submitOnApply) {        
+        if (submitOnApply) {
           return this.submit({});
         }
-      },    
+      },
 
       /**
        * Reads the filters on each widget and then creates the filter widgets.
@@ -1963,7 +1967,7 @@ var OccurrenceWidgetManager = (function ($,_) {
       submit : function(additionalParams, submitTargetUrl, isPost) {
         submitTargetUrl = submitTargetUrl || targetUrl;
         showWaitDialog();
-        var params = $.extend({},additionalParams);               
+        var params = $.extend({},additionalParams);
 
         //Collect the filter values
         for(var wi=0; wi < widgets.length; wi++) {
@@ -1971,9 +1975,9 @@ var OccurrenceWidgetManager = (function ($,_) {
           for (var fi=0; fi < widgetFilters.length; fi++) {
             var filter = widgetFilters[fi];
             var paramName = filter.paramName;
-            if (undefined == paramName){              
+            if (undefined == paramName){
               paramName = widgets[wi].getId();
-            }            
+            }
             if (params[paramName] == null) {
               params[paramName] = new Array();
             }
@@ -1985,10 +1989,10 @@ var OccurrenceWidgetManager = (function ($,_) {
                 params[paramName].push(filter.key.toString());
               }
             } else {
-              params[paramName].push(filter.value);              
-            }                      
-          }          
-        }       
+              params[paramName].push(filter.value);
+            }
+          }
+        }
         //redirects the window to the target
         if (isPost) {
           var formStr = '<form action="' + submitTargetUrl + '" method="post">';
@@ -2000,11 +2004,11 @@ var OccurrenceWidgetManager = (function ($,_) {
             } else {
               formStr += '<input type="text" name="'+ param + '" value="' + values+ '" />';
             }
-          });                          
+          });
           formStr += '</form>';
           var objForm = $(formStr);
           $('body').append(objForm);
-          $(objForm).submit();          
+          $(objForm).submit();
         } else {
           window.location = submitTargetUrl + $.param(params,true);
         }
@@ -2015,11 +2019,11 @@ var OccurrenceWidgetManager = (function ($,_) {
        * Iterates over all the "filter widgets" and executes on each one the init() function.
        */
       initWidgets : function(){
-        for(var i=0; i < widgets.length; i++){          
-          widgets[i].showSummaryView();          
+        for(var i=0; i < widgets.length; i++){
+          widgets[i].showSummaryView();
         }
       },
-      
+
       /**
        * Using a polygon parameter value, creates a polygon shape.
        */
@@ -2040,7 +2044,7 @@ var OccurrenceWidgetManager = (function ($,_) {
         defaultMapLayer.addLayer(polygon);
         return polygon;
       },
-      
+
       /**
        * Using a bounding box parameter value, creates a rectangle shape.
        */
@@ -2054,23 +2058,23 @@ var OccurrenceWidgetManager = (function ($,_) {
         defaultMapLayer.addLayer(rectangle);
         return rectangle;
       },
-      
+
       /**
        * Checks if the list of coordinates forms a bounding box.
        */
-      isRectangle: function(value){        
+      isRectangle: function(value){
         var values = value.split(",");
         if(values.length == 5) {
           var point1 = values[0].split(" ");
           var point2 = values[1].split(" ");
           var point3 = values[2].split(" ");
           var point4 = values[3].split(" ");
-          var valX1 = parseFloat(point1[0]) + parseFloat(point3[0]);                    
+          var valX1 = parseFloat(point1[0]) + parseFloat(point3[0]);
           var valX2 = parseFloat(point2[0]) + parseFloat(point4[0]);
-          
+
           var valY1 = parseFloat(point1[1]) + parseFloat(point3[1]);
           var valY2 = parseFloat(point2[1]) + parseFloat(point4[1]);
-          
+
           return (valX1 == valX2 && valY1  == valY2);
         }
         return false;
@@ -2080,14 +2084,14 @@ var OccurrenceWidgetManager = (function ($,_) {
        * Initializes the state of the module and renders the previously submitted filters.
        */
       initialize: function(filters){
-        var self = this;  
-        //The filters parameter could be null or undefined when none filter has been interpreted from the HTTP request 
-        if(typeof(filters) != undefined && filters != null) {              
+        var self = this;
+        //The filters parameter could be null or undefined when none filter has been interpreted from the HTTP request
+        if(typeof(filters) != undefined && filters != null) {
           $.each(filters, function(key,filterValues){
-            $.each(filterValues, function(idx,filter) {                                  
+            $.each(filterValues, function(idx,filter) {
               var occWidget = getWidgetById(filter.paramName);
-              if (occWidget != undefined) { //If the parameter doesn't exist avoids the initialization                
-                if(filter.paramName == 'GEOMETRY') {                                    
+              if (occWidget != undefined) { //If the parameter doesn't exist avoids the initialization
+                if(filter.paramName == 'GEOMETRY') {
                   filter.value = filter.value.replace("POLYGON((","").replace("))","");
                   filter.label = filter.label.replace("POLYGON((","").replace("))","");
                   filter.marker = occWidget.getGeometries().length;
@@ -2100,7 +2104,7 @@ var OccurrenceWidgetManager = (function ($,_) {
                     occWidget.addGeometry(self.createPolygon(filter.value));
                   }
                 }
-                occWidget.filters.push(filter);                    
+                occWidget.filters.push(filter);
               }
             });
           });
@@ -2108,7 +2112,7 @@ var OccurrenceWidgetManager = (function ($,_) {
         }
         this.centerDropDownMenus();
         initialConfParams = this.getConfigurationParams();
-        this.bindConfigureWidget();            
+        this.bindConfigureWidget();
       }
   }
   return InnerOccurrenceWidgetManager;

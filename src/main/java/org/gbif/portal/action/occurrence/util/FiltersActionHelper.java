@@ -24,6 +24,7 @@ import org.gbif.api.service.registry.NetworkService;
 import org.gbif.api.util.SearchTypeValidator;
 import org.gbif.api.util.VocabularyUtils;
 import org.gbif.api.vocabulary.BasisOfRecord;
+import org.gbif.api.vocabulary.Continent;
 import org.gbif.api.vocabulary.Country;
 import org.gbif.api.vocabulary.DatasetType;
 import org.gbif.portal.model.SearchSuggestions;
@@ -38,7 +39,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
-
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 
@@ -181,6 +181,11 @@ public class FiltersActionHelper {
   /**
    * Constant that contains the prefix of a key to get a Basis of record name from the resource bundle file.
    */
+  private static final String CONTINENT_KEY = "enum.continent.";
+
+  /**
+   * Constant that contains the prefix of a key to get a Basis of record name from the resource bundle file.
+   */
   private static final String BASIS_OF_RECORD_KEY = "enum.basisofrecord.";
 
 
@@ -219,7 +224,7 @@ public class FiltersActionHelper {
 
   /**
    * Gets the title(name) of a country.
-   * 
+   *
    * @param isoCode iso 2/3 country code
    */
   public String getCountryTitle(String isoCode) {
@@ -230,6 +235,12 @@ public class FiltersActionHelper {
     return isoCode;
   }
 
+  /**
+   * Returns the list of {@link Continent} literals.
+   */
+  public Continent[] getContinents() {
+    return Continent.values();
+  }
   /**
    * Gets the current year.
    * This value is used by occurrence filters to determine the maximum year that is allowed for the
@@ -278,6 +289,8 @@ public class FiltersActionHelper {
       } else if (parameter == OccurrenceSearchParameter.COUNTRY
         || parameter == OccurrenceSearchParameter.PUBLISHING_COUNTRY) {
         return StringEscapeUtils.escapeEcmaScript(getCountryTitle(filterValue));
+      } else if (parameter == OccurrenceSearchParameter.CONTINENT) {
+        return LocalizedTextUtil.findDefaultText(CONTINENT_KEY + filterValue, getLocale());
       } else if (parameter == OccurrenceSearchParameter.DEPTH || parameter == OccurrenceSearchParameter.ELEVATION) {
         return getRangeTitle(filterValue, METER);
       } else if (parameter == OccurrenceSearchParameter.EVENT_DATE
@@ -304,7 +317,7 @@ public class FiltersActionHelper {
 
   /**
    * Gets the title(name) of a node.
-   * 
+   *
    * @param networkKey node key/UUID
    */
   public String getNetworkTitle(String networkKey) {
