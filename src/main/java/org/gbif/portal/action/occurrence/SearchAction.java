@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
@@ -210,7 +211,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Suggestions for dataset title search.
-   *
+   * 
    * @return the datasetsSuggestions
    */
   public SearchSuggestions<DatasetSearchResult> getDatasetsSuggestions() {
@@ -237,7 +238,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
    */
   public String getFilterTitle(String filterKey, String filterValue) {
     if (!isSuggestion(filterValue)) {
-      return filtersActionHelper.getFilterTitle(filterKey, filterValue);
+      return Objects.firstNonNull(filtersActionHelper.getFilterTitle(filterKey, filterValue), filterValue);
     }
     return filterValue;
   }
@@ -259,7 +260,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Suggestions for scientific name search.
-   *
+   * 
    * @return the nameUsagesSuggestions
    */
   public SearchSuggestions<NameUsageSearchResult> getNameUsagesSuggestions() {
@@ -268,7 +269,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Gets the title(name) of a node.
-   *
+   * 
    * @param networkKey node key/UUID
    */
   public String getNetworkTitle(String networkKey) {
@@ -289,7 +290,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Gets the configuration of fields and information to display.
-   *
+   * 
    * @return the table
    */
   public OccurrenceTable getTable() {
@@ -396,7 +397,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Retrieve value for Term in fields map. Currently expecting only DwcTerm.
-   *
+   * 
    * @param term Term
    * @return value for Term in fields map, or null if it doesn't exist
    */
