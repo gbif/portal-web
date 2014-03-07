@@ -331,6 +331,8 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   protected String translateFilterValue(OccurrenceSearchParameter param, String value) {
     if (param == OccurrenceSearchParameter.GEOMETRY) {
       return String.format(FiltersActionHelper.POLYGON_PATTERN, value);
+    } else if (Enum.class.isAssignableFrom(param.type())) {
+      return value.toUpperCase();
     }
     return value;
   }
