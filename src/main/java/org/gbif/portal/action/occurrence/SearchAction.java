@@ -238,9 +238,10 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
    */
   public String getFilterTitle(String filterKey, String filterValue) {
     if (!isSuggestion(filterValue)) {
-      return Objects.firstNonNull(filtersActionHelper.getFilterTitle(filterKey, filterValue), filterValue);
+      return Objects.firstNonNull(filtersActionHelper.getFilterTitle(filterKey, filterValue),
+        Strings.nullToEmpty(filterValue));
     }
-    return filterValue;
+    return Strings.nullToEmpty(filterValue);
   }
 
 
