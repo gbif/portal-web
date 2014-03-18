@@ -7,11 +7,8 @@
       <ul>
           <li>
             <#if by.occurrenceDatasets gt 0>
-              <a href="<@s.url value='/dataset/search?publishingCountry=${country.name()}&type=OCCURRENCE'/>">${by.occurrenceDatasets} occurrence datasets</a>
-              <#--
-              <@s.url value='/occurrence/search?publishingCountry=${isocode}'/>
-              -->
-              with <a href="#">${by.occurrenceRecords} records</a>.
+              <a href="<@s.url value='/dataset/search?publishingCountry=${country.name()}&type=OCCURRENCE'/>">${by.occurrenceDatasets} occurrence datasets</a>              
+              with <a href="<@s.url value='/occurrence/search?publishingCountry=${isocode}'/>">${by.occurrenceRecords} records</a>.
             <#else>
               No occurrence datasets.
             </#if>
