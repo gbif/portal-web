@@ -36,14 +36,16 @@
         </p>
       </#if>
 
-      <#if nodeManagers?has_content>
-        <h3>Node Manager<#if nodeManagers?size gt 1>s</#if></h3>
-        <p>
+      <h3>Node Manager<#if nodeManagers?has_content && nodeManagers?size gt 1>s</#if></h3>
+      <p>
+        <#if nodeManagers?has_content>
           <#list nodeManagers as nm>
             <a href="${contactBaseUrl}#contact${nm.key?c}">${nm.firstName!} ${nm.lastName!}</a><#if nm_has_next>, </#if>
           </#list>
-        </p>
-      </#if>
+        <#else>
+          pending appointment
+        </#if>
+      </p>
 
       <#if (showDescription!false) && node.description?has_content>
         <h3>Description</h3>
