@@ -3,17 +3,20 @@ package org.gbif.portal.action.occurrence;
 import org.gbif.api.model.occurrence.VerbatimOccurrence;
 import org.gbif.api.model.registry.Organization;
 import org.gbif.api.service.registry.OrganizationService;
+import org.gbif.api.vocabulary.Extension;
 import org.gbif.dwc.terms.DcTerm;
 import org.gbif.dwc.terms.DwcTerm;
 import org.gbif.dwc.terms.GbifTerm;
 import org.gbif.dwc.terms.Term;
 import org.gbif.portal.action.occurrence.util.MockOccurrenceFactory;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
 
 import com.google.common.base.Throwables;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -31,6 +34,8 @@ public class DetailAction extends OccurrenceBaseAction {
 
   private Organization publisher;
   private Map<String, Map<String, String>> verbatim;
+  private Map<Extension, List<Map<Term, String>>> verbatimExtensions = Maps.newTreeMap();
+
   private boolean fragmentExists = false;
   private static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -78,7 +83,7 @@ public class DetailAction extends OccurrenceBaseAction {
 
   /**
    * Retrieve value for Term in fields map. Currently expecting only DwcTerm.
-   * 
+   *
    * @param term Term
    * @return value for Term in fields map, or null if it doesn't exist
    */
@@ -178,6 +183,51 @@ public class DetailAction extends OccurrenceBaseAction {
       LOG.error("Can't load verbatim data for occurrence {}: {}", id, e);
     }
 
+    // THIS IS MOCK DATA!!!
+    if (id == -1000000000) {
+      loadMockVerbatimExtensions();
+    }
     return SUCCESS;
+  }
+
+  //TODO: move code to MockFactory once we use the new multimedia API
+  // TODO: copy verbatimExtensions from verbatimOccurrence once we use the new multimedia API
+  private void loadMockVerbatimExtensions() {
+    List<Map<Term, String>> media = Lists.newArrayList();
+    verbatimExtensions.put(Extension.IMAGE, media);
+
+    Map<Term, String> obj = Maps.newHashMap();
+    obj.put(DcTerm.identifier, "http://farm8.staticflickr.com/7093/7039524065_3ed0382368.jpg");
+    obj.put(DcTerm.references, "http://www.flickr.com/photos/70939559@N02/7039524065");
+    obj.put(DcTerm.format, "jpg");
+    obj.put(DcTerm.title, "Geranium Plume Moth 0032");
+    obj.put(DcTerm.description, "Geranium Plume Moth 0032 description");
+    obj.put(DcTerm.license, "BY-NC-SA 2.0");
+    obj.put(DcTerm.creator, "Moayed Bahajjaj");
+    obj.put(DcTerm.created, "2012-03-29");
+    media.add(obj);
+
+    obj = Maps.newHashMap();
+    obj.put(DcTerm.identifier, "http://none.staticflickr.com/666.png");
+    obj.put(DcTerm.references, "http://none.staticflickr.com/666");
+    obj.put(DcTerm.title, "Babe at the beach");
+    obj.put(DcTerm.license, "CC0");
+    obj.put(DcTerm.creator, "Rod Steward");
+    obj.put(DcTerm.created, "1968-02-19");
+    media.add(obj);
+
+    List<Map<Term, String>> facts = Lists.newArrayList();
+    verbatimExtensions.put(Extension.MEASUREMENT_OR_FACT, facts);
+
+    obj = Maps.newHashMap();
+    obj.put(DwcTerm.measurementType, "sound intensity");
+    obj.put(DwcTerm.measurementValue, "128");
+    obj.put(DwcTerm.measurementUnit, "Decibel");
+    obj.put(DwcTerm.measurementDeterminedDate, "1966");
+    obj.put(DwcTerm.measurementDeterminedBy, "Ron Wood");
+    facts.add(obj);
+  }
+  public Map<Extension, List<Map<Term, String>>> getVerbatimExtensions() {
+    return verbatimExtensions;
   }
 }
