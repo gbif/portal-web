@@ -13,8 +13,10 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
 
+import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +32,7 @@ public class DetailAction extends OccurrenceBaseAction {
   private Organization publisher;
   private Map<String, Map<String, String>> verbatim;
   private boolean fragmentExists = false;
+  private static final ObjectMapper MAPPER = new ObjectMapper();
 
 
   @Override
@@ -42,6 +45,16 @@ public class DetailAction extends OccurrenceBaseAction {
     }
 
     return SUCCESS;
+  }
+
+  public String getMedia() {
+    try {
+      return MAPPER.writeValueAsString(occ.getMedia());
+    } catch (Exception e) {
+      // we are hosed
+      throw Throwables.propagate(e);
+    }
+
   }
 
   /**
@@ -61,6 +74,44 @@ public class DetailAction extends OccurrenceBaseAction {
 
   public boolean isFragmentExists() {
     return fragmentExists;
+  }
+
+  /**
+   * Retrieve value for Term in fields map. Currently expecting only DwcTerm.
+   * 
+   * @param term Term
+   * @return value for Term in fields map, or null if it doesn't exist
+   */
+  public String retrieveTerm(String term) {
+    // special case for Dc.rights
+    if (term.equals("rights")) {
+      return occ.getVerbatimField(DcTerm.rights);
+    }
+    // special case for Dc.accessRights
+    else if (term.equals("accessRights")) {
+      return occ.getVerbatimField(DcTerm.accessRights);
+    }
+    // special case for Dc.bibliographicCitation
+    else if (term.equals("bibliographicCitation")) {
+      return occ.getVerbatimField(DcTerm.bibliographicCitation);
+    }
+    // special case for Dc.rightsHolder
+    else if (term.equals("rightsHolder")) {
+      return occ.getVerbatimField(DcTerm.rightsHolder);
+    }
+    // special case for Dc.type
+    else if (term.equals("type")) {
+      return occ.getVerbatimField(DcTerm.type);
+    }
+    // special case for Dc.type
+    else if (term.equals("language")) {
+      return occ.getVerbatimField(DcTerm.language);
+    }
+    DwcTerm t = DwcTerm.valueOf(term);
+    if (t != null && occ != null && occ.getVerbatimFields() != null) {
+      return occ.getVerbatimField(t);
+    }
+    return null;
   }
 
   public String verbatim() {
@@ -127,45 +178,6 @@ public class DetailAction extends OccurrenceBaseAction {
       LOG.error("Can't load verbatim data for occurrence {}: {}", id, e);
     }
 
-     return SUCCESS;
-  }
-
-  /**
-   * Retrieve value for Term in fields map. Currently expecting only DwcTerm.
-   *
-   * @param term Term
-   *
-   * @return value for Term in fields map, or null if it doesn't exist
-   */
-  public String retrieveTerm(String term) {
-    // special case for Dc.rights
-    if (term.equals("rights")) {
-      return occ.getVerbatimField(DcTerm.rights);
-    }
-    // special case for Dc.accessRights
-    else if (term.equals("accessRights")) {
-      return occ.getVerbatimField(DcTerm.accessRights);
-    }
-    // special case for Dc.bibliographicCitation
-    else if (term.equals("bibliographicCitation")) {
-      return occ.getVerbatimField(DcTerm.bibliographicCitation);
-    }
-    // special case for Dc.rightsHolder
-    else if (term.equals("rightsHolder")) {
-      return occ.getVerbatimField(DcTerm.rightsHolder);
-    }
-    // special case for Dc.type
-    else if (term.equals("type")) {
-      return occ.getVerbatimField(DcTerm.type);
-    }
-    // special case for Dc.type
-    else if (term.equals("language")) {
-      return occ.getVerbatimField(DcTerm.language);
-    }
-    DwcTerm t = DwcTerm.valueOf(term);
-    if (t != null && occ != null && occ.getVerbatimFields() != null) {
-      return occ.getVerbatimField(t);
-    }
-    return null;
+    return SUCCESS;
   }
 }

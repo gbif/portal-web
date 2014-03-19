@@ -4,7 +4,37 @@
 <html>
 <head>
   <title>Occurrence Detail ${id?c}</title>
-<#-- RDFa -->
+  
+  <!-- Extra content used for the image gallery only-->
+  <content tag="extra_scripts">
+    <#-- shadowbox to view large images -->
+    <link rel="stylesheet" type="text/css" href="<@s.url value='/js/vendor/fancybox/jquery.fancybox.css?v=2.1.4'/>">
+    <script type="text/javascript" src="<@s.url value='/js/vendor/fancybox/jquery.fancybox.js?v=2.1.4'/>"></script>
+    <link rel="stylesheet" type="text/css" href="<@s.url value='/js/vendor/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5'/>">
+    <script type="text/javascript" src="<@s.url value='/js/vendor/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5'/>"></script>
+
+    <script type="text/javascript">
+      $(function() {
+        var imagesJSON = '{"results": ${media}}';
+        
+        if (imagesJSON) {
+          $("#images").occurrenceSlideshow(imagesJSON);
+        }
+        
+      });
+    </script>
+    <style type="text/css">
+        #content #images .scrollable {
+          height: 350px;
+        }
+        /* specific to this page, since it falls right beside a high z-order map article */
+        .fancybox-overlay {
+          z-index: 10001;
+        }
+    </style>
+  </content>
+    
+  <#-- RDFa -->
   <meta property="dwc:scientificName" content="${occ.scientificName!}"/>
   <meta property="dwc:kingdom" content="${occ.kingdom!}"/>
   <#if dataset.key??>
@@ -248,6 +278,25 @@ occ.depthAccuracy?has_content || (geographicClassification.size > 0) >
         </div>
     </div>
     </#if>
+  </@common.article>
+</#if>
+
+
+<!-- Start a gallery, only if the occurrence has at least 1 image media -->
+<#if !primeImage?exists>
+  <@common.article id="images">
+    <div class="species_images">
+      <a class="controller previous" href="#" title="Previous image"></a>
+      <a class="controller next" href="#" title="Next image"></a>
+      <div class="scroller">
+        <div class="photos"></div>
+      </div>
+    </div>
+    <div class="right">
+      <h2 class="title"></h2>
+      <div class="scrollable"></div>
+    </div>
+    <div class="counter">1 / 1</div>
   </@common.article>
 </#if>
 
