@@ -160,9 +160,9 @@
                     <li style="display:none;"><a tabindex="-1" href="#" data-filter="HAS_COORDINATE" title="Bounding Box" data-template-filter="map-template-filter" data-template-summary="template-filter" class="filter-control">Location</a></li>
                     <li style="display:none;"><a tabindex="-1" href="#" data-filter="SPATIAL_ISSUES" title="Bounding Box" data-template-filter="map-template-filter" data-template-summary="template-filter" class="filter-control">Location</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a country name..." data-filter="COUNTRY" title="Country" data-template-filter="template-simple-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Country</a></li>
-                      <li><a tabindex="-1" href="#" data-placeholder="Type a continent..." data-filter="CONTINENT"
-                             title="Continent" data-template-filter="template-continent-filter"
-                             data-template-summary="template-filter" class="filter-control">Continent</a></li>
+                    <#--
+                    <li><a tabindex="-1" href="#" data-placeholder="Type a continent..." data-filter="CONTINENT" title="Continent" data-template-filter="template-continent-filter" data-template-summary="template-filter" class="filter-control">Continent</a></li>
+                    -->
                     <li><a tabindex="-1" href="#" data-placeholder="Type a country name..." data-filter="PUBLISHING_COUNTRY" title="Publishing country" data-template-filter="template-simple-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Publishing country</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a collector name..." data-filter="RECORDED_BY" title="Collector" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value collector_name_autosuggest auto_add" class="filter-control">Collector</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a record number..." data-filter="RECORD_NUMBER" title="Record number" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value record_number_autosuggest auto_add" class="filter-control">Record number</a></li>
