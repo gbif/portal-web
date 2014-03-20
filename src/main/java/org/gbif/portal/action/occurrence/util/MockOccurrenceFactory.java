@@ -1,7 +1,7 @@
 package org.gbif.portal.action.occurrence.util;
 
 import org.gbif.api.model.common.Identifier;
-import org.gbif.api.model.common.Image;
+import org.gbif.api.model.common.MediaObject;
 import org.gbif.api.model.occurrence.FactOrMeasurment;
 import org.gbif.api.model.occurrence.Occurrence;
 import org.gbif.api.model.occurrence.OccurrenceRelation;
@@ -12,15 +12,21 @@ import org.gbif.api.vocabulary.EndpointType;
 import org.gbif.api.vocabulary.EstablishmentMeans;
 import org.gbif.api.vocabulary.IdentifierType;
 import org.gbif.api.vocabulary.LifeStage;
+import org.gbif.api.vocabulary.MediaType;
 import org.gbif.api.vocabulary.OccurrenceIssue;
 import org.gbif.api.vocabulary.Sex;
 import org.gbif.api.vocabulary.TypeStatus;
 import org.gbif.dwc.terms.DcTerm;
 import org.gbif.dwc.terms.DwcTerm;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.UUID;
+
 import javax.validation.constraints.NotNull;
+
+import com.google.common.base.Throwables;
 
 /**
  * Creates a new mock Occurrence object, and populates all its possible fields.
@@ -381,16 +387,34 @@ public class MockOccurrenceFactory {
    * Populate a list of Image with mock values.
    */
   private static void populateMediaList() {
-    Image im1 = new Image();
-    im1.setCreated(new Date());
-    im1.setCreator("David Remsen");
-    im1.setDescription("Female Tachycineta albiventer photographed in the Amazon, Brazil, in November 2010");
-    im1.setImage("http://farm6.static.flickr.com/5127/5242866958_98afd8cbce_o.jpg");
-    im1.setLicense("http://creativecommons.org/licenses/by-nc-sa/2.0/deed.en");
-    im1.setLink("http://en.wikipedia.org/wiki/White-winged_Swallow");
-    im1.setPublisher("Encyclopedia of Life");
-    im1.setTitle("Andorinha-do-rio (Tachycineta albiventer)");
-    mockOccurrence.getMedia().add(im1);
+    try {
+      MediaObject media = new MediaObject();
+      media.setType(MediaType.StillImage);
+      media.setFormat("JPEG");
+      media.setCreated(new Date());
+      media.setUrl(new URI("http://digit.snm.ku.dk/www/Aves/full/AVES-100348_Caprimulgus_pectoralis_fervidus_ad____f.jpg"));
+      media.setLicense("CC-BY-NC");
+      media.setReferences(new URI("http://www.multimedia.danbif.dk/Animalia/chordata/aves/caprimulgiformes/caprimulgidae/caprimulgus/pectoralis"));
+      media.setPublisher("DanBIF");
+      media.setTitle("Pectoralis");
+      mockOccurrence.getMedia().add(media);
+
+      media = new MediaObject();
+      media.setType(MediaType.StillImage);
+      media.setCreated(new Date());
+      media.setCreator("G. U. Skinner");
+      media.setDescription("Polypodium skinneri Hook sheet");
+      media.setUrl(new URI("http://ww2.bgbm.org/herbarium/images/B/20/00/76/52/thumbs/b_20_0076524.jpg"));
+      media.setLicense("Image parts provided by this server with the given resolution have been released under the Creative Commons cc-by-sa 3.0 (generic) licence [http://creativecommons.org/licenses/by-sa/3.0/de/]. Please credit images to BGBM following our citation guidelines ");
+      media.setReferences(new URI("http://search.biocase.org/edit/search/units/details/getDetails/B%2020%200076524/Herbarium%20Berolinense/BGBM/1095"));
+      media.setPublisher("Botanic Garden and Botanical Museum Berlin-Dahlem");
+      media.setTitle("Polypodium skinneri Hook");
+      mockOccurrence.getMedia().add(media);      
+      
+    } catch (URISyntaxException e) {
+      // not possible
+      throw Throwables.propagate(e);
+    }
   }
 
   /**

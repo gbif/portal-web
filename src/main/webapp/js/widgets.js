@@ -1681,7 +1681,6 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate) {
     _.each(images, function(imgJson) {
       n++;
       slideData.push(imgJson);
-
       $photos.append("<li><div class='spinner'></div><a href='"+imgJson.image+"' class='fancybox' title='"+imgJson.title+"'><img id='photo_"+n+"'src='" + imgJson.image + "' /></a></li>");
 
       var $img = $photos.find("#photo_" + n);
@@ -1752,6 +1751,21 @@ $.fn.speciesSlideshow = function(usageID) {
  * Occurrence detail page slide show
  */
 $.fn.occurrenceSlideshow = function(data) {
+  // strip non images from media
+  alert(data.results);
+  _.filter(data.results, function(media) {
+    
+    return media.type && media.type=="StillImage";
+  });
+
+  // Hack: append new terms to match the species image response such that:
+  //   - url -> image
+  //   - references -> link
+  _.each(data.results, function(media) {
+    media.image = media.url;
+    media.references = media.link;
+  });
+
   $(this).imageGallery(
     function(callback) {
 	    callback($.parseJSON(data));
