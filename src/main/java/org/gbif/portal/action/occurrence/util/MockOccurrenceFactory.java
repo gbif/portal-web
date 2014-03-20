@@ -10,6 +10,7 @@ import org.gbif.api.vocabulary.Continent;
 import org.gbif.api.vocabulary.Country;
 import org.gbif.api.vocabulary.EndpointType;
 import org.gbif.api.vocabulary.EstablishmentMeans;
+import org.gbif.api.vocabulary.Extension;
 import org.gbif.api.vocabulary.IdentifierType;
 import org.gbif.api.vocabulary.LifeStage;
 import org.gbif.api.vocabulary.MediaType;
@@ -18,15 +19,20 @@ import org.gbif.api.vocabulary.Sex;
 import org.gbif.api.vocabulary.TypeStatus;
 import org.gbif.dwc.terms.DcTerm;
 import org.gbif.dwc.terms.DwcTerm;
+import org.gbif.dwc.terms.Term;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
 import com.google.common.base.Throwables;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 /**
  * Creates a new mock Occurrence object, and populates all its possible fields.
@@ -78,6 +84,8 @@ public class MockOccurrenceFactory {
     populateVerbatimDwcGeologicalConceptTerms();
     populateVerbatimDwcIdentificationTerms();
     populateVerbatimDwcTaxonTerms();
+
+    populateVerbatimExtensions();
 
     populateIdentifierList();
     populateMediaList();
@@ -409,13 +417,50 @@ public class MockOccurrenceFactory {
       media.setReferences(new URI("http://search.biocase.org/edit/search/units/details/getDetails/B%2020%200076524/Herbarium%20Berolinense/BGBM/1095"));
       media.setPublisher("Botanic Garden and Botanical Museum Berlin-Dahlem");
       media.setTitle("Polypodium skinneri Hook");
-      mockOccurrence.getMedia().add(media);      
-      
+      mockOccurrence.getMedia().add(media);
+
     } catch (URISyntaxException e) {
       // not possible
       throw Throwables.propagate(e);
     }
   }
+
+  private static void populateVerbatimExtensions() {
+    List<Map<Term, String>> media = Lists.newArrayList();
+    mockOccurrence.getExtensions().put(Extension.IMAGE, media);
+
+    Map<Term, String> obj = Maps.newHashMap();
+    obj.put(DcTerm.identifier, "http://farm8.staticflickr.com/7093/7039524065_3ed0382368.jpg");
+    obj.put(DcTerm.references, "http://www.flickr.com/photos/70939559@N02/7039524065");
+    obj.put(DcTerm.format, "jpg");
+    obj.put(DcTerm.title, "Geranium Plume Moth 0032");
+    obj.put(DcTerm.description, "Geranium Plume Moth 0032 description");
+    obj.put(DcTerm.license, "BY-NC-SA 2.0");
+    obj.put(DcTerm.creator, "Moayed Bahajjaj");
+    obj.put(DcTerm.created, "2012-03-29");
+    media.add(obj);
+
+    obj = Maps.newHashMap();
+    obj.put(DcTerm.identifier, "http://none.staticflickr.com/666.png");
+    obj.put(DcTerm.references, "http://none.staticflickr.com/666");
+    obj.put(DcTerm.title, "Babe at the beach");
+    obj.put(DcTerm.license, "CC0");
+    obj.put(DcTerm.creator, "Rod Steward");
+    obj.put(DcTerm.created, "1968-02-19");
+    media.add(obj);
+
+    List<Map<Term, String>> facts = Lists.newArrayList();
+    mockOccurrence.getExtensions().put(Extension.MEASUREMENT_OR_FACT, facts);
+
+    obj = Maps.newHashMap();
+    obj.put(DwcTerm.measurementType, "sound intensity");
+    obj.put(DwcTerm.measurementValue, "128");
+    obj.put(DwcTerm.measurementUnit, "Decibel");
+    obj.put(DwcTerm.measurementDeterminedDate, "1966");
+    obj.put(DwcTerm.measurementDeterminedBy, "Ron Wood");
+    facts.add(obj);
+  }
+
 
   /**
    * Populate list of FactOrMeasurement with mock values.

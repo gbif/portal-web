@@ -8,6 +8,7 @@ import org.gbif.dwc.terms.DcTerm;
 import org.gbif.dwc.terms.DwcTerm;
 import org.gbif.dwc.terms.GbifTerm;
 import org.gbif.dwc.terms.Term;
+import org.gbif.dwc.terms.TermFactory;
 import org.gbif.portal.action.occurrence.util.MockOccurrenceFactory;
 
 import java.util.List;
@@ -16,7 +17,6 @@ import java.util.TreeMap;
 import java.util.UUID;
 
 import com.google.common.base.Throwables;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -28,13 +28,14 @@ import static org.gbif.api.model.Constants.NUB_DATASET_KEY;
 public class DetailAction extends OccurrenceBaseAction {
 
   private static final Logger LOG = LoggerFactory.getLogger(DetailAction.class);
+  private static final TermFactory TERM_FACTORY = TermFactory.instance();
 
   @Inject
   private OrganizationService organizationService;
 
   private Organization publisher;
   private Map<String, Map<String, String>> verbatim;
-  private Map<Extension, List<Map<Term, String>>> verbatimExtensions = Maps.newTreeMap();
+  private Map<Extension, List<Map<Term, String>>> verbatimExtensions;
 
   private boolean fragmentExists = false;
   private static final ObjectMapper MAPPER = new ObjectMapper();
@@ -82,41 +83,15 @@ public class DetailAction extends OccurrenceBaseAction {
   }
 
   /**
-   * Retrieve value for Term in fields map. Currently expecting only DwcTerm.
+   * Retrieve verbatim value for a Term in the core fields map.
+   * Accepts any term the TermFactory can deal with.
    *
-   * @param term Term
-   * @return value for Term in fields map, or null if it doesn't exist
+   * @param termName simple or full name of any Term
+   * @return verbatim value for core Term, or null if it doesn't exist
    */
-  public String retrieveTerm(String term) {
-    // special case for Dc.rights
-    if (term.equals("rights")) {
-      return occ.getVerbatimField(DcTerm.rights);
-    }
-    // special case for Dc.accessRights
-    else if (term.equals("accessRights")) {
-      return occ.getVerbatimField(DcTerm.accessRights);
-    }
-    // special case for Dc.bibliographicCitation
-    else if (term.equals("bibliographicCitation")) {
-      return occ.getVerbatimField(DcTerm.bibliographicCitation);
-    }
-    // special case for Dc.rightsHolder
-    else if (term.equals("rightsHolder")) {
-      return occ.getVerbatimField(DcTerm.rightsHolder);
-    }
-    // special case for Dc.type
-    else if (term.equals("type")) {
-      return occ.getVerbatimField(DcTerm.type);
-    }
-    // special case for Dc.type
-    else if (term.equals("language")) {
-      return occ.getVerbatimField(DcTerm.language);
-    }
-    DwcTerm t = DwcTerm.valueOf(term);
-    if (t != null && occ != null && occ.getVerbatimFields() != null) {
-      return occ.getVerbatimField(t);
-    }
-    return null;
+  public String retrieveTerm(String termName) {
+    Term term = TERM_FACTORY.findTerm(termName);
+    return term == null || occ == null ? null : occ.getVerbatimField(term);
   }
 
   public String verbatim() {
@@ -134,6 +109,10 @@ public class DetailAction extends OccurrenceBaseAction {
       VerbatimOccurrence v =
         id == -1000000000 ? MockOccurrenceFactory.getMockOccurrence() : occurrenceService.getVerbatim(id);
 
+      // copy extensions data
+      verbatimExtensions = v.getExtensions();
+
+      // build core fields with custom ordering/grouping
       for (String group : DwcTerm.GROUPS) {
         for (DwcTerm t : DwcTerm.listByGroup(group)) {
           if (v.getVerbatimFields().containsKey(t)) {
@@ -183,50 +162,9 @@ public class DetailAction extends OccurrenceBaseAction {
       LOG.error("Can't load verbatim data for occurrence {}: {}", id, e);
     }
 
-    // THIS IS MOCK DATA!!!
-    if (id == -1000000000) {
-      loadMockVerbatimExtensions();
-    }
     return SUCCESS;
   }
 
-  //TODO: move code to MockFactory once we use the new multimedia API
-  // TODO: copy verbatimExtensions from verbatimOccurrence once we use the new multimedia API
-  private void loadMockVerbatimExtensions() {
-    List<Map<Term, String>> media = Lists.newArrayList();
-    verbatimExtensions.put(Extension.IMAGE, media);
-
-    Map<Term, String> obj = Maps.newHashMap();
-    obj.put(DcTerm.identifier, "http://farm8.staticflickr.com/7093/7039524065_3ed0382368.jpg");
-    obj.put(DcTerm.references, "http://www.flickr.com/photos/70939559@N02/7039524065");
-    obj.put(DcTerm.format, "jpg");
-    obj.put(DcTerm.title, "Geranium Plume Moth 0032");
-    obj.put(DcTerm.description, "Geranium Plume Moth 0032 description");
-    obj.put(DcTerm.license, "BY-NC-SA 2.0");
-    obj.put(DcTerm.creator, "Moayed Bahajjaj");
-    obj.put(DcTerm.created, "2012-03-29");
-    media.add(obj);
-
-    obj = Maps.newHashMap();
-    obj.put(DcTerm.identifier, "http://none.staticflickr.com/666.png");
-    obj.put(DcTerm.references, "http://none.staticflickr.com/666");
-    obj.put(DcTerm.title, "Babe at the beach");
-    obj.put(DcTerm.license, "CC0");
-    obj.put(DcTerm.creator, "Rod Steward");
-    obj.put(DcTerm.created, "1968-02-19");
-    media.add(obj);
-
-    List<Map<Term, String>> facts = Lists.newArrayList();
-    verbatimExtensions.put(Extension.MEASUREMENT_OR_FACT, facts);
-
-    obj = Maps.newHashMap();
-    obj.put(DwcTerm.measurementType, "sound intensity");
-    obj.put(DwcTerm.measurementValue, "128");
-    obj.put(DwcTerm.measurementUnit, "Decibel");
-    obj.put(DwcTerm.measurementDeterminedDate, "1966");
-    obj.put(DwcTerm.measurementDeterminedBy, "Ron Wood");
-    facts.add(obj);
-  }
   public Map<Extension, List<Map<Term, String>>> getVerbatimExtensions() {
     return verbatimExtensions;
   }
