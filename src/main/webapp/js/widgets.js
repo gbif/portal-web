@@ -1751,24 +1751,24 @@ $.fn.speciesSlideshow = function(usageID) {
  * Occurrence detail page slide show
  */
 $.fn.occurrenceSlideshow = function(data) {
+  var $dataAsJson = $.parseJSON(data);
+
   // strip non images from media
-  alert(data.results);
-  _.filter(data.results, function(media) {
-    
+  _.filter($dataAsJson.results, function(media) {
     return media.type && media.type=="StillImage";
   });
 
   // Hack: append new terms to match the species image response such that:
   //   - url -> image
   //   - references -> link
-  _.each(data.results, function(media) {
+  _.each($dataAsJson.results, function(media) {
     media.image = media.url;
-    media.references = media.link;
+    media.link = media.references;
   });
 
   $(this).imageGallery(
     function(callback) {
-	    callback($.parseJSON(data));
+	    callback($dataAsJson);
     },
     function($container, data) {  // postImageUpdate hook
       if (data.references) {
