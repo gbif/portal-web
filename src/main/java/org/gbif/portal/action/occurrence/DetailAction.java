@@ -1,9 +1,11 @@
 package org.gbif.portal.action.occurrence;
 
+import org.gbif.api.model.common.MediaObject;
 import org.gbif.api.model.occurrence.VerbatimOccurrence;
 import org.gbif.api.model.registry.Organization;
 import org.gbif.api.service.registry.OrganizationService;
 import org.gbif.api.vocabulary.Extension;
+import org.gbif.api.vocabulary.MediaType;
 import org.gbif.dwc.terms.DcTerm;
 import org.gbif.dwc.terms.DwcTerm;
 import org.gbif.dwc.terms.GbifTerm;
@@ -15,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
+
+import com.google.common.collect.Lists;
 
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
@@ -52,6 +56,40 @@ public class DetailAction extends OccurrenceBaseAction {
 
     return SUCCESS;
   }
+  
+  public List<MediaObject> getVideos() {
+    return filterFor(occ.getMedia(), MediaType.MovingImage);
+  }
+
+  /**
+   * Inspects the media to determine if the image gallery can show.
+   */
+  public boolean hasImages() {
+    for (MediaObject m : occ.getMedia()) {
+      if (MediaType.StillImage == m.getType() && m.getUrl() != null) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+    public List<MediaObject> getAudio() {
+    return filterFor(occ.getMedia(), MediaType.Sound);
+  }
+
+  public List<MediaObject> getImages() {
+    return filterFor(occ.getMedia(), MediaType.StillImage);
+  }
+
+  private List<MediaObject> filterFor(List<MediaObject> media, MediaType type) {
+    List<MediaObject> filtered = Lists.newArrayList();
+    for (MediaObject m : media) {
+      if (type == m.getType()) {
+        filtered.add(m);
+      }
+    }
+    return filtered;
+  }
 
   public String getMedia() {
     try {
@@ -60,7 +98,6 @@ public class DetailAction extends OccurrenceBaseAction {
       // we are hosed
       throw Throwables.propagate(e);
     }
-
   }
 
   /**

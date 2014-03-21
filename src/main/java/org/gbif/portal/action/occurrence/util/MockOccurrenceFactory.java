@@ -417,6 +417,29 @@ public class MockOccurrenceFactory {
       media.setReferences(new URI("http://search.biocase.org/edit/search/units/details/getDetails/B%2020%200076524/Herbarium%20Berolinense/BGBM/1095"));
       media.setPublisher("Botanic Garden and Botanical Museum Berlin-Dahlem");
       media.setTitle("Polypodium skinneri Hook");
+      
+      mockOccurrence.getMedia().add(media);      
+      media = new MediaObject();
+      media.setType(MediaType.MovingImage);
+      media.setCreated(new Date());
+      media.setCreator("M. Döring");
+      media.setDescription("A very young looking biologist");
+      media.setLicense("CC0");
+      media.setReferences(new URI("https://www.youtube.com/watch?v=DVN65nmoEHk"));
+      media.setPublisher("banddelux");
+      media.setTitle("CELLOPHANE SUCKERS - This is Rock`n`Roll (The Kids)");
+      mockOccurrence.getMedia().add(media);      
+      
+      media = new MediaObject();
+      media.setType(MediaType.Sound);
+      media.setCreator("M. Döring");
+      media.setLicense("CC0");
+      media.setUrl(new URI("https://www.youtube.com/watch?v=DVN65nmoEHk"));
+      media.setReferences(new URI("https://www.youtube.com/watch?v=DVN65nmoEHk"));
+      media.setPublisher("banddelux");
+      media.setTitle("Audio - This is Rock`n`Roll (The Kids)");
+      mockOccurrence.getMedia().add(media);      
+      
       mockOccurrence.getMedia().add(media);
 
     } catch (URISyntaxException e) {

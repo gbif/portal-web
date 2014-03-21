@@ -1754,7 +1754,7 @@ $.fn.occurrenceSlideshow = function(data) {
   var $dataAsJson = $.parseJSON(data);
 
   // strip non images from media
-  _.filter($dataAsJson.results, function(media) {
+  $dataAsJson.results = _.filter($dataAsJson.results, function(media) {
     return media.type && media.type=="StillImage";
   });
 

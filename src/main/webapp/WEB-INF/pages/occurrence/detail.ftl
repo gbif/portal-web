@@ -666,6 +666,50 @@ member?has_content || geologicalContextID?has_content || lithostratigraphicTerms
   </@common.article>
 </#if>
 
+<#-- Local utiliy macro to write media consistently -->
+<#-- TODO: sort some styling on this -->
+<#macro mediaListItem media title typeLabel>
+  <#if (media?size > 0)>
+    <div class="col">
+    <h3>${title}</h3>
+    <ul class="notes">
+    <#list media as m>
+      <#if m.url?has_content || m.references?has_content>
+        <li>
+          <#-- Prefer to link to the source over the homepage --> 
+          <#if m.url?has_content>
+            <a href="${m.url}">${m.title!m.url}
+            <#if m.format?has_content><span class="note">(${m.format})</span></#if>
+            </a> 
+          <#else>
+            <a href="${m.references}">${m.title!m.references} <#if m.format?has_content><span class="note">(${m.format})</span></#if></a>
+          </#if>
+        </li>
+        <#if m.publisher?has_content><span class="note">${m.publisher}</span><br/></#if>
+        <#if m.creator?has_content><span class="note">${m.creator}</span><br/></#if>
+        <#if m.description?has_content><span class="note">${m.description}</span><br/></#if>
+
+        <#if m.license?has_content><span class="note"><a class="helpPopup" title="License" data-message="${m.license}" data-remarks="">${common.limit(m.license, 40)}</a><br/></span></#if>
+        <#if m.references?has_content && m.url?has_content>
+          <span class="note">Originally found on <a href="${m.references}">${typeLabel} homepage</a></span><br/>  
+        </#if>      
+      </#if>
+    </#list>
+    </ul>
+    </div>
+  </#if>
+</#macro>
+
+<#if occ.media?has_content>
+  <@common.article id="media" title="Associated media">
+  <div class="fullwidth">
+    <@mediaListItem media=images title="Images" typeLabel="Image"/>
+    <@mediaListItem media=videos title="Videos" typeLabel="Video"/>
+    <@mediaListItem media=audio title="Audio" typeLabel="Audio"/>
+  </div>
+  </@common.article>
+</#if>
+
 <#--<#assign associatedMedia = action.retrieveTerm('associatedMedia')! />-->
 <#--<#if associatedMedia?? || (occ.media?size > 0) >-->
   <#--<@common.article id="media" title="Media">-->
