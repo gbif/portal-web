@@ -264,6 +264,14 @@
   <p><#if enum.interpreted?has_content>${enum.interpreted?string}<#else>${enum.verbatim!"&nbsp;"}</#if></p>
 </#macro>
 
+<#-- Creates a dt dd definition if the value has content, otherwise none -->
+<#macro definition title value>
+ <#if value?has_content>
+  <dt>${title}</dt>
+  <dd>${value}</dd>
+ </#if>
+</#macro>
+
 <#macro article id="" title="" titleRight="" fullWidthTitle=false class="">
 <article<#if id?has_content> id="${id}"</#if> class="${class!}">
   <header></header>
