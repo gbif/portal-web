@@ -18,7 +18,7 @@
 <@common.notice title="Feedback sought">
   <p>The API is currently at vesion v0.9 and is nearing stability - it powers all functions of this portal.</p>
   <p>Please report issues to <a href="mailto:dev@gbif.org">dev@gbif.org</a> and help us move to a stable v1.0
-  (expected December 2013)</p>
+  (expected May 2014)</p>
 </@common.notice>
 
 
@@ -104,10 +104,11 @@
     <li>The occurrence response will be reviewed to align closer to the Darwin Core</li>
     <li>The occurrence API will support searching by scientific name</li>
     <li>All query parameters for countries will be converted into ISO country codes where currently (e.g.) DENMARK is used</li>
+    <li>Occurrence multimedia will be interpreted</li>
   </ol>
   <p>Feedback is sought from developers on the API structure, before the frozen v1.0 will be released to <a href="mailto:dev@gbif.org">dev@gbif.org</a></p>
 
-  <p>v1.0 is expected in <strong>December 2013</strong> unless feedback received indicates it should be delayed</p>
+  <p>v1.0 is expected in <strong>May 2014</strong> unless feedback received indicates it should be delayed</p>
   </div>
 </@common.article>
 
