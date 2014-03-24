@@ -37,6 +37,9 @@ public class NodeAction extends MemberBaseAction<Node> {
 
   private static List<ContactType> contactTypeOrder = Lists.newArrayList(
     ContactType.HEAD_OF_DELEGATION,
+    ContactType.TEMPORARY_HEAD_OF_DELEGATION,
+    ContactType.ADDITIONAL_DELEGATE,
+    ContactType.TEMPORARY_DELEGATE,
     ContactType.REGIONAL_NODE_REPRESENTATIVE,
     ContactType.NODE_MANAGER,
     ContactType.NODE_STAFF
