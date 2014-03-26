@@ -282,7 +282,7 @@ occ.depthAccuracy?has_content || (geographicClassification.size > 0) >
 
 
 <!-- Start a gallery, only if the occurrence has at least 1 image media -->
-<#if !primeImage?exists>
+<#if action.hasImages()>
   <@common.article id="images">
     <div class="species_images">
       <a class="controller previous" href="#" title="Previous image"></a>
