@@ -1692,10 +1692,13 @@ var OccurrenceWidgetManager = (function ($,_) {
               newWidget = new OccurrenceMultiSelectWidget();
               newWidget.init({widgetContainer: widgetContainer, manager: self, bindingsExecutor: function () {
               }});
-            } else if (filterName == "ELEVATION" || filterName == "DEPTH" | filterName == "YEAR") {
+            } else if (filterName == "ELEVATION" || filterName == "DEPTH") {
+                newWidget = new OccurrenceComparatorWidget();
+                newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
+                newWidget.setUnit("m");
+            } else if (filterName == "YEAR") {
               newWidget = new OccurrenceComparatorWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
-              newWidget.setUnit("m");
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});              
             } else { //By default creates a simple OccurrenceWidget with an empty binding function
               newWidget = new OccurrenceWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
