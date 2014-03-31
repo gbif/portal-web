@@ -73,7 +73,7 @@
 </#macro>
 
 <#macro geoClassification header geographicClassification>
-  <#if (geographicClassification?size >0) >
+  <#if geographicClassification?has_content >
     <h3>${header}</h3>
     <p>
       <#list geographicClassification as c>
@@ -190,7 +190,7 @@ georeferenceVerificationStatus?has_content || habitat?has_content || locationRem
 higherGeographyID?has_content || locationID?has_content || locationAccordingTo?has_content ||
 occ.decimalLatitude?has_content || occ.decimalLongitude?has_content || occ.country?has_content || occ.waterBody?has_content ||
 occ.elevation?has_content || occ.elevationAccuracy?has_content || occ.depth?has_content ||
-occ.depthAccuracy?has_content || (geographicClassification.size > 0) >
+occ.depthAccuracy?has_content || geographicClassification?has_content >
   <@common.article id="location" title=title titleRight=titleRight class="occurrenceMap">
     <#if showMap>
     <div id="map" class="map">
