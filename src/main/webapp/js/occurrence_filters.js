@@ -1547,7 +1547,21 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
           $(this).addClass("selected");
         }
       });
-    }
+
+      this.filterElement.find(".select-all-" + self.getId()).click( function() {
+        self.filterElement.find(".multi-select > li").each( function() {
+    	  self.addFilter({value:$(this).attr("key"),key:null,submitted: false,paramName:self.getId()});
+    	  $(this).addClass("selected");
+        });
+      });      
+      
+      this.filterElement.find(".clear-all-" + self.getId()).click( function() {
+        self.filterElement.find(".multi-select > li").each( function() {
+         self.removeFilter({value:$(this).attr("key"),key:null});
+         $(this).removeClass("selected");
+        });
+      });
+    }           
   };
   return InnerOccurrenceMultiSelectWidget;
 })(jQuery,_,OccurrenceWidget);

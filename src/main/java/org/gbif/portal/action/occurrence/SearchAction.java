@@ -74,6 +74,9 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   private static final EnumSet<OccurrenceSearchParameter> OCC_VALIDATION_DISCARDED = EnumSet.of(
     OccurrenceSearchParameter.TAXON_KEY, OccurrenceSearchParameter.DATASET_KEY);
 
+  private static final TypeStatus[] OCC_TYPE_STATUSES = EnumSet.complementOf(EnumSet.of(TypeStatus.TYPE_GENUS,
+    TypeStatus.TYPE_SPECIES)).toArray(new TypeStatus[TypeStatus.values().length - 2]);
+
   private OccurrenceTable table;
 
 
@@ -163,7 +166,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
    * Returns the list of {@link TypeS} literals.
    */
   public TypeStatus[] getTypeStatuses() {
-    return TypeStatus.values();
+    return OCC_TYPE_STATUSES;
   }
 
   /**

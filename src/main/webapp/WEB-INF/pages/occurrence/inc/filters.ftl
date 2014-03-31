@@ -97,6 +97,9 @@
                 <li key="${basisOfRecord}"><a>${action.getFilterTitle('basisOfRecord',basisOfRecord)}</a></li>
               </#list>
             </ul>
+            <div class="select-controls">
+              <a class="select-control select-all-<%= paramName %>">[Select all]</a>&nbsp;&nbsp;<a class="select-control clear-all-<%= paramName %>">[Clear all]</a>
+            </div>
           </div>
           <div class="center">
             <a class="button candy_blue_button apply" title="<%= title %>" data-action="add-new-filter" data-filter="<%= paramName %>" apply-function="applyOccurrenceFilters"><span>Apply</span></a>
@@ -125,6 +128,9 @@
               <li key="${continent}"><a>${action.getFilterTitle('continent',continent)}</a></li>
             </#list>
             </ul>
+            <div class="select-controls">
+              <a class="select-control select-all-<%= paramName %>">[Select all]</a>&nbsp;&nbsp;<a class="select-control clear-all-<%= paramName %>">[Clear all]</a>
+            </div>
           </div>
           <div class="center">
             <a class="button candy_blue_button apply" title="<%= title %>" data-action="add-new-filter"
@@ -152,6 +158,9 @@
                <li key="${itemValue}"><a>${action.getFilterTitle('typeStatus',itemValue)}</a></li>
              </#list>
             </ul>
+            <div class="select-controls">
+              <a class="select-control select-all-<%= paramName %>">[Select all]</a>&nbsp;&nbsp;<a class="select-control clear-all-<%= paramName %>">[Clear all]</a>
+            </div>
           </div>
           <div class="center">
             <a class="button candy_blue_button apply" title="<%= title %>" data-action="add-new-filter" data-filter="<%= paramName %>" apply-function="applyOccurrenceFilters"><span>Apply</span></a>
