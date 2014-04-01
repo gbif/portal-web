@@ -56,7 +56,7 @@ public class DetailAction extends OccurrenceBaseAction {
 
     return SUCCESS;
   }
-  
+
   public List<MediaObject> getVideos() {
     return filterFor(occ.getMedia(), MediaType.MovingImage);
   }
@@ -66,13 +66,13 @@ public class DetailAction extends OccurrenceBaseAction {
    */
   public boolean hasImages() {
     for (MediaObject m : occ.getMedia()) {
-      if (MediaType.StillImage == m.getType() && m.getUrl() != null) {
+      if (MediaType.StillImage == m.getType() && m.getIdentifier() != null) {
         return true;
       }
     }
     return false;
   }
-  
+
     public List<MediaObject> getAudio() {
     return filterFor(occ.getMedia(), MediaType.Sound);
   }

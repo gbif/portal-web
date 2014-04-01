@@ -400,7 +400,8 @@ public class MockOccurrenceFactory {
       media.setType(MediaType.StillImage);
       media.setFormat("JPEG");
       media.setCreated(new Date());
-      media.setUrl(new URI("http://digit.snm.ku.dk/www/Aves/full/AVES-100348_Caprimulgus_pectoralis_fervidus_ad____f.jpg"));
+      media.setIdentifier(
+        new URI("http://digit.snm.ku.dk/www/Aves/full/AVES-100348_Caprimulgus_pectoralis_fervidus_ad____f.jpg"));
       media.setLicense("CC-BY-NC");
       media.setReferences(new URI("http://www.multimedia.danbif.dk/Animalia/chordata/aves/caprimulgiformes/caprimulgidae/caprimulgus/pectoralis"));
       media.setPublisher("DanBIF");
@@ -412,13 +413,13 @@ public class MockOccurrenceFactory {
       media.setCreated(new Date());
       media.setCreator("G. U. Skinner");
       media.setDescription("Polypodium skinneri Hook sheet");
-      media.setUrl(new URI("http://ww2.bgbm.org/herbarium/images/B/20/00/76/52/thumbs/b_20_0076524.jpg"));
+      media.setIdentifier(new URI("http://ww2.bgbm.org/herbarium/images/B/20/00/76/52/thumbs/b_20_0076524.jpg"));
       media.setLicense("Image parts provided by this server with the given resolution have been released under the Creative Commons cc-by-sa 3.0 (generic) licence [http://creativecommons.org/licenses/by-sa/3.0/de/]. Please credit images to BGBM following our citation guidelines ");
       media.setReferences(new URI("http://search.biocase.org/edit/search/units/details/getDetails/B%2020%200076524/Herbarium%20Berolinense/BGBM/1095"));
       media.setPublisher("Botanic Garden and Botanical Museum Berlin-Dahlem");
-      media.setTitle("Polypodium skinneri Hook");
-      
-      mockOccurrence.getMedia().add(media);      
+      media.setTitle("Polypodium skinneri");
+
+      mockOccurrence.getMedia().add(media);
       media = new MediaObject();
       media.setType(MediaType.MovingImage);
       media.setCreated(new Date());
@@ -428,18 +429,18 @@ public class MockOccurrenceFactory {
       media.setReferences(new URI("https://www.youtube.com/watch?v=DVN65nmoEHk"));
       media.setPublisher("banddelux");
       media.setTitle("CELLOPHANE SUCKERS - This is Rock`n`Roll (The Kids)");
-      mockOccurrence.getMedia().add(media);      
-      
+      mockOccurrence.getMedia().add(media);
+
       media = new MediaObject();
       media.setType(MediaType.Sound);
       media.setCreator("M. Döring");
       media.setLicense("CC0");
-      media.setUrl(new URI("https://www.youtube.com/watch?v=DVN65nmoEHk"));
+      media.setIdentifier(new URI("https://www.youtube.com/watch?v=DVN65nmoEHk"));
       media.setReferences(new URI("https://www.youtube.com/watch?v=DVN65nmoEHk"));
       media.setPublisher("banddelux");
       media.setTitle("Audio - This is Rock`n`Roll (The Kids)");
-      mockOccurrence.getMedia().add(media);      
-      
+      mockOccurrence.getMedia().add(media);
+
       mockOccurrence.getMedia().add(media);
 
     } catch (URISyntaxException e) {
