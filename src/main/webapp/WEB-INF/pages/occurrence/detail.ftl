@@ -669,7 +669,7 @@ member?has_content || geologicalContextID?has_content || lithostratigraphicTerms
   <@common.article id="media" title="Associated media">
   <div class="fullwidth">
     <#list occ.media as m>
-      <#assign link = m.url!m.references />
+      <#assign link = m.identifier!m.references />
       <#if link?has_content>
        <div class="col">
         <h3><@s.text name="enum.mediatype.${m.type}"/> <#if m.format?has_content><span class="small">[${m.format}]</span></#if></h3>
