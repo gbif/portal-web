@@ -1759,7 +1759,7 @@ $.fn.occurrenceSlideshow = function(data) {
   });
 
   // Hack: append new terms to match the species image response such that:
-  //   - url -> image
+  //   - identifier -> image
   //   - references -> link
   _.each($dataAsJson.results, function(media) {
     media.image = media.identifier;
