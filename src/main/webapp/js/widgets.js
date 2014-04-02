@@ -1578,7 +1578,7 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate) {
   $nextCtr         = $this.find(".next"),
   $scroller        = $this.find(".scroller"),
   $metadata        = $this.find(".scrollable"),
-  $imgCounter      = $this.find(".counter");  
+  $imgCounter      = $this.find(".counter");
 
   $(this).hide();
   imageProvider(initImageData);
@@ -1587,7 +1587,7 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate) {
     $imgCounter.text(1+currentPhoto + " / " + slideData.length);
     // remove all other metadata
     $metadata.empty();
-    
+
     // title is special
     $metaTitle = $this.find(".title");
     $metaTitle.fadeOut(150, function() {
@@ -1613,7 +1613,7 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate) {
     }
     updateMetaProp("Copyright", data.license, "No license provided");
     updateMetaProp("Description", data.description, null);
-    
+
     // if registered, call the post image change callback
     if (postImageUpdate) {
       postImageUpdate($metadata, data);
@@ -1719,7 +1719,7 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate) {
       deactivateController($previousCtr);
     }
   }
-}  
+}
 
 
 /**
@@ -1742,7 +1742,7 @@ $.fn.speciesSlideshow = function(usageID) {
         getDatasetDetail(data.datasetKey, function(dataset) {
           $container.prepend("<h3>Source</h3><p><a title='" + dataset.title + "' href='" + $srcLink + "'>" + limitText(dataset.title, 28) +"</a></p>");
         });
-      }    
+      }
     }
   );
 };
@@ -1762,7 +1762,7 @@ $.fn.occurrenceSlideshow = function(data) {
   //   - url -> image
   //   - references -> link
   _.each($dataAsJson.results, function(media) {
-    media.image = media.url;
+    media.image = media.identifier;
     media.link = media.references;
   });
 
@@ -1773,9 +1773,9 @@ $.fn.occurrenceSlideshow = function(data) {
     function($container, data) {  // postImageUpdate hook
       if (data.references) {
         $container.prepend("<h3>Links</h3><ul><li><a title='Image homepage' href='" + data.references + "'>Image homepage</a></li></ul>");
-      }    
+      }
     }
-    
+
   );
 };
 
