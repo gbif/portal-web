@@ -603,7 +603,7 @@
         <checklistbank.ws.url>http://api.gbif-dev.org/v0.9/</checklistbank.ws.url>
         <checklistbank.search.ws.url>http://api.gbif-dev.org/v0.9/species/</checklistbank.search.ws.url>
         <checklistbank.match.ws.url>http://api.gbif-dev.org/v0.9/species/match/</checklistbank.match.ws.url>
-        <occurrence.ws.url>http://localhost:8081/</occurrence.ws.url>
+        <occurrence.ws.url>http://api.gbif-dev.org/v0.9/</occurrence.ws.url>
         <occurrence.ws.url.public>http://api.gbif-dev.org/v0.9/</occurrence.ws.url.public>
         <tile-server.url>http://api.gbif-dev.org/v0.9/map</tile-server.url>
         <image-cache.url>http://api.gbif-dev.org/v0.9/image</image-cache.url>
