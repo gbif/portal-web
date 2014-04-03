@@ -27,6 +27,7 @@ import org.gbif.api.vocabulary.BasisOfRecord;
 import org.gbif.api.vocabulary.Continent;
 import org.gbif.api.vocabulary.Country;
 import org.gbif.api.vocabulary.DatasetType;
+import org.gbif.api.vocabulary.MediaType;
 import org.gbif.portal.model.SearchSuggestions;
 
 import java.lang.reflect.InvocationTargetException;
@@ -39,6 +40,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
+
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
 
@@ -194,6 +196,12 @@ public class FiltersActionHelper {
    */
   private static final String TYPE_STATUS_KEY = "enum.typestatus.";
 
+
+  /**
+   * Constant that contains the prefix of a key to get a Media Type label from the resource bundle file.
+   */
+  private static final String MEDIA_TYPE_KEY = "enum.mediatype.";
+
   @Inject
   public FiltersActionHelper(DatasetService datasetService, NameUsageService nameUsageService,
     NameUsageSearchService nameUsageSearchService, NameUsageMatchingService nameUsageMatchingService,
@@ -224,7 +232,7 @@ public class FiltersActionHelper {
 
   /**
    * Gets the title(name) of a country.
-   *
+   * 
    * @param isoCode iso 2/3 country code
    */
   public String getCountryTitle(String isoCode) {
@@ -241,6 +249,7 @@ public class FiltersActionHelper {
   public Continent[] getContinents() {
     return Continent.values();
   }
+
   /**
    * Gets the current year.
    * This value is used by occurrence filters to determine the maximum year that is allowed for the
@@ -280,6 +289,8 @@ public class FiltersActionHelper {
         return LocalizedTextUtil.findDefaultText(BASIS_OF_RECORD_KEY + filterValue, getLocale());
       } else if (parameter == OccurrenceSearchParameter.TYPE_STATUS) {
         return LocalizedTextUtil.findDefaultText(TYPE_STATUS_KEY + filterValue, getLocale());
+      } else if (parameter == OccurrenceSearchParameter.MEDIA_TYPE) {
+        return LocalizedTextUtil.findDefaultText(MEDIA_TYPE_KEY + getMediaTypeValue(filterValue), getLocale());
       } else if (parameter == OccurrenceSearchParameter.DATASET_KEY) {
         return StringEscapeUtils.escapeEcmaScript(getDatasetTitle(filterValue));
       } else if (parameter == OccurrenceSearchParameter.GEOMETRY) {
@@ -307,6 +318,18 @@ public class FiltersActionHelper {
     return title;
   }
 
+  /**
+   * Gets the enum name of the value string if it is a valid media type.
+   * Note: this has to be done because MediaType values are not in uppercase, i.e.: StillImage, MovingImage and Sound.
+   */
+  public String getMediaTypeValue(String value) {
+    final Enum<?> mediaType = VocabularyUtils.lookupEnum(value, MediaType.class);
+    return (mediaType == null ? value : mediaType.name());
+  }
+
+  /**
+   * Gets the title for the georeferenced filter.
+   */
   public String getGeoreferencedTitle(String value) {
     if (Boolean.parseBoolean(value)) {
       return GEOREFERENCING_LEGEND;
@@ -317,7 +340,7 @@ public class FiltersActionHelper {
 
   /**
    * Gets the title(name) of a node.
-   *
+   * 
    * @param networkKey node key/UUID
    */
   public String getNetworkTitle(String networkKey) {

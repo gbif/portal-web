@@ -164,6 +164,33 @@
       </td>
     </tr>
   </script>
+  
+  
+  <script type="text/template" id="template-media-type-filter">
+    <tr class="filter">
+      <td colspan="4">
+        <a class="edit" style="display:none;"/>
+        <div class="inner filter_view">
+          <h4 class="title"><%= title %></h4>
+          <div class="filter">
+            <h4 class="title">Select </h4>
+            <ul class="multi-select">
+             <#list mediaTypes as itemValue>
+               <li key="${itemValue}"><a>${action.getFilterTitle('mediaType',itemValue)}</a></li>
+             </#list>
+            </ul>
+          </div>
+          <div class="center">
+            <a class="button candy_blue_button apply" title="<%= title %>" data-action="add-new-filter" data-filter="<%= paramName %>" apply-function="applyOccurrenceFilters"><span>Apply</span></a>
+          </div>
+          <a class="close"></a>
+        </div>
+        <div class="summary_view">
+
+        </div>
+      </td>
+    </tr>
+  </script>
 
   <script type="text/template" id="template-add-filter">
     <tr class="filter">

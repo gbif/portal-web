@@ -10,6 +10,7 @@ import org.gbif.api.service.occurrence.OccurrenceSearchService;
 import org.gbif.api.vocabulary.BasisOfRecord;
 import org.gbif.api.vocabulary.Continent;
 import org.gbif.api.vocabulary.Country;
+import org.gbif.api.vocabulary.MediaType;
 import org.gbif.api.vocabulary.TypeStatus;
 import org.gbif.dwc.terms.DcTerm;
 import org.gbif.dwc.terms.DwcTerm;
@@ -160,10 +161,17 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   }
 
   /**
-   * Returns the list of {@link TypeS} literals.
+   * Returns the list of {@link TypeStatus} literals.
    */
   public TypeStatus[] getTypeStatuses() {
     return TypeStatus.values();
+  }
+
+  /**
+   * Returns the list of {@link MediaType} literals.
+   */
+  public MediaType[] getMediaTypes() {
+    return MediaType.values();
   }
 
   /**
@@ -302,12 +310,22 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
     return validationErrors;
   }
 
+  /**
+   * Returns the enum name of the value parameter.
+   */
+  public String getMediaTypeValue(String value) {
+    return filtersActionHelper.getMediaTypeValue(value);
+  }
+
   @Override
   public boolean hasErrors() {
     return super.hasErrors() || !validationErrors.isEmpty();
   }
 
 
+  /**
+   * Validates if there are parameters with errors.
+   */
   public boolean hasParameterErrors(String parameter) {
     return (getFieldErrors().containsKey(parameter));
   }
