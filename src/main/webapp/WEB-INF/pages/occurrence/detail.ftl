@@ -327,11 +327,11 @@ individualID?has_content || identificationID?has_content || identificationVerifi
 <#assign recordNumber = action.retrieveTerm('recordNumber')! />
 <#assign eventID = action.retrieveTerm('eventID')! />
 <#assign fieldNumber = action.retrieveTerm('fieldNumber')! />
-<#assign eventDate = action.retrieveTerm('eventDate')! />
+<#assign eventDate = occ.eventDate! />
 
 <#-- Occurrence block consists of various terms/fields. At least 1 has to be present for block to appear -->
 <#if occ.lifeStage?has_content || occ.sex?has_content || occ.establishmentMeans?has_content ||
-occ.individualCount?has_content ||recordedBy?has_content || verbatimEventDate?has_content ||
+occ.individualCount?has_content ||recordedBy?has_content || verbatimEventDate?has_content || eventDate?has_content ||
 occurrenceRemarks?has_content || eventRemarks?has_content || associatedOccurrences?has_content ||
 associatedSequences?has_content || associatedReferences?has_content || associatedTaxa?has_content ||
 samplingProtocol?has_content || samplingEffort?has_content || fieldNotes?has_content ||
