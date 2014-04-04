@@ -327,6 +327,7 @@ individualID?has_content || identificationID?has_content || identificationVerifi
 <#assign recordNumber = action.retrieveTerm('recordNumber')! />
 <#assign eventID = action.retrieveTerm('eventID')! />
 <#assign fieldNumber = action.retrieveTerm('fieldNumber')! />
+<#assign eventDate = action.retrieveTerm('eventDate')! />
 
 <#-- Occurrence block consists of various terms/fields. At least 1 has to be present for block to appear -->
 <#if occ.lifeStage?has_content || occ.sex?has_content || occ.establishmentMeans?has_content ||
@@ -340,10 +341,10 @@ eventID?has_content || fieldNumber?has_content>
   <div class="left">
 
       <#-- Show event date, partial event date, or verbatim event date in that order of priority + the recorder -->
-        <#if occ.eventDate?? || partialGatheringDate?has_content || recordedBy?has_content || verbatimEventDate?has_content >
+        <#if eventDate?has_content || partialGatheringDate?has_content || recordedBy?has_content || verbatimEventDate?has_content >
             <h3>Recorded</h3>
-          <#if occ.eventDate??>
-              <p>${occ.eventDate!?datetime?string.medium}<#if recordedBy?has_content>&nbsp;by&nbsp;${recordedBy}</#if></p>
+          <#if eventDate?has_content>
+              <p>${eventDate!?datetime?string.medium}<#if recordedBy?has_content>&nbsp;by&nbsp;${recordedBy}</#if></p>
           <#elseif partialGatheringDate?has_content >
               <p>${partialGatheringDate}<#if recordedBy?has_content>&nbsp;by&nbsp;${recordedBy}</#if></p>
           <#elseif verbatimEventDate?has_content >

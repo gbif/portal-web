@@ -239,7 +239,7 @@
     <div id="contact_footer">
       <div class="footer">
           <ul>
-              <li><h3>2013 &copy; GBIF</h3></li>
+              <li><h3>2014 &copy; GBIF</h3></li>
               <li><div class="logo"></div></li>
           </ul>
 
