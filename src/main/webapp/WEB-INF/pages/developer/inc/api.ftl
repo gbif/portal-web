@@ -44,7 +44,7 @@
 </table>
 </#macro>
 
-
+<#macro url relativeUrl>${action.cfg.apiBaseUrl}${relativeUrl}</#macro>
 
 <#macro trow url httpMethod resp respLink="" paging=false showParams=true params=[] authRequired=false>
 <tr>

@@ -87,6 +87,14 @@
         </tr>
       </tbody>
     </table>
+
+
+    <h3>Range queries</h3>
+    <p>Some search parameters support range queries, for example the <em>year</em> parameter in the occurrence search.
+      In general ranges are given as a single parameter value by concatenating a lower and an upper value with a comma.
+      For example:
+      <code><@api.url '/occurrence/search?year=1800,1899'/></code>
+    </p>
   </div>
 </@common.article>
 

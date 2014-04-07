@@ -16,7 +16,7 @@
 <div class="left">
      <p>
        This API works against the GBIF Occurrence Store, which handles occurrence records and makes them available through the web service and download files.
-       In addition we also provide a <a href="">Map API</a> that offers spatial services.
+       In addition we also provide a <a href="<@s.url value='/developer/maps'/>">Map API</a> that offers spatial services.
     </p>
     <p>
         Internally we use a Java web service client for the consumption of these HTTP-based, RESTful web services. It may
@@ -146,20 +146,20 @@
 </@api.article>
 
 <#assign apidocs="http://gbif.github.io/gbif-api/apidocs/org/gbif/api/"/>
-vocabulary/BasisOfRecord.html
+
 <#assign params = {
   "datasetKey": "The occurrence dataset key (a uuid)",
-  "year": "The 4 digit year. A year of 98 will be interpreted as AD 98.",
-  "month": "The month of the year, starting with 1 for January.",
-  "eventDate": "Occurrence date in ISO 8601 format: yyyy, yyyy-MM, yyyy-MM-dd, or MM-dd.",
-  "lastInterpreted": "This date the record was last modified in GBIF, in ISO 8601 format: yyyy, yyyy-MM, yyyy-MM-dd, or MM-dd.",
-  "decimalLatitude": "Latitude in decimals between -90 and 90 based on WGS 84.",
-  "decimalLongitude": "Longitude in decimals between -180 and 180 based on WGS 84.",
+  "year": "The 4 digit year. A year of 98 will be interpreted as AD 98. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
+  "month": "The month of the year, starting with 1 for January. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
+  "eventDate": "Occurrence date in ISO 8601 format: yyyy, yyyy-MM, yyyy-MM-dd, or MM-dd. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
+  "lastInterpreted": "This date the record was last modified in GBIF, in ISO 8601 format: yyyy, yyyy-MM, yyyy-MM-dd, or MM-dd. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
+  "decimalLatitude": "Latitude in decimals between -90 and 90 based on WGS 84.. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
+  "decimalLongitude": "Longitude in decimals between -180 and 180 based on WGS 84.. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
   "country": "The 2-letter country code (as per <a href='http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm' target='_blank'>ISO-3166-1</a>) of the country in which the occurrence was recorded.",
   "continent": "Continent, as defined in our <a href='${apidocs}vocabulary/Continent.html' target='_blank'>Continent enum</a>",
   "publishingCountry" : "The 2-letter country code (as per <a href='http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm' target='_blank'>ISO-3166-1</a>) of the country in which the occurrence was recorded.",
-  "elevation": "Elevation (altitude) in meters above sea level.",
-  "depth" : "Depth in meters relative to altitude. For example 10 meters below a lake surface with given altitude.",
+  "elevation": "Elevation (altitude) in meters above sea level. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
+  "depth" : "Depth in meters relative to altitude. For example 10 meters below a lake surface with given altitude. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
   "institutionCode" : "An identifier of any form assigned by the source to identify the institution the record belongs to. Not guaranteed to be unique.",
   "collectionCode": "An identifier of any form assigned by the source to identify the physical collection or digital dataset uniquely within the context of an institution.",
   "catalogNumber": "An identifier of any form assigned by the source within a physical collection or digital dataset for the record which may not be unique, but should be fairly unique in combination with the institution and collection code.",
@@ -174,8 +174,8 @@ vocabulary/BasisOfRecord.html
   "issue": "A specific interpretation issue as defined in our <a href='${apidocs}vocabulary/OccurrenceIssue.html' target='_blank'>OccurrenceIssue enum</a>",
   "q" : "Simple search parameter. The value for this parameter can be a simple word or a phrase.",
   "limit": "The maximum number of results to return. This can't be greater than 300, any value greater is set to 300.",
-  "from" : "The minimum year for which to return occurrences.",
-  "to" : "The maximum year for which to return occurrences."
+  "from" : "The minimum year for which to return occurrence counts. Deprecated and will be replaced by a standard <a href='${baseUrl}/developer/summary#common'>range query</a> soon.",
+  "to" : "The maximum year for which to return occurrence counts. Deprecated and will be replaced by a standard <a href='${baseUrl}/developer/summary#common'>range query</a> soon."
 } />
 
 
