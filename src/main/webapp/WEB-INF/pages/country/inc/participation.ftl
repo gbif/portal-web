@@ -1,6 +1,7 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.country.CountryBaseAction" -->
 <#import "/WEB-INF/macros/common.ftl" as common>
 
-<#if node??>
+<#if node?? && node.participationStatus != 'OBSERVER' && node.participationStatus != 'FORMER'>
 <@common.article id="participation" title="GBIF participant information" titleRight="Node">
     <div class="left">
         <#--
