@@ -37,13 +37,13 @@ public class NodeContactOrderTest {
     }
 
     assertEquals((Integer) 9, contacts.get(0).getKey());
-    assertEquals((Integer) 7, contacts.get(1).getKey());
-    assertEquals((Integer) 6, contacts.get(2).getKey());
-    assertEquals((Integer) 4, contacts.get(3).getKey());
-    assertEquals((Integer) 3, contacts.get(4).getKey());
-    assertEquals((Integer) 1, contacts.get(5).getKey());
-    assertEquals((Integer) 5, contacts.get(6).getKey());
-    assertEquals((Integer) 2, contacts.get(7).getKey());
+    assertEquals((Integer) 2, contacts.get(1).getKey());
+    assertEquals((Integer) 7, contacts.get(2).getKey());
+    assertEquals((Integer) 6, contacts.get(3).getKey());
+    assertEquals((Integer) 4, contacts.get(4).getKey());
+    assertEquals((Integer) 3, contacts.get(5).getKey());
+    assertEquals((Integer) 1, contacts.get(6).getKey());
+    assertEquals((Integer) 5, contacts.get(7).getKey());
     assertEquals((Integer) 8, contacts.get(8).getKey());
   }
 
