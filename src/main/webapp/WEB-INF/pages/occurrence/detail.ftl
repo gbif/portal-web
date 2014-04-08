@@ -257,11 +257,13 @@ occ.depthAccuracy?has_content || geographicClassification?has_content >
 <#assign individualID = action.retrieveTerm('individualID')! />
 <#assign identificationID = action.retrieveTerm('identificationID')! />
 <#assign identificationVerificationStatus = action.retrieveTerm('identificationVerificationStatus')! />
+<#assign identifiedBy = action.retrieveTerm('identifiedBy')! />
 
 <#-- Identification block consists of various terms/fields. At least 1 has to be present for block to appear -->
 <#if occ.taxonKey?? || occ.typeStatus?has_content || occ.dateIdentified?has_content ||
 previousIdentifications?has_content || identificationReferences?has_content || identificationRemarks?has_content ||
-individualID?has_content || identificationID?has_content || identificationVerificationStatus?has_content>
+individualID?has_content || identificationID?has_content || identificationVerificationStatus?has_content ||
+identifiedBy?has_content>
   <#assign title>
   Identification details <span class='subtitle'>According to <a href="<@s.url value='/dataset/${nubDatasetKey}'/>">GBIF Backbone Taxonomy</a></span>
   </#assign>
@@ -333,8 +335,8 @@ individualID?has_content || identificationID?has_content || identificationVerifi
 <#if occ.lifeStage?has_content || occ.sex?has_content || occ.establishmentMeans?has_content ||
 occ.individualCount?has_content ||recordedBy?has_content || verbatimEventDate?has_content || eventDate?has_content ||
 occurrenceRemarks?has_content || eventRemarks?has_content || associatedOccurrences?has_content ||
-associatedSequences?has_content || associatedReferences?has_content || associatedTaxa?has_content ||
-samplingProtocol?has_content || samplingEffort?has_content || fieldNotes?has_content ||
+partialGatheringDate?has_content || associatedSequences?has_content || associatedReferences?has_content ||
+associatedTaxa?has_content || samplingProtocol?has_content || samplingEffort?has_content || fieldNotes?has_content ||
 reproductiveCondition?has_content || behavior?has_content || occurrenceStatus?has_content || recordNumber?has_content ||
 eventID?has_content || fieldNumber?has_content>
   <@common.article id="occurrence" title="Occurrence details">
