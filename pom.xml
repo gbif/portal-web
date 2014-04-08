@@ -42,8 +42,7 @@
   <properties>
 
     <!-- used for packaging and deploying only.
-    We have used a system var localhost configuration for the failsafe and jetty plugin -->
-    <jetty.port>8080</jetty.port>
+    We have used a system var localhost configuration for the failsafe and jetty plugin -->    
     <servername>http://localhost:8080</servername>
     <!-- configure struts tags to include the servlet context by default -->
     <url.includeContext>true</url.includeContext>
