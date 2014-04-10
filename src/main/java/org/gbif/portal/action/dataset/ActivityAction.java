@@ -14,6 +14,7 @@ import org.gbif.api.service.registry.DatasetService;
 import org.gbif.api.service.registry.OrganizationService;
 import org.gbif.api.util.occurrence.HumanFilterBuilder;
 import org.gbif.portal.action.user.DownloadsAction;
+import org.gbif.utils.file.FileUtils;
 
 import java.util.LinkedList;
 import java.util.Map;
@@ -67,6 +68,10 @@ public class ActivityAction extends DetailAction {
       }
     }
     return null;
+  }
+
+  public String getHumanRedeableBytesSize(long bytes) {
+    return FileUtils.humanReadableByteCount(bytes, true);
   }
 
   public Pageable getPage() {
