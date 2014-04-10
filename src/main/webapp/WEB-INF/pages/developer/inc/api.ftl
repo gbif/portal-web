@@ -1,5 +1,7 @@
 <#import "/WEB-INF/macros/common.ftl" as common>
 
+<#assign apidocs="http://gbif.github.io/gbif-api/apidocs/org/gbif/api/"/>
+
 <#macro introArticle>
   <@common.article id="overview" title="Introduction" titleRight="Quick links">
   <#nested />

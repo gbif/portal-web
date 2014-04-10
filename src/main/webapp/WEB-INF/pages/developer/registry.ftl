@@ -282,17 +282,17 @@
 
 <#assign params = {
   "q": "Simple search parameter. The value for this parameter can be a simple word or a phrase. Wildcards can be added to the simple word parameters only, e.g. q=*puma*",
-  "country": "Filters by country as given in our <a href='http://builds.gbif.org/view/Common/job/gbif-api/site/apidocs/org/gbif/api/vocabulary/Country.html' target='_blank'>Country enum</a>, e.g. country=CANADA. Not yet implemented for use with dataset search, but will eventually search on the countries within the geospatial coverage of the dataset.",
-  "type": "For datasets, filters by dataset type as given in our <a href='http://builds.gbif.org/view/Common/job/gbif-api/site/apidocs/org/gbif/api/vocabulary/DatasetType.html' target='_blank'>DatasetType enum</a>. For metadata documents, filters by the metadata type as given in our <a href='http://builds.gbif.org/view/Common/job/gbif-api/site/apidocs/org/gbif/api/vocabulary/MetadataType.html' target='_blank'>MetadataType enum</a>",
+  "country": "Filters by country as given in our <a href='${api.apidocs}/vocabulary/Country.html' target='_blank'>Country enum</a>, e.g. country=CANADA. Not yet implemented for use with dataset search, but will eventually search on the countries within the geospatial coverage of the dataset.",
+  "type": "For datasets, filters by dataset type as given in our <a href='${api.apidocs}/vocabulary/DatasetType.html' target='_blank'>DatasetType enum</a>. For metadata documents, filters by the metadata type as given in our <a href='${api.apidocs}/vocabulary/MetadataType.html' target='_blank'>MetadataType enum</a>",
   "identifier": "The value for this parameter can be a simple string or integer, e.g. identifier=120",
-  "identifierType": "Used in combination with the identifier parameter to filter identifiers by identifier type as given in our <a href='http://builds.gbif.org/view/Common/job/gbif-api/site/apidocs/org/gbif/api/vocabulary/IdentifierType.html' target='_blank'>IdentifierType enum</a>",
-  "subtype": "Not yet implemented, but will eventually allow filtering of datasets by their dataset subtype as given in our <a href='http://builds.gbif.org/view/Common/job/gbif-api/site/apidocs/org/gbif/api/vocabulary/DatasetSubtype.html' target='_blank'>DatasetSubtype enum</a>.",
+  "identifierType": "Used in combination with the identifier parameter to filter identifiers by identifier type as given in our <a href='${api.apidocs}/vocabulary/IdentifierType.html' target='_blank'>IdentifierType enum</a>",
+  "subtype": "Not yet implemented, but will eventually allow filtering of datasets by their dataset subtype as given in our <a href='${api.apidocs}/vocabulary/DatasetSubtype.html' target='_blank'>DatasetSubtype enum</a>.",
   "keyword": "Filters datasets by a case insensitive plain text keyword. The search is done on the merged collection of tags, the dataset keywordCollections and temporalCoverages.",
   "owning_org": "Filters datasets by their owning organization UUID key",
   "hosting_org": "Filters datasets by their hosting organization UUID key",
   "decade": "Filters datasets by their temporal coverage broken down to decades. Decades are given as a full year, e.g. 1880, 1960, 2000, etc, and will return datasets wholly contained in the decade as well as those that cover the entire decade or more. Facet by decade to get the break down, e.g. <a href='${action.cfg.apiBaseUrl}/dataset/search?facet=DECADE&facet_only=true' target='_blank'>/search?facet=DECADE&facet_only=true</a>",
-  "publishing_country": "Filters datasets by their owining organization's country as given in our <a href='http://builds.gbif.org/view/Common/job/gbif-api/site/apidocs/org/gbif/api/vocabulary/Country.html' target='_blank'>Country enum</a>",
-  "continent": "Not yet implemented, but will eventually allow filtering datasets by their continent(s) as given in our <a href='http://builds.gbif.org/view/Common/job/gbif-api/site/apidocs/org/gbif/api/vocabulary/Continent.html' target='_blank'>Continent enum</a>.",
+  "publishing_country": "Filters datasets by their owining organization's country as given in our <a href='${api.apidocs}/vocabulary/Country.html' target='_blank'>Country enum</a>",
+  "continent": "Not yet implemented, but will eventually allow filtering datasets by their continent(s) as given in our <a href='${api.apidocs}/vocabulary/Continent.html' target='_blank'>Continent enum</a>.",
   "facet": "A list of facet names used to retrieve the 100 most frequent values for a field. Allowed facets are: type, keyword, owning_org, hosting_org, decade, and publishing_country. Additionally subtype and country are legal values but not yet implemented, so data will not yet be returned for them."
 } />
 

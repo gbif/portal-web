@@ -129,7 +129,7 @@
   "language": "default=en or use HTTP header for this",
   "datasetKey": "Filters by the checklist dataset key (a uuid)",
   "sourceId": "Filters by the source identifier",
-  "rank": "Filters by taxonomic rank as given in our <a href='http://builds.gbif.org/view/Common/job/gbif-api/site/apidocs/org/gbif/api/vocabulary/Rank.html' target='_blank'>Rank enum</a>",
+  "rank": "Filters by taxonomic rank as given in our <a href='${api.apidocs}/vocabulary/Rank.html' target='_blank'>Rank enum</a>",
   "name": "A scientific name which can be either a case insensitive filter for a canonical namestring, e.g. 'Puma concolor', or an input to the name parser",
   "strict": "If true it (fuzzy) matches only the given name, but never a taxon in the upper classification",
   "verbose": "If true it shows alternative matches which were considered but then rejected",
@@ -140,11 +140,11 @@
   "family": "Optional family classification accepting a canonical name.",
   "genus": "Optional genus classification accepting a canonical name.",
   "highertaxonKey": "Filters by any of the higher Linnean rank keys. Note this is within the respective checklist and not searching nub keys across all checklists.",
-  "status": "Filters by the taxonomic status as given in our <a href='http://builds.gbif.org/view/Common/job/gbif-api/site/apidocs/org/gbif/api/vocabulary/TaxonomicStatus.html' target='_blank'>TaxonomicStatus enum</a>",
+  "status": "Filters by the taxonomic status as given in our <a href='${api.apidocs}/vocabulary/TaxonomicStatus.html' target='_blank'>TaxonomicStatus enum</a>",
   "extinct": "Filters by extinction status (a boolean, e.g. extinct=true)",
   "habitat": "Filters by the habitat, though currently only as boolean marine or not-marine (i.e. habitat=true means marine, false means not-marine)",
   "threat": "Not yet implemented, but will eventually allow for filtering by a threat status enum",
-  "nameType": "Filters by the name type as given in our <a href='http://builds.gbif.org/view/Common/job/gbif-api/site/apidocs/org/gbif/api/vocabulary/NameType.html' target='_blank'>NameType enum</a>",
+  "nameType": "Filters by the name type as given in our <a href='${api.apidocs}/vocabulary/NameType.html' target='_blank'>NameType enum</a>",
   "nomenclaturalStatus": "Not yet implemented, but will eventually allow for filtering by a nomenclatural status enum",
   "facet": "A list of facet names used to retrieve the 100 most frequent values for a field. Allowed facets are: dataset_key, highertaxon_key, rank, status, extinct, habitat, and name_type. Additionally threat and nomenclatural_status are legal values but not yet implemented, so data will not yet be returned for them."
 } />
