@@ -1693,12 +1693,9 @@ var OccurrenceWidgetManager = (function ($,_) {
             } else if (filterName == "MONTH") {
               newWidget = new OccurrenceMonthWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
-            } else if (filterName == "BASIS_OF_RECORD") {
+            } else if (filterName == "BASIS_OF_RECORD" || filterName == "TYPE_STATUS" || filterName == "MEDIA_TYPE") {
               newWidget = new OccurrenceMultiSelectWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
-            } else if (filterName == "TYPE_STATUS") {
-              newWidget = new OccurrenceMultiSelectWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});              
             } else if (filterName == "COUNTRY" || filterName == "PUBLISHING_COUNTRY") {
               newWidget = new OccurrenceWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindCountryAutosuggest});

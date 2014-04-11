@@ -4,7 +4,40 @@
 <html>
 <head>
   <title>Occurrence Detail ${id?c}</title>
-<#-- RDFa -->
+
+  <!-- Extra content used for the image gallery only-->
+  <content tag="extra_scripts">
+    <#-- shadowbox to view large images -->
+    <link rel="stylesheet" type="text/css" href="<@s.url value='/js/vendor/fancybox/jquery.fancybox.css?v=2.1.4'/>">
+    <script type="text/javascript" src="<@s.url value='/js/vendor/fancybox/jquery.fancybox.js?v=2.1.4'/>"></script>
+    <link rel="stylesheet" type="text/css" href="<@s.url value='/js/vendor/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5'/>">
+    <script type="text/javascript" src="<@s.url value='/js/vendor/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5'/>"></script>
+
+    <script type="text/javascript">
+      $(function() {
+        var imagesJSON = '{"results": ${media}}';
+
+        if (imagesJSON) {
+          $("#images").occurrenceSlideshow(imagesJSON);
+        }
+
+      });
+    </script>
+    <style type="text/css">
+        #content #images .scrollable {
+          height: 350px;
+        }
+        /* specific to this page, since it falls right beside a high z-order map article */
+        .fancybox-overlay {
+          z-index: 10001;
+        }
+      #content #media dl dd:last-child {
+        margin-bottom: 30px;
+      }
+    </style>
+  </content>
+
+  <#-- RDFa -->
   <meta property="dwc:scientificName" content="${occ.scientificName!}"/>
   <meta property="dwc:kingdom" content="${occ.kingdom!}"/>
   <#if dataset.key??>
@@ -107,61 +140,22 @@
 <#macro footprint header wkt srs fit>
   <#if wkt?has_content || srs?has_content || fit?has_content>
   <h3>${header}</h3>
-  <p>
-    <dl>
-      <#if wkt?has_content>
-          <dt>WKT</dt>
-          <dd>${wkt}</dd>
-      </#if>
-
-      <#if srs?has_content>
-        <dt>SRS</dt>
-        <dd>${srs}</dd>
-      </#if>
-
-      <#if fit?has_content>
-        <dt>Spatial Fit</dt>
-        <dd>${fit}</dd>
-      </#if>
-    </dl>
-  </p>
-  </#if>
-</#macro>
-
-<#macro georeferenced header georeferencedDate georeferencedBy georeferenceProtocol georeferenceSources georeferenceVerificationStatus>
-  <#if georeferencedDate?has_content || georeferencedBy?has_content || georeferenceProtocol?has_content || georeferenceSources?has_content || georeferenceVerificationStatus?has_content>
-  <h3>${header}</h3>
-  <p>
   <dl>
-    <#if georeferencedDate?has_content || georeferencedBy?has_content>
-        <dt>Georeferenced</dt>
-        <dd>
-          <#if georeferencedDate?has_content && georeferencedBy?has_content>
-            ${georeferencedDate}&nbsp;by&nbsp;${georeferencedBy}
-          <#elseif georeferencedDate?has_content>
-            ${georeferencedDate}
-          <#elseif georeferencedBy?has_content>
-            By&nbsp;${georeferencedBy}
-          </#if>
-        </dd>
+    <#if wkt?has_content>
+        <dt>WKT</dt>
+        <dd>${wkt}</dd>
     </#if>
 
-    <#if georeferenceProtocol?has_content>
-      <dt>Protocol</dt>
-      <dd>${georeferenceProtocol}</dd>
+    <#if srs?has_content>
+      <dt>SRS</dt>
+      <dd>${srs}</dd>
     </#if>
 
-    <#if georeferenceSources?has_content>
-        <dt>Sources</dt>
-        <dd>${georeferenceSources}</dd>
-    </#if>
-
-    <#if georeferenceVerificationStatus?has_content>
-        <dt>Status</dt>
-        <dd>${georeferenceVerificationStatus}</dd>
+    <#if fit?has_content>
+      <dt>Spatial Fit</dt>
+      <dd>${fit}</dd>
     </#if>
   </dl>
-  </p>
   </#if>
 </#macro>
 
@@ -184,13 +178,50 @@
 
 <#-- Location block consists of max 25 terms/fields. At least 1 has to be present for block to appear -->
 <#if locality?has_content || island?has_content || islandGroup?has_content || footprintWKT?has_content ||
-footprintSRS?has_content || footprintSpatialFit?has_content || georeferencedDate?has_content ||
-georeferencedBy?has_content || georeferenceProtocol?has_content || georeferenceSources?has_content ||
-georeferenceVerificationStatus?has_content || habitat?has_content || locationRemarks?has_content ||
-higherGeographyID?has_content || locationID?has_content || locationAccordingTo?has_content ||
-occ.decimalLatitude?has_content || occ.decimalLongitude?has_content || occ.country?has_content || occ.waterBody?has_content ||
-occ.elevation?has_content || occ.elevationAccuracy?has_content || occ.depth?has_content ||
-occ.depthAccuracy?has_content || geographicClassification?has_content >
+  footprintSRS?has_content || footprintSpatialFit?has_content || georeferencedDate?has_content ||
+  georeferencedBy?has_content || georeferenceProtocol?has_content || georeferenceSources?has_content ||
+  georeferenceVerificationStatus?has_content || habitat?has_content || locationRemarks?has_content ||
+  higherGeographyID?has_content || locationID?has_content || locationAccordingTo?has_content ||
+  occ.decimalLatitude?has_content || occ.decimalLongitude?has_content || occ.country?has_content ||
+  occ.waterBody?has_content || occ.elevation?has_content || occ.elevationAccuracy?has_content ||
+  occ.depth?has_content || occ.depthAccuracy?has_content || geographicClassification?has_content >
+
+  <#macro georeferenced>
+    <#if georeferencedDate?has_content || georeferencedBy?has_content || georeferenceProtocol?has_content || georeferenceSources?has_content || georeferenceVerificationStatus?has_content>
+      <h3>Georeferencing</h3>
+      <dl>
+        <#if georeferencedDate?has_content || georeferencedBy?has_content>
+          <dt>Georeferenced</dt>
+          <dd>
+            <#if georeferencedDate?has_content && georeferencedBy?has_content>
+            ${georeferencedDate}&nbsp;by&nbsp;${georeferencedBy}
+            <#elseif georeferencedDate?has_content>
+            ${georeferencedDate}
+            <#elseif georeferencedBy?has_content>
+              By&nbsp;${georeferencedBy}
+            </#if>
+          </dd>
+        </#if>
+
+        <#if georeferenceProtocol?has_content>
+          <dt>Protocol</dt>
+          <dd>${georeferenceProtocol}</dd>
+        </#if>
+
+        <#if georeferenceSources?has_content>
+          <dt>Sources</dt>
+          <dd>${georeferenceSources}</dd>
+        </#if>
+
+        <#if georeferenceVerificationStatus?has_content>
+          <dt>Status</dt>
+          <dd>${georeferenceVerificationStatus}</dd>
+        </#if>
+      </dl>
+    </#if>
+  </#macro>
+
+>>>>>>> multimedia
   <@common.article id="location" title=title titleRight=titleRight class="occurrenceMap">
     <#if showMap>
     <div id="map" class="map">
@@ -210,12 +241,12 @@ occ.depthAccuracy?has_content || geographicClassification?has_content >
         </div>
     </div>
     <div class="fullwidth fullwidth_under_map">
-        <div class="left left_under_map left_occurrence_detail">
+        <div class="left left_under_map">
           <@geoClassification header="Geographic Classification" geographicClassification=geographicClassification/>
         <@islandClassification header="Islands" island=island islandGroup=islandGroup />
         <@kv header="Habitat" value=habitat />
         <@footprint header="Footprint" wkt=footprintWKT srs=footprintSRS fit=footprintSpatialFit />
-        <@georeferenced header="Georeference" georeferencedDate=georeferencedDate georeferencedBy=georeferencedBy georeferenceProtocol=georeferenceProtocol georeferenceSources=georeferenceSources georeferenceVerificationStatus=georeferenceVerificationStatus />
+        <@georeferenced />
         <@kv header="Remarks" value=locationRemarks />
         </div>
 
@@ -227,8 +258,7 @@ occ.depthAccuracy?has_content || geographicClassification?has_content >
     </div>
 
     <#else>
-    <div class="fullwidth fullwidth_under_map left_occurrence_detail">
-
+    <div class="fullwidth fullwidth_under_map">
         <div class="left">
           <@kv header="Locality" value=locality />
       <@kv header="Elevation" value=occ.elevation unit="m" plusMinus=occ.elevationAccuracy!?string />
@@ -238,7 +268,7 @@ occ.depthAccuracy?has_content || geographicClassification?has_content >
       <@islandClassification header="Islands" island=island islandGroup=islandGroup />
       <@kv header="Habitat" value=habitat />
       <@footprint header="Footprint" wkt=footprintWKT srs=footprintSRS fit=footprintSpatialFit />
-      <@georeferenced header="Georeference" georeferencedDate=georeferencedDate georeferencedBy=georeferencedBy georeferenceProtocol=georeferenceProtocol georeferenceSources=georeferenceSources georeferenceVerificationStatus=georeferenceVerificationStatus />
+      <@georeferenced />
       <@kv header="Remarks" value=locationRemarks />
         </div>
         <div class="right right_under_map">
@@ -248,6 +278,25 @@ occ.depthAccuracy?has_content || geographicClassification?has_content >
         </div>
     </div>
     </#if>
+  </@common.article>
+</#if>
+
+
+<!-- Start a gallery, only if the occurrence has at least 1 image media -->
+<#if action.hasImages()>
+  <@common.article id="images">
+    <div class="species_images">
+      <a class="controller previous" href="#" title="Previous image"></a>
+      <a class="controller next" href="#" title="Next image"></a>
+      <div class="scroller">
+        <div class="photos"></div>
+      </div>
+    </div>
+    <div class="right">
+      <h2 class="title"></h2>
+      <div class="scrollable"></div>
+    </div>
+    <div class="counter">1 / 1</div>
   </@common.article>
 </#if>
 
@@ -537,7 +586,7 @@ highestBiostratigraphicZone?has_content || bed?has_content || formation?has_cont
 member?has_content || geologicalContextID?has_content || lithostratigraphicTerms?has_content>
 <#-- show additional geological context group verbatim terms, excluding those terms (usually interpreted terms) already shown -->
   <@common.article id="geology" title="Geological context">
-  <div class="left left_occurrence_detail">
+  <div class="left">
 
     <#if earliestEonOrLowestEonothem?has_content || latestEonOrHighestEonothem?has_content ||
     earliestEraOrLowestErathem?has_content || latestEraOrHighestErathem?has_content ||
@@ -620,104 +669,79 @@ member?has_content || geologicalContextID?has_content || lithostratigraphicTerms
   </@common.article>
 </#if>
 
-<#--<#assign associatedMedia = action.retrieveTerm('associatedMedia')! />-->
-<#--<#if associatedMedia?? || (occ.media?size > 0) >-->
-  <#--<@common.article id="media" title="Media">-->
+<#if occ.media?has_content>
+  <@common.article id="media" title="Associated media">
+  <div class="fullwidth">
+    <#list occ.media as m>
+      <#assign link = m.identifier!m.references />
+      <#if link?has_content>
+       <div class="col">
+        <h3><@s.text name="enum.mediatype.${m.type}"/> <#if m.format?has_content><span class="small">[${m.format}]</span></#if></h3>
+        <dl>
+          <dt>Title</dt>
+          <dd><a href="${link}">${m.title!link}</a></dd>
 
-  <#--&lt;#&ndash; show list of images coming in from DwC associatedMedia. Todo: show actual images &ndash;&gt;-->
-  <#--<#if associatedMedia??>-->
-    <#--<h3>Associated Media</h3>-->
-    <#--<p>${associatedMedia}</p>-->
-  <#--</#if>-->
+          <@common.definition title="Description" value=m.description! />
+          <@common.definition title="License" value=m.license! />
+          <#assign created>
+          ${m.creator!}<#if m.created?has_content><#if m.creator?has_content>, </#if>${m.created?date}</#if>
+          </#assign>
+          <@common.definition title="Creator" value=created! />
+          <@common.definition title="Publisher" value=m.publisher! />
+        </dl>
+       </div>
+      </#if>
+    </#list>
+  </div>
+  </@common.article>
+</#if>
 
-  <#--&lt;#&ndash; show list of media. Todo: show actual images &ndash;&gt;-->
-  <#--<#if (occ.media?size > 0)>-->
-    <#--<#list occ.media as m>-->
-      <#--<h3>Image #${m_index+1}: ${m.title!"No title"}</h3>-->
+<#--
+<#if occ.facts?has_content>
+  <@common.article id="measurementOrFact" title="Measurement or fact">
+    <#list occ.facts as fom>
+    <h3>Fact or Measurement #${fom_index+1}: ${fom.type!"Type unknown"}</h3>
 
-        <#--<#if m.image?has_content>-->
-        <#--<p><a href="${m.image}">${m.image}</a></p>-->
-        <#--</#if>-->
+      <#if fom.value?has_content>
+      <p>${fom.value}</p>
+      </#if>
 
-        <#--<#if m.created?has_content>-->
-        <#--<h3>Taken on</h3>-->
-        <#--<p>${m.created?date?string.medium}</p>-->
-        <#--</#if>-->
+      <#if fom.unit?has_content>
+      <h3>Unit</h3>
+      <p>${fom.unit}</p>
+      </#if>
 
-        <#--<#if m.creator?has_content>-->
-        <#--<h3>Photographer</h3>-->
-        <#--<p>${m.creator}</p>-->
-        <#--</#if>-->
+      <#if fom.accuracy?has_content>
+      <h3>Accuracy</h3>
+      <p>${fom.accuracy}</p>
+      </#if>
 
-        <#--<#if m.publisher?has_content>-->
-        <#--<h3>Publisher</h3>-->
-        <#--<p>${m.publisher}</p>-->
-        <#--</#if>-->
+      <#if fom.method?has_content>
+      <h3>Method</h3>
+      <p>${fom.method}</p>
+      </#if>
 
-        <#--<#if m.description?has_content>-->
-        <#--<h3>Description</h3>-->
-        <#--<p>${m.description}</p>-->
-        <#--</#if>-->
+      <#if fom.determinedBy?has_content>
+      <h3>Determined By</h3>
+      <p>${fom.determinedBy}</p>
+      </#if>
 
-        <#--<#if m.license?has_content>-->
-        <#--<h3>Copyright</h3>-->
-        <#--<p>${m.license}</p>-->
-        <#--</#if>-->
+      <#if fom.determinedDate?has_content>
+      <h3>Date Determined</h3>
+      <p>${fom.determinedDate}</p>
+      </#if>
 
-      <#--<a href="${m.image}" class="read_more">Read more</a>-->
-      <#--</#list>-->
-    <#--</#if>-->
-  <#--</@common.article>-->
-<#--</#if>-->
+      <#if fom.remarks?has_content>
+      <h3>Remarks</h3>
+      <p>${fom.remarks}</p>
+      </#if>
 
-<#--<#if (occ.facts?size > 0) >-->
-  <#--<@common.article id="measurementOrFact" title="Measurement or fact">-->
+    </#list>
+  </@common.article>
+</#if>
+-->
 
-  <#--&lt;#&ndash; show list of FactOrMeasurement. &ndash;&gt;-->
-    <#--<#if (occ.facts?size > 0)>-->
-      <#--<#list occ.facts as fom>-->
-      <#--<h3>Fact or Measurement #${fom_index+1}: ${fom.type!"Type unknown"}</h3>-->
-
-        <#--<#if fom.value?has_content>-->
-        <#--<p>${fom.value}</p>-->
-        <#--</#if>-->
-
-        <#--<#if fom.unit?has_content>-->
-        <#--<h3>Unit</h3>-->
-        <#--<p>${fom.unit}</p>-->
-        <#--</#if>-->
-
-        <#--<#if fom.accuracy?has_content>-->
-        <#--<h3>Accuracy</h3>-->
-        <#--<p>${fom.accuracy}</p>-->
-        <#--</#if>-->
-
-        <#--<#if fom.method?has_content>-->
-        <#--<h3>Method</h3>-->
-        <#--<p>${fom.method}</p>-->
-        <#--</#if>-->
-
-        <#--<#if fom.determinedBy?has_content>-->
-        <#--<h3>Determined By</h3>-->
-        <#--<p>${fom.determinedBy}</p>-->
-        <#--</#if>-->
-
-        <#--<#if fom.determinedDate?has_content>-->
-        <#--<h3>Date Determined</h3>-->
-        <#--<p>${fom.determinedDate}</p>-->
-        <#--</#if>-->
-
-        <#--<#if fom.remarks?has_content>-->
-        <#--<h3>Remarks</h3>-->
-        <#--<p>${fom.remarks}</p>-->
-        <#--</#if>-->
-
-      <#--</#list>-->
-    <#--</#if>-->
-  <#--</@common.article>-->
-<#--</#if>-->
-
-<#--<#if (occ.relations?size > 0) >-->
+<#--<#if (occ.relations?size > 0) >
   <#--<@common.article id="resourceRelationship" title="Resource Relationship">-->
 
   <#--&lt;#&ndash; show list of FactOrMeasurement. &ndash;&gt;-->

@@ -1,20 +1,29 @@
 package org.gbif.portal.action.occurrence;
 
+import org.gbif.api.model.common.MediaObject;
 import org.gbif.api.model.occurrence.VerbatimOccurrence;
 import org.gbif.api.model.registry.Organization;
 import org.gbif.api.service.registry.OrganizationService;
+import org.gbif.api.vocabulary.Extension;
+import org.gbif.api.vocabulary.MediaType;
 import org.gbif.dwc.terms.DcTerm;
 import org.gbif.dwc.terms.DwcTerm;
 import org.gbif.dwc.terms.GbifTerm;
 import org.gbif.dwc.terms.Term;
+import org.gbif.dwc.terms.TermFactory;
 import org.gbif.portal.action.occurrence.util.MockOccurrenceFactory;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
 
+import com.google.common.collect.Lists;
+
+import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,13 +32,17 @@ import static org.gbif.api.model.Constants.NUB_DATASET_KEY;
 public class DetailAction extends OccurrenceBaseAction {
 
   private static final Logger LOG = LoggerFactory.getLogger(DetailAction.class);
+  private static final TermFactory TERM_FACTORY = TermFactory.instance();
 
   @Inject
   private OrganizationService organizationService;
 
   private Organization publisher;
   private Map<String, Map<String, String>> verbatim;
+  private Map<Extension, List<Map<Term, String>>> verbatimExtensions;
+
   private boolean fragmentExists = false;
+  private static final ObjectMapper MAPPER = new ObjectMapper();
 
 
   @Override
@@ -42,6 +55,49 @@ public class DetailAction extends OccurrenceBaseAction {
     }
 
     return SUCCESS;
+  }
+
+  public List<MediaObject> getVideos() {
+    return filterFor(occ.getMedia(), MediaType.MovingImage);
+  }
+
+  /**
+   * Inspects the media to determine if the image gallery can show.
+   */
+  public boolean hasImages() {
+    for (MediaObject m : occ.getMedia()) {
+      if (MediaType.StillImage == m.getType() && m.getIdentifier() != null) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+    public List<MediaObject> getAudio() {
+    return filterFor(occ.getMedia(), MediaType.Sound);
+  }
+
+  public List<MediaObject> getImages() {
+    return filterFor(occ.getMedia(), MediaType.StillImage);
+  }
+
+  private List<MediaObject> filterFor(List<MediaObject> media, MediaType type) {
+    List<MediaObject> filtered = Lists.newArrayList();
+    for (MediaObject m : media) {
+      if (type == m.getType()) {
+        filtered.add(m);
+      }
+    }
+    return filtered;
+  }
+
+  public String getMedia() {
+    try {
+      return MAPPER.writeValueAsString(occ.getMedia());
+    } catch (Exception e) {
+      // we are hosed
+      throw Throwables.propagate(e);
+    }
   }
 
   /**
@@ -63,6 +119,18 @@ public class DetailAction extends OccurrenceBaseAction {
     return fragmentExists;
   }
 
+  /**
+   * Retrieve verbatim value for a Term in the core fields map.
+   * Accepts any term the TermFactory can deal with.
+   *
+   * @param termName simple or full name of any Term
+   * @return verbatim value for core Term, or null if it doesn't exist
+   */
+  public String retrieveTerm(String termName) {
+    Term term = TERM_FACTORY.findTerm(termName);
+    return term == null || occ == null ? null : occ.getVerbatimField(term);
+  }
+
   public String verbatim() {
     LOG.debug("Loading raw details for occurrence id [{}]", id);
 
@@ -78,6 +146,10 @@ public class DetailAction extends OccurrenceBaseAction {
       VerbatimOccurrence v =
         id == -1000000000 ? MockOccurrenceFactory.getMockOccurrence() : occurrenceService.getVerbatim(id);
 
+      // copy extensions data
+      verbatimExtensions = v.getExtensions();
+
+      // build core fields with custom ordering/grouping
       for (String group : DwcTerm.GROUPS) {
         for (DwcTerm t : DwcTerm.listByGroup(group)) {
           if (v.getVerbatimFields().containsKey(t)) {
@@ -127,45 +199,10 @@ public class DetailAction extends OccurrenceBaseAction {
       LOG.error("Can't load verbatim data for occurrence {}: {}", id, e);
     }
 
-     return SUCCESS;
+    return SUCCESS;
   }
 
-  /**
-   * Retrieve value for Term in fields map. Currently expecting only DwcTerm.
-   *
-   * @param term Term
-   *
-   * @return value for Term in fields map, or null if it doesn't exist
-   */
-  public String retrieveTerm(String term) {
-    // special case for Dc.rights
-    if (term.equals("rights")) {
-      return occ.getVerbatimField(DcTerm.rights);
-    }
-    // special case for Dc.accessRights
-    else if (term.equals("accessRights")) {
-      return occ.getVerbatimField(DcTerm.accessRights);
-    }
-    // special case for Dc.bibliographicCitation
-    else if (term.equals("bibliographicCitation")) {
-      return occ.getVerbatimField(DcTerm.bibliographicCitation);
-    }
-    // special case for Dc.rightsHolder
-    else if (term.equals("rightsHolder")) {
-      return occ.getVerbatimField(DcTerm.rightsHolder);
-    }
-    // special case for Dc.type
-    else if (term.equals("type")) {
-      return occ.getVerbatimField(DcTerm.type);
-    }
-    // special case for Dc.type
-    else if (term.equals("language")) {
-      return occ.getVerbatimField(DcTerm.language);
-    }
-    DwcTerm t = DwcTerm.valueOf(term);
-    if (t != null && occ != null && occ.getVerbatimFields() != null) {
-      return occ.getVerbatimField(t);
-    }
-    return null;
+  public Map<Extension, List<Map<Term, String>>> getVerbatimExtensions() {
+    return verbatimExtensions;
   }
 }

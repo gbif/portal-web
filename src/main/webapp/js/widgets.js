@@ -1560,18 +1560,12 @@ $.fn.bindDialogPopover = function(opt) {
   });
 };
 
-
-
-
-/*
-* ==============
-* SPECIES IMAGES
-* ==============
-*/
-
-$.fn.speciesSlideshow = function(usageID) {
-  var $this = $(this);
-
+/**
+ * Generic image gallery.
+ * @param imageProvider that will be triggered to provide the data and passed a callback to continue
+ * @param postImageUpdate an optional function that will be called after image changed
+ */
+$.fn.imageGallery = function(imageProvider, postImageUpdate) {
   var
   slideData        = [],
   photoWidth       = 627,
@@ -1579,170 +1573,211 @@ $.fn.speciesSlideshow = function(usageID) {
   currentPhoto     = 0,
   transitionSpeed  = 500,
   easingMethod     = "easeOutQuart",
-
+  $this            = $(this),
   $previousCtr     = $this.find(".previous"),
   $nextCtr         = $this.find(".next"),
   $scroller        = $this.find(".scroller"),
-  $metadata        = $this.find(".scrollable");
+  $metadata        = $this.find(".scrollable"),
   $imgCounter      = $this.find(".counter");
 
   $(this).hide();
+  imageProvider(initImageData);
 
-  var url = cfg.wsClb + "species/" + usageID + "/images?callback=?";
+  function updateMetadata(currentPhoto, data) {
+    $imgCounter.text(1+currentPhoto + " / " + slideData.length);
+    // remove all other metadata
+    $metadata.empty();
 
-  $.getJSON(url, initImageData);
+    // title is special
+    $metaTitle = $this.find(".title");
+    $metaTitle.fadeOut(150, function() {
+      if (data.title) {
+        $metaTitle.html(limitText(data.title, 60));
+        $metaTitle.attr("title", data.title);
+      } else {
+        $metaTitle.html("No title");
+      }
+      $metaTitle.fadeIn(150);
+    });
 
-function updateMetadata(currentPhoto, data) {
-  $imgCounter.text(1+currentPhoto + " / " + slideData.length);
-
-  // remove all other metadata
-  $metadata.empty();
-
-  // title is special
-  $metaTitle = $this.find(".title");
-  $metaTitle.fadeOut(150, function() {
-    if (data.title) {
-      $metaTitle.html(limitText(data.title, 60));
-      $metaTitle.attr("title", data.title);
-    } else {
-      $metaTitle.html("No title");
+    updateMetaProp("Image publisher", data.publisher, null);
+    if (data.creator || data.created) {
+      if (data.creator && data.created) {
+        $val = data.creator + ", " + data.created;
+      } else if (data.creator) {
+        $val = data.creator;
+      } else {
+        $val = data.created;
+      }
+      updateMetaProp("Photographer", $val, null);
     }
-    $metaTitle.fadeIn(150);
-  });
+    updateMetaProp("Copyright", data.license, "No license provided");
+    updateMetaProp("Description", data.description, null);
 
-  // add source
-  $srcLink = data.link;
-  if (!data.link && data.usageKey != usageID) {
-    $srcLink = cfg.baseUrl + '/species/' + data.usageKey;
+    // if registered, call the post image change callback
+    if (postImageUpdate) {
+      postImageUpdate($metadata, data);
+    }
   }
-  if ($srcLink) {
-    // load dataset title and keep it with image
-    getDatasetDetail(data.datasetKey, function(dataset) {
-      $metadata.prepend("<h3>Source</h3><p><a title='" + dataset.title + "' href='" + $srcLink + "'>" + limitText(dataset.title, 28) +"</a></p>");
+
+  function updateMetaProp(prop, value, defaultValue) {
+    if (!value) {
+      value = defaultValue;
+    }
+    if (value) {
+      $metadata.append("<h3>"+prop+"</h3><p>" + value +"</p>");
+    }
+  }
+
+  function activateNextController() {
+    $nextCtr.show();
+    $nextCtr.click(function(event) {
+      event.preventDefault();
+
+      if (currentPhoto == 0) {
+        activatePrevController();
+      }
+
+      $scroller.scrollTo('+=' + photoWidth + 'px', transitionSpeed, { easing:easingMethod, axis:'x' });
+      currentPhoto++;
+      updateMetadata(currentPhoto, slideData[currentPhoto]);
+
+      if (currentPhoto == slideData.length - 1) {
+        deactivateController($nextCtr);
+      }
     });
   }
 
-  updateMetaProp("Image publisher", data.publisher, null);
-  if (data.creator || data.created) {
-    if (data.creator && data.created) {
-      $val = data.creator + ", " + data.created;
-    } else if (data.creator) {
-      $val = data.creator;
+  function activatePrevController() {
+    $previousCtr.show();
+    $previousCtr.click(function(event) {
+      event.preventDefault();
+
+      if (currentPhoto == slideData.length - 1) {
+        activateNextController();
+      }
+      $scroller.scrollTo('-=' + photoWidth + 'px', transitionSpeed, { easing:easingMethod, axis:'x'} );
+      currentPhoto--;
+      updateMetadata(currentPhoto, slideData[currentPhoto]);
+
+      if (currentPhoto == 0) {
+        deactivateController($previousCtr);
+      }
+    });
+  }
+
+  function deactivateController(controller) {
+    controller.hide();
+    controller.off('click');
+  }
+
+  function initImageData(data) {
+
+    $this.show();
+    var images = data.results;
+    var $photos = $scroller.find(".photos");
+    var n = 0;
+
+    _.each(images, function(imgJson) {
+      n++;
+      slideData.push(imgJson);
+      $photos.append("<li><div class='spinner'></div><a href='"+imgJson.image+"' class='fancybox' title='"+imgJson.title+"'><img id='photo_"+n+"'src='" + imgJson.image + "' /></a></li>");
+
+      var $img = $photos.find("#photo_" + n);
+
+      $img.on("load", function() {
+
+        $(this).parent().parent().find(".spinner").fadeOut(100, function() { $(this).remove(); });
+
+        var
+        h   = parseInt($(this).css("height"), 10),
+        w   = parseInt($(this).css("width"), 10);
+        $img.css("top", photoHeight/2 - h/2 );
+        $img.css("left", photoWidth/2 - w/2 );
+        $img.fadeIn(100);
+      });
+    });
+
+    updateMetadata(0, slideData[0]);
+
+    $photos.css("width", slideData.length * photoWidth);
+
+    // attach fancybox links
+    $photos.find("a").fancybox({
+   		'transitionIn'	:	'elastic',
+ 	  	'transitionOut'	:	'elastic',
+ 		  'speedIn'		:	600,
+   		'speedOut'		:	200,
+ 	  	'overlayShow'	:	false
+   	});
+    //console.log(slideData.length + " photos loaded");
+
+    if (slideData.length == 1) {
+      $this.find("div.controller").remove();
     } else {
-      $val = data.created;
-    }
-    updateMetaProp("Photographer", $val, null);
-  }
-  updateMetaProp("Copyright", data.license, "No license provided");
-  updateMetaProp("Description", data.description, null);
-
-}
-
-function updateMetaProp(prop, value, defaultValue) {
-  if (!value) {
-    value = defaultValue;
-  }
-  if (value) {
-    $metadata.append("<h3>"+prop+"</h3><p>" + value +"</p>");
-  }
-}
-
-function activateNextController() {
-  $nextCtr.show();
-  $nextCtr.click(function(event) {
-    event.preventDefault();
-
-    if (currentPhoto == 0) {
-      activatePrevController();
-    }
-
-    $scroller.scrollTo('+=' + photoWidth + 'px', transitionSpeed, { easing:easingMethod, axis:'x' });
-    currentPhoto++;
-    updateMetadata(currentPhoto, slideData[currentPhoto]);
-
-    if (currentPhoto == slideData.length - 1) {
-      deactivateController($nextCtr);
-    }
-  });
-}
-function activatePrevController() {
-  $previousCtr.show();
-  $previousCtr.click(function(event) {
-    event.preventDefault();
-
-    if (currentPhoto == slideData.length - 1) {
       activateNextController();
-    }
-    $scroller.scrollTo('-=' + photoWidth + 'px', transitionSpeed, { easing:easingMethod, axis:'x'} );
-    currentPhoto--;
-    updateMetadata(currentPhoto, slideData[currentPhoto]);
-
-    if (currentPhoto == 0) {
       deactivateController($previousCtr);
     }
-  });
-}
-function deactivateController(controller) {
-  controller.hide();
-  controller.off('click');
-}
-
-function initImageData(data) {
-
-  $this.show();
-
-  var images = data.results;
-  var $photos = $scroller.find(".photos");
-  var n = 0;
-
-  _.each(images, function(imgJson) {
-    n++;
-    slideData.push(imgJson);
-
-    $photos.append("<li><div class='spinner'></div><a href='"+imgJson.image+"' class='fancybox' title='"+imgJson.title+"'><img id='photo_"+n+"'src='" + imgJson.image + "' /></a></li>");
-
-    var $img = $photos.find("#photo_" + n);
-
-    $img.on("load", function() {
-
-      $(this).parent().parent().find(".spinner").fadeOut(100, function() { $(this).remove(); });
-
-      var
-      h   = parseInt($(this).css("height"), 10),
-      w   = parseInt($(this).css("width"), 10);
-      $img.css("top", photoHeight/2 - h/2 );
-      $img.css("left", photoWidth/2 - w/2 );
-      $img.fadeIn(100);
-    });
-
-  });
-
-  updateMetadata(0, slideData[0]);
-
-  $photos.css("width", slideData.length * photoWidth);
-
-  // attach fancybox links
-  $photos.find("a").fancybox({
- 		'transitionIn'	:	'elastic',
- 		'transitionOut'	:	'elastic',
- 		'speedIn'		:	600,
- 		'speedOut'		:	200,
- 		'overlayShow'	:	false
- 	});
-  //console.log(slideData.length + " photos loaded");
-
-  if (slideData.length == 1) {
-    $this.find("div.controller").remove();
-  } else {
-    activateNextController();
-    deactivateController($previousCtr);
   }
 }
 
+
+/**
+ * Species detail page slide show
+ */
+$.fn.speciesSlideshow = function(usageID) {
+  var url = cfg.wsClb + "species/" + usageID + "/images?callback=?";
+  $(this).imageGallery(
+    function(callback) {   // the data provider
+      $.getJSON(url, callback);
+    },
+    function($container, data) {  // postImageUpdate hook
+      // prepend the source link, linking to the source, or the original usage if none provided
+      $srcLink = data.link;
+      if (!data.link && data.usageKey != usageID) {
+        $srcLink = cfg.baseUrl + '/species/' + data.usageKey;
+      }
+      if ($srcLink) {
+        // load dataset title and keep it with image
+        getDatasetDetail(data.datasetKey, function(dataset) {
+          $container.prepend("<h3>Source</h3><p><a title='" + dataset.title + "' href='" + $srcLink + "'>" + limitText(dataset.title, 28) +"</a></p>");
+        });
+      }
+    }
+  );
 };
 
+/**
+ * Occurrence detail page slide show
+ */
+$.fn.occurrenceSlideshow = function(data) {
+  var $dataAsJson = $.parseJSON(data);
 
+  // strip non images from media
+  $dataAsJson.results = _.filter($dataAsJson.results, function(media) {
+    return media.type && media.type=="StillImage";
+  });
 
+  // Hack: append new terms to match the species image response such that:
+  //   - identifier -> image
+  //   - references -> link
+  _.each($dataAsJson.results, function(media) {
+    media.image = media.identifier;
+    media.link = media.references;
+  });
+
+  $(this).imageGallery(
+    function(callback) {
+	    callback($dataAsJson);
+    },
+    function($container, data) {  // postImageUpdate hook
+      if (data.references) {
+        $container.prepend("<h3>Links</h3><ul><li><a title='Image homepage' href='" + data.references + "'>Image homepage</a></li></ul>");
+      }
+    }
+
+  );
+};
 
 /*
 * ==========

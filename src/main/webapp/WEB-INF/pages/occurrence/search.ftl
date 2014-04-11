@@ -37,7 +37,11 @@
             filtersFromRequest['${filterKey}'] = new Array();
            <#list filters.get(filterKey) as filterValue>
              //the title is taken from the link that has the filterKey value as its data-filter attribute
-             addFilters(filtersFromRequest,'${filterKey}','${filterValue}','${action.getFilterTitle(filterKey,filterValue)}');
+             <#if filterKey == 'MEDIA_TYPE'>
+               addFilters(filtersFromRequest,'${filterKey}','${action.getMediaTypeValue(filterValue)}','${action.getFilterTitle(filterKey,filterValue)}');
+             <#else>
+               addFilters(filtersFromRequest,'${filterKey}','${filterValue}','${action.getFilterTitle(filterKey,filterValue)}');
+             </#if>
            </#list>
          </#list>
       </#if>
@@ -177,7 +181,8 @@
                     <li><a tabindex="-1" href="#" data-placeholder="Type an collection code..." data-filter="COLLECTION_CODE" title="Collection code" data-template-filter="template-add-filter" data-template-summary="suggestions-template-filter" data-input-classes="value collection_code_autosuggest auto_add" class="filter-control">Collection code</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type an elevation..." data-filter="ELEVATION" title="Elevation" data-template-filter="template-compare-filter" data-template-summary="template-filter" data-input-classes="value auto_add" class="filter-control">Elevation</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a depth..." data-filter="DEPTH" title="Depth" data-template-filter="template-compare-filter" data-template-summary="template-filter" data-input-classes="value auto_add" class="filter-control">Depth</a></li>
-                    <li><a tabindex="-1" href="#" data-placeholder="Type a name..." data-filter="TYPE_STATUS" title="Type status" data-template-filter="template-type-status-filter" data-template-summary="template-filter" class="filter-control">Type status</a></li>
+                    <li><a tabindex="-1" href="#" data-placeholder="Type a type status..." data-filter="TYPE_STATUS" title="Type status" data-template-filter="template-type-status-filter" data-template-summary="template-filter" class="filter-control">Type status</a></li>
+                    <li><a tabindex="-1" href="#" data-placeholder="Type a media type..." data-filter="MEDIA_TYPE" title="Media type" data-template-filter="template-media-type-filter" data-template-summary="template-filter" class="filter-control">Multimedia types</a></li>
                   </ul>
                   <input type="hidden" id="nubTaxonomyKey" value="${nubTaxonomyKey}"/>
                 </div>
