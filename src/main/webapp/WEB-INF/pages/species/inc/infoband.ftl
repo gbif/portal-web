@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.species.UsageBaseAction" -->
 <#import "/WEB-INF/macros/common.ftl" as common>
 <#--
  THIS INCLUDE GENERATES THE INFOBAND AND TABS FOR A SPECIES PAGE
@@ -26,7 +27,7 @@
   <h3>
   <#assign classification=usage.higherClassificationMap />
   <#list classification?keys as key>
-    <a href="<@s.url value='/species/${key?c}'/>">${classification.get(key)}</a><#if key_has_next> &#x203A; </#if>
+    <a href="<@s.url value='/species/${key?c}'/>">${classification.get(key)!}</a><#if key_has_next> &#x203A; </#if>
   </#list>
   </h3>
 
