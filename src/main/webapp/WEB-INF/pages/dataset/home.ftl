@@ -6,6 +6,7 @@
     <content tag="extra_scripts">
       <script type="text/javascript" src="<@s.url value='/js/vendor/jquery-ui-1.8.17.min.js'/>"></script>
       <script type="text/javascript" src="<@s.url value='/js/portal_autocomplete.js'/>"></script>
+      <#include "/WEB-INF/inc/feed_templates.ftl">
       <script type="text/javascript">
       $(function() {
         $("#q").datasetAutosuggest(cfg.wsRegSuggest, 6, 75, "#content",function(item){ window.location = cfg.baseUrl + "/dataset/" + item.key;});
@@ -17,7 +18,6 @@
               background: url("../img/boxes/box_bottom.png") no-repeat left top;
           }
       </style>
-      <#include "/WEB-INF/inc/feed_templates.ftl">
     </content>
   </head>
   <body class="infobandless">
