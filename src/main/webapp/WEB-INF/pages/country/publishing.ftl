@@ -59,7 +59,7 @@
   <@common.article id="metrics" title="Data published by ${country.title}">
     <div class="fullwidth">
       <p>
-        <@metrics.metricsTable baseAddress="hostCountry=${country}"/>
+        <@metrics.metricsTable baseAddress="publishingCountry=${country}"/>
       </p>
     </div>
   </@common.article>
