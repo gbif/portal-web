@@ -73,10 +73,8 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   // List of parameters that should be excluded during the regular validation.
   // These parameters are excluded since they could contain String values that will be processed as suggestions.
   private static final EnumSet<OccurrenceSearchParameter> OCC_VALIDATION_DISCARDED = EnumSet.of(
-    OccurrenceSearchParameter.TAXON_KEY, OccurrenceSearchParameter.DATASET_KEY);
-
-  private static final TypeStatus[] OCC_TYPE_STATUSES = EnumSet.complementOf(EnumSet.of(TypeStatus.TYPE_GENUS,
-    TypeStatus.TYPE_SPECIES)).toArray(new TypeStatus[TypeStatus.values().length - 2]);
+    OccurrenceSearchParameter.TAXON_KEY,
+    OccurrenceSearchParameter.DATASET_KEY);
 
   private OccurrenceTable table;
 
@@ -164,10 +162,10 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   }
 
   /**
-   * Returns the list of {@link TypeStatus} literals.
+   * Returns the list of {@link TypeStatus} literals applicable for specimens only.
    */
-  public TypeStatus[] getTypeStatuses() {
-    return OCC_TYPE_STATUSES;
+  public List<TypeStatus> getTypeStatuses() {
+    return TypeStatus.specimenTypeStatusList();
   }
 
   /**
@@ -222,7 +220,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Suggestions for dataset title search.
-   * 
+  *
    * @return the datasetsSuggestions
    */
   public SearchSuggestions<DatasetSearchResult> getDatasetsSuggestions() {
@@ -272,7 +270,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Suggestions for scientific name search.
-   * 
+   *
    * @return the nameUsagesSuggestions
    */
   public SearchSuggestions<NameUsageSearchResult> getNameUsagesSuggestions() {
@@ -281,7 +279,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Gets the title(name) of a node.
-   * 
+   *
    * @param networkKey node key/UUID
    */
   public String getNetworkTitle(String networkKey) {
@@ -302,7 +300,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Gets the configuration of fields and information to display.
-   * 
+   *
    * @return the table
    */
   public OccurrenceTable getTable() {
@@ -421,7 +419,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Retrieve value for Term in fields map. Currently expecting only DwcTerm.
-   * 
+   *
    * @param term Term
    * @return value for Term in fields map, or null if it doesn't exist
    */
