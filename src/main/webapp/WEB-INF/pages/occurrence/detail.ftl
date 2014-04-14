@@ -673,21 +673,22 @@ member?has_content || geologicalContextID?has_content || lithostratigraphicTerms
   <@common.article id="media" title="Associated media">
   <div class="fullwidth">
     <#list occ.media as m>
-      <#assign link = m.identifier!m.references />
+      <#assign link = m.references!m.identifier />
       <#if link?has_content>
+       <#assign created>${m.creator!}<#if m.created?has_content><#if m.creator?has_content>, </#if>${m.created?date}</#if></#assign>
        <div class="col">
         <h3><@s.text name="enum.mediatype.${m.type}"/> <#if m.format?has_content><span class="small">[${m.format}]</span></#if></h3>
         <dl>
           <dt>Title</dt>
           <dd><a href="${link}">${m.title!link}</a></dd>
-
           <@common.definition title="Description" value=m.description! />
-          <@common.definition title="License" value=m.license! />
-          <#assign created>
-          ${m.creator!}<#if m.created?has_content><#if m.creator?has_content>, </#if>${m.created?date}</#if>
-          </#assign>
+          <@common.definition title="Source" value=m.source! />
+          <@common.definition title="Audience" value=m.audience! />
           <@common.definition title="Creator" value=created! />
+          <@common.definition title="Contributor" value=m.contributor! />
           <@common.definition title="Publisher" value=m.publisher! />
+          <@common.definition title="Rights Holder" value=m.rightsHolder! />
+          <@common.definition title="License" value=m.license! />
         </dl>
        </div>
       </#if>

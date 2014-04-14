@@ -58,9 +58,19 @@ public class MockOccurrenceFactory {
       // populate interpreted fields
       populateInterpretedFields();
 
+      // populate extensions
+      populateExtensions();
+
       // populate validations
       populateOccurrenceValidations();
     }
+  }
+
+  private static void populateExtensions() {
+    populateIdentifierList();
+    populateMediaList();
+    populateFactOrMeasurementList();
+    populateOccurrenceRelationList();
   }
 
   /**
@@ -86,11 +96,6 @@ public class MockOccurrenceFactory {
     populateVerbatimDwcTaxonTerms();
 
     populateVerbatimExtensions();
-
-    populateIdentifierList();
-    populateMediaList();
-    populateFactOrMeasurementList();
-    populateOccurrenceRelationList();
   }
 
   /**
@@ -405,6 +410,10 @@ public class MockOccurrenceFactory {
       media.setLicense("CC-BY-NC");
       media.setReferences(new URI("http://www.multimedia.danbif.dk/Animalia/chordata/aves/caprimulgiformes/caprimulgidae/caprimulgus/pectoralis"));
       media.setPublisher("DanBIF");
+      media.setContributor("Christian Rassmussen");
+      media.setRightsHolder("Danske Bank");
+      media.setAudience("Academia");
+      media.setSource("Hans Christian Andersen, De vilde Svaner");
       media.setTitle("Pectoralis");
       mockOccurrence.getMedia().add(media);
 

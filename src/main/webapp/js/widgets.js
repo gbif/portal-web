@@ -1592,15 +1592,17 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate) {
     $metaTitle = $this.find(".title");
     $metaTitle.fadeOut(150, function() {
       if (data.title) {
-        $metaTitle.html(limitText(data.title, 60));
-        $metaTitle.attr("title", data.title);
+        $title = data.title;
       } else {
-        $metaTitle.html("No title");
+        $title = "No title";
       }
+      $metaTitle.attr("title", $title);
+      $metaTitle.html(limitText($title, 60));
       $metaTitle.fadeIn(150);
     });
-
-    updateMetaProp("Image publisher", data.publisher, null);
+    if (data.references) {
+      updateMetaProp("Image home", data.references, null);
+    }
     if (data.creator || data.created) {
       if (data.creator && data.created) {
         $val = data.creator + ", " + data.created;
@@ -1611,8 +1613,12 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate) {
       }
       updateMetaProp("Photographer", $val, null);
     }
-    updateMetaProp("Copyright", data.license, "No license provided");
+    updateMetaProp("Contributor", data.contributor, null);
+    updateMetaProp("Publisher", data.publisher, null);
+    updateMetaProp("Rights holder", data.rightsHolder, null);
+    updateMetaProp("License", data.license, "No license provided");
     updateMetaProp("Description", data.description, null);
+    updateMetaProp("Source", data.source, null);
 
     // if registered, call the post image change callback
     if (postImageUpdate) {
@@ -1625,6 +1631,10 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate) {
       value = defaultValue;
     }
     if (value) {
+      // convert links to anchors
+      if (value.length > 5 && value.substring(0, 4) == "http") {
+        value = '<a href="' + value + '">' + value + '</a>';
+      }
       $metadata.append("<h3>"+prop+"</h3><p>" + value +"</p>");
     }
   }
@@ -1770,10 +1780,7 @@ $.fn.occurrenceSlideshow = function(data) {
     function(callback) {
 	    callback($dataAsJson);
     },
-    function($container, data) {  // postImageUpdate hook
-      if (data.references) {
-        $container.prepend("<h3>Links</h3><ul><li><a title='Image homepage' href='" + data.references + "'>Image homepage</a></li></ul>");
-      }
+    function($container, data) {  // postImageUpdate hook doing nothing
     }
 
   );
