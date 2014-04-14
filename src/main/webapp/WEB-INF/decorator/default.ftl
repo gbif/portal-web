@@ -120,6 +120,7 @@
               <li><a href="${cfg.drupal}/newsroom/uses">Featured data use</a></li>
               <li><a href="${cfg.drupal}/newsroom/opportunities">Opportunities</a></li>
               <li><a href="${cfg.drupal}/newsroom/events">Events</a></li>
+              <li><a href="${cfg.drupal}/newsroom/consultations">Consultations</a></li>              
             </ul>
           </div>
 
