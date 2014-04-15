@@ -268,7 +268,11 @@
 <#macro definition title value>
  <#if value?has_content>
   <dt>${title}</dt>
-  <dd>${value}</dd>
+   <#if value?starts_with("http")>
+     <dd><a href="${value}" title="${value}">${limit(value, 34)}</a></dd>
+   <#else>
+     <dd>${value}</dd>
+   </#if>
  </#if>
 </#macro>
 

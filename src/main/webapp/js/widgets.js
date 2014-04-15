@@ -1600,9 +1600,7 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate) {
       $metaTitle.html(limitText($title, 60));
       $metaTitle.fadeIn(150);
     });
-    if (data.references) {
-      updateMetaProp("Image home", data.references, null);
-    }
+    updateMetaProp("Image home", data.link, null);
     if (data.creator || data.created) {
       if (data.creator && data.created) {
         $val = data.creator + ", " + data.created;
@@ -1616,7 +1614,7 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate) {
     updateMetaProp("Contributor", data.contributor, null);
     updateMetaProp("Publisher", data.publisher, null);
     updateMetaProp("Rights holder", data.rightsHolder, null);
-    updateMetaProp("License", data.license, "No license provided");
+    updateMetaProp("License", data.license, null);
     updateMetaProp("Description", data.description, null);
     updateMetaProp("Source", data.source, null);
 

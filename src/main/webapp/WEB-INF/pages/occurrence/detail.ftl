@@ -679,8 +679,9 @@ member?has_content || geologicalContextID?has_content || lithostratigraphicTerms
        <div class="col">
         <h3><@s.text name="enum.mediatype.${m.type}"/> <#if m.format?has_content><span class="small">[${m.format}]</span></#if></h3>
         <dl>
-          <dt>Title</dt>
-          <dd><a href="${link}">${m.title!link}</a></dd>
+          <@common.definition title="Title" value=m.title! />
+          <@common.definition title="Media file" value=m.identifier! />
+          <@common.definition title="Link" value=m.references! />
           <@common.definition title="Description" value=m.description! />
           <@common.definition title="Source" value=m.source! />
           <@common.definition title="Audience" value=m.audience! />
