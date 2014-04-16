@@ -677,7 +677,7 @@ member?has_content || geologicalContextID?has_content || lithostratigraphicTerms
       <#if link?has_content>
        <#assign created>${m.creator!}<#if m.created?has_content><#if m.creator?has_content>, </#if>${m.created?date}</#if></#assign>
        <div class="col">
-        <h3><@s.text name="enum.mediatype.${m.type}"/> <#if m.format?has_content><span class="small">[${m.format}]</span></#if></h3>
+        <h3><@s.text name="enum.mediatype.${m.type!'NULL'}"/> <#if m.format?has_content><span class="small">[${m.format}]</span></#if></h3>
         <dl>
           <@common.definition title="Title" value=m.title! />
           <@common.definition title="Media file" value=m.identifier! />
