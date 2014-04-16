@@ -89,6 +89,7 @@ public class DownloadsAction extends BaseAction {
     return null;
   }
 
+  // used by the freemarker macro to render human readable file sizes
   public String getHumanRedeableBytesSize(long bytes) {
     return FileUtils.humanReadableByteCount(bytes, true);
   }
