@@ -13,26 +13,19 @@
 
 <body class="ipt">
 
-<#-- 
-  TODO: 
-  All the stats are hardcoded.
-  They need to be made accurate, or using registry WS where possible.
-  http://dev.gbif.org/issues/browse/PF-1143
--->
-
-<@common.article id="installations" title="" titleRight="104 IPT installations" class="map">
-  <div id="iptmap" class="map"></div>
+<@common.article id="installations" title="" titleRight="128 IPT installations" class="map">
+    <div id="iptmap" class="map"></div>
     <div class="right">
-      <p>Located in 87 countries, serving:</p>
-      <ul>
-        <li>131 checklists published by 18 different publishers</li>
-        <li>799 occurrence datasets published by 76 different publishers totaling 117.5 million records.</li>
-      </ul>
-      <p><em>Status: September 2013</em></p>
-      <p>&nbsp;</p>
-      <h3>Don’t see your IPT?</h3>
-      <p>Send <a href="mailto:helpdesk@gbif.org" title="Mail to GBIF Helpdesk requesting IPT be added to map">GBIF</a> your coordinates.</p>
-  </div>
+        <p>Located in 42 countries, serving:</p>
+        <ul>
+            <li>88 checklists published by 28 different publishers</li>
+            <li>872 occurrence datasets published by 265 different publishers totaling 220,533,236 million records.</li>
+            <li>6 metadata-only datasets published by 6 different publishers</li>
+        </ul>
+        <p><em>Status: April 2014</em></p>
+        <h3>Don’t see your IPT?</h3>
+        <p>Send <a href="mailto:helpdesk@gbif.org" title="Mail to GBIF Helpdesk requesting IPT be added to map">GBIF</a> your coordinates.</p>
+    </div>
 </@common.article>
 <script>
     // function gets called on each feature before adding it to the GeoJSON layer, and is used to create a popup
