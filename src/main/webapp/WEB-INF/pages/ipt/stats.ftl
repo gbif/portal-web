@@ -19,7 +19,7 @@
         <p>Located in 42 countries, serving:</p>
         <ul>
             <li>88 checklists published by 28 different publishers</li>
-            <li>872 occurrence datasets published by 265 different publishers totaling 220,533,236 million records.</li>
+            <li>872 occurrence datasets published by 265 different publishers totaling 220 million records.</li>
             <li>6 metadata-only datasets published by 6 different publishers</li>
         </ul>
         <p><em>Status: April 2014</em></p>
