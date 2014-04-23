@@ -25,7 +25,7 @@
 
   <groupId>org.gbif</groupId>
   <artifactId>portal-web</artifactId>
-  <version>0.11.1</version>
+  <version>0.11.1-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <name>GBIF Portal</name>
