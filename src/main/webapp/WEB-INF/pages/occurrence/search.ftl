@@ -115,7 +115,7 @@
     <#assign showLastInterpreted =  table.hasSummaryField('LAST_INTERPRETED')>
     <#assign showDataset =  table.hasSummaryField('DATASET')>
     <#assign showLocation =  table.hasColumn('LOCATION')>
-    <#assign showDate =  table.hasColumn('DATE')>
+    <#assign showDate =  table.hasColumn('EVENT_DATE')>
     <#assign showBasisOfRecord =  table.hasColumn('BASIS_OF_RECORD')>
     <table class="results">
       <#if !action.hasErrors()>
@@ -213,29 +213,35 @@
                 <#if showOccurrenceKey>
                   <span class="code">${occ.key?c}</span>
                 </#if>
-                <#if showCatalogNumber &&  action.retrieveTerm('catalogNumber',occ)?has_content><#if showOccurrenceKey>· </#if><span class="catalog">Cat. ${action.retrieveTerm('catalogNumber',occ)!}</span></#if>
-                <#if showRecordedBy && action.retrieveTerm('recordedBy',occ)?has_content>
-                  <div class="code">Collector: ${action.retrieveTerm('recordedBy',occ)}</div>
+                <#assign catalogNumber =  action.retrieveTerm('catalogNumber',occ)>
+                <#if showCatalogNumber &&  catalogNumber?has_content><#if showOccurrenceKey>· </#if><span class="catalog" title="${catalogNumber}">Cat. ${common.limit(catalogNumber,40)}</span></#if>
+                <#assign recordedBy =  action.retrieveTerm('recordedBy',occ)!>
+                <#if showRecordedBy && recordedBy?has_content>
+                  <div class="code" title="${recordedBy}">Recorded by: ${common.limit(recordedBy,60)}</div>
                 </#if>
-                <#if showCollectionCode && action.retrieveTerm('collectionCode',occ)?has_content>
-                  <div class="code">Collection: ${action.retrieveTerm('collectionCode',occ)}</div>
+                <#assign collectionCode =  action.retrieveTerm('collectionCode',occ)!>
+                <#if showCollectionCode && collectionCode?has_content>
+                  <div class="code" title="${collectionCode}">Collection: ${common.limit(collectionCode,60)}</div>
                 </#if>
-                <#if showInstitution && action.retrieveTerm('institutionCode',occ)?has_content>
-                  <div class="code">Institution: ${action.retrieveTerm('institutionCode',occ)}</div>
-                </#if>
+                <#assign institutionCode =  action.retrieveTerm('institutionCode',occ)!>
+                <#if showInstitution && institutionCode?has_content>
+                  <div class="code" title="${institutionCode}">Institution: ${common.limit(institutionCode,60)}</div>
+                </#if>                
                 <#if showLastInterpreted && occ.lastInterpreted?has_content>
                   <div class="code">Last modified in GBIF: ${occ.lastInterpreted?string("yyyy-MM-dd")}</div>
                 </#if>
-                <#if showRecordNumber && action.retrieveTerm('recordNumber',occ)?has_content>
-                  <div class="code">Record number: ${action.retrieveTerm('recordNumber',occ)}</div>
+                <#assign recordNumber =  action.retrieveTerm('recordNumber',occ)!>
+                <#if showRecordNumber && recordNumber?has_content>
+                  <div class="code" title="${recordNumber}">Record number: ${common.limit(recordNumber,60)}</div>
                 </#if>
                  <#if showTypeStatus && occ.typeStatus?has_content>
                   <div class="code">Type status: ${action.getFilterTitle('typeStatus',occ.typeStatus)!}</div>
                 </#if>
               </div>
-              <#if showScientificName && occ.scientificName?has_content><a class="title" href="<@s.url value='/occurrence/${occ.key?c}'/>">${occ.scientificName}</a></#if>
+              <#if showScientificName && occ.scientificName?has_content><a class="title" title="${occ.scientificName}" href="<@s.url value='/occurrence/${occ.key?c}'/>">${common.limit(occ.scientificName,40)}</a></#if>              
               <#if showDataset && occ.datasetKey?has_content>
-               <div class="footer">Published in ${action.getDatasetTitle(occ.datasetKey)!} </div>
+               <#assign datasetTitle =  action.getDatasetTitle(occ.datasetKey)!>
+               <div class="footer" title="${datasetTitle}">Published in ${common.limit(datasetTitle,60)}</div>
               </#if>
              </a>
             </td>

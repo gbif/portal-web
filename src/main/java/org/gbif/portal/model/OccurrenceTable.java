@@ -20,14 +20,15 @@ public class OccurrenceTable {
    * Enum that represents the visible columns in the occurrence page.
    */
   public static enum OccurrenceColumn {
-    SUMMARY, LOCATION, BASIS_OF_RECORD, DATE;
+    SUMMARY, LOCATION, BASIS_OF_RECORD, EVENT_DATE;
   }
 
   /**
    * Enum that represents the visible information of the summary column in the occurrence page.
    */
   public static enum OccurrenceSummaryField {
-    OCCURRENCE_KEY, CATALOG_NUMBER, COLLECTION_CODE, RECORDED_BY, INSTITUTION, SCIENTIFIC_NAME, DATASET, LAST_INTERPRETED,
+    OCCURRENCE_KEY, CATALOG_NUMBER, COLLECTION_CODE, RECORDED_BY, INSTITUTION, SCIENTIFIC_NAME, DATASET,
+    LAST_INTERPRETED,
     RECORD_NUMBER, TYPE_STATUS;
   }
 
@@ -155,7 +156,7 @@ public class OccurrenceTable {
       requestCols.add(OccurrenceColumn.BASIS_OF_RECORD);
     }
     if (isParameterPresent(searchRequest, OCC_DATE_PARAMS)) {
-      requestCols.add(OccurrenceColumn.DATE);
+      requestCols.add(OccurrenceColumn.EVENT_DATE);
     }
     return requestCols;
   }
