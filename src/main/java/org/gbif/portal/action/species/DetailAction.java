@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.UUID;
+
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
@@ -35,11 +36,14 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 import com.google.common.base.Strings;
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Populates the models for the detail page of any taxon.
@@ -48,6 +52,8 @@ import com.google.inject.Inject;
 public class DetailAction extends UsageBaseAction {
 
   private static final long serialVersionUID = -737170459644474553L;
+
+  private static final Logger LOG = LoggerFactory.getLogger(DetailAction.class);
 
   // only some species have a differing original name (a basionym)
   @Nullable
@@ -222,8 +228,10 @@ public class DetailAction extends UsageBaseAction {
     final Set<String> seenRefs = Sets.newHashSet();
     usage.setReferences(FluentIterable.from(referenceService.listByUsage(id, page15).getResults())
       .filter(new Predicate<Reference>() {
+
         public boolean apply(@Nullable Reference r) {
-          if (r == null) return false;
+          if (r == null)
+            return false;
           // deduplicate references only for nub species
           if (usage.isNub() && seenRefs.contains(r.getCitation())) {
             return false;
@@ -233,12 +241,13 @@ public class DetailAction extends UsageBaseAction {
         }
       })
       .toSortedList(Ordering.natural().onResultOf(new Function<Reference, String>() {
+
         @Override
         public String apply(@Nullable Reference r) {
           return r == null ? null : r.getCitation();
         }
       }))
-    );
+      );
 
     if (Origin.SOURCE == usage.getOrigin()) {
       verbatimExists = usageService.getVerbatim(id) != null;
@@ -293,7 +302,25 @@ public class DetailAction extends UsageBaseAction {
         values = Lists.newArrayList();
         vernacularNames.put(key, values);
       }
-      values.add(name);
+      addVernacularNameIfNotExists(values, name);
+    }
+  }
+
+  /**
+   * Adds the vernacular name to the list if it doesn't exist yet in the list.
+   */
+  private void addVernacularNameIfNotExists(List<VernacularName> vernacularNames, final VernacularName existingName) {
+    if (!Iterables.any(vernacularNames, new Predicate<VernacularName>() {
+
+      @Override
+      public boolean apply(VernacularName vernacularName) {
+        return vernacularName.getVernacularName().equalsIgnoreCase(existingName.getVernacularName())
+          && vernacularName.getUsageKey().equals(existingName.getUsageKey())
+          && ((vernacularName.getDatasetKey() == null && existingName.getDatasetKey() == null)
+          || vernacularName.getDatasetKey().equals(existingName.getDatasetKey()));
+      }
+    })) {
+      vernacularNames.add(existingName);
     }
   }
 
