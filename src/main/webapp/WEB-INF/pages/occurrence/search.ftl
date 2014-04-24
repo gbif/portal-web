@@ -213,7 +213,7 @@
                 <#if showOccurrenceKey>
                   <span class="code">${occ.key?c}</span>
                 </#if>
-                <#assign catalogNumber =  action.retrieveTerm('catalogNumber',occ)>
+                <#assign catalogNumber =  action.retrieveTerm('catalogNumber',occ)!>
                 <#if showCatalogNumber &&  catalogNumber?has_content><#if showOccurrenceKey>· </#if><span class="catalog" title="${catalogNumber}">Cat. ${common.limit(catalogNumber,40)}</span></#if>
                 <#assign recordedBy =  action.retrieveTerm('recordedBy',occ)!>
                 <#if showRecordedBy && recordedBy?has_content>
