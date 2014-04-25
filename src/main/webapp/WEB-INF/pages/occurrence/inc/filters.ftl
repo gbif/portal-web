@@ -276,7 +276,7 @@
             <table>
                 <tr>
                   <td>
-                    <h4>&nbsp;</h4>
+                    
                     <select name="predicate" class="predicate">
                       <option value="eq">Is</option>
                       <% if (inputClasses.indexOf("temporal") == -1){%>

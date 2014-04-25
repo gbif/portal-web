@@ -349,7 +349,7 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
           var widget = this;
           widget.create($(control));
           widget.showSummaryView();
-          $(control).on("click", function(e) {
+          $(control).on("click touchstart", function(e) {
             e.preventDefault();
             widget.showEditView();
           });
@@ -1721,10 +1721,10 @@ var OccurrenceWidgetManager = (function ($,_) {
       },
 
       /**
-       * Handles the click event to positioning the dropdown menus relative to the element that shows them.
+       * Handles the click and touchstart(mobile devices) events to positioning the dropdown menus relative to the element that shows them.
        */
       centerDropDownMenus: function() {
-        $('a.[data-toggle="dropdown"]').click( function(e){
+        $('a.[data-toggle="dropdown"]').on('click touchstart', function(e){        	
           // .position() uses position relative to the offset parent,
           var pos = $(this).position();
 
@@ -1903,7 +1903,7 @@ var OccurrenceWidgetManager = (function ($,_) {
           center: CONFIG.center,
           zoom: CONFIG.defaultZoom,
           layers: [minimal],
-          zoomControl: false
+          zoomControl: true
         });
         setupZoom(map);
 
