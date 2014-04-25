@@ -7,7 +7,7 @@ $.extend($.ui.autocomplete.prototype,
     return value.replace(new RegExp("(?![^&;]+;)(?!<[^<>]*)(" + term.replace(/([\^\$\(\)\[\]\{\}\*\.\+\?\|\\])/gi, "\\$1") + ")(?![^<>]*>)(?![^&;]+;)", "gi"), "<strong>$1</strong>");
   }
   });
-
+ var OPEN_KEYS = [13,37,39];
 /**
  * Species name Autosuggest widget.
  * @param wsServiceUrl url to the search/suggest service
@@ -18,7 +18,7 @@ $.fn.countryAutosuggest = function(countryList,appendToElement, onSelectEventHan
   //reference to the widget
   var self = $(this);
   //jquery ui autocomplete widget creation
-  self.autocomplete({
+  var autoComplete = self.autocomplete({
     source:function(request, response) {
       var matches = $.map( countryList, function(country) {
         if ( country.label.toUpperCase().indexOf(request.term.toUpperCase()) === 0 ) {
@@ -29,7 +29,7 @@ $.fn.countryAutosuggest = function(countryList,appendToElement, onSelectEventHan
         matches.push({label:"No results found",iso2Lettercode:0});
       }
       response(matches);
-    },
+    },    
     create: function(event, ui) {
       //forcibly css classes are removed because of conflicts between existing styles and jquery ui styles
       $(".ui-autocomplete").removeClass("ui-widget-content ui-corner-all");
@@ -40,7 +40,7 @@ $.fn.countryAutosuggest = function(countryList,appendToElement, onSelectEventHan
       $(".ui-autocomplete").css("z-index",1000);
     },
     appendTo: appendToElement,
-    focus: function( event, ui ) {//on focus: sets the value of the input[text] element
+    focus: function( event, ui ) {//on focus: sets the value of the input[text] element      
       return false;
     },
     select: function( event, ui ) {//on select: sets the value of the input[text] element
@@ -60,6 +60,16 @@ $.fn.countryAutosuggest = function(countryList,appendToElement, onSelectEventHan
       .appendTo( ul );
     //last line customizes the generated elements of the auto-complete widget by highlighting the results and adding new css class
   };
+  $(self).on('focus', function() {
+    if ($(self).val()) {
+	  self.autocomplete('search');
+    }
+  });
+  $(self).on($.browser.opera ? "keypress" : "keydown", function(event){
+    if(OPEN_KEYS.indexOf(event.keyCode) != -1 && $(self).val()){		  
+	  self.autocomplete('search');		  
+	}
+  });
 };
 
 /**
@@ -131,6 +141,16 @@ $.fn.datasetAutosuggest = function(wsSuggestUrl, limit, maxLength, appendToEleme
       .appendTo( ul );
     //last line customizes the generated elements of the auto-complete widget by highlighting the results and adding new css class
   };
+  $(self).on('focus', function() {
+    if ($(self).val()) {
+	  self.autocomplete('search');
+    }
+  });
+  $(self).on($.browser.opera ? "keypress" : "keydown", function(event){
+    if(OPEN_KEYS.indexOf(event.keyCode) != -1 && $(self).val()){		  
+	  self.autocomplete('search');		  
+	}
+  });
 };
 
 /**
@@ -226,6 +246,16 @@ $.fn.speciesAutosuggest = function(wsServiceUrl,limit,chklstKeysElementsSelector
       .appendTo( ul );
     //last line customizes the generated elements of the auto-complete widget by highlighting the results and adding new css class
   };
+  $(self).on('focus', function() {
+    if ($(self).val()) {
+	  self.autocomplete('search');
+    }
+  });
+  $(self).on($.browser.opera ? "keypress" : "keydown", function(event){
+    if(OPEN_KEYS.indexOf(event.keyCode) != -1 && $(self).val()){		  
+	  self.autocomplete('search');		  
+	}
+  });
 };
 
 /**
@@ -283,4 +313,14 @@ $.fn.termsAutosuggest = function(wsServiceUrl,appendToElement,limit,onSelectEven
       .appendTo( ul );
     //last line customizes the generated elements of the auto-complete widget by highlighting the results and adding new css class
   };
+  $(self).on('focus', function() {
+	    if ($(self).val()) {
+		  self.autocomplete('search');
+	    }
+	  });
+  $(self).on($.browser.opera ? "keypress" : "keydown", function(event){
+    if(OPEN_KEYS.indexOf(event.keyCode) != -1 && $(self).val()){		  
+	  self.autocomplete('search');		  
+	}
+  });
 };

@@ -42,8 +42,6 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Populates the models for the detail page of any taxon.
@@ -52,8 +50,6 @@ import org.slf4j.LoggerFactory;
 public class DetailAction extends UsageBaseAction {
 
   private static final long serialVersionUID = -737170459644474553L;
-
-  private static final Logger LOG = LoggerFactory.getLogger(DetailAction.class);
 
   // only some species have a differing original name (a basionym)
   @Nullable

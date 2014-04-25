@@ -187,7 +187,7 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
           this.filterElement.fadeIn(FADE_TIME);
           this.showFilters();
           this.showEditView();
-          this.toggleApplyButton();
+          this.toggleApplyButton();          
         }
       },
 
@@ -260,6 +260,11 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
         });});
         self.filterElement.find('.edit').hide();
         this.showFilters();
+        var firstInput = $(this.filterElement).find("input:first");
+        //set the focus on the first input
+        if(firstInput){
+          firstInput.focus();
+        }
       },
 
       /**
