@@ -20,11 +20,12 @@ import static org.junit.Assert.assertNotNull;
 public class DetailActionTest extends StrutsJUnit4TestCase<DetailAction> {
 
   // Utility builder
-  private static VernacularName vernacularOf(String name, Language language, Boolean plural) {
+  private static VernacularName vernacularOf(String name, Language language, Boolean plural, Integer usageKey) {
     VernacularName n = new VernacularName();
     n.setVernacularName(name);
     n.setLanguage(language);
     n.setPlural(plural);
+    n.setUsageKey(usageKey);
     return n;
   }
 
@@ -53,11 +54,11 @@ public class DetailActionTest extends StrutsJUnit4TestCase<DetailAction> {
   @Test
   public void testVernaculars() {
     List<VernacularName> source = ImmutableList.of(
-      vernacularOf("Z", Language.ENGLISH, null),
-      vernacularOf("Z", null, null),
-      vernacularOf("A", Language.ABKHAZIAN, null),
-      vernacularOf("A", Language.ABKHAZIAN, true),
-      vernacularOf("B", Language.ABKHAZIAN, null));
+      vernacularOf("Z", Language.ENGLISH, null, 1),
+      vernacularOf("Z", null, null, 2),
+      vernacularOf("A", Language.ABKHAZIAN, null, 3),
+      vernacularOf("A", Language.ABKHAZIAN, true, 4),
+      vernacularOf("B", Language.ABKHAZIAN, null, 5));
     action.usage = new NameUsageContainer();
     action.usage.setVernacularNames(source);
     action.populateVernacularNames();
