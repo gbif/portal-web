@@ -1382,7 +1382,7 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
    * Gets the date format related to the viewMode parameter.
    */
   InnerOccurrenceDateComparatorWidget.prototype.setDateMask = function(viewMode, input) {
-    var defaultFormat = {mask: '9999-99', placeholder: 'yyyy-mm'};
+    var defaultFormat = {mask: '9999-99', placeholder: 'yyyy-mm',insertMode: false};
     $(input).removeClass(ERROR_CLASS)
     if (viewMode == 'months') {
       $(input).inputmask(defaultFormat);
