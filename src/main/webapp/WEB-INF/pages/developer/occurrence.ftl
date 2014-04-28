@@ -120,15 +120,14 @@
   </p>
 
   <@api.apiTable auth=false paging=false>
-      <@trowM url="/count" resp="Count" respLink="/occurrence/count">Returns occurrence counts for a predefined set of dimensions.
+      <@trowM url="/occurrence/count" resp="Count" respLink="/occurrence/count">Returns occurrence counts for a predefined set of dimensions.
         The supported dimensions are enumerated in the <a href="${action.cfg.apiBaseUrl}/occurrence/count/schema" target="_blank">/occurrence/count/schema</a> service.
         An example for the count of georeferenced observations from Canada: <a href="${action.cfg.apiBaseUrl}/occurrence/count?country=CANADA&georeferenced=true&basisOfRecord=OBSERVATION" target="_blank">/occurrence/count?country=CANADA&georeferenced=true&basisOfRecord=OBSERVATION</a>.
-        Note that country is the full name, not ISO code. This will change to ISO code in v1.0 of the API.
       </@trowM>
-      <@trowM url="/count/schema" resp="Count" respLink="/occurrence/count/schema">List the supported metrics by the service.</@trowM>
-      <@trowM url="/counts/basis_of_record" resp="Counts" respLink="/occurrence/counts/basis_of_record">Lists occurrence counts by basis of record.</@trowM>
-      <@trowM url="/counts/countries"resp="Counts" respLink="/occurrence/counts/countries?publishingCountry=US" params=["publishingCountry"]>Lists occurrence counts by publishing country.</@trowM>
-      <@trowM url="/counts/year" resp="Counts" respLink="/occurrence/counts/year?from=2000&to=20012" params=["from","to"]>Lists occurrence counts by year.</@trowM>
+      <@trowM url="/occurrence/count/schema" resp="Count" respLink="/occurrence/count/schema">List the supported metrics by the service.</@trowM>
+      <@trowM url="/occurrence/counts/basis_of_record" resp="Counts" respLink="/occurrence/counts/basis_of_record">Lists occurrence counts by basis of record.</@trowM>
+      <@trowM url="/occurrence/counts/countries"resp="Counts" respLink="/occurrence/counts/countries?publishingCountry=US" params=["publishingCountry"]>Lists occurrence counts by publishing country.</@trowM>
+      <@trowM url="/occurrence/counts/year" resp="Counts" respLink="/occurrence/counts/year?year=1981,2012" params=["year"]>Lists occurrence counts by year.</@trowM>
     </@api.apiTable>
 </@api.article>
 
@@ -172,8 +171,6 @@
   "issue": "A specific interpretation issue as defined in our <a href='${api.apidocs}vocabulary/OccurrenceIssue.html' target='_blank'>OccurrenceIssue enum</a>",
   "q" : "Simple search parameter. The value for this parameter can be a simple word or a phrase.",
   "limit": "The maximum number of results to return. This can't be greater than 300, any value greater is set to 300.",
-  "from" : "The minimum year for which to return occurrence counts. Deprecated and will be replaced by a standard <a href='${baseUrl}/developer/summary#common'>range query</a> soon.",
-  "to" : "The maximum year for which to return occurrence counts. Deprecated and will be replaced by a standard <a href='${baseUrl}/developer/summary#common'>range query</a> soon."
 } />
 
 

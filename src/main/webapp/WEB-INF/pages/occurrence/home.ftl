@@ -3,24 +3,24 @@
 <head>
   <title>Occurrence search</title>
    <content tag="extra_scripts">
-      <#-- 
+      <#--
         Maps are embedded as iframes, but we register event listeners to link through to the occurrence
         search based on the state of the widget.
       -->
       <script type="text/javascript" src="${cfg.tileServerBaseUrl!}/map-events.js"></script>
-      <script>    
+      <script>
         $(document).ready(function() {
-          var yearsValues = new Array();  
-          <#assign yearCounts=action.yearCounts>  
+          var yearsValues = new Array();
+          <#assign yearCounts=action.yearCounts>
           <#list yearCounts?keys as k>
             yearsValues.push(${yearCounts.get(k)?c});
-          </#list>                     
+          </#list>
           $("#yearChart").addGraph(yearsValues, {height:240});
-          
+
           new GBIFMapListener().subscribe(function(id, searchUrl) {
             $("#geoOccurrenceSearch").attr("href", "<@s.url value='/occurrence/search'/>?" +  searchUrl);
           });
-        });     
+        });
 
      </script>
    </content>
@@ -58,10 +58,10 @@
          <p>
            This map shows the density of all ${numGeoreferenced!0} georeferenced occurrence records published through the GBIF network.
          </p>
-         <p> 
-           To explore the records, zoom into the map or click on the links above and add further filters to customize search results. 
+         <p>
+           To explore the records, zoom into the map or click on the links above and add further filters to customize search results.
          </p>
-         
+
        </div>
     </div>
   </@common.article>
@@ -117,7 +117,7 @@
       </div>
     </div>
     <div class="right">
-      <p>This visualization shows the growth in occurrences recorded <a href="<@s.url value='/occurrence/search?YEAR=1950%2C*'/>">after 1950</a>.
+      <p>This visualization shows the growth in occurrences recorded <a href="<@s.url value='/occurrence/search?YEAR=1900%2C*'/>">after 1900</a>.
       GBIF provides access to many older records, and you can add date range filters to search content for any period.</p>
       <p>For example, <a href="<@s.url value='/occurrence/search?YEAR=1850%2C1950'/>">here is a filtered view</a> for records between 1850 and 1950.</p>
     </div>
