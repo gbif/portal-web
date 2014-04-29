@@ -168,6 +168,10 @@ public class FiltersActionHelper {
 
   private static final String METER = "m";
 
+  private static final String ALL = "all";
+
+  private static final String WILDCARD = "*";
+
   // List of official countries
   private static final Set<Country> COUNTRIES = Sets.immutableEnumSet(Sets.filter(
     Sets.newHashSet(Country.values()),
@@ -283,7 +287,9 @@ public class FiltersActionHelper {
     OccurrenceSearchParameter parameter =
       (OccurrenceSearchParameter) VocabularyUtils.lookupEnum(filterKey, OccurrenceSearchParameter.class);
     if (parameter != null) {
-      if (parameter == OccurrenceSearchParameter.TAXON_KEY) {
+      if (WILDCARD.equals(filterValue)) {
+        return ALL;
+      } else if (parameter == OccurrenceSearchParameter.TAXON_KEY) {
         return StringEscapeUtils.escapeEcmaScript(getScientificName(filterValue));
       } else if (parameter == OccurrenceSearchParameter.BASIS_OF_RECORD) {
         return LocalizedTextUtil.findDefaultText(BASIS_OF_RECORD_KEY + filterValue, getLocale());
