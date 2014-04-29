@@ -121,6 +121,7 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
         this.manager = options.manager;
         this.bindingsExecutor = options.bindingsExecutor;
         this.summaryTemplate = null;
+        this.showAll = false;
       },
 
       //IsBlank
@@ -211,6 +212,17 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
           this.filterElement.find('.edit').show();
         }
       },
+      
+      /**
+       * Gets the showAll property.
+       */
+      isShowAll : function() {
+    	   return this.showAll;
+       },
+       
+       setShowAll : function(showAllValue) {
+         this.showAll = showAllValue;
+       },
 
 
       /**
@@ -1515,7 +1527,7 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
  * Type status widget. Displays a multi-select list with the basis of record values.
  */
 var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
-  var InnerOccurrenceMultiSelectWidget = function () {
+  var InnerOccurrenceMultiSelectWidget = function () {    
   };
   //Inherits everything from OccurrenceWidget
   InnerOccurrenceMultiSelectWidget.prototype = $.extend(true,{}, new OccurrenceWidget());
@@ -1538,6 +1550,13 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
   };
 
   /**
+   * Checks if all the elements are selected.
+   */
+  InnerOccurrenceMultiSelectWidget.prototype.hasAllSelected = new function() {
+   return this.filterElement && this.filterElement.find(".multi-select > li").length == this.filterElement.find(".multi-select > li.selected").length;
+  };
+   
+  /**
    * Executes addtional bindings: binds click event of each basis of record element.
    */
   InnerOccurrenceMultiSelectWidget.prototype.executeAdditionalBindings = function(){
@@ -1547,13 +1566,16 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
         if ($(this).hasClass("selected")) {
           self.removeFilter({value:$(this).attr("key"),key:null});
           $(this).removeClass("selected");
+          self.setShowAll(false);
         } else {
           self.addFilter({value:$(this).attr("key"),key:null,submitted: false,paramName:self.getId()});
           $(this).addClass("selected");
+          self.setShowAll(self.hasAllSelected());
         }
       });
 
       this.filterElement.find(".select-all-" + self.getId()).click( function() {
+    	self.setShowAll(true);
         self.filterElement.find(".multi-select > li").each( function() {
     	  self.addFilter({value:$(this).attr("key"),key:null,submitted: false,paramName:self.getId()});
     	  $(this).addClass("selected");
@@ -1561,6 +1583,7 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
       });      
       
       this.filterElement.find(".clear-all-" + self.getId()).click( function() {
+    	self.setShowAll(false);
         self.filterElement.find(".multi-select > li").each( function() {
          self.removeFilter({value:$(this).attr("key"),key:null});
          $(this).removeClass("selected");
@@ -1990,26 +2013,30 @@ var OccurrenceWidgetManager = (function ($,_) {
 
         //Collect the filter values
         for(var wi=0; wi < widgets.length; wi++) {
-          var widgetFilters = widgets[wi].getFilters();
-          for (var fi=0; fi < widgetFilters.length; fi++) {
-            var filter = widgetFilters[fi];
-            var paramName = filter.paramName;
-            if (undefined == paramName){
-              paramName = widgets[wi].getId();
-            }
-            if (params[paramName] == null) {
-              params[paramName] = new Array();
-            }
-            if (filter.key != null) {
-              //key field could be a string or a number, but is sent as a string
-              if($.type(filter.key) == 'string' && filter.key.length > 0){
-                params[paramName].push(filter.key);
-              } else if ($.type(filter.key) == 'number'){
-                params[paramName].push(filter.key.toString());
-              }
-            } else {
-              params[paramName].push(filter.value);
-            }
+          if(widgets[wi].isShowAll()){
+        	  params[widgets[wi].getId()] = '*';
+          } else {
+	          var widgetFilters = widgets[wi].getFilters();
+	          for (var fi=0; fi < widgetFilters.length; fi++) {
+	            var filter = widgetFilters[fi];
+	            var paramName = filter.paramName;
+	            if (undefined == paramName){
+	              paramName = widgets[wi].getId();
+	            }
+	            if (params[paramName] == null) {
+	              params[paramName] = new Array();
+	            }
+	            if (filter.key != null) {
+	              //key field could be a string or a number, but is sent as a string
+	              if($.type(filter.key) == 'string' && filter.key.length > 0){
+	                params[paramName].push(filter.key);
+	              } else if ($.type(filter.key) == 'number'){
+	                params[paramName].push(filter.key.toString());
+	              }
+	            } else {
+	              params[paramName].push(filter.value);
+	            }
+	          }
           }
         }
         //redirects the window to the target
