@@ -7,7 +7,7 @@
             <ul>
                 <li class="single last"><h4>v2.1</h4>(Latest version)</li>
             </ul>
-            <a href="<@s.url value='http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.1/ipt-2.1.war'/>" title="View occurrences" class="candy_blue_button" onClick="_gaq.push(['_trackEvent', 'IPT_WAR', 'Download', 'IPT 2.1' ]);"><span>Download</span></a>
+            <a href="<@s.url value='http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.1.1/ipt-2.1.1.war'/>" title="View occurrences" class="candy_blue_button" onClick="_gaq.push(['_trackEvent', 'IPT_WAR', 'Download', 'IPT_2_1_1']);"><span>Download</span></a>
         </div>
     </div>
 </content>
