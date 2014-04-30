@@ -563,7 +563,6 @@
         <servername>http://www.gbif-uat.org</servername>
         <drupal.url>http://www.gbif-uat.org</drupal.url>
         <url.includeContext>false</url.includeContext>
-        <google.analytics>UA-42057855-1</google.analytics>
         <registry.ws.url>http://api.gbif-uat.org/v0.9/</registry.ws.url>
         <checklistbank.ws.url>http://api.gbif-uat.org/v0.9/</checklistbank.ws.url>
         <checklistbank.search.ws.url>http://api.gbif-uat.org/v0.9/species/</checklistbank.search.ws.url>
