@@ -120,7 +120,7 @@
 <@api.article id="dataset_search" title="Dataset Search">
   <p>The dataset search API provides search services for datasets.</p>
   <@api.apiTable auth=false >
-    <@trowS url="/search" respLink="/dataset/search?q=plant&publishing_country=argentina" paging=true params=["q","country","type","subtype","keyword","owning_org","hosting_org","decade","publishing_country","continent","hl","facet","facet_only","facet_mincount","facet_multiselect"]>Full text search across all datasets.
+    <@trowS url="/search" respLink="/dataset/search?q=plant&publishing_country=AR" paging=true params=["q","country","type","subtype","keyword","owning_org","hosting_org","decade","publishing_country","continent","hl","facet","facet_only","facet_mincount","facet_multiselect"]>Full text search across all datasets.
         Results are ordered by relevance.</@trowS>
     <@trowS url="/suggest" respLink="/dataset/suggest?q=Amazon&type=OCCURRENCE" params=["q","country","type","subtype","keyword","owning_org","hosting_org","decade","publishing_country","continent"]>Search that returns up to 20 matching datasets.
         Results are ordered by relevance.</@trowS>
@@ -282,7 +282,7 @@
 
 <#assign params = {
   "q": "Simple search parameter. The value for this parameter can be a simple word or a phrase. Wildcards can be added to the simple word parameters only, e.g. q=*puma*",
-  "country": "Filters by country as given in our <a href='${api.apidocs}/vocabulary/Country.html' target='_blank'>Country enum</a>, e.g. country=CANADA. Not yet implemented for use with dataset search, but will eventually search on the countries within the geospatial coverage of the dataset.",
+  "country": "Filters by country given as a ISO 639-1 (2 letter) country code. Not yet implemented for use with dataset search, but will eventually search on the countries within the geospatial coverage of the dataset.",
   "type": "For datasets, filters by dataset type as given in our <a href='${api.apidocs}/vocabulary/DatasetType.html' target='_blank'>DatasetType enum</a>. For metadata documents, filters by the metadata type as given in our <a href='${api.apidocs}/vocabulary/MetadataType.html' target='_blank'>MetadataType enum</a>",
   "identifier": "The value for this parameter can be a simple string or integer, e.g. identifier=120",
   "identifierType": "Used in combination with the identifier parameter to filter identifiers by identifier type as given in our <a href='${api.apidocs}/vocabulary/IdentifierType.html' target='_blank'>IdentifierType enum</a>",
@@ -291,7 +291,7 @@
   "owning_org": "Filters datasets by their owning organization UUID key",
   "hosting_org": "Filters datasets by their hosting organization UUID key",
   "decade": "Filters datasets by their temporal coverage broken down to decades. Decades are given as a full year, e.g. 1880, 1960, 2000, etc, and will return datasets wholly contained in the decade as well as those that cover the entire decade or more. Facet by decade to get the break down, e.g. <a href='${action.cfg.apiBaseUrl}/dataset/search?facet=DECADE&facet_only=true' target='_blank'>/search?facet=DECADE&facet_only=true</a>",
-  "publishing_country": "Filters datasets by their owining organization's country as given in our <a href='${api.apidocs}/vocabulary/Country.html' target='_blank'>Country enum</a>",
+  "publishing_country": "Filters datasets by their owining organization's country given as a ISO 639-1 (2 letter) country code",
   "continent": "Not yet implemented, but will eventually allow filtering datasets by their continent(s) as given in our <a href='${api.apidocs}/vocabulary/Continent.html' target='_blank'>Continent enum</a>.",
   "facet": "A list of facet names used to retrieve the 100 most frequent values for a field. Allowed facets are: type, keyword, owning_org, hosting_org, decade, and publishing_country. Additionally subtype and country are legal values but not yet implemented, so data will not yet be returned for them."
 } />

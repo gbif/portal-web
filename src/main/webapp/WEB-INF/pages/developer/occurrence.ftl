@@ -140,7 +140,7 @@
   <@api.apiTable auth=false paging=false>
     <@trowM url="/occurrence/counts/datasets" resp="UUID Counts" respLink="/occurrence/counts/datasets?country=DE" params=["country","taxonKey"]>Returns occurrence counts for datasets that cover a given taxon or country.</@trowM>
     <@trowM url="/occurrence/counts/countries" resp="Country Counts" respLink="/occurrence/counts/countries?publishingCountry=DE" params=["publishingCountry"]>Returns occurrence counts for all countries covered by the data published by the given country.</@trowM>
-    <@trowM url="/occurrence/counts/publishingCountry" resp="Country Counts" respLink="/occurrence/counts/publishing_countries?country=DE" params=["country"]>Returns occurrence counts for all countries that publish data about the given country.</@trowM>
+    <@trowM url="/occurrence/counts/publishing_country" resp="Country Counts" respLink="/occurrence/counts/publishing_countries?country=DE" params=["country"]>Returns occurrence counts for all countries that publish data about the given country.</@trowM>
   </@api.apiTable>
 </@api.article>
 
