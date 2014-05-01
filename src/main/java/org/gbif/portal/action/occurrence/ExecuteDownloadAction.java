@@ -38,7 +38,7 @@ public class ExecuteDownloadAction extends BaseAction {
     Predicate p = predicateFactory.build(getServletRequest().getParameterMap());
     LOG.info("Predicate build for passing to download [{}]", p);
     emails.add(getCurrentUser().getEmail());
-    DownloadRequest download = new DownloadRequest(p, getCurrentUser().getUserName(), emails);
+    DownloadRequest download = new DownloadRequest(p, getCurrentUser().getUserName(), emails, true);
     LOG.debug("Creating download with DownloadRequest [{}] from service [{}]", download, downloadRequestService);
     key = downloadRequestService.create(download);
     LOG.debug("Got key [{}] for new download", key);

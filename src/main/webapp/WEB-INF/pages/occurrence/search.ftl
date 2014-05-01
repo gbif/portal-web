@@ -184,6 +184,7 @@
                     <li><a tabindex="-1" href="#" data-placeholder="Type a depth..." data-filter="DEPTH" title="Depth" data-template-filter="template-compare-filter" data-template-summary="template-filter" data-input-classes="value auto_add" class="filter-control">Depth</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a type status..." data-filter="TYPE_STATUS" title="Type status" data-template-filter="template-type-status-filter" data-template-summary="template-filter" class="filter-control">Type status</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a media type..." data-filter="MEDIA_TYPE" title="Media type" data-template-filter="template-media-type-filter" data-template-summary="template-filter" class="filter-control">Multimedia types</a></li>
+                    <li><a tabindex="-1" href="#" data-placeholder="Type a issue..." data-filter="ISSUE" title="Issue" data-template-filter="template-occurrence-issue-filter" data-template-summary="template-filter" class="filter-control">Issues</a></li>
                   </ul>
                   <input type="hidden" id="nubTaxonomyKey" value="${nubTaxonomyKey}"/>
                 </div>

@@ -206,6 +206,12 @@ public class FiltersActionHelper {
    */
   private static final String MEDIA_TYPE_KEY = "enum.mediatype.";
 
+
+  /**
+   * Constant that contains the prefix of a key to get a OccurrenceIssue label from the resource bundle file.
+   */
+  private static final String OCCURRENCE_ISSUE_KEY = "enum.occurrenceissue.";
+
   @Inject
   public FiltersActionHelper(DatasetService datasetService, NameUsageService nameUsageService,
     NameUsageSearchService nameUsageSearchService, NameUsageMatchingService nameUsageMatchingService,
@@ -319,6 +325,8 @@ public class FiltersActionHelper {
         return getMonthRangeTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.SPATIAL_ISSUES) {
         return getSpatialIssuesTitle(filterValue);
+      } else if (parameter == OccurrenceSearchParameter.ISSUE) {
+        return LocalizedTextUtil.findDefaultText(OCCURRENCE_ISSUE_KEY + filterValue, getLocale());
       }
     }
     return title;

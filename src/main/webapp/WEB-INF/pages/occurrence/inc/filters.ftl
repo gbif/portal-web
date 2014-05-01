@@ -203,6 +203,36 @@
       </td>
     </tr>
   </script>
+  
+  
+  <script type="text/template" id="template-occurrence-issue-filter">
+    <tr class="filter">
+      <td colspan="4">
+        <a class="edit" style="display:none;"/>
+        <div class="inner filter_view">
+          <h4 class="title"><%= title %></h4>
+          <div class="filter">
+            <h4 class="title">Select </h4>
+            <ul class="multi-select">
+             <#list occurrenceIssues as itemValue>
+               <li key="${itemValue}"><a>${action.getFilterTitle('issue',itemValue)}</a></li>
+             </#list>
+            </ul>
+            <div class="select-controls">
+              <a class="select-control select-all-<%= paramName %>">[Select all]</a>&nbsp;&nbsp;<a class="select-control clear-all-<%= paramName %>">[Clear all]</a>
+            </div>
+          </div>
+          <div class="center">
+            <a class="button candy_blue_button apply" title="<%= title %>" data-action="add-new-filter" data-filter="<%= paramName %>" apply-function="applyOccurrenceFilters"><span>Apply</span></a>
+          </div>
+          <a class="close"></a>
+        </div>
+        <div class="summary_view">
+
+        </div>
+      </td>
+    </tr>
+  </script>
 
   <script type="text/template" id="template-add-filter">
     <tr class="filter">

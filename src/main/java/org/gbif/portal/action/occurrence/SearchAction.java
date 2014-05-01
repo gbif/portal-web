@@ -11,6 +11,7 @@ import org.gbif.api.vocabulary.BasisOfRecord;
 import org.gbif.api.vocabulary.Continent;
 import org.gbif.api.vocabulary.Country;
 import org.gbif.api.vocabulary.MediaType;
+import org.gbif.api.vocabulary.OccurrenceIssue;
 import org.gbif.api.vocabulary.TypeStatus;
 import org.gbif.dwc.terms.DcTerm;
 import org.gbif.dwc.terms.DwcTerm;
@@ -68,6 +69,8 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   // Name of the offset field, used to display error messages related to the offset parameter
   private static final String OFFSET_FIELD = "offset";
+
+  private static final Set<OccurrenceIssue> OCCURRENCE_ISSUES = EnumSet.allOf(OccurrenceIssue.class);
 
 
   // List of parameters that should be excluded during the regular validation.
@@ -208,6 +211,13 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
     return filtersActionHelper.getCountries();
   }
 
+  /**
+   * Returns the list of {@link OccurrenceIssue} literals.
+   */
+  public Set<OccurrenceIssue> getOccurrenceIssues() {
+    return OCCURRENCE_ISSUES;
+  }
+
 
   /**
    * Gets the current year.
@@ -220,7 +230,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Suggestions for dataset title search.
-  *
+   * 
    * @return the datasetsSuggestions
    */
   public SearchSuggestions<DatasetSearchResult> getDatasetsSuggestions() {
@@ -270,7 +280,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Suggestions for scientific name search.
-   *
+   * 
    * @return the nameUsagesSuggestions
    */
   public SearchSuggestions<NameUsageSearchResult> getNameUsagesSuggestions() {
@@ -279,7 +289,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Gets the title(name) of a node.
-   *
+   * 
    * @param networkKey node key/UUID
    */
   public String getNetworkTitle(String networkKey) {
@@ -300,7 +310,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Gets the configuration of fields and information to display.
-   *
+   * 
    * @return the table
    */
   public OccurrenceTable getTable() {
@@ -419,7 +429,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Retrieve value for Term in fields map. Currently expecting only DwcTerm.
-   *
+   * 
    * @param term Term
    * @return value for Term in fields map, or null if it doesn't exist
    */
