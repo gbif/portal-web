@@ -222,7 +222,7 @@
                     &nbsp;&nbsp;{<br/>
                     &nbsp;&nbsp;&nbsp;&nbsp;"type":"and",<br/>
                     &nbsp;&nbsp;&nbsp;&nbsp;"predicates":
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{"type":"equals","key":"SPATIAL_ISSUES","value":"false"},<br/>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{"type":"equals","key":"HAS_GEOSPATIAL_ISSUE","value":"false"},<br/>
                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"type":"equals","key":"TAXON_KEY","value":"2440447"}]<br/>
                   &nbsp;&nbsp;}<br/>
                 }<br/>
@@ -241,7 +241,7 @@
                     &nbsp;&nbsp;{<br/>
                     &nbsp;&nbsp;&nbsp;&nbsp;"type":"or",<br/>
                     &nbsp;&nbsp;&nbsp;&nbsp;"predicates":
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{"type":"equals","key":"SPATIAL_ISSUES","value":"false"},<br/>
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{"type":"equals","key":"HAS_GEOSPATIAL_ISSUE","value":"false"},<br/>
                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"type":"equals","key":"TAXON_KEY","value":"2440447"}]<br/>
                   &nbsp;&nbsp;}<br/>
                 }<br/>

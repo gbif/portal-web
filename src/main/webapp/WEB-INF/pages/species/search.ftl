@@ -5,7 +5,7 @@
   <title>Species Search Results for ${q!}</title>
 
   <content tag="extra_scripts">
-    <script type="text/javascript" src="<@s.url value='/js/facets.js'/>"></script>    
+    <script type="text/javascript" src="<@s.url value='/js/facets.js'/>"></script>
     <script type="text/javascript">
       //needed to avoid caching by Firefox's bfcache
       window.onunload = function(){ };
@@ -108,7 +108,7 @@
           </div>
 
           <#assign seeAllFacets = ["HIGHERTAXON_KEY","RANK","DATASET_KEY", "NOMENCLATURAL_STATUS"]>
-          <#assign facets= ["DATASET_KEY","HIGHERTAXON_KEY","RANK","STATUS","EXTINCT","THREAT","HABITAT", "NOMENCLATURAL_STATUS", "NAME_TYPE"]>
+          <#assign facets= ["DATASET_KEY","HIGHERTAXON_KEY","RANK","STATUS","IS_EXTINCT","THREAT","HABITAT", "NOMENCLATURAL_STATUS", "NAME_TYPE"]>
           <#include "/WEB-INF/inc/facets.ftl">
         </div>
       </div>

@@ -37,7 +37,7 @@
     <div class="results">
       <ul>
         <li><a href="<@s.url value='/occurrence/search'/>" title="">${numOccurrences!0}</a>occurrences records</li>
-        <li class="last"><a href="<@s.url value='/occurrence/search?HAS_COORDINATE=true&SPATIAL_ISSUES=false'/>" title="">${numGeoreferenced!0}</a>georeferenced records</li>
+        <li class="last"><a href="<@s.url value='/occurrence/search?HAS_COORDINATE=true&HAS_GEOSPATIAL_ISSUE=false'/>" title="">${numGeoreferenced!0}</a>georeferenced records</li>
       </ul>
     </div>
 </@common.article>
@@ -50,7 +50,7 @@
        <div class="inner">
          <h3>View records</h3>
          <p>
-           <a href="<@s.url value='/occurrence/search?HAS_COORDINATE=true&SPATIAL_ISSUES=false'/>">All records</a>
+           <a href="<@s.url value='/occurrence/search?HAS_COORDINATE=true&HAS_GEOSPATIAL_ISSUE=false'/>">All records</a>
            |
            <a href="<@s.url value='/occurrence/search'/>" id='geoOccurrenceSearch'>In viewable area</a></li>
          </p>

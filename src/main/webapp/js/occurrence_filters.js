@@ -188,7 +188,7 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
           this.filterElement.fadeIn(FADE_TIME);
           this.showFilters();
           this.showEditView();
-          this.toggleApplyButton();          
+          this.toggleApplyButton();
         }
       },
 
@@ -212,14 +212,14 @@ var OccurrenceWidget = (function ($,_,OccurrenceWidgetManager) {
           this.filterElement.find('.edit').show();
         }
       },
-      
+
       /**
        * Gets the showAll property.
        */
       isShowAll : function() {
     	   return this.showAll;
        },
-       
+
        setShowAll : function(showAllValue) {
          this.showAll = showAllValue;
        },
@@ -1066,17 +1066,17 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
         self.filters.push({label:val == 'true' ?'Yes':'No',value: val, key: null,paramName:'HAS_COORDINATE', submitted: false,hidden:true});
         self.filterElement.find(':checkbox[name="HAS_COORDINATE"][id!=' + $(this).attr('id') + ']').removeAttr('checked');
         if(val == 'false'){
-          self.removeFilterByParamName('SPATIAL_ISSUES');
-          self.filterElement.find(':checkbox[name="SPATIAL_ISSUES"]').removeAttr('checked');
-          self.filterElement.find('#spatial_issues > :input').attr('disabled','disabled');
+          self.removeFilterByParamName('HAS_GEOSPATIAL_ISSUE');
+          self.filterElement.find(':checkbox[name="HAS_GEOSPATIAL_ISSUE"]').removeAttr('checked');
+          self.filterElement.find('#has_geospatial_issue > :input').attr('disabled','disabled');
         } else {
-          self.filterElement.find('#spatial_issues > :input').removeAttr('disabled');
+          self.filterElement.find('#has_geospatial_issue > :input').removeAttr('disabled');
         }
       } else {
         self.filterElement.find(".map_control,.leaflet-control-draw").show();
       }
       if ($(this).attr('id') == 'isNotGeoreferenced') {
-        self.filterElement.find('#spatial_issues > :input').removeAttr('disabled');
+        self.filterElement.find('#has_geospatial_issue > :input').removeAttr('disabled');
       }
       self.showFilters();
       self.filterElement.find(".apply").show();
@@ -1084,15 +1084,15 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
   };
 
   /**
-   * Binds the event handler to the .checkbox[name="SPATIAL_ISSUES"].change event.
+   * Binds the event handler to the .checkbox[name="HAS_GEOSPATIAL_ISSUE"].change event.
    */
   InnerOccurrenceLocationWidget.prototype.bindSelectSpatialIssuesEvent = function() {
     var self = this;
-    this.filterElement.find(':checkbox[name="SPATIAL_ISSUES"]').change( function(e) {
-      self.removeFilterByParamName('SPATIAL_ISSUES');
-      self.filterElement.find(':checkbox[name="SPATIAL_ISSUES"]').each( function(idx,el) {
+    this.filterElement.find(':checkbox[name="HAS_GEOSPATIAL_ISSUE"]').change( function(e) {
+      self.removeFilterByParamName('HAS_GEOSPATIAL_ISSUE');
+      self.filterElement.find(':checkbox[name="HAS_GEOSPATIAL_ISSUE"]').each( function(idx,el) {
         if ($(el).attr('checked')) {
-          self.filters.push({label:$(el).val() == 'true' ?'Yes':'No',value: $(el).val(), key:null,paramName:'SPATIAL_ISSUES', submitted: false, hidden:true});
+          self.filters.push({label:$(el).val() == 'true' ?'Yes':'No',value: $(el).val(), key:null,paramName:'HAS_GEOSPATIAL_ISSUE', submitted: false, hidden:true});
         }
       });
       self.showFilters();
@@ -1527,7 +1527,7 @@ var OccurrenceDateComparatorWidget = (function ($,_,OccurrenceWidget) {
  * Type status widget. Displays a multi-select list with the basis of record values.
  */
 var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
-  var InnerOccurrenceMultiSelectWidget = function () {    
+  var InnerOccurrenceMultiSelectWidget = function () {
   };
   //Inherits everything from OccurrenceWidget
   InnerOccurrenceMultiSelectWidget.prototype = $.extend(true,{}, new OccurrenceWidget());
@@ -1555,7 +1555,7 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
   InnerOccurrenceMultiSelectWidget.prototype.hasAllSelected = new function() {
    return this.filterElement && this.filterElement.find(".multi-select > li").length == this.filterElement.find(".multi-select > li.selected").length;
   };
-   
+
   /**
    * Executes addtional bindings: binds click event of each basis of record element.
    */
@@ -1580,8 +1580,8 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
     	  self.addFilter({value:$(this).attr("key"),key:null,submitted: false,paramName:self.getId()});
     	  $(this).addClass("selected");
         });
-      });      
-      
+      });
+
       this.filterElement.find(".clear-all-" + self.getId()).click( function() {
     	self.setShowAll(false);
         self.filterElement.find(".multi-select > li").each( function() {
@@ -1589,7 +1589,7 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
          $(this).removeClass("selected");
         });
       });
-    }           
+    }
   };
   return InnerOccurrenceMultiSelectWidget;
 })(jQuery,_,OccurrenceWidget);
@@ -1614,7 +1614,7 @@ var OccurrenceWidgetManager = (function ($,_) {
    */
   function getWidgetById(id) {
     var widgetId = id;
-    if(widgetId == 'HAS_COORDINATE' || widgetId == 'POLYGON' || widgetId == 'SPATIAL_ISSUES') { //HAS_COORDINATE parameter is handled by BOUNDING_BOX widget
+    if(widgetId == 'HAS_COORDINATE' || widgetId == 'POLYGON' || widgetId == 'HAS_GEOSPATIAL_ISSUE') { //HAS_COORDINATE parameter is handled by BOUNDING_BOX widget
       widgetId = 'GEOMETRY';
     }
     for (var i=0;i < widgets.length;i++) {
@@ -1689,7 +1689,7 @@ var OccurrenceWidgetManager = (function ($,_) {
           //By examinig the attribute data-filter creates the corresponding OccurreWidget(or subtype) instance.
           //Also the binding function is set as parameter, for instance: elf.bindSpeciesAutosuggest. When a binding function isn't needed a empty function is set:  function(){}.
           var filterName = $(control).attr("data-filter");
-          if (filterName != "HAS_COORDINATE" && filterName != "SPATIAL_ISSUES") { //these filters are skiped because use the same widget as the bounding box widget
+          if (filterName != "HAS_COORDINATE" && filterName != "HAS_GEOSPATIAL_ISSUE") { //these filters are skiped because use the same widget as the bounding box widget
             var newWidget;
             if (filterName == "TAXON_KEY") {
               newWidget = new OccurrenceWidget();
@@ -1723,7 +1723,7 @@ var OccurrenceWidgetManager = (function ($,_) {
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
             } else if (filterName == "BASIS_OF_RECORD" || filterName == "TYPE_STATUS" || filterName == "MEDIA_TYPE" || filterName == "ISSUE") {
               newWidget = new OccurrenceMultiSelectWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});              
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
             } else if (filterName == "COUNTRY" || filterName == "PUBLISHING_COUNTRY") {
               newWidget = new OccurrenceWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindCountryAutosuggest});
@@ -1737,7 +1737,7 @@ var OccurrenceWidgetManager = (function ($,_) {
                 newWidget.setUnit("m");
             } else if (filterName == "YEAR") {
               newWidget = new OccurrenceComparatorWidget();
-              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});              
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
             } else { //By default creates a simple OccurrenceWidget with an empty binding function
               newWidget = new OccurrenceWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
@@ -1752,7 +1752,7 @@ var OccurrenceWidgetManager = (function ($,_) {
        * Handles the click and touchstart(mobile devices) events to positioning the dropdown menus relative to the element that shows them.
        */
       centerDropDownMenus: function() {
-        $('a.[data-toggle="dropdown"]').on('click touchstart', function(e){        	
+        $('a.[data-toggle="dropdown"]').on('click touchstart', function(e){
           // .position() uses position relative to the offset parent,
           var pos = $(this).position();
 

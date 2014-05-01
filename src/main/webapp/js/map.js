@@ -9,7 +9,7 @@ var LAYER_ALL = [
   "LIVING",
   "FOSSIL",
   "SP_NO_YEAR","SP_PRE_1900","SP_1900_1910","SP_1910_1920","SP_1920_1930","SP_1930_1940","SP_1940_1950","SP_1950_1960","SP_1960_1970","SP_1970_1980","SP_1980_1990","SP_1990_2000","SP_2000_2010","SP_2010_2020",
-  "OTH_NO_YEAR","OTH_PRE_1900","OTH_1900_1910","OTH_1910_1920","OTH_1920_1930","OTH_1930_1940","OTH_1940_1950","OTH_1950_1960","OTH_1960_1970","OTH_1970_1980","OTH_1980_1990","OTH_1990_2000","OTH_2000_2010","OTH_2010_2020"  
+  "OTH_NO_YEAR","OTH_PRE_1900","OTH_1900_1910","OTH_1910_1920","OTH_1920_1930","OTH_1930_1940","OTH_1940_1950","OTH_1950_1960","OTH_1960_1970","OTH_1970_1980","OTH_1980_1990","OTH_1990_2000","OTH_2000_2010","OTH_2010_2020"
 ];
 
 
@@ -36,7 +36,7 @@ $.fn.occurrenceMap = function(id, options) {
     }, options
   );
 
-  var 
+  var
   cmAttr = 'Nokia',
   cmUrl  = 'http://2.maps.nlp.nokia.com/maptile/2.1/maptile/newest/normal.day.grey/{z}/{x}/{y}/256/png8?app_id=_peU-uCkp-j8ovkzFGNU&app_code=gBoUkAMoxoqIWfxWA5DuMQ';
 
@@ -81,7 +81,7 @@ $.fn.occurrenceMap = function(id, options) {
   if (options.type != "point") {
     L.control.layers(baseLayers, overlays).addTo(map);
   }
-  
+
 
   // entering fullscreen disables the window scrolling
   map.on('enterFullscreen', function(){
@@ -167,9 +167,9 @@ $.fn.occurrenceMap = function(id, options) {
       var ne=bounds.getNorthEast();
       var se=bounds.getSouthEast();
       var nw=bounds.getNorthWest();
-      
+
       var separator = target.indexOf('?') !== -1 ? "&" : "?";
-      
+
       // limit bounds or SOLR barfs
       sw.lng = sw.lng<-180 ? -180 : sw.lng;
       sw.lat = sw.lat<-90 ? -90 : sw.lat;
@@ -178,10 +178,10 @@ $.fn.occurrenceMap = function(id, options) {
       ne.lng = ne.lng>180 ? 180 : ne.lng;
       ne.lat = ne.lat>90 ? 90 : ne.lat;
       se.lng = se.lng>180 ? 180 : se.lng;
-      se.lat = se.lat<-90 ? -90 : se.lat;  
-      
+      se.lat = se.lat<-90 ? -90 : se.lat;
+
       // records on maps are those with no issues
-      $(this).attr("href", target + separator + "SPATIAL_ISSUES=false&GEOMETRY="
+      $(this).attr("href", target + separator + "HAS_GEOSPATIAL_ISSUE=false&GEOMETRY="
         + sw.lng + " " + sw.lat + ","
         + nw.lng + " " + nw.lat + ","
         + ne.lng + " " + ne.lat + ","

@@ -242,7 +242,7 @@ public class FiltersActionHelper {
 
   /**
    * Gets the title(name) of a country.
-   * 
+   *
    * @param isoCode iso 2/3 country code
    */
   public String getCountryTitle(String isoCode) {
@@ -323,7 +323,7 @@ public class FiltersActionHelper {
         return getTemporalRangeTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.MONTH) {
         return getMonthRangeTitle(filterValue);
-      } else if (parameter == OccurrenceSearchParameter.SPATIAL_ISSUES) {
+      } else if (parameter == OccurrenceSearchParameter.HAS_GEOSPATIAL_ISSUE) {
         return getSpatialIssuesTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.ISSUE) {
         return LocalizedTextUtil.findDefaultText(OCCURRENCE_ISSUE_KEY + filterValue, getLocale());
@@ -354,7 +354,7 @@ public class FiltersActionHelper {
 
   /**
    * Gets the title(name) of a node.
-   * 
+   *
    * @param networkKey node key/UUID
    */
   public String getNetworkTitle(String networkKey) {

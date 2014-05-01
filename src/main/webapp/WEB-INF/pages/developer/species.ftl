@@ -89,7 +89,7 @@
       Fuzzy matches scientific names against the GBIF Backbone Taxonomy with the optional classification provided.
       If a classification is provided and strict is not set to true, the default matching will also try to match against these if no direct match is found for the name parameter alone.
     </@trow>
-    <@trow url="/search" resp="NameUsage Page" respLink="/species/search?q=Puma&rank=GENUS" paging=true params=["q","datasetKey","rank","highertaxonKey","status","extinct","habitat","threat","nameType","nomenclaturalStatus","hl","facet","facet_only","facet_mincount","facet_multiselect"]>
+    <@trow url="/search" resp="NameUsage Page" respLink="/species/search?q=Puma&rank=GENUS" paging=true params=["q","datasetKey","rank","highertaxonKey","status","is_extinct","habitat","threat","nameType","nomenclaturalStatus","hl","facet","facet_only","facet_mincount","facet_multiselect"]>
         Full text search of name usages covering the scientific and vernacular name, the species description, distribution and the entire classification
         across all name usages of all or some checklists. Results are ordered by relevance as this search usually returns a lot of results.</@trow>
     <@trow url="/suggest" resp="NameUsage Page" respLink="/species/suggest?datasetKey=d7dddbf4-2cf0-4f39-9b2a-bb099caae36c&q=Puma%20con" paging=false params=["q","datasetKey","rank"]>
@@ -141,7 +141,7 @@
   "genus": "Optional genus classification accepting a canonical name.",
   "highertaxonKey": "Filters by any of the higher Linnean rank keys. Note this is within the respective checklist and not searching nub keys across all checklists.",
   "status": "Filters by the taxonomic status as given in our <a href='${api.apidocs}/vocabulary/TaxonomicStatus.html' target='_blank'>TaxonomicStatus enum</a>",
-  "extinct": "Filters by extinction status (a boolean, e.g. extinct=true)",
+  "isExtinct": "Filters by extinction status (a boolean, e.g. isExtinct=true)",
   "habitat": "Filters by the habitat, though currently only as boolean marine or not-marine (i.e. habitat=true means marine, false means not-marine)",
   "threat": "Not yet implemented, but will eventually allow for filtering by a threat status enum",
   "nameType": "Filters by the name type as given in our <a href='${api.apidocs}/vocabulary/NameType.html' target='_blank'>NameType enum</a>",

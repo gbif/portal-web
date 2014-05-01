@@ -27,7 +27,7 @@
       var filtersFromRequest = new Object();
       var countryList = [<#list countries as country><#if country.official>{label:"${country.title}",iso2Lettercode:"${country.iso2LetterCode}"}<#if country_has_next>,</#if></#if></#list>];
       function addFilters(filtersFromRequest,filterKey,filterValue,filterLabel) {
-        if(filterKey == 'SPATIAL_ISSUES' || filterKey == 'HAS_COORDINATE'){
+        if(filterKey == 'HAS_GEOSPATIAL_ISSUE' || filterKey == 'HAS_COORDINATE'){
           filtersFromRequest[filterKey].push({ label: filterLabel, value:filterValue, key: null, paramName: filterKey, submitted: true, hidden:true });
         } else {
           filtersFromRequest[filterKey].push({ label: filterLabel, value:filterValue, key: filterValue, paramName: filterKey, submitted: true, hidden:false });
@@ -163,7 +163,7 @@
                     <li><a tabindex="-1" href="#" data-placeholder="Select a location..." data-filter="GEOMETRY" title="Location" data-template-filter="map-template-filter" data-template-summary="template-summary-location" class="filter-control">Location</a></li>
                     <!--Next li is a place holder to map HAS_COORDINATE to the bounding box widget-->
                     <li style="display:none;"><a tabindex="-1" href="#" data-filter="HAS_COORDINATE" title="Bounding Box" data-template-filter="map-template-filter" data-template-summary="template-filter" class="filter-control">Location</a></li>
-                    <li style="display:none;"><a tabindex="-1" href="#" data-filter="SPATIAL_ISSUES" title="Bounding Box" data-template-filter="map-template-filter" data-template-summary="template-filter" class="filter-control">Location</a></li>
+                    <li style="display:none;"><a tabindex="-1" href="#" data-filter="HAS_GEOSPATIAL_ISSUE" title="Bounding Box" data-template-filter="map-template-filter" data-template-summary="template-filter" class="filter-control">Location</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a country name..." data-filter="COUNTRY" title="Country" data-template-filter="template-simple-filter" data-template-summary="template-filter" class="filter-control" data-input-classes="">Country</a></li>
                     <#--
                     <li><a tabindex="-1" href="#" data-placeholder="Type a continent..." data-filter="CONTINENT" title="Continent" data-template-filter="template-continent-filter" data-template-summary="template-filter" class="filter-control">Continent</a></li>
@@ -227,7 +227,7 @@
                 <#assign institutionCode =  action.retrieveTerm('institutionCode',occ)!>
                 <#if showInstitution && institutionCode?has_content>
                   <div class="code" title="${institutionCode}">Institution: ${common.limit(institutionCode,60)}</div>
-                </#if>                
+                </#if>
                 <#if showLastInterpreted && occ.lastInterpreted?has_content>
                   <div class="code">Last modified in GBIF: ${occ.lastInterpreted?string("yyyy-MM-dd")}</div>
                 </#if>
@@ -239,7 +239,7 @@
                   <div class="code">Type status: ${action.getFilterTitle('typeStatus',occ.typeStatus)!}</div>
                 </#if>
               </div>
-              <#if showScientificName && occ.scientificName?has_content><a class="title" title="${occ.scientificName}" href="<@s.url value='/occurrence/${occ.key?c}'/>">${common.limit(occ.scientificName,40)}</a></#if>              
+              <#if showScientificName && occ.scientificName?has_content><a class="title" title="${occ.scientificName}" href="<@s.url value='/occurrence/${occ.key?c}'/>">${common.limit(occ.scientificName,40)}</a></#if>
               <#if showDataset && occ.datasetKey?has_content>
                <#assign datasetTitle =  action.getDatasetTitle(occ.datasetKey)!>
                <div class="footer" title="${datasetTitle}">Published in ${common.limit(datasetTitle,60)}</div>

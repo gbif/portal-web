@@ -10,7 +10,7 @@
         new GBIFMapListener().subscribe(function(id, searchUrl) {
           $("#geoOccurrenceSearch").attr("href", "<@s.url value='/occurrence/search'/>?" +  searchUrl.replace("DATASET", "DATASET_KEY"));
         });
-          
+
         // create an array of the bounding boxes from the geographic coverages
         // we ignore anything that is global as that tells us very little
         var bboxes = [
@@ -20,9 +20,9 @@
             </#if>
           </#list>
         ];
-        
+
         // paint the bounding box once the iframe is loaded
-        // This will only work when deployed in the same domain, but this is considered a good old hack for this isolated case 
+        // This will only work when deployed in the same domain, but this is considered a good old hack for this isolated case
         var mapframe = document.getElementById('mapframe');
         mapframe.onload = function() {
           mapframe.contentWindow.addBboxes(bboxes);
@@ -121,9 +121,9 @@
   <#if keywordsTruncatedInTitle>
     <a id="keywords"/>
     <h3>Keywords and tags</h3>
-    <p>    
+    <p>
     <#list keywords as k>
-      <a href="<@s.url value='/dataset/search?q=${k}'/>">${k}</a>,&nbsp;  
+      <a href="<@s.url value='/dataset/search?q=${k}'/>">${k}</a>,&nbsp;
     </#list>
     </p>
   </#if>
@@ -232,7 +232,7 @@
     </ul>
     </p>
   </#if>
-  
+
 
   <#-- DATA DESCRIPTIONS -->
   <#-- By urgent request, we do not show links to the UK NBN data files -->
@@ -264,7 +264,7 @@
     </p>
   </#if>
 
-  <p>  
+  <p>
   <h3>Metadata Documents</h3>
   <ul>
     <#list metaLinks as p>
@@ -279,12 +279,12 @@
           <a href="${cfg.wsReg}dataset/${dataset.key}/document">Cached copy (<@s.text name='enum.endpointtype.${p.type!"UNKNOWN"}'/>)</a>
           <@common.popup message="The cached copy of the original serves to distinguish cases where the source of content on this page might be confusing, or where the original is not accessible" title="Note"/>
         </li>
-        
+
       </#if>
     </#list>
     <#-- we verify asynchroneously via app.js all links with class=verify and hide the list element in case of errors or 404 -->
-    
-    
+
+
     <li class="download">
       <a href="${cfg.wsReg}dataset/${dataset.key}/document">GBIF annotated version (EML)</a>
       <@common.popup message="The GBIF annotated version is created based on available content according to the <a href='http://www.gbif.org/orc/?doc_id=2820'>GBIF Metadata Profile</a>. Please note that it might not be as rich as the original version and the document will vary over time as content is indexed, and algorithms for producing the document are improved" title="Note"/>
@@ -340,7 +340,7 @@
        <div class="inner">
          <h3>View records</h3>
          <p>
-           <a href="<@s.url value='/occurrence/search?datasetKey=${id!}&HAS_COORDINATE=true&SPATIAL_ISSUES=false'/>">All records</a>
+           <a href="<@s.url value='/occurrence/search?datasetKey=${id!}&HAS_COORDINATE=true&HAS_GEOSPATIAL_ISSUE=false'/>">All records</a>
            |
            <#-- Note this is intercepted in the map.js to append the bounding box -->
            <a href="<@s.url value='/occurrence/search?datasetKey=${id!}'/>" id='geoOccurrenceSearch'>In viewable area</a></li>

@@ -173,8 +173,8 @@
       </td>
     </tr>
   </script>
-  
-  
+
+
   <script type="text/template" id="template-media-type-filter">
     <tr class="filter">
       <td colspan="4">
@@ -203,8 +203,8 @@
       </td>
     </tr>
   </script>
-  
-  
+
+
   <script type="text/template" id="template-occurrence-issue-filter">
     <tr class="filter">
       <td colspan="4">
@@ -308,7 +308,7 @@
           <div class="filter">
             <table>
                 <tr>
-                  <td>                    
+                  <td>
                     <select name="predicate" class="predicate">
                       <option value="eq">Is</option>
                       <% if (inputClasses.indexOf("temporal") == -1){%>
@@ -678,11 +678,11 @@
               </table>
               </fieldset>
               <div style="width:490px;">
-                <fieldset class="location_option_geo" id="spatial_issues">
+                <fieldset class="location_option_geo" id="has_geospatial_issue">
                   <legend>Show only records</legend>
-                  <label for="noSpatialIssues">with no known coordinate issues</label> <input type="checkbox" name="SPATIAL_ISSUES" id="noSpatialIssues" value="false" <#if action.isInFilter('SPATIAL_ISSUES', 'false')> checked</#if> <#if action.isInFilter('HAS_COORDINATE', 'false')> disabled</#if>/>
+                  <label for="noSpatialIssues">with no known coordinate issues</label> <input type="checkbox" name="HAS_GEOSPATIAL_ISSUE" id="noSpatialIssues" value="false" <#if action.isInFilter('HAS_GEOSPATIAL_ISSUE', 'false')> checked</#if> <#if action.isInFilter('HAS_COORDINATE', 'false')> disabled</#if>/>
                   <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  <label for="spatialIssues">with known coordinate issues</label> <input type="checkbox" name="SPATIAL_ISSUES" id="spatialIssues" value="true" <#if action.isInFilter('SPATIAL_ISSUES', 'true')> checked</#if> <#if action.isInFilter('HAS_COORDINATE', 'false')> disabled</#if>/>
+                  <label for="spatialIssues">with known coordinate issues</label> <input type="checkbox" name="HAS_GEOSPATIAL_ISSUE" id="spatialIssues" value="true" <#if action.isInFilter('HAS_GEOSPATIAL_ISSUE', 'true')> checked</#if> <#if action.isInFilter('HAS_COORDINATE', 'false')> disabled</#if>/>
                 </fieldset>
               </div>
               <div style="display:table">

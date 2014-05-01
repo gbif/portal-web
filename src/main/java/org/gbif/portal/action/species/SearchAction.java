@@ -87,7 +87,7 @@ public class SearchAction
     lookupFacetTitles(NameUsageSearchParameter.RANK, getRankTitle);
 
     // replace extinct boolean values
-    lookupFacetTitles(NameUsageSearchParameter.EXTINCT, getExtinctTitle);
+    lookupFacetTitles(NameUsageSearchParameter.IS_EXTINCT, getExtinctTitle);
 
     // replace marine boolean values
     lookupFacetTitles(NameUsageSearchParameter.HABITAT, getHabitatTitle);
@@ -118,7 +118,7 @@ public class SearchAction
 
   /**
    * Removes all vernacular names from the given list which are not highlighted, ie matching the query.
-   * 
+   *
    * @param vernacularNames
    */
   private void filterVernacularMatches(List<VernacularName> vernacularNames, boolean removeAll) {
@@ -179,7 +179,7 @@ public class SearchAction
 
       @Override
       public String apply(String name) {
-        return getBooleanTitle("search.facet.EXTINCT", name);
+        return getBooleanTitle("search.facet.IS_EXTINCT", name);
       }
     };
 
