@@ -22,7 +22,7 @@
     <#if occ.taxonKey??>
       <a href="<@s.url value='/species/${occ.taxonKey?c}'/>">${occ.scientificName}</a>
     <#else>
-      a name which cant be <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">interpreted</a>
+      a <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">name which can't be interpreted</a>
     </#if>
     <#if occ.eventDate??>
       recorded on ${occ.eventDate!?date?string.medium}
