@@ -50,7 +50,7 @@ public class HomeAction extends BaseAction {
 
   @Override
   public String execute() {
-    numGeoreferenced = (int) occurrenceCubeService.get(new ReadBuilder().at(OccurrenceCube.GEOREFERENCED, true));
+    numGeoreferenced = (int) occurrenceCubeService.get(new ReadBuilder().at(OccurrenceCube.IS_GEOREFERENCED, true));
     numOccurrences = (int) occurrenceCubeService.get(new ReadBuilder());
     borCounts = occurrenceDistributionIndexService.getBasisOfRecordCounts();
     kingdomCounts = occurrenceDistributionIndexService.getKingdomCounts();

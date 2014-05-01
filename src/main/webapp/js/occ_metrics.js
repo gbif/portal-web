@@ -28,7 +28,7 @@ $(window).ready(function() {
     }
 
     if ($target.hasClass("geo")) {
-      address = address + "&GEOREFERENCED=true";
+      address = address + "&IS_GEOREFERENCED=true";
     }
     var ws = cfg.wsMetrics + 'occurrence/count' + address;
     //console.debug(ws);

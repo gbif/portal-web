@@ -231,7 +231,7 @@ public class CountryBaseAction extends NodeAction {
   }
 
   private void loadCountryList(Map<Country, Long> cMetrics, boolean isAboutCountry, int limit) {
-    ReadBuilder rb = new ReadBuilder().at(OccurrenceCube.GEOREFERENCED, true);
+    ReadBuilder rb = new ReadBuilder().at(OccurrenceCube.IS_GEOREFERENCED, true);
     if (isAboutCountry) {
       rb.at(OccurrenceCube.COUNTRY, country);
     } else {

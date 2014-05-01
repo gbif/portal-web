@@ -118,7 +118,7 @@ public class MemberBaseAction<T extends NetworkEntity & Taggable> extends org.gb
       if (DatasetType.OCCURRENCE == d.getType()) {
         dsCnt = cubeService.get(new ReadBuilder().at(OccurrenceCube.DATASET_KEY, d.getKey()));
         dsGeoCnt = cubeService.get(new ReadBuilder().at(OccurrenceCube.DATASET_KEY, d.getKey()).at(
-          OccurrenceCube.GEOREFERENCED, true));
+          OccurrenceCube.IS_GEOREFERENCED, true));
 
       } else if (DatasetType.CHECKLIST == d.getType()) {
         DatasetMetrics metric = datasetMetricsService.get(d.getKey());

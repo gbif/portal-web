@@ -166,7 +166,7 @@ public class UsageBaseAction extends BaseAction {
                                                    .at(OccurrenceCube.TAXON_KEY, usage.getKey()));
       numGeoreferencedOccurrences = occurrenceCubeService.get(new ReadBuilder()
                                                                 .at(OccurrenceCube.TAXON_KEY, usage.getKey())
-                                                                .at(OccurrenceCube.GEOREFERENCED, true));
+                                                                .at(OccurrenceCube.IS_GEOREFERENCED, true));
     } catch (ServiceUnavailableException e) {
       LOG.error("Failed to load occurrence metrics for usage {}", usage.getKey(), e);
     }
