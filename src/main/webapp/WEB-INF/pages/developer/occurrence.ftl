@@ -125,9 +125,6 @@
         An example for the count of georeferenced observations from Canada: <a href="${action.cfg.apiBaseUrl}/occurrence/count?country=CANADA&georeferenced=true&basisOfRecord=OBSERVATION" target="_blank">/occurrence/count?country=CANADA&georeferenced=true&basisOfRecord=OBSERVATION</a>.
       </@trowM>
       <@trowM url="/occurrence/count/schema" resp="Count" respLink="/occurrence/count/schema">List the supported metrics by the service.</@trowM>
-      <@trowM url="/occurrence/counts/basis_of_record" resp="Counts" respLink="/occurrence/counts/basis_of_record">Lists occurrence counts by basis of record.</@trowM>
-      <@trowM url="/occurrence/counts/countries"resp="Counts" respLink="/occurrence/counts/countries?publishingCountry=US" params=["publishingCountry"]>Lists occurrence counts by publishing country.</@trowM>
-      <@trowM url="/occurrence/counts/year" resp="Counts" respLink="/occurrence/counts/year?year=1981,2012" params=["year"]>Lists occurrence counts by year.</@trowM>
     </@api.apiTable>
 </@api.article>
 
@@ -138,9 +135,11 @@
   </p>
 
   <@api.apiTable auth=false paging=false>
-    <@trowM url="/occurrence/counts/datasets" resp="UUID Counts" respLink="/occurrence/counts/datasets?country=DE" params=["country","taxonKey"]>Returns occurrence counts for datasets that cover a given taxon or country.</@trowM>
-    <@trowM url="/occurrence/counts/countries" resp="Country Counts" respLink="/occurrence/counts/countries?publishingCountry=DE" params=["publishingCountry"]>Returns occurrence counts for all countries covered by the data published by the given country.</@trowM>
-    <@trowM url="/occurrence/counts/publishing_country" resp="Country Counts" respLink="/occurrence/counts/publishing_countries?country=DE" params=["country"]>Returns occurrence counts for all countries that publish data about the given country.</@trowM>
+    <@trowM url="/occurrence/counts/basis_of_record" resp="Counts" respLink="/occurrence/counts/basis_of_record">Lists occurrence counts by basis of record.</@trowM>
+    <@trowM url="/occurrence/counts/year" resp="Counts" respLink="/occurrence/counts/year?year=1981,2012" params=["year"]>Lists occurrence counts by year.</@trowM>
+    <@trowM url="/occurrence/counts/datasets" resp="Counts" respLink="/occurrence/counts/datasets?country=DE" params=["country","taxonKey"]>Lists occurrence counts for datasets that cover a given taxon or country.</@trowM>
+    <@trowM url="/occurrence/counts/countries" resp="Counts" respLink="/occurrence/counts/countries?publishingCountry=DE" params=["publishingCountry"]>Lists occurrence counts for all countries covered by the data published by the given country.</@trowM>
+    <@trowM url="/occurrence/counts/publishing_country" resp="Counts" respLink="/occurrence/counts/publishing_countries?country=DE" params=["country"]>Lists occurrence counts for all countries that publish data about the given country.</@trowM>
   </@api.apiTable>
 </@api.article>
 
