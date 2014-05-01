@@ -221,7 +221,6 @@
     </#if>
   </#macro>
 
->>>>>>> multimedia
   <@common.article id="location" title=title titleRight=titleRight class="occurrenceMap">
     <#if showMap>
     <div id="map" class="map">

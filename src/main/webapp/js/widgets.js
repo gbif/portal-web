@@ -1689,7 +1689,7 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate) {
     _.each(images, function(imgJson) {
       n++;
       slideData.push(imgJson);
-      $photos.append("<li><div class='spinner'></div><a href='"+imgJson.image+"' class='fancybox' title='"+imgJson.title+"'><img id='photo_"+n+"'src='" + imgJson.image + "' /></a></li>");
+      $photos.append("<li><div class='spinner'></div><a href='"+imgJson.image+"' class='fancybox' title='"+ (imgJson.title ? imgJson.title : '') +"'><img id='photo_"+n+"'src='" + imgJson.image + "' /></a></li>");
 
       var $img = $photos.find("#photo_" + n);
 
