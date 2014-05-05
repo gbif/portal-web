@@ -1,12 +1,7 @@
 <#import "/WEB-INF/macros/common.ftl" as common>
 
-<#if feed??>
-  <#assign titleRight = "News" />
-<#else>
-  <#assign titleRight = "" />
-</#if>
-<@common.article id="datasets" title="Latest datasets published" titleRight=titleRight>
-    <div class="<#if feed??>left<#else>fullwidth</#if>">
+<@common.article id="datasets" title="Latest datasets published">
+    <div class="fullwidth">
       <#if datasets?has_content>
         <ul class="notes">
           <#list datasets as cw>
@@ -21,10 +16,4 @@
         <p>None published.</p>
       </#if>
     </div>
-
-  <#if feed??>
-    <div class="right">
-        <div id="news"></div>
-    </div>
-  </#if>
 </@common.article>

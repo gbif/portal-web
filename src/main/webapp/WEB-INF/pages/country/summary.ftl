@@ -14,14 +14,10 @@
           $("#mapAbout").append(
             '<iframe id="mapAboutFrame" name="map" src="${cfg.tileServerBaseUrl!}/index.html?type=COUNTRY&key=${isocode}" allowfullscreen height="100%" width="100%" frameborder="0"/></iframe>'
           );
-                    
+
           $("#mapBy").append(
             '<iframe id="mapByFrame" name="map" src="${cfg.tileServerBaseUrl!}/index.html?type=PUBLISHING_COUNTRY&key=${isocode}" allowfullscreen height="100%" width="100%" frameborder="0"/></iframe>'
           );
-
-          <#if feed??>
-            <@feeds.googleFeedJs url="${feed}" target="#news" />
-          </#if>
       });
   </script>
 </head>
