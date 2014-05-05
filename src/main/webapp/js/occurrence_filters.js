@@ -1531,29 +1531,48 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
   };
   //Inherits everything from OccurrenceWidget
   InnerOccurrenceMultiSelectWidget.prototype = $.extend(true,{}, new OccurrenceWidget());
-
+  
   /**
    * Re-defines the showFilters function, iterates over the selection list to get the selected values and then show them as filters.
    */
   InnerOccurrenceMultiSelectWidget.prototype.showFilters = function() {
     if(this.filterElement != null) {
       var self = this;
-      this.filterElement.find(".multi-select > li").each( function() {
-        $(this).removeClass("selected");
-        for(var i=0; i < self.filters.length; i++) {
-          if(self.filters[i].value == $(this).attr("key") && !$(this).hasClass("selected")) {
-            $(this).addClass("selected");
+      if(this.hasFilterWithValue('*')){
+        this.filterElement.find(".multi-select > li").each( function() {
+    	  $(this).addClass("selected");	        
+    	});
+    	this.setShowAll(true);
+      } else {
+        this.filterElement.find(".multi-select > li").each( function() {	    
+          $(this).removeClass("selected");
+          for(var i=0; i < self.filters.length; i++) {
+            if(self.filters[i].value == $(this).attr("key") && !$(this).hasClass("selected")) {
+              $(this).addClass("selected");
+            }
           }
-        }
-      });
+        });
+      }
     }
-  };
+  };  
 
   /**
    * Checks if all the elements are selected.
    */
-  InnerOccurrenceMultiSelectWidget.prototype.hasAllSelected = new function() {
+  InnerOccurrenceMultiSelectWidget.prototype.hasAllSelected = function() {
    return this.filterElement && this.filterElement.find(".multi-select > li").length == this.filterElement.find(".multi-select > li.selected").length;
+  };
+  
+  /**
+   * Checks if all the elements are selected.
+   */
+  InnerOccurrenceMultiSelectWidget.prototype.selectAll = function() {
+    this.setShowAll(true);
+    var self = this;
+    this.filterElement.find(".multi-select > li").each( function() {
+  	  self.addFilter({value:$(this).attr("key"),key:null,submitted: false,paramName:self.getId()});
+  	  $(this).addClass("selected");
+    });
   };
 
   /**
@@ -1564,26 +1583,36 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
       var self = this;
       this.filterElement.find(".multi-select > li").click( function() {
         if ($(this).hasClass("selected")) {
+          if(self.hasAllSelected()){
+            self.selectAll();
+        	self.removeFilter({value:'*'});
+          }
           self.removeFilter({value:$(this).attr("key"),key:null});
           $(this).removeClass("selected");
           self.setShowAll(false);
+          if(self.hasFilterWithValue('*')){
+           self.removeFilter({value:'*'});
+          }
         } else {
           self.addFilter({value:$(this).attr("key"),key:null,submitted: false,paramName:self.getId()});
           $(this).addClass("selected");
           self.setShowAll(self.hasAllSelected());
+          if(!self.getShowAll()){
+        	self.removeFilter({value:'*'});              
+          } else {
+        	self.clearFilters();
+        	self.addFilter({value:'*'});
+          }
         }
       });
 
       this.filterElement.find(".select-all-" + self.getId()).click( function() {
-    	self.setShowAll(true);
-        self.filterElement.find(".multi-select > li").each( function() {
-    	  self.addFilter({value:$(this).attr("key"),key:null,submitted: false,paramName:self.getId()});
-    	  $(this).addClass("selected");
-        });
+    	self.selectAll();
       });
 
       this.filterElement.find(".clear-all-" + self.getId()).click( function() {
     	self.setShowAll(false);
+    	self.removeFilter({value:'*'});
         self.filterElement.find(".multi-select > li").each( function() {
          self.removeFilter({value:$(this).attr("key"),key:null});
          $(this).removeClass("selected");
@@ -2066,7 +2095,7 @@ var OccurrenceWidgetManager = (function ($,_) {
        */
       initWidgets : function(){
         for(var i=0; i < widgets.length; i++){
-          widgets[i].showSummaryView();
+          widgets[i].showSummaryView();          
         }
       },
 
@@ -2150,7 +2179,7 @@ var OccurrenceWidgetManager = (function ($,_) {
                     occWidget.addGeometry(self.createPolygon(filter.value));
                   }
                 }
-                occWidget.filters.push(filter);
+                occWidget.filters.push(filter);                
               }
             });
           });

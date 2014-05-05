@@ -88,10 +88,9 @@
     <tr class="filter">
       <td colspan="4">
         <a class="edit" style="display:none;"/>
-        <div class="inner filter_view">
-          <h4 class="title"><%= title %></h4>
+        <div class="inner filter_view">          
           <div class="filter">
-            <h4 class="title">Select </h4>
+            <h4 class="title"><%= title %> </h4>
             <ul class="multi-select">
               <#list basisOfRecords as basisOfRecord>
                 <li key="${basisOfRecord}"><a>${action.getFilterTitle('basisOfRecord',basisOfRecord)}</a></li>
@@ -119,10 +118,8 @@
         <a class="edit" style="display:none;"/>
 
         <div class="inner filter_view">
-          <h4 class="title"><%= title %></h4>
-
           <div class="filter">
-            <h4 class="title">Select </h4>
+            <h4 class="title"><%= title %> </h4>
             <ul class="multi-select">
             <#list continents as continent>
               <li key="${continent}"><a>${action.getFilterTitle('continent',continent)}</a></li>
@@ -149,10 +146,9 @@
     <tr class="filter">
       <td colspan="4">
         <a class="edit" style="display:none;"/>
-        <div class="inner filter_view">
-          <h4 class="title"><%= title %></h4>
+        <div class="inner filter_view">          
           <div class="filter">
-            <h4 class="title">Select </h4>
+            <h4 class="title"><%= title %> </h4>
             <ul class="multi-select" style="height:300px !important; overflow:scroll !important; padding-bottom:10px !important;">
              <#list typeStatuses as itemValue>
                <li key="${itemValue}"><a>${action.getFilterTitle('typeStatus',itemValue)}</a></li>
@@ -179,10 +175,9 @@
     <tr class="filter">
       <td colspan="4">
         <a class="edit" style="display:none;"/>
-        <div class="inner filter_view">
-          <h4 class="title"><%= title %></h4>
+        <div class="inner filter_view">          
           <div class="filter">
-            <h4 class="title">Select </h4>
+            <h4 class="title"><%= title %> </h4>
             <ul class="multi-select">
              <#list mediaTypes as itemValue>
                <li key="${itemValue}"><a>${action.getFilterTitle('mediaType',itemValue)}</a></li>
@@ -209,10 +204,9 @@
     <tr class="filter">
       <td colspan="4">
         <a class="edit" style="display:none;"/>
-        <div class="inner filter_view">
-          <h4 class="title"><%= title %></h4>
+        <div class="inner filter_view">          
           <div class="filter">
-            <h4 class="title">Select </h4>
+            <h4 class="title"><%= title %> </h4>
             <ul class="multi-select">
              <#list occurrenceIssues as itemValue>
                <li key="${itemValue}"><a>${action.getFilterTitle('issue',itemValue)}</a></li>
