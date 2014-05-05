@@ -242,7 +242,7 @@ public class FiltersActionHelper {
 
   /**
    * Gets the title(name) of a country.
-   *
+   * 
    * @param isoCode iso 2/3 country code
    */
   public String getCountryTitle(String isoCode) {
@@ -337,8 +337,11 @@ public class FiltersActionHelper {
    * Note: this has to be done because MediaType values are not in uppercase, i.e.: StillImage, MovingImage and Sound.
    */
   public String getMediaTypeValue(String value) {
-    final Enum<?> mediaType = VocabularyUtils.lookupEnum(value, MediaType.class);
-    return (mediaType == null ? value : mediaType.name());
+    if (!WILDCARD.equals(value)) {
+      final Enum<?> mediaType = VocabularyUtils.lookupEnum(value, MediaType.class);
+      return (mediaType == null ? value : mediaType.name());
+    }
+    return value;
   }
 
   /**
@@ -354,7 +357,7 @@ public class FiltersActionHelper {
 
   /**
    * Gets the title(name) of a node.
-   *
+   * 
    * @param networkKey node key/UUID
    */
   public String getNetworkTitle(String networkKey) {
