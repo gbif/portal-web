@@ -80,7 +80,7 @@
               <ul>
                 <#list countByIssues?keys as k>
                   <#assign val=countByIssues(k) />
-                  <li><a href="#">${common.enumLabel(k)}</a> <span class="number" data-cnt="${val?c}">${val}</span></li>
+                  <li><a href="<@s.url value='/occurrence/search?dataset_key=${id}&issue=${k}'/>">${common.enumLabel(k)}</a> <span class="number" data-cnt="${val?c}">${val}</span></li>
                 </#list>
               </ul>
             </div>
