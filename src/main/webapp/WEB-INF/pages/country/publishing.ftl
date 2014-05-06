@@ -59,7 +59,7 @@
   <@common.article id="metrics" title="Data published by ${country.title}">
     <div class="fullwidth">
       <p>
-        <@metrics.metricsTable baseAddress="publishingCountry=${country}"/>
+        <@metrics.metricsTable baseAddress="publishingCountry=${country.getIso2LetterCode()}"/>
       </p>
     </div>
   </@common.article>

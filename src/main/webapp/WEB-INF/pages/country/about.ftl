@@ -73,7 +73,7 @@
 <@common.article id="metrics" title="Occurrences located in ${country.title}">
     <div class="fullwidth">
       <p>
-        <@metrics.metricsTable baseAddress="country=${country}"/>
+        <@metrics.metricsTable baseAddress="country=${country.getIso2LetterCode()}"/>
 	  </p>
     </div>
 </@common.article>
