@@ -122,7 +122,7 @@
   <@api.apiTable auth=false paging=false>
       <@trowM url="/occurrence/count" resp="Count" respLink="/occurrence/count">Returns occurrence counts for a predefined set of dimensions.
         The supported dimensions are enumerated in the <a href="${action.cfg.apiBaseUrl}/occurrence/count/schema" target="_blank">/occurrence/count/schema</a> service.
-        An example for the count of georeferenced observations from Canada: <a href="${action.cfg.apiBaseUrl}/occurrence/count?country=CANADA&georeferenced=true&basisOfRecord=OBSERVATION" target="_blank">/occurrence/count?country=CANADA&georeferenced=true&basisOfRecord=OBSERVATION</a>.
+        An example for the count of georeferenced observations from Canada: <a href="${action.cfg.apiBaseUrl}/occurrence/count?country=CA&isGeoreferenced=true&basisOfRecord=OBSERVATION" target="_blank">/occurrence/count?country=CA&isGeoreferenced=true&basisOfRecord=OBSERVATION</a>.
       </@trowM>
       <@trowM url="/occurrence/count/schema" resp="Count" respLink="/occurrence/count/schema">List the supported metrics by the service.</@trowM>
     </@api.apiTable>
@@ -164,7 +164,7 @@
   "basisOfRecord": "Basis of record, as defined in our <a href='${api.apidocs}vocabulary/BasisOfRecord.html' target='_blank'>BasisOfRecord enum</a>",
   "taxonKey": "A taxon key from the GBIF backbone. All included and synonym taxa are included in the search, so a search for aves with taxonKey=212 (i.e. <a href='${action.cfg.apiBaseUrl}/occurrence/search?taxonKey=212' target='_blank'>/occurrence/search?taxonKey=212</a>) will match all birds, no matter which species.",
   "scientificName": "A scientific name from the GBIF backbone. All included and synonym taxa are included in the search.",
-  "hasCoordinate": "Limits searches to occurrence records which contain a value in both latitude and longitude (i.e. georeferenced=true limits to occurrence records with coordinate values and georeferenced=false limits to occurrence records without coordinate values).",
+  "hasCoordinate": "Limits searches to occurrence records which contain a value in both latitude and longitude (i.e. hasCoordinate=true limits to occurrence records with coordinate values and hasCoordinate=false limits to occurrence records without coordinate values).",
   "geometry": "Searches for occurrences inside a polygon described in Well Known Text (WKT) format. A WKT shape written as POLYGON ((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1)) would be queried as is, i.e. <a href='${action.cfg.apiBaseUrl}/occurrence/search?geometry=POLYGON((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1))' target='_blank'>/occurrence/search?geometry=POLYGON((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1))</a>.",
   "spatialIssues": "Includes/excludes occurrence records which contain spatial issues (as determined in our record interpretation), i.e. spatialIssues=true returns only those records with spatial issues while spatialIssues=false includes only records without spatial issues. The absence of this parameter returns any record with or without spatial issues.",
   "issue": "A specific interpretation issue as defined in our <a href='${api.apidocs}vocabulary/OccurrenceIssue.html' target='_blank'>OccurrenceIssue enum</a>",

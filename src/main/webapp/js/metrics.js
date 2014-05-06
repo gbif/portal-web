@@ -44,7 +44,7 @@ $.fn.occMetrics = function(){
     }
 
     if ($target.hasClass("geo")) {
-      address = address + "&georeferenced=true";
+      address = address + "&isGeoreferenced=true";
     }
     var ws = cfg.wsMetrics + 'occurrence/count' + address;
     //console.debug(ws);
