@@ -9,7 +9,7 @@
       <script type="text/javascript" src="<@s.url value='/js/vendor/leaflet/leaflet.js'/>"></script>
 
       <script>
-        var baseUrl = cfg.tileServerBaseUrl + '/density/tile?x=0&y=0&z=0';
+        var baseUrl = cfg.tileServerBaseUrl + '/density/tile?x={x}&y={y}&z={z}';
 
         // Based on the preview content, build the tile template url
         function getGBIFUrl() {
