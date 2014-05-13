@@ -31,9 +31,6 @@ import org.slf4j.LoggerFactory;
 public class StatsAction extends DetailAction {
   private static final Logger LOG = LoggerFactory.getLogger(StatsAction.class);
 
-  private static final String OCCURRENCE_RESULT = "occurrence";
-  private static final String CHECKLIST_RESULT = "checklist";
-
   // OCCURRENCE ONLY, checklist use the DatasetMetrics class
   // breakdown by kingdom
   private Map<Kingdom, Long> countByKingdom = Maps.newHashMap();
@@ -54,11 +51,9 @@ public class StatsAction extends DetailAction {
   public String execute() {
     super.execute();
 
-    if (DatasetType.OCCURRENCE == member.getType()) {
+    if (DatasetType.OCCURRENCE == member.getType() || DatasetType.CHECKLIST == member.getType()) {
       populateOccMetrics();
-      return OCCURRENCE_RESULT;
-    } else if (DatasetType.CHECKLIST == member.getType()) {
-      return CHECKLIST_RESULT;
+      return SUCCESS;
     } else {
       throw new NotFoundException("External datasets don't have a stats page");
     }

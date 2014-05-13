@@ -176,8 +176,7 @@
 
     <action name="*/stats" class="org.gbif.portal.action.dataset.StatsAction">
       <param name="id">{1}</param>
-      <result name="occurrence">/WEB-INF/pages/dataset/stats-occurrence.ftl</result>
-      <result name="checklist">/WEB-INF/pages/dataset/stats-checklist.ftl</result>
+      <result >/WEB-INF/pages/dataset/stats.ftl</result>
     </action>
 
     <action name="*/activity" class="org.gbif.portal.action.dataset.ActivityAction">
