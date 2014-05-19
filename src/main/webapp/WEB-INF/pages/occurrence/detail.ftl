@@ -132,8 +132,7 @@
 <#macro kv header value="" plusMinus="" unit="">
   <#if value?has_content>
     <h3>${header}</h3>
-    <#-- retrieve value from term, otherwise use incoming value -->
-    <p>${value}${unit!}<#if plusMinus?has_content>&nbsp;±&nbsp;${plusMinus}${unit!}</#if></p>
+    <p><#if value?starts_with("http")><a href="${value}">${value}</a><#else>${value}</#if>${unit!}<#if plusMinus?has_content>&nbsp;±&nbsp;${plusMinus}${unit!}</#if></p>
   </#if>
 </#macro>
 
@@ -473,6 +472,9 @@ otherCatalogNumbers?has_content || language?has_content>
   <div class="left">
       <h3>Data publisher</h3>
       <p><a href="<@s.url value='/publisher/${publisher.key}'/>" title="">${publisher.title}</a></p>
+      <#if occ.references??>
+        <p><a target="_blank" href="${occ.references}">Record details on publisher site</a></p>
+      </#if>
 
   <#-- institution code and institution ID on same line -->
     <#if institutionCode?has_content && institutionID?has_content>

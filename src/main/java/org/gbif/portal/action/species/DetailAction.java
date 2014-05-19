@@ -132,7 +132,7 @@ public class DetailAction extends UsageBaseAction {
     for (NameUsageComponent c : usage.getDistributions()) {
       loadDataset(c.getDatasetKey());
     }
-    for (NameUsageComponent c : usage.getReferences()) {
+    for (NameUsageComponent c : usage.getReferenceList()) {
       loadDataset(c.getDatasetKey());
     }
     for (NameUsageComponent c : usage.getTypeSpecimens()) {
@@ -222,7 +222,7 @@ public class DetailAction extends UsageBaseAction {
     }
 
     final Set<String> seenRefs = Sets.newHashSet();
-    usage.setReferences(FluentIterable.from(referenceService.listByUsage(id, page15).getResults())
+    usage.setReferenceList(FluentIterable.from(referenceService.listByUsage(id, page15).getResults())
       .filter(new Predicate<Reference>() {
 
         public boolean apply(@Nullable Reference r) {

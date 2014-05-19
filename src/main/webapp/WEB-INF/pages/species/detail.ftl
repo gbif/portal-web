@@ -309,6 +309,9 @@
 
   <h3>External links</h3>
   <ul>
+    <#if usage.references??>
+      <li><a target="_blank" href="${usage.references}">Record details on publisher site</a></li>
+    </#if>
   <#list usage.externalLinks as i>
     <#if i.title?has_content || (i.datasetKey?has_content && datasets.get(i.datasetKey)??)>
     <li>
@@ -605,11 +608,11 @@
   </@common.article>
 </#if>
 
-<#if (usage.references?size>0)>
+<#if (usage.referenceList?size>0)>
   <@common.article id="references" title="Bibliography">
     <div class="fullwidth">
-      <#if usage.references?has_content>
-        <#list usage.references as ref>
+      <#if usage.referenceList?has_content>
+        <#list usage.referenceList as ref>
           <p>
             <#if ref.link?has_content><a href="${ref.link}">${ref.citation}</a><#else>${ref.citation}</#if>
             <#if ref.doi?has_content><br/>DOI:<a href="http://dx.doi.org/${ref.doi}">${ref.doi}</a></#if>

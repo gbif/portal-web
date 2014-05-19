@@ -31,7 +31,7 @@
     <div class="right">
        <div class="inner">
          <h3>About</h3>
-         <p>The map shows georeferenced data for all datasets published</p>  
+         <p>The map shows georeferenced data for all datasets published. 80% of all data is georeferenced.</p>
        </div>
     </div>
   </@common.article>
