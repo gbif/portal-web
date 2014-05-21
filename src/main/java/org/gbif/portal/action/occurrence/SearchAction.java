@@ -230,7 +230,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Suggestions for dataset title search.
-   * 
+   *
    * @return the datasetsSuggestions
    */
   public SearchSuggestions<DatasetSearchResult> getDatasetsSuggestions() {
@@ -280,7 +280,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Suggestions for scientific name search.
-   * 
+   *
    * @return the nameUsagesSuggestions
    */
   public SearchSuggestions<NameUsageSearchResult> getNameUsagesSuggestions() {
@@ -289,7 +289,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Gets the title(name) of a node.
-   * 
+   *
    * @param networkKey node key/UUID
    */
   public String getNetworkTitle(String networkKey) {
@@ -310,7 +310,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Gets the configuration of fields and information to display.
-   * 
+   *
    * @return the table
    */
   public OccurrenceTable getTable() {
@@ -428,12 +428,12 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   }
 
   /**
-   * Retrieve value for Term in fields map. Currently expecting only DwcTerm.
-   * 
+   * Retrieve value for Term in interpreted fields map. Currently expecting only DwcTerm.
+   *
    * @param term Term
    * @return value for Term in fields map, or null if it doesn't exist
    */
-  public String retrieveTerm(String term, Occurrence occ) {
+  public String termValue(String term, Occurrence occ) {
     // special case for Dc.rights
     if (term.equals("rights")) {
       return occ.getVerbatimField(DcTerm.rights);

@@ -16,11 +16,9 @@
     <script type="text/javascript">
       $(function() {
         var imagesJSON = '{"results": ${media}}';
-
         if (imagesJSON) {
-          $("#images").occurrenceSlideshow(imagesJSON);
+          $("#images").occurrenceSlideshow(imagesJSON, '${action.verbatimValue('scientificName')!occ.scientificName!"No title"}');
         }
-
       });
     </script>
     <style type="text/css">
@@ -158,22 +156,22 @@
   </#if>
 </#macro>
 
-<#assign locality = action.retrieveTerm('locality')! />
-<#assign island = action.retrieveTerm('island')! />
-<#assign islandGroup = action.retrieveTerm('islandGroup')! />
-<#assign footprintWKT = action.retrieveTerm('footprintWKT')! />
-<#assign footprintSRS = action.retrieveTerm('footprintSRS')! />
-<#assign footprintSpatialFit = action.retrieveTerm('footprintSpatialFit')! />
-<#assign georeferencedDate = action.retrieveTerm('georeferencedDate')! />
-<#assign georeferencedBy = action.retrieveTerm('georeferencedBy')! />
-<#assign georeferenceProtocol = action.retrieveTerm('georeferenceProtocol')! />
-<#assign georeferenceSources = action.retrieveTerm('georeferenceSources')! />
-<#assign georeferenceVerificationStatus = action.retrieveTerm('georeferenceVerificationStatus')! />
-<#assign habitat = action.retrieveTerm('habitat')! />
-<#assign locationRemarks = action.retrieveTerm('locationRemarks')! />
-<#assign higherGeographyID = action.retrieveTerm('higherGeographyID')! />
-<#assign locationID = action.retrieveTerm('locationID')! />
-<#assign locationAccordingTo = action.retrieveTerm('locationAccordingTo')! />
+<#assign locality = action.termValue('locality')! />
+<#assign island = action.termValue('island')! />
+<#assign islandGroup = action.termValue('islandGroup')! />
+<#assign footprintWKT = action.termValue('footprintWKT')! />
+<#assign footprintSRS = action.termValue('footprintSRS')! />
+<#assign footprintSpatialFit = action.termValue('footprintSpatialFit')! />
+<#assign georeferencedDate = action.termValue('georeferencedDate')! />
+<#assign georeferencedBy = action.termValue('georeferencedBy')! />
+<#assign georeferenceProtocol = action.termValue('georeferenceProtocol')! />
+<#assign georeferenceSources = action.termValue('georeferenceSources')! />
+<#assign georeferenceVerificationStatus = action.termValue('georeferenceVerificationStatus')! />
+<#assign habitat = action.termValue('habitat')! />
+<#assign locationRemarks = action.termValue('locationRemarks')! />
+<#assign higherGeographyID = action.termValue('higherGeographyID')! />
+<#assign locationID = action.termValue('locationID')! />
+<#assign locationAccordingTo = action.termValue('locationAccordingTo')! />
 
 <#-- Location block consists of max 25 terms/fields. At least 1 has to be present for block to appear -->
 <#if locality?has_content || island?has_content || islandGroup?has_content || footprintWKT?has_content ||
@@ -298,13 +296,13 @@
   </@common.article>
 </#if>
 
-<#assign previousIdentifications = action.retrieveTerm('previousIdentifications')! />
-<#assign identificationReferences = action.retrieveTerm('identificationReferences')! />
-<#assign identificationRemarks = action.retrieveTerm('identificationRemarks')! />
-<#assign individualID = action.retrieveTerm('individualID')! />
-<#assign identificationID = action.retrieveTerm('identificationID')! />
-<#assign identificationVerificationStatus = action.retrieveTerm('identificationVerificationStatus')! />
-<#assign identifiedBy = action.retrieveTerm('identifiedBy')! />
+<#assign previousIdentifications = action.termValue('previousIdentifications')! />
+<#assign identificationReferences = action.termValue('identificationReferences')! />
+<#assign identificationRemarks = action.termValue('identificationRemarks')! />
+<#assign individualID = action.termValue('individualID')! />
+<#assign identificationID = action.termValue('identificationID')! />
+<#assign identificationVerificationStatus = action.termValue('identificationVerificationStatus')! />
+<#assign identifiedBy = action.termValue('identifiedBy')! />
 
 <#-- Identification block consists of various terms/fields. At least 1 has to be present for block to appear -->
 <#if occ.taxonKey?? || occ.typeStatus?has_content || occ.dateIdentified?has_content ||
@@ -317,7 +315,7 @@ identifiedBy?has_content>
   <@common.article id="taxonomy" title=title>
   <div class="left">
     <#if occ.taxonKey??>
-      <#assign identificationQualifier = action.retrieveTerm('identificationQualifier')! />
+      <#assign identificationQualifier = action.termValue('identificationQualifier')! />
         <h3>Identified as ${occ.rank!"species"}</h3>
         <p><a href="<@s.url value='/species/${occ.taxonKey?c}'/>">${occ.scientificName}</a><#if identificationQualifier?has_content>&nbsp;[${identificationQualifier}]</#if></p>
 
@@ -359,23 +357,23 @@ identifiedBy?has_content>
 </#if>
 
 
-<#assign recordedBy = action.retrieveTerm('recordedBy')! />
-<#assign verbatimEventDate = action.retrieveTerm('verbatimEventDate')! />
-<#assign occurrenceRemarks = action.retrieveTerm('occurrenceRemarks')! />
-<#assign eventRemarks = action.retrieveTerm('eventRemarks')! />
-<#assign associatedOccurrences = action.retrieveTerm('associatedOccurrences')! />
-<#assign associatedSequences = action.retrieveTerm('associatedSequences')! />
-<#assign associatedReferences = action.retrieveTerm('associatedReferences')! />
-<#assign associatedTaxa = action.retrieveTerm('associatedTaxa')! />
-<#assign samplingProtocol = action.retrieveTerm('samplingProtocol')! />
-<#assign samplingEffort = action.retrieveTerm('samplingEffort')! />
-<#assign fieldNotes = action.retrieveTerm('fieldNotes')! />
-<#assign reproductiveCondition = action.retrieveTerm('reproductiveCondition')! />
-<#assign behavior = action.retrieveTerm('behavior')! />
-<#assign occurrenceStatus = action.retrieveTerm('occurrenceStatus')! />
-<#assign recordNumber = action.retrieveTerm('recordNumber')! />
-<#assign eventID = action.retrieveTerm('eventID')! />
-<#assign fieldNumber = action.retrieveTerm('fieldNumber')! />
+<#assign recordedBy = action.termValue('recordedBy')! />
+<#assign verbatimEventDate = action.termValue('verbatimEventDate')! />
+<#assign occurrenceRemarks = action.termValue('occurrenceRemarks')! />
+<#assign eventRemarks = action.termValue('eventRemarks')! />
+<#assign associatedOccurrences = action.termValue('associatedOccurrences')! />
+<#assign associatedSequences = action.termValue('associatedSequences')! />
+<#assign associatedReferences = action.termValue('associatedReferences')! />
+<#assign associatedTaxa = action.termValue('associatedTaxa')! />
+<#assign samplingProtocol = action.termValue('samplingProtocol')! />
+<#assign samplingEffort = action.termValue('samplingEffort')! />
+<#assign fieldNotes = action.termValue('fieldNotes')! />
+<#assign reproductiveCondition = action.termValue('reproductiveCondition')! />
+<#assign behavior = action.termValue('behavior')! />
+<#assign occurrenceStatus = action.termValue('occurrenceStatus')! />
+<#assign recordNumber = action.termValue('recordNumber')! />
+<#assign eventID = action.termValue('eventID')! />
+<#assign fieldNumber = action.termValue('fieldNumber')! />
 <#assign eventDate = occ.eventDate! />
 
 <#-- Occurrence block consists of various terms/fields. At least 1 has to be present for block to appear -->
@@ -443,23 +441,23 @@ eventID?has_content || fieldNumber?has_content>
 </#if>
 
 
-<#assign institutionCode = action.retrieveTerm('institutionCode')! />
-<#assign institutionID = action.retrieveTerm('institutionID')! />
-<#assign datasetID = action.retrieveTerm('datasetID')! />
-<#assign datasetName = action.retrieveTerm('datasetName')! />
-<#assign collectionCode = action.retrieveTerm('collectionCode')! />
-<#assign collectionID = action.retrieveTerm('collectionID')! />
-<#assign type =  action.retrieveTerm('type')! />
-<#assign ownerInstitutionCode =  action.retrieveTerm('ownerInstitutionCode')! />
-<#assign disposition =  action.retrieveTerm('disposition')! />
-<#assign preparations =  action.retrieveTerm('preparations')! />
-<#assign dataGeneralizations =  action.retrieveTerm('dataGeneralizations')! />
-<#assign informationWithheld =  action.retrieveTerm('informationWithheld')! />
-<#assign dynamicProperties =  action.retrieveTerm('dynamicProperties')! />
-<#assign occurrenceID =  action.retrieveTerm('occurrenceID')! />
-<#assign catalogNumber =  action.retrieveTerm('catalogNumber')! />
-<#assign otherCatalogNumbers =  action.retrieveTerm('otherCatalogNumbers')! />
-<#assign language =  action.retrieveTerm('language')! />
+<#assign institutionCode = action.termValue('institutionCode')! />
+<#assign institutionID = action.termValue('institutionID')! />
+<#assign datasetID = action.termValue('datasetID')! />
+<#assign datasetName = action.termValue('datasetName')! />
+<#assign collectionCode = action.termValue('collectionCode')! />
+<#assign collectionID = action.termValue('collectionID')! />
+<#assign type =  action.termValue('type')! />
+<#assign ownerInstitutionCode =  action.termValue('ownerInstitutionCode')! />
+<#assign disposition =  action.termValue('disposition')! />
+<#assign preparations =  action.termValue('preparations')! />
+<#assign dataGeneralizations =  action.termValue('dataGeneralizations')! />
+<#assign informationWithheld =  action.termValue('informationWithheld')! />
+<#assign dynamicProperties =  action.termValue('dynamicProperties')! />
+<#assign occurrenceID =  action.termValue('occurrenceID')! />
+<#assign catalogNumber =  action.termValue('catalogNumber')! />
+<#assign otherCatalogNumbers =  action.termValue('otherCatalogNumbers')! />
+<#assign language =  action.termValue('language')! />
 
 <#-- Source block consists of various terms/fields. At least 1 has to be present for block to appear -->
 <#if occ.basisOfRecord?has_content || occ.identifiers?has_content || institutionCode?has_content ||
@@ -557,24 +555,24 @@ otherCatalogNumbers?has_content || language?has_content>
   </@common.article>
 </#if>
 
-<#assign earliestEonOrLowestEonothem = action.retrieveTerm('earliestEonOrLowestEonothem')! />
-<#assign latestEonOrHighestEonothem = action.retrieveTerm('latestEonOrHighestEonothem')! />
-<#assign earliestEraOrLowestErathem = action.retrieveTerm('earliestEraOrLowestErathem')! />
-<#assign latestEraOrHighestErathem = action.retrieveTerm('latestEraOrHighestErathem')! />
-<#assign earliestPeriodOrLowestSystem = action.retrieveTerm('earliestPeriodOrLowestSystem')! />
-<#assign latestPeriodOrHighestSystem = action.retrieveTerm('latestPeriodOrHighestSystem')! />
-<#assign earliestEpochOrLowestSeries = action.retrieveTerm('earliestEpochOrLowestSeries')! />
-<#assign latestEpochOrHighestSeries = action.retrieveTerm('latestEpochOrHighestSeries')! />
-<#assign earliestAgeOrLowestStage = action.retrieveTerm('earliestAgeOrLowestStage')! />
-<#assign latestAgeOrHighestStage = action.retrieveTerm('latestAgeOrHighestStage')! />
-<#assign lowestBiostratigraphicZone = action.retrieveTerm('lowestBiostratigraphicZone')! />
-<#assign highestBiostratigraphicZone = action.retrieveTerm('highestBiostratigraphicZone')! />
-<#assign bed = action.retrieveTerm('bed')! />
-<#assign formation = action.retrieveTerm('formation')! />
-<#assign group = action.retrieveTerm('group')! />
-<#assign member = action.retrieveTerm('member')! />
-<#assign geologicalContextID = action.retrieveTerm('geologicalContextID')! />
-<#assign lithostratigraphicTerms = action.retrieveTerm('lithostratigraphicTerms')! />
+<#assign earliestEonOrLowestEonothem = action.termValue('earliestEonOrLowestEonothem')! />
+<#assign latestEonOrHighestEonothem = action.termValue('latestEonOrHighestEonothem')! />
+<#assign earliestEraOrLowestErathem = action.termValue('earliestEraOrLowestErathem')! />
+<#assign latestEraOrHighestErathem = action.termValue('latestEraOrHighestErathem')! />
+<#assign earliestPeriodOrLowestSystem = action.termValue('earliestPeriodOrLowestSystem')! />
+<#assign latestPeriodOrHighestSystem = action.termValue('latestPeriodOrHighestSystem')! />
+<#assign earliestEpochOrLowestSeries = action.termValue('earliestEpochOrLowestSeries')! />
+<#assign latestEpochOrHighestSeries = action.termValue('latestEpochOrHighestSeries')! />
+<#assign earliestAgeOrLowestStage = action.termValue('earliestAgeOrLowestStage')! />
+<#assign latestAgeOrHighestStage = action.termValue('latestAgeOrHighestStage')! />
+<#assign lowestBiostratigraphicZone = action.termValue('lowestBiostratigraphicZone')! />
+<#assign highestBiostratigraphicZone = action.termValue('highestBiostratigraphicZone')! />
+<#assign bed = action.termValue('bed')! />
+<#assign formation = action.termValue('formation')! />
+<#assign group = action.termValue('group')! />
+<#assign member = action.termValue('member')! />
+<#assign geologicalContextID = action.termValue('geologicalContextID')! />
+<#assign lithostratigraphicTerms = action.termValue('lithostratigraphicTerms')! />
 
 <#-- Geology block consists of various terms/fields. At least 1 has to be present for block to appear -->
 <#if earliestEonOrLowestEonothem?has_content ||
@@ -784,10 +782,10 @@ member?has_content || geologicalContextID?has_content || lithostratigraphicTerms
   <#--</@common.article>-->
 <#--</#if>-->
 
-<#assign rights = action.retrieveTerm('rights')!"" />
-<#assign bibliographicCitation = action.retrieveTerm('bibliographicCitation')!"" />
-<#assign accessRights = action.retrieveTerm('accessRights')!"" />
-<#assign rightsHolder = action.retrieveTerm('rightsHolder')!"" />
+<#assign rights = action.termValue('rights')!"" />
+<#assign bibliographicCitation = action.termValue('bibliographicCitation')!"" />
+<#assign accessRights = action.termValue('accessRights')!"" />
+<#assign rightsHolder = action.termValue('rightsHolder')!"" />
 <@citationArticle bibliographicCitation=bibliographicCitation rights=rights accessRights=accessRights rightsHolder=rightsHolder dataset=dataset publisher=publisher />
 
 <@common.notice title="Record history">

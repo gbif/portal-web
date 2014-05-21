@@ -214,24 +214,24 @@
                 <#if showOccurrenceKey>
                   <span class="code">${occ.key?c}</span>
                 </#if>
-                <#assign catalogNumber =  action.retrieveTerm('catalogNumber',occ)!>
+                <#assign catalogNumber =  action.termValue('catalogNumber',occ)!>
                 <#if showCatalogNumber &&  catalogNumber?has_content><#if showOccurrenceKey>· </#if><span class="catalog" title="${catalogNumber}">Cat. ${common.limit(catalogNumber,40)}</span></#if>
-                <#assign recordedBy =  action.retrieveTerm('recordedBy',occ)!>
+                <#assign recordedBy =  action.termValue('recordedBy',occ)!>
                 <#if showRecordedBy && recordedBy?has_content>
                   <div class="code" title="${recordedBy}">Recorded by: ${common.limit(recordedBy,60)}</div>
                 </#if>
-                <#assign collectionCode =  action.retrieveTerm('collectionCode',occ)!>
+                <#assign collectionCode =  action.termValue('collectionCode',occ)!>
                 <#if showCollectionCode && collectionCode?has_content>
                   <div class="code" title="${collectionCode}">Collection: ${common.limit(collectionCode,60)}</div>
                 </#if>
-                <#assign institutionCode =  action.retrieveTerm('institutionCode',occ)!>
+                <#assign institutionCode =  action.termValue('institutionCode',occ)!>
                 <#if showInstitution && institutionCode?has_content>
                   <div class="code" title="${institutionCode}">Institution: ${common.limit(institutionCode,60)}</div>
                 </#if>
                 <#if showLastInterpreted && occ.lastInterpreted?has_content>
                   <div class="code">Last modified in GBIF: ${occ.lastInterpreted?string("yyyy-MM-dd")}</div>
                 </#if>
-                <#assign recordNumber =  action.retrieveTerm('recordNumber',occ)!>
+                <#assign recordNumber =  action.termValue('recordNumber',occ)!>
                 <#if showRecordNumber && recordNumber?has_content>
                   <div class="code" title="${recordNumber}">Record number: ${common.limit(recordNumber,60)}</div>
                 </#if>

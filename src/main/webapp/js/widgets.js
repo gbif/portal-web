@@ -1758,7 +1758,7 @@ $.fn.speciesSlideshow = function(usageID) {
 /**
  * Occurrence detail page slide show
  */
-$.fn.occurrenceSlideshow = function(data) {
+$.fn.occurrenceSlideshow = function(data, defaultTitle) {
   var $dataAsJson = $.parseJSON(data);
 
   // strip non images from media
@@ -1770,8 +1770,11 @@ $.fn.occurrenceSlideshow = function(data) {
   //   - identifier -> image
   //   - references -> link
   _.each($dataAsJson.results, function(media) {
-    media.image = media.identifier;
-    media.link = media.references;
+    _.defaults(media, {
+      image: media.identifier,
+      link: media.references,
+      title: defaultTitle
+    });
   });
 
   $(this).imageGallery(

@@ -38,6 +38,7 @@ public class DetailAction extends OccurrenceBaseAction {
   private OrganizationService organizationService;
 
   private Organization publisher;
+  private VerbatimOccurrence v;
   private Map<String, Map<String, String>> verbatim;
   private Map<Extension, List<Map<Term, String>>> verbatimExtensions;
 
@@ -120,13 +121,25 @@ public class DetailAction extends OccurrenceBaseAction {
   }
 
   /**
-   * Retrieve verbatim value for a Term in the core fields map.
+   * Retrieve verbatim value for a Term.
    * Accepts any term the TermFactory can deal with.
    *
    * @param termName simple or full name of any Term
    * @return verbatim value for core Term, or null if it doesn't exist
    */
-  public String retrieveTerm(String termName) {
+  public String verbatimValue(String termName) {
+    Term term = TERM_FACTORY.findTerm(termName);
+    return term == null || v == null ? null : v.getVerbatimField(term);
+  }
+
+  /**
+   * Retrieve interpreted value for a Term.
+   * Accepts any term the TermFactory can deal with.
+   *
+   * @param termName simple or full name of any Term
+   * @return interpreted or unaltered verbatim value for core Term, or null if it doesn't exist
+   */
+  public String termValue(String termName) {
     Term term = TERM_FACTORY.findTerm(termName);
     return term == null || occ == null ? null : occ.getVerbatimField(term);
   }
@@ -143,8 +156,7 @@ public class DetailAction extends OccurrenceBaseAction {
       fragmentExists = occurrenceService.getFragment(id) != null;
       // check if the mock occurrence should be loaded
       // TODO: revert change when moving to production
-      VerbatimOccurrence v =
-        id == -1000000000 ? MockOccurrenceFactory.getMockOccurrence() : occurrenceService.getVerbatim(id);
+      v = id == -1000000000 ? MockOccurrenceFactory.getMockOccurrence() : occurrenceService.getVerbatim(id);
 
       // copy extensions data
       verbatimExtensions = v.getExtensions();

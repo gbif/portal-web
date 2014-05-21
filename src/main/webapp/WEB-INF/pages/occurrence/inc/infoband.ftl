@@ -11,7 +11,7 @@
 
 <content tag="infoband">
   <#-- display occurrence id in source data. If not provided show GBIF generated occurrence id instead -->
-  <#assign occurrenceID = action.retrieveTerm('occurrenceID')! />
+  <#assign occurrenceID = action.termValue('occurrenceID')! />
   <#if occurrenceID?has_content>
     <h1>${occurrenceID}</h1>
   <#else>

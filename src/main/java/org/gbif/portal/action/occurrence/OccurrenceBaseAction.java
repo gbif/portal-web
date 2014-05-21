@@ -65,7 +65,7 @@ public class OccurrenceBaseAction extends BaseAction {
 
   /**
    * The partial gathering date, constructed from individual occurrence day, month, year.
-   * 
+   *
    * @return partial gathering date
    */
   public String getPartialGatheringDate() {
@@ -81,7 +81,7 @@ public class OccurrenceBaseAction extends BaseAction {
    * Basically, only valid integers gets persisted to the index, and any invalid data will be flagged/logged.
    * This method must ensure the values gets displayed exactly as they are persisted so that if there are errors
    * they can be detected via the occurrence page also.
-   * 
+   *
    * @return date string
    */
   protected String constructPartialGatheringDate(Integer year, Integer month, Integer day) {

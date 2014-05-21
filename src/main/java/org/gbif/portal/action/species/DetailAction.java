@@ -126,7 +126,7 @@ public class DetailAction extends UsageBaseAction {
     for (NameUsage u : sublist(related, MAX_COMPONENTS)) {
       loadDataset(u.getDatasetKey());
     }
-    for (NameUsageComponent c : usage.getExternalLinks()) {
+    for (NameUsageComponent c : usage.getIdentifiers()) {
       loadDataset(c.getDatasetKey());
     }
     for (NameUsageComponent c : usage.getDistributions()) {
