@@ -789,6 +789,7 @@ member?has_content || geologicalContextID?has_content || lithostratigraphicTerms
 <@citationArticle bibliographicCitation=bibliographicCitation rights=rights accessRights=accessRights rightsHolder=rightsHolder dataset=dataset publisher=publisher />
 
 <@common.notice title="Record history">
+  <#if occ.lastInterpreted?has_content>
   <p>
     This record was last modified in GBIF on ${occ.lastInterpreted?date?string.medium}.
     <#if occ.lastCrawled?has_content>
@@ -798,6 +799,7 @@ member?has_content || geologicalContextID?has_content || lithostratigraphicTerms
       It was last updated according to the publisher on ${occ.modified?date?string.medium}.
     </#if>
   </p>
+  </#if>
   <p>
     A record will be modified by GBIF when either the source record has been changed by the publisher, or improvements in the GBIF processing warrant an update.
     There may be more details available about this occurrence in the <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">verbatim version</a> of the record.
