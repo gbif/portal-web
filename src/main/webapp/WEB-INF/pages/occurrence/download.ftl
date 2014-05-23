@@ -33,6 +33,7 @@
         <p>Your download status is "<@s.text name="enum.downloadstatus.${download.status}" />"</p>
       </#if>
       <p>In your user home you can also see the status and link to <a href="<@s.url value='/user/download'/>">all your requested downloads</a>.</p>
+      <p style="font-size:small;">Please visit this <a href="<@s.url value='/faq/datause'/>">page</a> to obtain information of how to use the downloaded data.</p>      
       <#else>
         <p><@s.fielderror fieldName="key"/></p>
       </#if>

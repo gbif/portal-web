@@ -32,6 +32,7 @@
 
       <div class="footer">
         <@paging.pagination page=page url=currentUrlWithoutPage/>
+        <p style="font-size:small;">Please visit this <a href="<@s.url value='/faq/datause'/>">page</a> to obtain information of how to use the downloaded data.</p>
       </div>
     </div>
   </@common.article>
