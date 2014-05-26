@@ -1614,7 +1614,7 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate) {
     updateMetaProp("Contributor", data.contributor, null);
     updateMetaProp("Publisher", data.publisher, null);
     updateMetaProp("Rights holder", data.rightsHolder, null);
-    updateMetaProp("License", data.license, null);
+    updateMetaProp("License", data.license, "No license given");
     updateMetaProp("Description", data.description, null);
     updateMetaProp("Source", data.source, null);
 

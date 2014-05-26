@@ -312,23 +312,6 @@
     <#if usage.references??>
       <li><a target="_blank" href="${usage.references}">Record details on publisher site</a></li>
     </#if>
-  <#list usage.externalLinks as i>
-    <#if i.title?has_content || (i.datasetKey?has_content && datasets.get(i.datasetKey)??)>
-    <li>
-      <#if i.identifierLink?has_content>
-        <a href="${i.identifierLink}" title="${i.title!i.type!}">
-      </#if>
-      <#if i.title?has_content>
-        ${i.title}
-      <#else>
-        ${common.limit( datasets.get(i.datasetKey).title ,28)}
-      </#if>
-      <#if i.identifierLink?has_content>
-        </a>
-      </#if>
-    </li>
-    </#if>
-  </#list>
   <#if usage.nubKey??>
     <li><a target="_blank" href="http://eol.org/search/?q=${usage.canonicalOrScientificName}" title="Encyclopedia of Life">Encyclopedia of Life</a></li>
   </#if>
@@ -346,10 +329,8 @@
         <dd><a href="#" title="${usage.sourceId}">${usage.sourceId}</a></dd>
       </#if>
       <#list usage.identifiers as i>
-      <#if i.type != 'URL' && i.type!='SOURCE_ID'>
         <dt>${i.type}</dt>
         <dd><a href="${i.identifierLink!'#'}" title="${i.identifier}">${common.limit(i.identifier ,22)}</a></dd>
-      </#if>
       </#list>
     </dl>
 </div>
