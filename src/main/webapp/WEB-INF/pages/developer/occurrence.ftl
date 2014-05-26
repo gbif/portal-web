@@ -56,7 +56,7 @@
 
 
 <@api.article id="occurrence" title="Occurrences">
-  <p>This API provides services related to the retrieval of single occurrence records.</p>
+<p>This API provides services related to the retrieval of single occurrence records.</p>
 
   <@api.apiTable auth=false paging=false params=false>
     <@trowO url="/{key}" respLink="/occurrence/252408386">Gets details for a single, interpreted occurrence</@trowO>
@@ -69,70 +69,70 @@
 
 
 <@api.article id="search" title="Searching">
-  <p>This API provides services for searching occurrence records that have been indexed by GBIF.
-    In order to retrieve all results for a given search filter you need to issue individual requests for each page,
-    which is limited to a maximum size of 300 records per page.
+<p>This API provides services for searching occurrence records that have been indexed by GBIF.
+  In order to retrieve all results for a given search filter you need to issue individual requests for each page,
+  which is limited to a maximum size of 300 records per page.
 
-    Note that for technical reasons we also have a hard limit for any query of 1 million records.
-    You will get an error if the offset exceeds 1.000.000.
-    To retrieve all records beyond a million you should use our asynchronous <a href="#download">download service</a> instead.
-  </p>
+  Note that for technical reasons we also have a hard limit for any query of 1 million records.
+  You will get an error if the offset exceeds 1.000.000.
+  To retrieve all records beyond a million you should use our asynchronous <a href="#download">download service</a> instead.
+</p>
 
   <@api.apiTable auth=false>
-      <@trowS url="" respLink="/occurrence/search?taxonKey=1"  paging=true params=["datasetKey","year","month","eventDate","lastInterpreted","decimalLatitude","decimalLongitude","country","continent","publishingCountry","elevation","depth","institutionCode", "collectionCode", "catalogNumber","recordedBy","recordedNumber","basisOfRecord","taxonKey","scientificName","hasCoordinate","geometry","spatialIssues"]>Full search across all occurrences.
-      Results are ordered by relevance.</@trowS>
-      <@trowS url="/catalog_number" respLink="/occurrence/search/catalog_number?q=122&limit=5" params=["q","limit"]>Search that returns matching catalog numbers.
-      Results are ordered by relevance.</@trowS>
-      <@trowS url="/collection_code" respLink="/occurrence/search/collection_code?q=12&limit=5" params=["q","limit"]>Search that returns matching collection codes.
-      Results are ordered by relevance.</@trowS>
-      <@trowS url="/collector_name" respLink="/occurrence/search/collector_name?q=juan&limit=5" params=["q","limit"]>Search that returns matching collector names.
-      Results are ordered by relevance.</@trowS>
-      <@trowS url="/institution_code" respLink="/occurrence/search/institution_code?q=GB&limit=5" params=["q","limit"]>Search that returns matching institution codes.
-      Results are ordered by relevance.</@trowS>
-    </@api.apiTable>
+    <@trowS url="" respLink="/occurrence/search?taxonKey=1"  paging=true params=["datasetKey","year","month","eventDate","lastInterpreted","decimalLatitude","decimalLongitude","country","continent","publishingCountry","elevation","depth","institutionCode", "collectionCode", "catalogNumber","recordedBy","recordNumber","basisOfRecord","taxonKey","scientificName","hasCoordinate","geometry","spatialIssues"]>Full search across all occurrences.
+    Results are ordered by relevance.</@trowS>
+    <@trowS url="/catalog_number" respLink="/occurrence/search/catalog_number?q=122&limit=5" params=["q","limit"]>Search that returns matching catalog numbers.
+    Results are ordered by relevance.</@trowS>
+    <@trowS url="/collection_code" respLink="/occurrence/search/collection_code?q=12&limit=5" params=["q","limit"]>Search that returns matching collection codes.
+    Results are ordered by relevance.</@trowS>
+    <@trowS url="/collector_name" respLink="/occurrence/search/collector_name?q=juan&limit=5" params=["q","limit"]>Search that returns matching collector names.
+    Results are ordered by relevance.</@trowS>
+    <@trowS url="/institution_code" respLink="/occurrence/search/institution_code?q=GB&limit=5" params=["q","limit"]>Search that returns matching institution codes.
+    Results are ordered by relevance.</@trowS>
+  </@api.apiTable>
 </@api.article>
 
 
 
 <@api.article id="download" title="Occurrence Downloads">
-  <p>This API provides services to download occurrence records and retrieve information about those downloads.</p>
-  <p>Occurrence downloads are created asynchronously - the user requests a download and, once complete, is sent and email with a link to the resulting file.</p>
-  <p>Internally we use a Java web service client for the consumption of these HTTP-based, RESTful web services. It may
-    be of interest to those coding against the API, and can be found in the <a href="https://github.com/gbif/occurrence/tree/master/occurrence-ws-client" target="_blank">occurrence-download-ws-client</a>.
-  </p>
+<p>This API provides services to download occurrence records and retrieve information about those downloads.</p>
+<p>Occurrence downloads are created asynchronously - the user requests a download and, once complete, is sent and email with a link to the resulting file.</p>
+<p>Internally we use a Java web service client for the consumption of these HTTP-based, RESTful web services. It may
+  be of interest to those coding against the API, and can be found in the <a href="https://github.com/gbif/occurrence/tree/master/occurrence-ws-client" target="_blank">occurrence-download-ws-client</a>.
+</p>
 
   <@api.apiTable params=false>
-      <@trowD url="/request" resp="Download key" method="POST" authRequired=true>Starts the process of creating a download file. See the <a href="#predicates">predicates</a> section to consult the requests accepted by this service.</@trowD>
-      <@trowD url="/request/{key}" resp="Download file" respLink="/occurrence/download/request/0000447-130906152512535" method="GET" authRequired=false>Retrieves the download file if it is available.</@trowD>
-      <@trowD url="/request/{key}" method="DELETE" authRequired=true>Cancels the download process.</@trowD>
-      <@trowD url="" method="GET" resp="Download Page" authRequired=true paging=true>Lists all the downloads. This operation can be executed by the role ADMIN only.</@trowD>
-      <@trowD url="/{key}" resp="Download" respLink="/occurrence/download/0000447-130906152512535" method="GET">Retrieves the occurrence download metadata by its unique key.</@trowD>
-      <@trowD url="/{key}" method="PUT" authRequired=true>Updates the status of an existing occurrence download. This operation can be executed by the role ADMIN only.</@trowD>
-      <@trowD url="/{key}" method="POST" authRequired=true>Creates the metadata about an occurrence download. This operation can be executed by the role ADMIN only.</@trowD>
-      <@trowD url="/user/{user}" method="GET" resp="Download Page" authRequired=true paging=true>Lists the downloads created by a user. Only role ADMIN can list downloads of other users.</@trowD>
-    </@api.apiTable>
+    <@trowD url="/request" resp="Download key" method="POST" authRequired=true>Starts the process of creating a download file. See the <a href="#predicates">predicates</a> section to consult the requests accepted by this service.</@trowD>
+    <@trowD url="/request/{key}" resp="Download file" respLink="/occurrence/download/request/0000447-130906152512535" method="GET" authRequired=false>Retrieves the download file if it is available.</@trowD>
+    <@trowD url="/request/{key}" method="DELETE" authRequired=true>Cancels the download process.</@trowD>
+    <@trowD url="" method="GET" resp="Download Page" authRequired=true paging=true>Lists all the downloads. This operation can be executed by the role ADMIN only.</@trowD>
+    <@trowD url="/{key}" resp="Download" respLink="/occurrence/download/0000447-130906152512535" method="GET">Retrieves the occurrence download metadata by its unique key.</@trowD>
+    <@trowD url="/{key}" method="PUT" authRequired=true>Updates the status of an existing occurrence download. This operation can be executed by the role ADMIN only.</@trowD>
+    <@trowD url="/{key}" method="POST" authRequired=true>Creates the metadata about an occurrence download. This operation can be executed by the role ADMIN only.</@trowD>
+    <@trowD url="/user/{user}" method="GET" resp="Download Page" authRequired=true paging=true>Lists the downloads created by a user. Only role ADMIN can list downloads of other users.</@trowD>
+  </@api.apiTable>
 </@api.article>
 
 
 <@api.article id="metrics" title="Occurrence Metrics">
-  <p>This API provides services to retrieve various counts and metrics provided about occurrence records.
-    The kind of counts that are currently supported are listed by the schema method, see below for details.
-  </p>
+<p>This API provides services to retrieve various counts and metrics provided about occurrence records.
+  The kind of counts that are currently supported are listed by the schema method, see below for details.
+</p>
 
   <@api.apiTable auth=false paging=false>
-      <@trowM url="/occurrence/count" resp="Count" respLink="/occurrence/count">Returns occurrence counts for a predefined set of dimensions.
-        The supported dimensions are enumerated in the <a href="${action.cfg.apiBaseUrl}/occurrence/count/schema" target="_blank">/occurrence/count/schema</a> service.
-        An example for the count of georeferenced observations from Canada: <a href="${action.cfg.apiBaseUrl}/occurrence/count?country=CA&isGeoreferenced=true&basisOfRecord=OBSERVATION" target="_blank">/occurrence/count?country=CA&isGeoreferenced=true&basisOfRecord=OBSERVATION</a>.
-      </@trowM>
-      <@trowM url="/occurrence/count/schema" resp="Count" respLink="/occurrence/count/schema">List the supported metrics by the service.</@trowM>
-    </@api.apiTable>
+    <@trowM url="/occurrence/count" resp="Count" respLink="/occurrence/count">Returns occurrence counts for a predefined set of dimensions.
+    The supported dimensions are enumerated in the <a href="${action.cfg.apiBaseUrl}/occurrence/count/schema" target="_blank">/occurrence/count/schema</a> service.
+    An example for the count of georeferenced observations from Canada: <a href="${action.cfg.apiBaseUrl}/occurrence/count?country=CA&isGeoreferenced=true&basisOfRecord=OBSERVATION" target="_blank">/occurrence/count?country=CA&isGeoreferenced=true&basisOfRecord=OBSERVATION</a>.
+    </@trowM>
+    <@trowM url="/occurrence/count/schema" resp="Count" respLink="/occurrence/count/schema">List the supported metrics by the service.</@trowM>
+  </@api.apiTable>
 </@api.article>
 
 
 <@api.article id="inventories" title="Occurrence Inventories">
-  <p>This API provides services that list all distinct values together with their occurrence count for a given occurrence property.
-     Only a few properties are supported, each with its own service to call.
-  </p>
+<p>This API provides services that list all distinct values together with their occurrence count for a given occurrence property.
+  Only a few properties are supported, each with its own service to call.
+</p>
 
   <@api.apiTable auth=false paging=false>
     <@trowM url="/occurrence/counts/basis_of_record" resp="Counts" respLink="/occurrence/counts/basis_of_record">Lists occurrence counts by basis of record.</@trowM>
@@ -160,7 +160,7 @@
   "collectionCode": "An identifier of any form assigned by the source to identify the physical collection or digital dataset uniquely within the context of an institution.",
   "catalogNumber": "An identifier of any form assigned by the source within a physical collection or digital dataset for the record which may not be unique, but should be fairly unique in combination with the institution and collection code.",
   "recordedBy": "The person who recorded the occurrence.",
-  "recordedNumber": "The person who recorded the occurrence.",
+  "recordNumber": "An identifier given to the record at the time it was recorded in the field.",
   "basisOfRecord": "Basis of record, as defined in our <a href='${api.apidocs}vocabulary/BasisOfRecord.html' target='_blank'>BasisOfRecord enum</a>",
   "taxonKey": "A taxon key from the GBIF backbone. All included and synonym taxa are included in the search, so a search for aves with taxonKey=212 (i.e. <a href='${action.cfg.apiBaseUrl}/occurrence/search?taxonKey=212' target='_blank'>/occurrence/search?taxonKey=212</a>) will match all birds, no matter which species.",
   "scientificName": "A scientific name from the GBIF backbone. All included and synonym taxa are included in the search.",
@@ -169,7 +169,7 @@
   "spatialIssues": "Includes/excludes occurrence records which contain spatial issues (as determined in our record interpretation), i.e. spatialIssues=true returns only those records with spatial issues while spatialIssues=false includes only records without spatial issues. The absence of this parameter returns any record with or without spatial issues.",
   "issue": "A specific interpretation issue as defined in our <a href='${api.apidocs}vocabulary/OccurrenceIssue.html' target='_blank'>OccurrenceIssue enum</a>",
   "q" : "Simple search parameter. The value for this parameter can be a simple word or a phrase.",
-  "limit": "The maximum number of results to return. This can't be greater than 300, any value greater is set to 300.",
+  "limit": "The maximum number of results to return. This can't be greater than 300, any value greater is set to 300."
 } />
 
 
@@ -177,230 +177,230 @@
 
 
 <@common.article id="predicates" title="Occurrence Download Predicates">
-    <div class="fullwidth">
-        <p>A download predicate is an query expression to retrieve occurrence record downloads.</p>
-        <p>If you are interested in seeing some examples of how to use the Java API to build predicates, there are some <a href="https://github.com/gbif/occurrence/blob/master/occurrence-ws/src/test/java/org/gbif/occurrence/download/service/HiveQueryVisitorTest.java" target="_blank">test cases</a> that can be used as a reference.</p>
-        <p>The table below lists the supported predicates that can be combined to build download requests.</p>
+<div class="fullwidth">
+<p>A download predicate is an query expression to retrieve occurrence record downloads.</p>
+<p>If you are interested in seeing some examples of how to use the Java API to build predicates, there are some <a href="https://github.com/gbif/occurrence/blob/master/occurrence-ws/src/test/java/org/gbif/occurrence/download/service/HiveQueryVisitorTest.java" target="_blank">test cases</a> that can be used as a reference.</p>
+<p>The table below lists the supported predicates that can be combined to build download requests.</p>
 
-    <table class='table table-bordered table-striped table-params'>
-        <thead>
-        <tr>
-            <th width="10%" class='total'>Predicate</th>
-            <th width="30%" class='total'>Description</th>
-            <th width="60%">Example</th>
-        </tr>
-        </thead>
+<table class='table table-bordered table-striped table-params'>
+<thead>
+<tr>
+  <th width="10%" class='total'>Predicate</th>
+  <th width="30%" class='total'>Description</th>
+  <th width="60%">Example</th>
+</tr>
+</thead>
 
-        <tbody>
-        <tr>
-            <td>equals</td>
-            <td>equality comparison</td>
-            <td>
-              <code>
-               {<br/>
-                  &nbsp;&nbsp;"creator":"userName",<br/>
-                  &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
-                  &nbsp;&nbsp;"predicate":<br/>
-                  &nbsp;&nbsp;{<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"type":"equals",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"key":"BASIS_OF_RECORD",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"value":"LITERATURE"<br/>
-                  &nbsp;&nbsp;}<br/>
-                }<br/>
-              </code>
-             </td>
-        </tr>
-        <tr>
-            <td>and</td>
-            <td>logical AND(conjuction)</td>
-            <td>
-              <code>
-               {<br/>
-                  &nbsp;&nbsp;"creator":"userName",<br/>
-                  &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
-                  &nbsp;&nbsp;"predicate":<br/>
-                    &nbsp;&nbsp;{<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"type":"and",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"predicates":
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{"type":"equals","key":"HAS_GEOSPATIAL_ISSUE","value":"false"},<br/>
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"type":"equals","key":"TAXON_KEY","value":"2440447"}]<br/>
-                  &nbsp;&nbsp;}<br/>
-                }<br/>
-              </code>
-            </td>
-        </tr>
-        <tr>
-            <td>or</td>
-            <td>logical OR(disjunction)</td>
-            <td>
-              <code>
-               {<br/>
-                  &nbsp;&nbsp;"creator":"userName",<br/>
-                  &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
-                  &nbsp;&nbsp;"predicate":<br/>
-                    &nbsp;&nbsp;{<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"type":"or",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"predicates":
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{"type":"equals","key":"HAS_GEOSPATIAL_ISSUE","value":"false"},<br/>
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"type":"equals","key":"TAXON_KEY","value":"2440447"}]<br/>
-                  &nbsp;&nbsp;}<br/>
-                }<br/>
-              </code>
-            </td>
-        </tr>
-        <tr>
-           <td>lessThan</td>
-           <td>is less than</td>
-           <td>
-            <code>
-               {<br/>
-                  &nbsp;&nbsp;"creator":"userName",<br/>
-                  &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
-                  &nbsp;&nbsp;"predicate":<br/>
-                    &nbsp;&nbsp;{<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"type":"lessThan",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"key":"YEAR",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"value":"1900"<br/>
-                  &nbsp;&nbsp;}<br/>
-                }<br/>
-              </code>
-           </td>
-        </tr>
-        <tr>
-           <td>lessThanOrEquals</td>
-           <td>is less than or equals</td>
-           <td>
-            <code>
-               {<br/>
-                  &nbsp;&nbsp;"creator":"userName",<br/>
-                  &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
-                  &nbsp;&nbsp;"predicate":<br/>
-                    &nbsp;&nbsp;{<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"type":"lessThanOrEquals",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"key":"ALTITUDE",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"value":"1000"<br/>
-                  &nbsp;&nbsp;}<br/>
-                }<br/>
-             </code>
-           </td>
-        </tr>
-        <tr>
-           <td>greaterThan</td>
-           <td>is greater than</td>
-           <td>
-            <code>
-               {<br/>
-                  &nbsp;&nbsp;"creator":"userName",<br/>
-                  &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
-                  &nbsp;&nbsp;"predicate":<br/>
-                    &nbsp;&nbsp;{<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"type":"greaterThan",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"key":"YEAR",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"value":"1900"<br/>
-                  &nbsp;&nbsp;}<br/>
-                }<br/>
-             </code>
-           </td>
-        </tr>
-        <tr>
-           <td>greaterThanOrEquals</td>
-           <td>is greater than or equals</td>
-           <td>
-            <code>
-               {<br/>
-                  &nbsp;&nbsp;"creator":"userName",<br/>
-                  &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
-                  &nbsp;&nbsp;"predicate":<br/>
-                    &nbsp;&nbsp;{<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"type":"greaterThanOrEquals",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"key":"ALTITUDE",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"value":"1000"<br/>
-                  &nbsp;&nbsp;}<br/>
-                }<br/>
-             </code>
-           </td>
-        </tr>
-        <tr>
-           <td>in</td>
-           <td>specify multiple values to be compared</td>
-           <td>
-            <code>
-               {<br/>
-                  &nbsp;&nbsp;"creator":"userName",<br/>
-                  &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
-                  &nbsp;&nbsp;"predicate":<br/>
-                    &nbsp;&nbsp;{<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"type":"in",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"key":"CATALOG_NUMBER",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"values":["cat1","cat2","cat3"]<br/>
-                  &nbsp;&nbsp;}<br/>
-                }<br/>
-             </code>
-           </td>
-        </tr>
-        <tr>
-           <td>within</td>
-           <td>geospatial predicate that checks if the coordinates are inside a POLYGON</td>
-           <td>
-            <code>
-               {<br/>
-                  &nbsp;&nbsp;"creator":"userName",<br/>
-                  &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
-                  &nbsp;&nbsp;"predicate":<br/>
-                    &nbsp;&nbsp;{<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"type":"within",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"geometry":"POLYGON((-130.78125 51.179342,<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-130.78125 22.593726,-62.578125 22.593726,<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-62.578125 51.179342,-130.78125 51.179342))"<br/>
-                  &nbsp;&nbsp;}<br/>
-                }<br/>
-             </code>
-           </td>
-        </tr>
-        <tr>
-           <td>not</td>
-           <td>logical negation</td>
-           <td>
-            <code>
-               {<br/>
-                  &nbsp;&nbsp;"creator":"userName",<br/>
-                  &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
-                  &nbsp;&nbsp;"predicate":<br/>
-                    &nbsp;&nbsp;{<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"type":"not",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"predicate":<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type":"equals",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"key":"CATALOG_NUMBER",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"value":"cat1"<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-                  &nbsp;&nbsp;}<br/>
-                }<br/>
-             </code>
-           </td>
-        </tr>
-        <tr>
-           <td>like</td>
-           <td>search for a pattern</td>
-           <td>
-            <code>
-               {<br/>
-                  &nbsp;&nbsp;"creator":"userName",<br/>
-                  &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
-                  &nbsp;&nbsp;"predicate":<br/>
-                    &nbsp;&nbsp;{<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"type":"like",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"key":"CATALOG_NUMBER",<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;"value":"PAPS5-560%"<br/>
-                  &nbsp;&nbsp;}<br/>
-                }<br/>
-             </code>
-           </td>
-        </tr>
-        </tbody>
-    </table>
+<tbody>
+<tr>
+  <td>equals</td>
+  <td>equality comparison</td>
+  <td>
+    <code>
+      {<br/>
+      &nbsp;&nbsp;"creator":"userName",<br/>
+      &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
+      &nbsp;&nbsp;"predicate":<br/>
+      &nbsp;&nbsp;{<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"type":"equals",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"key":"BASIS_OF_RECORD",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"value":"LITERATURE"<br/>
+      &nbsp;&nbsp;}<br/>
+      }<br/>
+    </code>
+  </td>
+</tr>
+<tr>
+  <td>and</td>
+  <td>logical AND(conjuction)</td>
+  <td>
+    <code>
+      {<br/>
+      &nbsp;&nbsp;"creator":"userName",<br/>
+      &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
+      &nbsp;&nbsp;"predicate":<br/>
+      &nbsp;&nbsp;{<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"type":"and",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"predicates":
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{"type":"equals","key":"HAS_GEOSPATIAL_ISSUE","value":"false"},<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"type":"equals","key":"TAXON_KEY","value":"2440447"}]<br/>
+      &nbsp;&nbsp;}<br/>
+      }<br/>
+    </code>
+  </td>
+</tr>
+<tr>
+  <td>or</td>
+  <td>logical OR(disjunction)</td>
+  <td>
+    <code>
+      {<br/>
+      &nbsp;&nbsp;"creator":"userName",<br/>
+      &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
+      &nbsp;&nbsp;"predicate":<br/>
+      &nbsp;&nbsp;{<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"type":"or",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"predicates":
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[{"type":"equals","key":"HAS_GEOSPATIAL_ISSUE","value":"false"},<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"type":"equals","key":"TAXON_KEY","value":"2440447"}]<br/>
+      &nbsp;&nbsp;}<br/>
+      }<br/>
+    </code>
+  </td>
+</tr>
+<tr>
+  <td>lessThan</td>
+  <td>is less than</td>
+  <td>
+    <code>
+      {<br/>
+      &nbsp;&nbsp;"creator":"userName",<br/>
+      &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
+      &nbsp;&nbsp;"predicate":<br/>
+      &nbsp;&nbsp;{<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"type":"lessThan",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"key":"YEAR",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"value":"1900"<br/>
+      &nbsp;&nbsp;}<br/>
+      }<br/>
+    </code>
+  </td>
+</tr>
+<tr>
+  <td>lessThanOrEquals</td>
+  <td>is less than or equals</td>
+  <td>
+    <code>
+      {<br/>
+      &nbsp;&nbsp;"creator":"userName",<br/>
+      &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
+      &nbsp;&nbsp;"predicate":<br/>
+      &nbsp;&nbsp;{<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"type":"lessThanOrEquals",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"key":"ALTITUDE",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"value":"1000"<br/>
+      &nbsp;&nbsp;}<br/>
+      }<br/>
+    </code>
+  </td>
+</tr>
+<tr>
+  <td>greaterThan</td>
+  <td>is greater than</td>
+  <td>
+    <code>
+      {<br/>
+      &nbsp;&nbsp;"creator":"userName",<br/>
+      &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
+      &nbsp;&nbsp;"predicate":<br/>
+      &nbsp;&nbsp;{<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"type":"greaterThan",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"key":"YEAR",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"value":"1900"<br/>
+      &nbsp;&nbsp;}<br/>
+      }<br/>
+    </code>
+  </td>
+</tr>
+<tr>
+  <td>greaterThanOrEquals</td>
+  <td>is greater than or equals</td>
+  <td>
+    <code>
+      {<br/>
+      &nbsp;&nbsp;"creator":"userName",<br/>
+      &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
+      &nbsp;&nbsp;"predicate":<br/>
+      &nbsp;&nbsp;{<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"type":"greaterThanOrEquals",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"key":"ALTITUDE",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"value":"1000"<br/>
+      &nbsp;&nbsp;}<br/>
+      }<br/>
+    </code>
+  </td>
+</tr>
+<tr>
+  <td>in</td>
+  <td>specify multiple values to be compared</td>
+  <td>
+    <code>
+      {<br/>
+      &nbsp;&nbsp;"creator":"userName",<br/>
+      &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
+      &nbsp;&nbsp;"predicate":<br/>
+      &nbsp;&nbsp;{<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"type":"in",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"key":"CATALOG_NUMBER",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"values":["cat1","cat2","cat3"]<br/>
+      &nbsp;&nbsp;}<br/>
+      }<br/>
+    </code>
+  </td>
+</tr>
+<tr>
+  <td>within</td>
+  <td>geospatial predicate that checks if the coordinates are inside a POLYGON</td>
+  <td>
+    <code>
+      {<br/>
+      &nbsp;&nbsp;"creator":"userName",<br/>
+      &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
+      &nbsp;&nbsp;"predicate":<br/>
+      &nbsp;&nbsp;{<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"type":"within",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"geometry":"POLYGON((-130.78125 51.179342,<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-130.78125 22.593726,-62.578125 22.593726,<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-62.578125 51.179342,-130.78125 51.179342))"<br/>
+      &nbsp;&nbsp;}<br/>
+      }<br/>
+    </code>
+  </td>
+</tr>
+<tr>
+  <td>not</td>
+  <td>logical negation</td>
+  <td>
+    <code>
+      {<br/>
+      &nbsp;&nbsp;"creator":"userName",<br/>
+      &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
+      &nbsp;&nbsp;"predicate":<br/>
+      &nbsp;&nbsp;{<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"type":"not",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"predicate":<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type":"equals",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"key":"CATALOG_NUMBER",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"value":"cat1"<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+      &nbsp;&nbsp;}<br/>
+      }<br/>
+    </code>
+  </td>
+</tr>
+<tr>
+  <td>like</td>
+  <td>search for a pattern</td>
+  <td>
+    <code>
+      {<br/>
+      &nbsp;&nbsp;"creator":"userName",<br/>
+      &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
+      &nbsp;&nbsp;"predicate":<br/>
+      &nbsp;&nbsp;{<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"type":"like",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"key":"CATALOG_NUMBER",<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;"value":"PAPS5-560%"<br/>
+      &nbsp;&nbsp;}<br/>
+      }<br/>
+    </code>
+  </td>
+</tr>
+</tbody>
+</table>
 
-  </div>
+</div>
 </@common.article>
 </body>
 </html>
