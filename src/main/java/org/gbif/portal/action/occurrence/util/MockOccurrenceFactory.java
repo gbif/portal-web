@@ -151,7 +151,7 @@ public class MockOccurrenceFactory {
    * Populate a map of all Occurrence Validations.
    */
   private static void populateOccurrenceValidations() {
-    mockOccurrence.getIssues().add(OccurrenceIssue.COORDINATES_OUT_OF_RANGE);
+    mockOccurrence.getIssues().add(OccurrenceIssue.COORDINATE_OUT_OF_RANGE);
     mockOccurrence.getIssues().add(OccurrenceIssue.COUNTRY_COORDINATE_MISMATCH);
     mockOccurrence.getIssues().add(OccurrenceIssue.PRESUMED_NEGATED_LATITUDE);
     mockOccurrence.getIssues().add(OccurrenceIssue.PRESUMED_NEGATED_LONGITUDE);
