@@ -229,7 +229,9 @@
 
             <h3>Locality</h3>
             <p class="no_bottom">${locality!}<#if occ.country??><#if locality?has_content>, </#if><a href="<@s.url value='/country/${occ.country.iso2LetterCode}'/>">${occ.country.title}</a></#if></p>
-            <p class="light_note">${occ.decimalLongitude}, ${occ.decimalLatitude} <#if occ.coordinateAccuracy??> ± ${occ.coordinateAccuracy!?string}</#if></p>
+            <#if occ.decimalLongitude?has_content>
+              <p class="light_note">${occ.decimalLongitude?c}, ${occ.decimalLatitude?c} <#if occ.coordinateAccuracy??> ± ${occ.coordinateAccuracy!?string}</#if></p>
+            </#if>
 
           <@kv header="Water Body" value=occ.waterBody />
           <@kv header="Elevation" value=occ.elevation unit="m" plusMinus=occ.elevationAccuracy!?string />
