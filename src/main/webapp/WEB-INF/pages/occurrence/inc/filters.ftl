@@ -179,9 +179,9 @@
           <div class="filter">
             <h4 class="title"><%= title %> </h4>
             <ul class="multi-select">
-             <#list mediaTypes as itemValue>
-               <li key="${itemValue}"><a>${action.getFilterTitle('mediaType',itemValue)}</a></li>
-             </#list>
+              <li key="StillImage"><a>${action.getFilterTitle('mediaType','StillImage')}</a></li>
+              <li key="Sound"><a>${action.getFilterTitle('mediaType','Sound')}</a></li>
+              <li key="MovingImage"><a>${action.getFilterTitle('mediaType','MovingImage')}</a></li>             
             </ul>
             <div class="select-controls">
               <a class="select-control select-all-<%= paramName %>">[Select all]</a>&nbsp;&nbsp;<a class="select-control clear-all-<%= paramName %>">[Clear all]</a>
