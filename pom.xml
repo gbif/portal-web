@@ -62,7 +62,7 @@
     <gbif-api.version>0.14</gbif-api.version>
     <checklistbank-ws-client.version>2.7</checklistbank-ws-client.version>
     <registry-ws-client.version>2.15</registry-ws-client.version>
-    <occurrence-ws-client.version>0.18-SNAPSHOT</occurrence-ws-client.version>
+    <occurrence-ws-client.version>0.18</occurrence-ws-client.version>
     <metrics-ws-client.version>0.14</metrics-ws-client.version>
     <drupal-mybatis.version>0.11</drupal-mybatis.version>
     <gbif-common.version>0.16</gbif-common.version>
