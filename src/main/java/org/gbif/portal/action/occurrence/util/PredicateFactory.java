@@ -4,6 +4,7 @@ import org.gbif.api.model.occurrence.predicate.ConjunctionPredicate;
 import org.gbif.api.model.occurrence.predicate.DisjunctionPredicate;
 import org.gbif.api.model.occurrence.predicate.EqualsPredicate;
 import org.gbif.api.model.occurrence.predicate.GreaterThanOrEqualsPredicate;
+import org.gbif.api.model.occurrence.predicate.IsNotNullPredicate;
 import org.gbif.api.model.occurrence.predicate.LessThanOrEqualsPredicate;
 import org.gbif.api.model.occurrence.predicate.Predicate;
 import org.gbif.api.model.occurrence.predicate.WithinPredicate;
@@ -24,17 +25,19 @@ import com.google.common.collect.Range;
  * query object to pass into the service.
  * This parses the URL params which should be from something like the following
  * into a predicate suitable for launching a download service.
- *
  * It understands multi valued parameters and interprets the range format *,100
  * TAXON_KEY=12&ELEVATION=1000,2000
  * (ELEVATION >= 1000 AND ELEVATION <= 1000)
  */
 public class PredicateFactory {
+
   private final static String POLYGON = "POLYGON((%s))";
+  private final static String WILDCARD = "*";
 
   /**
    * Builds a full predicate filter from the parameters.
    * In case no filters exist still return a predicate that matches anything.
+   * 
    * @return always some predicate
    */
   public Predicate build(Map<String, String[]> params) {
@@ -124,9 +127,10 @@ public class PredicateFactory {
         range = SearchTypeValidator.buildRange(
           range.hasLowerBound() ? toIsoDate((Date) range.lowerEndpoint()) : null,
           range.hasUpperBound() ? toIsoDate((Date) range.upperEndpoint()) : null
-        );
+          );
       } else {
-        throw new IllegalArgumentException("Ranges are only supported for numeric or date parameter types but received " + param);
+        throw new IllegalArgumentException(
+          "Ranges are only supported for numeric or date parameter types but received " + param);
       }
 
 
@@ -146,8 +150,12 @@ public class PredicateFactory {
       return null;
 
     } else {
-      // defaults to an equals predicate with the original value
-      return new EqualsPredicate(param, value);
+      if (WILDCARD.equals(value)) {
+        return new IsNotNullPredicate(param);
+      } else {
+        // defaults to an equals predicate with the original value
+        return new EqualsPredicate(param, value);
+      }
     }
   }
 }
