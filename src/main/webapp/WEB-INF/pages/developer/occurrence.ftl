@@ -153,7 +153,7 @@
   "decimalLongitude": "Longitude in decimals between -180 and 180 based on WGS 84.. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
   "country": "The 2-letter country code (as per <a href='http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm' target='_blank'>ISO-3166-1</a>) of the country in which the occurrence was recorded.",
   "continent": "Continent, as defined in our <a href='${api.apidocs}vocabulary/Continent.html' target='_blank'>Continent enum</a>",
-  "publishingCountry" : "The 2-letter country code (as per <a href='http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm' target='_blank'>ISO-3166-1</a>) of the country in which the occurrence was recorded.",
+  "publishingCountry" : "The 2-letter country code (as per <a href='http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm' target='_blank'>ISO-3166-1</a>) of the owining organization's country.",
   "elevation": "Elevation (altitude) in meters above sea level. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
   "depth" : "Depth in meters relative to altitude. For example 10 meters below a lake surface with given altitude. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
   "institutionCode" : "An identifier of any form assigned by the source to identify the institution the record belongs to. Not guaranteed to be unique.",
