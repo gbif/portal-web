@@ -7,7 +7,7 @@
       <ul>
           <li>
             <#if by.occurrenceDatasets gt 0>
-              <a href="<@s.url value='/dataset/search?publishingCountry=${country.name()}&type=OCCURRENCE'/>">${by.occurrenceDatasets} occurrence datasets</a>              
+              <a href="<@s.url value='/dataset/search?publishingCountry=${country.getIso2LetterCode()}&type=OCCURRENCE'/>">${by.occurrenceDatasets} occurrence datasets</a>
               with <a href="<@s.url value='/occurrence/search?publishingCountry=${isocode}'/>">${by.occurrenceRecords} records</a>.
             <#else>
               No occurrence datasets.
@@ -16,7 +16,7 @@
 
           <li>
             <#if by.checklistDatasets gt 0>
-              <a href="<@s.url value='/dataset/search?publishingCountry=${country.name()}&type=CHECKLIST'/>">${by.checklistDatasets} checklists</a>
+              <a href="<@s.url value='/dataset/search?publishingCountry=${country.getIso2LetterCode()}&type=CHECKLIST'/>">${by.checklistDatasets} checklists</a>
               with ${by.checklistRecords} records.
             <#else>
               No checklist datasets.
@@ -25,7 +25,7 @@
 
           <li>
             <#if by.externalDatasets gt 0>
-              <a href="<@s.url value='/dataset/search?publishingCountry=${country.name()}&type=METADATA'/>">${by.externalDatasets} metadata-only datasets</a>.
+              <a href="<@s.url value='/dataset/search?publishingCountry=${country.getIso2LetterCode()}&type=METADATA'/>">${by.externalDatasets} metadata-only datasets</a>.
             <#else>
               No metadata-only datasets.
             </#if>

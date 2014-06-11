@@ -815,7 +815,7 @@ member?has_content || geologicalContextID?has_content || lithostratigraphicTerms
   <p>GBIF found issues interpreting the <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">verbatim content</a> of this record:</p>
   <ul>
   <#list occ.issues as issue>
-    <li><p>${issue.name()?replace("_", " ")?capitalize}</p></li>
+    <li><p><@s.text name="enum.occurrenceissue.${issue.name()}"/></p></li>
   </#list>
   </ul>
 </@common.notice>
