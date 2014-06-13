@@ -301,9 +301,12 @@
 </article>
 </#macro>
 
-<#macro notice title>
+<#macro notice title id="">
 <article class="notice">
   <header></header>
+  <#if id?has_content>
+    <a name="${id}"></a>
+  </#if>
   <div class="content">
     <img id="notice_icon" src="<@s.url value='/img/icons/notice_icon.png'/>" />
     <h3>${title!}</h3>

@@ -218,6 +218,17 @@
     </#if>
   </#macro>
 
+  <#if occ.issues?has_content>
+    <@common.notice id="issues" title="Interpretation issues">
+    <p>GBIF found issues interpreting the <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">verbatim content</a> of this record:</p>
+    <ul>
+      <#list occ.issues as issue>
+        <li><p><@s.text name="enum.occurrenceissue.${issue.name()}"/></p></li>
+      </#list>
+    </ul>
+    </@common.notice>
+  </#if>
+
   <@common.article id="location" title=title titleRight=titleRight class="occurrenceMap">
     <#if showMap>
     <div id="map" class="map">
@@ -807,19 +818,6 @@ member?has_content || geologicalContextID?has_content || lithostratigraphicTerms
     There may be more details available about this occurrence in the <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">verbatim version</a> of the record.
   </p>
 </@common.notice>
-
-
-<#if occ.issues?has_content>
-<@common.notice title="Interpretation issues">
-  <a name="issues"/>
-  <p>GBIF found issues interpreting the <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>">verbatim content</a> of this record:</p>
-  <ul>
-  <#list occ.issues as issue>
-    <li><p><@s.text name="enum.occurrenceissue.${issue.name()}"/></p></li>
-  </#list>
-  </ul>
-</@common.notice>
-</#if>
 
 </body>
 </html>
