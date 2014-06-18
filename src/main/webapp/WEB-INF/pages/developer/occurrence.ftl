@@ -79,7 +79,7 @@
 </p>
 
   <@api.apiTable auth=false>
-    <@trowS url="" respLink="/occurrence/search?taxonKey=1"  paging=true params=["datasetKey","year","month","eventDate","lastInterpreted","decimalLatitude","decimalLongitude","country","continent","publishingCountry","elevation","depth","institutionCode", "collectionCode", "catalogNumber","recordedBy","recordNumber","basisOfRecord","taxonKey","scientificName","hasCoordinate","geometry","spatialIssues"]>Full search across all occurrences.
+    <@trowS url="" respLink="/occurrence/search?taxonKey=1"  paging=true params=["datasetKey","year","month","eventDate","lastInterpreted","decimalLatitude","decimalLongitude","country","continent","publishingCountry","elevation","depth","institutionCode", "collectionCode", "catalogNumber","recordedBy","recordNumber","basisOfRecord","taxonKey","scientificName","hasCoordinate","geometry","spatialIssues", "issue", "mediaType"]>Full search across all occurrences.
     Results are ordered by relevance.</@trowS>
     <@trowS url="/catalog_number" respLink="/occurrence/search/catalog_number?q=122&limit=5" params=["q","limit"]>Search that returns matching catalog numbers.
     Results are ordered by relevance.</@trowS>
@@ -168,6 +168,7 @@
   "geometry": "Searches for occurrences inside a polygon described in Well Known Text (WKT) format. A WKT shape written as POLYGON ((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1)) would be queried as is, i.e. <a href='${action.cfg.apiBaseUrl}/occurrence/search?geometry=POLYGON((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1))' target='_blank'>/occurrence/search?geometry=POLYGON((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1))</a>.",
   "spatialIssues": "Includes/excludes occurrence records which contain spatial issues (as determined in our record interpretation), i.e. spatialIssues=true returns only those records with spatial issues while spatialIssues=false includes only records without spatial issues. The absence of this parameter returns any record with or without spatial issues.",
   "issue": "A specific interpretation issue as defined in our <a href='${api.apidocs}vocabulary/OccurrenceIssue.html' target='_blank'>OccurrenceIssue enum</a>",
+  "mediaType": "The kind of multimedia associated with an occurrence as defined in our <a href='${api.apidocs}vocabulary/MediaType.html' target='_blank'>MediaType enum</a>",
   "q" : "Simple search parameter. The value for this parameter can be a simple word or a phrase.",
   "limit": "The maximum number of results to return. This can't be greater than 300, any value greater is set to 300."
 } />

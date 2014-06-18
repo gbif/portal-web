@@ -9,6 +9,7 @@
 package org.gbif.portal.action.dataset;
 
 import org.gbif.api.model.checklistbank.DatasetMetrics;
+import org.gbif.api.model.common.search.Facet;
 import org.gbif.api.model.metrics.cube.OccurrenceCube;
 import org.gbif.api.model.metrics.cube.ReadBuilder;
 import org.gbif.api.model.registry.search.DatasetSearchParameter;
@@ -23,9 +24,11 @@ import org.gbif.api.vocabulary.Country;
 import org.gbif.api.vocabulary.DatasetType;
 import org.gbif.portal.action.BaseFacetedSearchAction;
 import org.gbif.portal.action.BaseSearchAction;
+import org.gbif.portal.model.FacetInstance;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -80,7 +83,7 @@ public class SearchAction
    * Solr supports highlighting for fixed ngram fields only (a fixed ngram is field with
    * minGramSize = maxGramSize) which is not the case for this field. For this reason, sometimes there is highlighting,
    * but for times when it's missing, this method will add the missing highlighting.
-   * 
+   *
    * @param t dataset title
    * @param q search query text
    * @return dataset title updated with missing highlighting if necessary
@@ -107,7 +110,7 @@ public class SearchAction
   /**
    * Checks if the dataset search result match (highlighted text) only occurred in the full text field.
    * This method goes through all highlighted fields that may be highlighted:
-   * 
+   *
    * <pre>
    * <arr name="hl.fl">
    *   <str>dataset_title</str>
@@ -118,12 +121,12 @@ public class SearchAction
    *   <str>description</str>
    * </arr>
    * </pre>
-   * 
+   *
    * If there is no highlighted text in any of these fields, it can be inferred that the match must have occurred in
    * the full text field.
    * </br>
    * If the query text was null, there can be no matching anyways so the method just returns false.
-   * 
+   *
    * @param result DatasetSearchResult
    * @return whether a match only occurred on the full text field or not
    */
@@ -155,7 +158,7 @@ public class SearchAction
    * This method is needed when checking if the query string matches the dataset title. For example, if the query
    * string is "straße", it won't match the dataset title "Schulhof Gymnasium Hürth Bonnstrasse" unless "straße" gets
    * converted to its ASCII equivalent "strasse".
-   * 
+   *
    * @param q query string
    * @return query string converted to ASCII equivalent
    * @see org.gbif.portal.action.dataset.SearchAction#addMissingHighlighting(String, String)
@@ -193,6 +196,7 @@ public class SearchAction
   @Override
   public String execute() {
     super.execute();
+
     // replace organisation keys with real names
     lookupFacetTitles(DatasetSearchParameter.HOSTING_ORG, getOrgTitle);
     lookupFacetTitles(DatasetSearchParameter.OWNING_ORG, getOrgTitle);
@@ -216,6 +220,27 @@ public class SearchAction
 
 
     return SUCCESS;
+  }
+
+  @Override
+  /**
+   * Facet search returns country enum names still, see http://dev.gbif.org/issues/browse/POR-2206
+   * Convert those into iso codes.
+   */
+  protected List<FacetInstance> toFacetInstance(Facet<DatasetSearchParameter> facet) {
+    if (DatasetSearchParameter.PUBLISHING_COUNTRY == facet.getField()) {
+      for (Facet.Count count : facet.getCounts()) {
+        // convert country enum name to iso code
+        Country c = null;
+        try {
+          c = (Country) VocabularyUtils.lookupEnum(count.getName(), Country.class);
+          count.setName(c.getIso2LetterCode());
+        } catch (IllegalArgumentException e) {
+          LOG.warn("Unable to read publishing country facet value {}", count.getName());
+        }
+      }
+    }
+    return super.toFacetInstance(facet);
   }
 
   public Map<UUID, Long> getRecordCounts() {
@@ -252,13 +277,12 @@ public class SearchAction
 
       @Override
       public String apply(String name) {
-        try {
-          Country c = (Country) VocabularyUtils.lookupEnum(name, Country.class);
+        // should be iso codes
+        Country c = Country.fromIsoCode(name);
+        if (c!=null) {
           return c.getTitle();
-
-        } catch (IllegalArgumentException e) {
-          return name;
         }
+        return name;
       }
     };
   }

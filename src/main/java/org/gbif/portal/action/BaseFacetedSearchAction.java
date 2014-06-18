@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * - Execution of the search request using an instance of {@link SearchService}.
  * - Holds the user selected values of a facet.
  * - Provides the required information for displaying the facet counts.
- * 
+ *
  * @param <T> type of the results content
  * @param <P> the search parameter enum
  * @param <R> the request type
@@ -60,7 +60,7 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
 
   /**
    * Default constructor for this class.
-   * 
+   *
    * @param searchService an instance of search service
    * @param searchType the type of the {@link Enum} used for search parameters & facets
    * @param request a new, default search request
@@ -90,7 +90,7 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
 
   /**
    * Translates current url query parameter values via the translateFacetValue method.
-   * 
+   *
    * @return current url with translated values
    */
   @Override
@@ -135,7 +135,7 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
    * </#list>
    * In the previous example the selected elements of a "select" element will be populated by using the list of
    * counts of the facet 'RANK'.
-   * 
+   *
    * @return the facetCounts
    */
   public Map<P, List<FacetInstance>> getFacetCounts() {
@@ -153,7 +153,7 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
   /**
    * Gets the facet counts that are part of the current search request filter.
    * Used in the facet UI.
-   * 
+   *
    * @return the selected facet counts if any
    */
   public Map<P, List<FacetInstance>> getSelectedFacetCounts() {
@@ -175,7 +175,7 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
    * Utility function that sets facet titles.
    * The function uses a function parameter to accomplish this task.
    * The getTitleFunction could provide the actual communication with the service later to provide the required title.
-   * 
+   *
    * @param facet the facet
    * @param getTitleFunction function that returns title using a facet name
    */
@@ -202,7 +202,7 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
 
   /**
    * Searches for facetInstance.name in the list of FacetInstances.
-   * 
+   *
    * @param facet search parameter to find the value in
    * @param name facet name to find, case insensitive
    * @return the existing facet instance from the counts or null
@@ -230,7 +230,7 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
       for (Facet<P> facet : searchResponse.getFacets()) {
         if (facet.getCounts() != null) {// the facet.Count are stored in the facetCounts field
           // facetFilters.put(facet.getField(), toFacetInstance(facet.getCounts()));
-          facetCounts.put(facet.getField(), toFacetInstance(facet.getCounts()));
+          facetCounts.put(facet.getField(), toFacetInstance(facet));
         }
       }
     }
@@ -275,7 +275,8 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
     }
   }
 
-  private List<FacetInstance> toFacetInstance(List<Facet.Count> counts) {
+  protected List<FacetInstance> toFacetInstance(Facet<P> facet) {
+    List<Facet.Count> counts = facet.getCounts();
     List<FacetInstance> instances = Lists.newArrayList();
     for (Facet.Count c : counts) {
       // only show counts with at least 1 matching record
