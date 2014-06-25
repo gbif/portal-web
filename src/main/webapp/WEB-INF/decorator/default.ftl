@@ -70,7 +70,7 @@
 
       <div class="account">
         <#if currentUser??>
-        <a href="${cfg.drupal}/user/${currentUser.key}/edit" title='Account'>Hello ${currentUser.firstName!currentUser.accountName!}</a>
+        <a href="${cfg.drupal}/user/${currentUser.key?c}/edit" title='Account'>Hello ${currentUser.firstName!currentUser.accountName!}</a>
         or
         <a href="${cfg.drupal}/user/logout?destination=${currentDestinationParam?url}" title='<@s.text name="menu.logout"/>'><@s.text name="menu.logout"/></a>
         <#else>
@@ -120,7 +120,7 @@
               <li><a href="${cfg.drupal}/newsroom/uses">Featured data use</a></li>
               <li><a href="${cfg.drupal}/newsroom/opportunities">Opportunities</a></li>
               <li><a href="${cfg.drupal}/newsroom/events">Events</a></li>
-              <li><a href="${cfg.drupal}/newsroom/consultations">Consultations</a></li>              
+              <li><a href="${cfg.drupal}/newsroom/consultations">Consultations</a></li>
             </ul>
           </div>
 

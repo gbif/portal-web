@@ -22,7 +22,7 @@
   </#if>
   <ul class="${hl!}">
     <li<#if (tab!"")=="account"> class='selected ${hl!}'</#if>>
-      <a href="${cfg.drupal}/user/${currentUser.key}/edit" title="Account"><span>Account</span></a>
+      <a href="${cfg.drupal}/user/${currentUser.key?c}/edit" title="Account"><span>Account</span></a>
     </li>
     <li<#if (tab!"")=="download"> class='selected ${hl!}'</#if>>
       <a href="<@s.url value='/user/download'/>" title="Downloads"><span>Downloads</span></a>
