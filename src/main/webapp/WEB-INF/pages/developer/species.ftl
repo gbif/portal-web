@@ -20,7 +20,7 @@
         datasets</a> in the GBIF network.
     </p>
     <p>
-        For statistics on checklist datasets, you can refer to the <a href="<@s.url value='/developer/registry#dataset_metrics'/>">dataset metrics</a> section of the Registry API.
+        For statistics on checklist datasets, you can refer to the <a href="<@s.url value='/developer/registry#datasetMetrics'/>">dataset metrics</a> section of the Registry API.
     </p>
     <p>
         Internally we use a Java web service client for the consumption of these HTTP-based, RESTful web services. It
@@ -31,7 +31,7 @@
 </div>
 <div class="right">
     <ul>
-        <li><a href="#name_usages">Name Usages</a></li>
+        <li><a href="#nameUsages">Name Usages</a></li>
         <li><a href="#searching">Searching</a></li>
         <li><a href="#parser">Name Parser</a></li>
         <li><a href="#parameters">Query Parameters</a></li>
@@ -46,7 +46,7 @@
 </#macro>
 
 
-<@api.article id="name_usages" title="Working with Name Usages">
+<@api.article id="nameUsages" title="Working with Name Usages">
   <p>A name usage is the usage of a scientific name according to one
       particular Checklist including the <a href="<@s.url value='/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c'/>">GBIF Taxonomic Backbone</a>
       which is just called <em>nub</em> in this API.
@@ -68,9 +68,9 @@
     <@trow url="/{int}/distributions" resp="Distribution Page" paging=true respLink="/species/5231190/distributions">Lists all distributions for a name usage</@trow>
     <@trow url="/{int}/images" resp="Image Page" paging=true respLink="/species/5231190/images">Lists all images for a name usage</@trow>
     <@trow url="/{int}/references" resp="Reference Page" paging=true respLink="/species/5231190/references">Lists all references for a name usage</@trow>
-    <@trow url="/{int}/species_profiles" resp="SpeciesProfile Page" paging=true respLink="/species/5231190/species_profiles">Lists all species profiles for a name usage</@trow>
-    <@trow url="/{int}/vernacular_names" resp="VernacularName Page" paging=true respLink="/species/5231190/vernacular_names">Lists all vernacular names for a name usage</@trow>
-    <@trow url="/{int}/type_specimens" resp="TypeSpecimen Page" paging=true respLink="/species/5231190/type_specimens">Lists all type specimens for a name usage</@trow>
+    <@trow url="/{int}/speciesProfiles" resp="SpeciesProfile Page" paging=true respLink="/species/5231190/speciesProfiles">Lists all species profiles for a name usage</@trow>
+    <@trow url="/{int}/vernacularNames" resp="VernacularName Page" paging=true respLink="/species/5231190/vernacularNames">Lists all vernacular names for a name usage</@trow>
+    <@trow url="/{int}/typeSpecimens" resp="TypeSpecimen Page" paging=true respLink="/species/5231190/typeSpecimens">Lists all type specimens for a name usage</@trow>
   </@api.apiTable>
 
 </@api.article>
@@ -89,7 +89,7 @@
       Fuzzy matches scientific names against the GBIF Backbone Taxonomy with the optional classification provided.
       If a classification is provided and strict is not set to true, the default matching will also try to match against these if no direct match is found for the name parameter alone.
     </@trow>
-    <@trow url="/search" resp="NameUsage Page" respLink="/species/search?q=Puma&rank=GENUS" paging=true params=["q","datasetKey","rank","highertaxonKey","status","is_extinct","habitat","threat","nameType","nomenclaturalStatus","hl","facet","facet_only","facet_mincount","facet_multiselect"]>
+    <@trow url="/search" resp="NameUsage Page" respLink="/species/search?q=Puma&rank=GENUS" paging=true params=["q","datasetKey","rank","highertaxonKey","status","isExtinct","habitat","threat","nameType","nomenclaturalStatus","hl","facet","facet_only","facet_mincount","facet_multiselect"]>
         Full text search of name usages covering the scientific and vernacular name, the species description, distribution and the entire classification
         across all name usages of all or some checklists. Results are ordered by relevance as this search usually returns a lot of results.</@trow>
     <@trow url="/suggest" resp="NameUsage Page" respLink="/species/suggest?datasetKey=d7dddbf4-2cf0-4f39-9b2a-bb099caae36c&q=Puma%20con" paging=false params=["q","datasetKey","rank"]>
@@ -146,7 +146,7 @@
   "threat": "Not yet implemented, but will eventually allow for filtering by a threat status enum",
   "nameType": "Filters by the name type as given in our <a href='${api.apidocs}/vocabulary/NameType.html' target='_blank'>NameType enum</a>",
   "nomenclaturalStatus": "Not yet implemented, but will eventually allow for filtering by a nomenclatural status enum",
-  "facet": "A list of facet names used to retrieve the 100 most frequent values for a field. Allowed facets are: dataset_key, highertaxon_key, rank, status, extinct, habitat, and name_type. Additionally threat and nomenclatural_status are legal values but not yet implemented, so data will not yet be returned for them."
+  "facet": "A list of facet names used to retrieve the 100 most frequent values for a field. Allowed facets are: datasetKey, higherTaxonKey, rank, status, isExtinct, habitat and nameType. Additionally threat and nomenclaturalStatus are legal values but not yet implemented, so data will not yet be returned for them."
 } />
 
 

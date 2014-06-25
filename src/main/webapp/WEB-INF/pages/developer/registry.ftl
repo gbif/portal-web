@@ -32,8 +32,8 @@
 <div class="right">
     <ul>
         <li><a href="#datasets">Datasets</a></li>
-        <li><a href="#dataset_search">Dataset Search</a></li>
-        <li><a href="#dataset_metrics">Dataset Metrics</a></li>
+        <li><a href="#datasetSearch">Dataset Search</a></li>
+        <li><a href="#datasetMetrics">Dataset Metrics</a></li>
         <li><a href="#installations">Installations</a></li>
         <li><a href="#organizations">Organizations</a></li>
         <li><a href="#nodes">Nodes</a></li>
@@ -117,7 +117,7 @@
   </@api.apiTable>
 </@api.article>
 
-<@api.article id="dataset_search" title="Dataset Search">
+<@api.article id="datasetSearch" title="Dataset Search">
   <p>The dataset search API provides search services for datasets.</p>
   <@api.apiTable auth=false >
     <@trowS url="/search" respLink="/dataset/search?q=plant&publishingCountry=AR" paging=true params=["q","country","type","subtype","keyword","owningOrg","hostingOrg","decade","publishingCountry","continent","hl","facet","facet_only","facet_mincount","facet_multiselect"]>Full text search across all datasets.
@@ -128,10 +128,10 @@
 
 </@api.article>
 
-<@api.article id="dataset_metrics" title="Dataset Metrics">
+<@api.article id="datasetMetrics" title="Dataset Metrics">
   <p>The dataset metrics API provides metrics for datasets of type CHECKLIST only.</p>
   <@api.apiTable auth=false>
-    <@trowM url="/dataset_metrics/{UUID}" respLink="/dataset_metrics/66dd0960-2d7d-46ee-a491-87b9adcfe7b1">Get various metrics for a checklist.
+    <@trowM url="/dataset/{UUID}/metrics" respLink="/dataset/66dd0960-2d7d-46ee-a491-87b9adcfe7b1/metrics">Get various metrics for a checklist.
         Metrics include the number of species, the number of synonyms, counts by rank, counts by vernacular name language, etc.</@trowM>
   </@api.apiTable>
 
