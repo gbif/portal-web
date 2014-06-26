@@ -363,10 +363,6 @@
       <result>/WEB-INF/pages/user/download.ftl</result>
     </action>
 
-    <action name="namelist" class="org.gbif.portal.action.user.NameListsAction">
-      <result>/WEB-INF/pages/user/namelist.ftl</result>
-    </action>
-
     <action name="download/cancel" class="org.gbif.portal.action.user.DownloadCancelAction">
       <result type="redirectAction">download</result>
     </action>
