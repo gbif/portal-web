@@ -105,7 +105,7 @@ public class SearchActionTest {
     List<String> keywords = new LinkedList<String>();
     keywords.add("k1");
     result.setKeywords(keywords);
-    result.setOwningOrganizationTitle("Owner");
+    result.setPublishingOrganizationTitle("Publisher");
     result.setHostingOrganizationTitle("Host");
     return result;
   }

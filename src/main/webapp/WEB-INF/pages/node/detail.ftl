@@ -42,7 +42,7 @@
       <#if datasets?has_content>
         <ul class="notes">
           <#list datasets as cw>
-            <@common.datasetListItem title=cw.obj.title key=cw.obj.key type=cw.obj.type modified=cw.obj.modified owningOrganizationKey=cw.obj.owningOrganizationKey owningOrganizationTitle=action.getOrganization(cw.obj.owningOrganizationKey).title count=cw.count geoCount=cw.geoCount></@common.datasetListItem>
+            <@common.datasetListItem title=cw.obj.title key=cw.obj.key type=cw.obj.type modified=cw.obj.modified publishingOrganizationKey=cw.obj.publishingOrganizationKey publishingOrganizationTitle=action.getOrganization(cw.obj.publishingOrganizationKey).title count=cw.count geoCount=cw.geoCount></@common.datasetListItem>
           </#list>
         </ul>
       <#else>

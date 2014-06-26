@@ -153,7 +153,7 @@ public class UsageBaseAction extends BaseAction {
     }
 
     // load publisher
-    publisher = organizationService.get(dataset.getOwningOrganizationKey());
+    publisher = organizationService.get(dataset.getPublishingOrganizationKey());
 
     try {
       metrics = metricsService.get(usage.getDatasetKey());

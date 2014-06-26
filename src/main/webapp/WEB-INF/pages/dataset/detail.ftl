@@ -159,7 +159,7 @@
   <h3>Registration Date</h3>
   <p>${dataset.created?date}</p>
 
-  <!-- Only show host if it's different from owning publisher -->
+  <!-- Only show host if it's different from publishing publisher -->
   <#if host.key! != publisher.key!>
     <h3>Hosted by</h3>
     <p><a href="<@s.url value='/publisher/${host.key}'/>"
@@ -170,7 +170,7 @@
   <p><a href="<@s.url value='/installation/${installation.key}'/>"
         title="${installation.title!"Unknown"}">${installation.title!"Unknown"}</a></p>
 
-  <!-- Could be an external dataset, with an owning org, but no endorsing node since it's not in GBIF Network -->
+  <!-- Could be an external dataset, with an publishing org, but no endorsing node since it's not in GBIF Network -->
   <#if (publisher.endorsingNode)?has_content>
     <h3>Endorsed by</h3>
     <p><a href="<@s.url value='/node/${publisher.endorsingNode.key}'/>"

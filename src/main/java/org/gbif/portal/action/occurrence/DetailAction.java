@@ -51,8 +51,8 @@ public class DetailAction extends OccurrenceBaseAction {
     // load occurrence, including all verbatim terms (organized by group)
     verbatim();
     // load publisher
-    if (dataset.getOwningOrganizationKey() != null) {
-      publisher = organizationService.get(dataset.getOwningOrganizationKey());
+    if (dataset.getPublishingOrganizationKey() != null) {
+      publisher = organizationService.get(dataset.getPublishingOrganizationKey());
     }
 
     return SUCCESS;

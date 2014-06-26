@@ -18,9 +18,9 @@
       </strong>
     </h2>
 
-    <#if showPublisher && dataset.owningOrganizationKey??>
+    <#if showPublisher && dataset.publishingOrganizationKey??>
       <p>
-        <#assign publisher=action.getOrganization(dataset.owningOrganizationKey) />
+        <#assign publisher=action.getOrganization(dataset.publishingOrganizationKey) />
         Published by <a href="<@s.url value='/publisher/${publisher.key}'/>" title="${publisher.title}">${publisher.title}</a>.
       </p>
     </#if>
@@ -82,8 +82,8 @@
 
       </strong>
       <#-- If anything needs to be placed next to the title, put it here -->
-      <#if publisher.numOwnedDatasets gt 0>
-        <span class="note">${publisher.numOwnedDatasets} published datasets.</span>
+      <#if publisher.numPublishedDatasets gt 0>
+        <span class="note">${publisher.numPublishedDatasets} published datasets.</span>
       </#if>
     </h2>
 
@@ -103,7 +103,7 @@
   <a href="<@s.url value='/publisher/${publisher.key}'/>">${publisher.title!"???"}</a>
   <span class="note">A data publisher
     <#if publisher.city?? || publisher.country??>from <@common.cityAndCountry publisher/></#if>
-    <#if (publisher.numOwnedDatasets > 0)>with ${publisher.numOwnedDatasets} published datasets</#if>
+    <#if (publisher.numPublishedDatasets > 0)>with ${publisher.numPublishedDatasets} published datasets</#if>
    </span>
 </li>
 </#macro>

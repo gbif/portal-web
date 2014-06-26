@@ -334,9 +334,9 @@
 </#macro>
 
 <#-- writes a standard list item for a dataset for display across country, node, network, installation, dataset and publisher pages -->
-<#macro datasetListItem title key type modified owningOrganizationKey="" owningOrganizationTitle="" count=0 geoCount=0 >
+<#macro datasetListItem title key type modified publishingOrganizationKey="" publishingOrganizationTitle="" count=0 geoCount=0 >
   <li>
     <a title="${title}" href="<@s.url value='/dataset/${key}'/>">${common.limit(title, 100)}</a>
-    <span class="note">${type?lower_case?cap_first} dataset. <#if modified?has_content>Updated ${modified?date}.</#if> <#if (count &gt; 0)>${count} records <#if geoCount &gt; 0>(${geoCount} georeferenced)</#if></#if> <#if owningOrganizationKey?has_content && owningOrganizationTitle?has_content> Published by <a href="<@s.url value='/publisher/${owningOrganizationKey}'/>" title="${owningOrganizationTitle}">${owningOrganizationTitle}</a></#if></span>
+    <span class="note">${type?lower_case?cap_first} dataset. <#if modified?has_content>Updated ${modified?date}.</#if> <#if (count &gt; 0)>${count} records <#if geoCount &gt; 0>(${geoCount} georeferenced)</#if></#if> <#if publishingOrganizationKey?has_content && publishingOrganizationTitle?has_content> Published by <a href="<@s.url value='/publisher/${publishingOrganizationKey}'/>" title="${publishingOrganizationTitle}">${publishingOrganizationTitle}</a></#if></span>
   </li>
 </#macro>

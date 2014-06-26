@@ -163,8 +163,8 @@ public class DatasetBaseAction extends MemberBaseAction<Dataset> {
 
     parentDataset = member.getParentDatasetKey() != null ? datasetService.get(member.getParentDatasetKey()) : null;
 
-    publisher = member.getOwningOrganizationKey() != null ?
-      organizationService.get(member.getOwningOrganizationKey()) : publisher;
+    publisher = member.getPublishingOrganizationKey() != null ?
+      organizationService.get(member.getPublishingOrganizationKey()) : publisher;
 
     installation = installationService.get(member.getInstallationKey());
 

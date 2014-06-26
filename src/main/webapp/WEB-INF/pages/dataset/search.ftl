@@ -53,14 +53,14 @@
             <a href="<@s.url value='/dataset/${dataset.key!}'/>" title="${action.removeHighlighting(datasetTitle!)}">${action.limitHighlightedText(datasetTitle!, max_show_length)}</a>
           </h2>
 
-          <#if dataset.owningOrganizationKey?has_content>
+          <#if dataset.publishingOrganizationKey?has_content>
             <p>
               <#if recordCounts.get(dataset.key)??>
                 ${recordCounts.get(dataset.key)} records published by
               <#else>
                 Published by
               </#if>
-              <a href="<@s.url value='/publisher/${dataset.owningOrganizationKey}'/>" title="${action.removeHighlighting(dataset.owningOrganizationTitle!)}">${dataset.owningOrganizationTitle!"Unknown"}</a></p>
+              <a href="<@s.url value='/publisher/${dataset.publishingOrganizationKey}'/>" title="${action.removeHighlighting(dataset.publishingOrganizationTitle!)}">${dataset.publishingOrganizationTitle!"Unknown"}</a></p>
           <#elseif dataset.hostingOrganizationKey?has_content>
             <p>Hosted by <a href="<@s.url value='/publisher/${dataset.hostingOrganizationKey}'/>" title="${action.removeHighlighting(dataset.hostingOrganizationTitle!)}">${dataset.hostingOrganizationTitle!"Unknown"}</a></p>
           </#if>

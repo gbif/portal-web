@@ -88,7 +88,7 @@
     <tr class="filter">
       <td colspan="4">
         <a class="edit" style="display:none;"/>
-        <div class="inner filter_view">          
+        <div class="inner filter_view">
           <div class="filter">
             <h4 class="title"><%= title %> </h4>
             <ul class="multi-select">
@@ -146,7 +146,7 @@
     <tr class="filter">
       <td colspan="4">
         <a class="edit" style="display:none;"/>
-        <div class="inner filter_view">          
+        <div class="inner filter_view">
           <div class="filter">
             <h4 class="title"><%= title %> </h4>
             <ul class="multi-select" style="height:300px !important; overflow:scroll !important; padding-bottom:10px !important;">
@@ -175,13 +175,13 @@
     <tr class="filter">
       <td colspan="4">
         <a class="edit" style="display:none;"/>
-        <div class="inner filter_view">          
+        <div class="inner filter_view">
           <div class="filter">
             <h4 class="title"><%= title %> </h4>
             <ul class="multi-select">
               <li key="StillImage"><a>${action.getFilterTitle('mediaType','StillImage')}</a></li>
               <li key="Sound"><a>${action.getFilterTitle('mediaType','Sound')}</a></li>
-              <li key="MovingImage"><a>${action.getFilterTitle('mediaType','MovingImage')}</a></li>             
+              <li key="MovingImage"><a>${action.getFilterTitle('mediaType','MovingImage')}</a></li>
             </ul>
             <div class="select-controls">
               <a class="select-control select-all-<%= paramName %>">[Select all]</a>&nbsp;&nbsp;<a class="select-control clear-all-<%= paramName %>">[Clear all]</a>
@@ -204,7 +204,7 @@
     <tr class="filter">
       <td colspan="4">
         <a class="edit" style="display:none;"/>
-        <div class="inner filter_view">          
+        <div class="inner filter_view">
           <div class="filter">
             <h4 class="title"><%= title %> </h4>
             <ul class="multi-select">
@@ -457,8 +457,8 @@
           <#list suggestions as datasetSearchResult>
               <input id="searchResult${datasetSearchResult.key}" type="radio" value="${datasetSearchResult.key}" name="DATASET_KEY" class="suggestion" data-suggestion="${title}"/>
               <label for="searchResult${datasetSearchResult.key}">${datasetSearchResult.title}
-              <#if datasetSearchResult.owningOrganizationTitle?has_content>
-                (Published by  <em>${datasetSearchResult.owningOrganizationTitle} </em>)
+              <#if datasetSearchResult.publishingOrganizationTitle?has_content>
+                (Published by  <em>${datasetSearchResult.publishingOrganizationTitle} </em>)
               <#elseif datasetSearchResult.networkOfOriginKey?has_content>
                 (Originates from <em>${action.getNetworkTitle(datasetSearchResult.networkOfOriginKey)!"Unknown"}</em>)
               </#if>

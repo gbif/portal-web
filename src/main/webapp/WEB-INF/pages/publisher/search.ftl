@@ -40,7 +40,7 @@
           <p>A data publisher
             <#-- country can appear on its own, but if city appears, there must be a country too -->
             <@common.cityAndCountry pub/>
-            <#if (pub.numOwnedDatasets > 0)>with ${pub.numOwnedDatasets} published datasets</#if>
+            <#if (pub.numPublishedDatasets > 0)>with ${pub.numPublishedDatasets} published datasets</#if>
           </p>
 
           <div class="footer">

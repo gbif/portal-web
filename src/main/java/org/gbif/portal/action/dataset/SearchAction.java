@@ -116,7 +116,7 @@ public class SearchAction
    *   <str>dataset_title</str>
    *   <str>keyword</str>
    *   <str>iso_country_code</str>
-   *   <str>owning_organization_title</str>
+   *   <str>publishing_organization_title</str>
    *   <str>hosting_organization_title</str>
    *   <str>description</str>
    * </arr>
@@ -137,7 +137,7 @@ public class SearchAction
     final String keywords = result.getKeywords() == null ? "" : TOKEN_JOINER.join(result.getKeywords());
     if (isHighlightedText(result.getTitle())
       || isHighlightedText(result.getDescription())
-      || isHighlightedText(result.getOwningOrganizationTitle())
+      || isHighlightedText(result.getPublishingOrganizationTitle())
       || isHighlightedText(result.getHostingOrganizationTitle())
       || isHighlightedText(keywords)) {
 
@@ -199,7 +199,7 @@ public class SearchAction
 
     // replace organisation keys with real names
     lookupFacetTitles(DatasetSearchParameter.HOSTING_ORG, getOrgTitle);
-    lookupFacetTitles(DatasetSearchParameter.OWNING_ORG, getOrgTitle);
+    lookupFacetTitles(DatasetSearchParameter.PUBLISHING_ORG, getOrgTitle);
     lookupFacetTitles(DatasetSearchParameter.TYPE, getDatasetTypeTitle);
     lookupFacetTitles(DatasetSearchParameter.PUBLISHING_COUNTRY, getCountryTitle);
 

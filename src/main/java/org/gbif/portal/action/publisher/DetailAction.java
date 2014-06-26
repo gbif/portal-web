@@ -41,7 +41,7 @@ public class DetailAction extends MemberBaseAction<Organization> {
 
   public String datasets() throws Exception {
     super.execute();
-    page = organizationService.ownedDatasets(id, new PagingRequest(offset, 25));
+    page = organizationService.publishedDatasets(id, new PagingRequest(offset, 25));
     return SUCCESS;
   }
 
@@ -59,7 +59,7 @@ public class DetailAction extends MemberBaseAction<Organization> {
       node = nodeService.get(member.getEndorsingNodeKey());
     }
     // load first 10 datasets
-    page = organizationService.ownedDatasets(id, new PagingRequest(0, 10));
+    page = organizationService.publishedDatasets(id, new PagingRequest(0, 10));
     super.loadCountWrappedDatasets(page);
 
     // load first 10 hosted installations

@@ -120,9 +120,9 @@
 <@api.article id="datasetSearch" title="Dataset Search">
   <p>The dataset search API provides search services for datasets.</p>
   <@api.apiTable auth=false >
-    <@trowS url="/search" respLink="/dataset/search?q=plant&publishingCountry=AR" paging=true params=["q","country","type","subtype","keyword","owningOrg","hostingOrg","decade","publishingCountry","continent","hl","facet","facet_only","facet_mincount","facet_multiselect"]>Full text search across all datasets.
+    <@trowS url="/search" respLink="/dataset/search?q=plant&publishingCountry=AR" paging=true params=["q","country","type","subtype","keyword","publishingOrg","hostingOrg","decade","publishingCountry","continent","hl","facet","facet_only","facet_mincount","facet_multiselect"]>Full text search across all datasets.
         Results are ordered by relevance.</@trowS>
-    <@trowS url="/suggest" respLink="/dataset/suggest?q=Amazon&type=OCCURRENCE" params=["q","country","type","subtype","keyword","owningOrg","hostingOrg","decade","publishingCountry","continent"]>Search that returns up to 20 matching datasets.
+    <@trowS url="/suggest" respLink="/dataset/suggest?q=Amazon&type=OCCURRENCE" params=["q","country","type","subtype","keyword","publishingOrg","hostingOrg","decade","publishingCountry","continent"]>Search that returns up to 20 matching datasets.
         Results are ordered by relevance.</@trowS>
   </@api.apiTable>
 
@@ -201,7 +201,7 @@
     <@trowO url="/{UUID}/comment" method="POST" resp="ID" auth=true>Creates and adds an organization comment</@trowO>
     <@trowO url="/{UUID}/comment" method="DELETE" auth=true>Deletes the organization comment with comment identifier {ID}</@trowO>
     <@trowO url="/{UUID}/hostedDataset" method="GET" resp="Dataset" respLink="/organization/e2e717bf-551a-4917-bdc9-4fa0f342c530/hostedDataset" paging=true>Lists the hosted datasets (datasets hosted by installations hosted by the organization)</@trowO>
-    <@trowO url="/{UUID}/ownedDataset" method="GET" resp="Dataset" respLink="/organization/e2e717bf-551a-4917-bdc9-4fa0f342c530/ownedDataset" paging=true>Lists the owned datasets (datasets published by the organization)</@trowO>
+    <@trowO url="/{UUID}/publishedDataset" method="GET" resp="Dataset" respLink="/organization/e2e717bf-551a-4917-bdc9-4fa0f342c530/publishedDataset" paging=true>Lists the published datasets (datasets published by the organization)</@trowO>
     <@trowO url="/{UUID}/installation" method="GET" resp="Installation" respLink="/organization/e2e717bf-551a-4917-bdc9-4fa0f342c530/installation" paging=true>Lists the technical installations hosted by this organization</@trowO>
     <@trowO url="/deleted" method="GET" resp="Organization List" respLink="/organization/deleted" paging=true>Lists the deleted organizations</@trowO>
     <@trowO url="/pending" method="GET" resp="Organization List" respLink="/organization/pending" paging=true>Lists the organizations whose endorsement is pending</@trowO>
@@ -240,7 +240,7 @@
     <@trowNo url="/country" method="GET" resp="ISO-CODE List" respLink="/node/country">Lists names of all GBIF member countries</@trowNo>
     <@trowNo url="/activeCountries" method="GET" resp="ISO-CODE List" respLink="/node/country">Lists of all GBIF member countries that are either voting or associate participants</@trowNo>
     <@trowNo url="/country/{ISO-CODE}" method="GET" resp="Node" respLink="/node/country/CO">Gets the country node by ISO 639-1 (2 letter) or ISO 639-2 (3 letter) country code</@trowNo>
-    <@trowNo url="/{UUID}/dataset" method="GET" resp="Dataset List" respLink="/node/0909d601-bda2-42df-9e63-a6d51847ebce/dataset" paging=true>Lists datasets owned by organizations endorsed by the node</@trowNo>
+    <@trowNo url="/{UUID}/dataset" method="GET" resp="Dataset List" respLink="/node/0909d601-bda2-42df-9e63-a6d51847ebce/dataset" paging=true>Lists datasets published by organizations endorsed by the node</@trowNo>
     <@trowNo url="/{UUID}/installation" method="GET" resp="Installation List" respLink="/node/0909d601-bda2-42df-9e63-a6d51847ebce/installation" paging=true>Lists installations hosted by organizations endorsed by the node</@trowNo>
   </@api.apiTable>
 
@@ -288,12 +288,12 @@
   "identifierType": "Used in combination with the identifier parameter to filter identifiers by identifier type as given in our <a href='${api.apidocs}/vocabulary/IdentifierType.html' target='_blank'>IdentifierType enum</a>",
   "subtype": "Not yet implemented, but will eventually allow filtering of datasets by their dataset subtype as given in our <a href='${api.apidocs}/vocabulary/DatasetSubtype.html' target='_blank'>DatasetSubtype enum</a>.",
   "keyword": "Filters datasets by a case insensitive plain text keyword. The search is done on the merged collection of tags, the dataset keywordCollections and temporalCoverages.",
-  "owningOrg": "Filters datasets by their owning organization UUID key",
+  "publishingOrg": "Filters datasets by their publishing organization UUID key",
   "hostingOrg": "Filters datasets by their hosting organization UUID key",
   "decade": "Filters datasets by their temporal coverage broken down to decades. Decades are given as a full year, e.g. 1880, 1960, 2000, etc, and will return datasets wholly contained in the decade as well as those that cover the entire decade or more. Facet by decade to get the break down, e.g. <a href='${action.cfg.apiBaseUrl}/dataset/search?facet=DECADE&facet_only=true' target='_blank'>/search?facet=DECADE&facet_only=true</a>",
   "publishingCountry": "Filters datasets by their owining organization's country given as a ISO 639-1 (2 letter) country code",
   "continent": "Not yet implemented, but will eventually allow filtering datasets by their continent(s) as given in our <a href='${api.apidocs}/vocabulary/Continent.html' target='_blank'>Continent enum</a>.",
-  "facet": "A list of facet names used to retrieve the 100 most frequent values for a field. Allowed facets are: type, keyword, owningOrg, hostingOrg, decade, and publishingCountry. Additionally subtype and country are legal values but not yet implemented, so data will not yet be returned for them."
+  "facet": "A list of facet names used to retrieve the 100 most frequent values for a field. Allowed facets are: type, keyword, publishingOrg, hostingOrg, decade, and publishingCountry. Additionally subtype and country are legal values but not yet implemented, so data will not yet be returned for them."
 } />
 
 
