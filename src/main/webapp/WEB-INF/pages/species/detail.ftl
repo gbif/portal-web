@@ -204,16 +204,12 @@
     <#if vernacularNames?has_content>
       <h3>Common names</h3>
       <ul>
-        <#list vernacularNames?keys as vk>
-          <#assign names=vernacularNames.get(vk)/>
-          <#assign v=names[0]/>
-          <li>${v.vernacularName}<#if v.language??> <span class="small">${v.language.getIso3LetterCode()}</span></#if>
-            <@common.usageSources components=names showSource=!usage.isNub() showChecklistSource=usage.isNub() />
-          </li>
-          <#if vk_has_next && vk_index==2>
-            <li class="more"><a href="<@s.url value='/species/${id?c}/vernaculars'/>">more</a></li>
+        <#list vernacularNames as v>
+          <li>${v.vernacularName}<#if v.language??> <span class="small">${v.language.getIso3LetterCode()}</span></#if></li>
+          <#if v_has_next && v_index==2>
             <#break />
           </#if>
+          <li class="more"><a href="<@s.url value='/species/${id?c}/vernaculars'/>">more</a></li>
         </#list>
       </ul>
     </#if>
@@ -294,8 +290,8 @@
 </div>
 
 <#-- Keep first image with url -->
-<#list usage.images as img>
-  <#if img.image??>
+<#list usage.media as img>
+  <#if img.media??>
     <#if !primeImage?exists><#assign primeImage=img/></#if>
   </#if>
 </#list>
@@ -303,7 +299,7 @@
 <div class="right">
   <#if primeImage?exists>
     <div class="species_image">
-      <a href="#images" class="images"><span><img src="../img/placeholder.png" data-load="${action.getImageCache(primeImage.image,'s')}" /></span></a>
+      <a href="#images" class="images"><span><img src="../img/placeholder.png" data-load="${action.getImageCache(primeImage.identifier,'s')}" /></span></a>
     </div>
   </#if>
 

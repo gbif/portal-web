@@ -19,11 +19,11 @@ import org.gbif.api.vocabulary.Origin;
 import org.gbif.api.vocabulary.Rank;
 import org.gbif.portal.model.VernacularLocaleComparator;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
-import java.util.TreeSet;
 import java.util.UUID;
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
@@ -73,15 +73,11 @@ public class DetailAction extends UsageBaseAction {
   @Inject
   private VernacularNameService vernacularNameService;
 
-  // Custom sorting of names current locale, then preferring English, then using the name
-  private final VernacularLocaleComparator vernacularLocaleComparator = new VernacularLocaleComparator(
-    Language.fromIsoCode(getLocale().getISO3Language()));
-
   // Empty collections are created to safeguard against NPE in freemarker templates
   private final List<String> habitats = Lists.newArrayList();
   private final List<NameUsage> related = Lists.newArrayList();
   private SortedMap<UUID, Integer> occurrenceDatasetCounts = Maps.newTreeMap(); // not final, since replaced
-  private TreeSet<VernacularName> vernacularNames;
+  private List<VernacularName> vernacularNames;
   private boolean nubSourceExists = false;
 
   // various page sizes used
@@ -118,7 +114,7 @@ public class DetailAction extends UsageBaseAction {
   public String execute() {
     loadUsage();
     loadUsageDetails();
-    populateVernacularNames();
+    vernacularNames = filterVernacularNames(usage.getVernacularNames(), Language.fromIsoCode(getLocale().getISO3Language()));
     populateHabitats();
 
     for (NameUsage u : sublist(related, MAX_COMPONENTS)) {
@@ -172,7 +168,7 @@ public class DetailAction extends UsageBaseAction {
   }
 
   @NotNull
-  public TreeSet<VernacularName> getVernacularNames() {
+  public List<VernacularName> getVernacularNames() {
     return vernacularNames;
   }
 
@@ -202,9 +198,9 @@ public class DetailAction extends UsageBaseAction {
     usage.setSpeciesProfiles(speciesProfileService.listByUsage(id, page20).getResults());
     toc = descriptionService.getToc(id);
 
-    final Set<String> seenRefs = Sets.newHashSet();
     usage.setReferenceList(FluentIterable.from(referenceService.listByUsage(id, page15).getResults())
       .filter(new Predicate<Reference>() {
+        private final Set<String> seenRefs = Sets.newHashSet();
 
         public boolean apply(@Nullable Reference r) {
           if (r == null)
@@ -251,13 +247,26 @@ public class DetailAction extends UsageBaseAction {
   /**
    * Populates the index of vernacular names.
    * This is a sorted map keyed on the name + language(optional) and order by name and by the rules imposed by
-   * {@link #vernacularLocaleComparator}
    */
   @VisibleForTesting
-  void populateVernacularNames() {
-    TreeSet<VernacularName> uniqueNames = Sets.newTreeSet(vernacularLocaleComparator);
-    uniqueNames.addAll(usage.getVernacularNames());
-    vernacularNames = uniqueNames;
+  List<VernacularName> filterVernacularNames(Collection<VernacularName> vernaculars, @Nullable Language locale) {
+    return FluentIterable.from(vernaculars).filter(new Predicate<VernacularName>() {
+        private Set<String> seen = Sets.newHashSet();
+        @Override
+        public boolean apply(@Nullable VernacularName v) {
+          StringBuilder sb = new StringBuilder();
+          sb.append(v.getLanguage() == null ? Language.ENGLISH.getIso2LetterCode() : v.getLanguage().getIso2LetterCode());
+          sb.append(":");
+          sb.append(v.getVernacularName());
+          final String unique = sb.toString().toLowerCase();
+          if (seen.contains(unique)) {
+            return false;
+          }
+          seen.add(unique);
+          return true;
+        }
+      })
+      .toSortedList(new VernacularLocaleComparator(locale));
   }
 
   /**

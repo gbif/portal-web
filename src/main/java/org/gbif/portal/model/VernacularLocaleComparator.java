@@ -4,6 +4,7 @@ import org.gbif.api.model.checklistbank.VernacularName;
 import org.gbif.api.vocabulary.Language;
 
 import java.util.Comparator;
+import javax.annotation.Nullable;
 
 /**
  * Sorts by language first, then vernacular name itself, case insensitive.
@@ -16,7 +17,7 @@ public class VernacularLocaleComparator implements Comparator<VernacularName> {
 
   private final Language locale;
 
-  public VernacularLocaleComparator(Language locale) {
+  public VernacularLocaleComparator(@Nullable Language locale) {
     this.locale = locale;
   }
 

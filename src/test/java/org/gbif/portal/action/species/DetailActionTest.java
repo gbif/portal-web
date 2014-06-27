@@ -1,6 +1,5 @@
 package org.gbif.portal.action.species;
 
-import org.gbif.api.model.checklistbank.NameUsageContainer;
 import org.gbif.api.model.checklistbank.VernacularName;
 import org.gbif.api.vocabulary.Language;
 import org.gbif.portal.action.ActionTestUtil;
@@ -57,12 +56,17 @@ public class DetailActionTest extends StrutsJUnit4TestCase<DetailAction> {
       vernacularOf("Z", null, null, 2),
       vernacularOf("A", Language.ABKHAZIAN, null, 3),
       vernacularOf("A", Language.ABKHAZIAN, true, 4),
-      vernacularOf("B", Language.ABKHAZIAN, null, 5));
-    action.usage = new NameUsageContainer();
-    action.usage.setVernacularNames(source);
-    action.populateVernacularNames();
+      vernacularOf("B", Language.ABKHAZIAN, null, 5),
+      vernacularOf("B", Language.GERMAN, null, 6),
+      vernacularOf("B", null, null, 7),
+      vernacularOf("b", Language.GERMAN, null, 8),
+      vernacularOf("B", Language.GERMAN, null, null)
+    );
 
-    List<VernacularName> result = action.getVernacularNames();
-    assertEquals(4, result.size());
+    List<VernacularName> result = action.filterVernacularNames(source, Language.GERMAN);
+    assertEquals(5, result.size());
+    assertEquals(Language.GERMAN, result.get(0).getLanguage());
+    assertEquals("B", result.get(0).getVernacularName());
+    assertEquals(Language.ENGLISH, result.get(1).getLanguage());
   }
 }
