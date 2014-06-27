@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.species.TypesAction" -->
 <#import "/WEB-INF/macros/pagination.ftl" as paging>
 <#import "/WEB-INF/macros/common.ftl" as common>
 <#import "/WEB-INF/macros/typespecimen.ftl" as types>

@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.species.SynonymsAction" -->
 <#import "/WEB-INF/macros/pagination.ftl" as paging>
 <html>
 <head>
@@ -36,8 +37,8 @@
             <span class="note"><@s.text name='enum.rank.${u.rank!"UNKNOWN"}'/></span>
           </h2>
           <div class="footer">
-            <#if usage.nub>
-              <p>According to ${u.accordingTo!u.origin!}</p>
+            <#if u.source?has_content>
+              <p>Source: ${u.source}</p>
             </#if>
           </div>
         </div>

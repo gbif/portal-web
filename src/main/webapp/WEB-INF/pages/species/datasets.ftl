@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.species.DatasetAction" -->
 <#import "/WEB-INF/macros/pagination.ftl" as paging>
 <#import "/WEB-INF/macros/common.ftl" as common>
 <html xmlns="http://www.w3.org/1999/html">

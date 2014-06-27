@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.species.VernacularNameAction" -->
 <#import "/WEB-INF/macros/pagination.ftl" as paging>
 <#import "/WEB-INF/macros/common.ftl" as common>
 <html>
@@ -32,7 +33,7 @@
       <#list page.results as item>
         <div class="result">
           <h2>
-            <a href='<@s.url value='/species/${item.usageKey?c}'/>'><strong>${item.vernacularName}</strong></a>
+            <a href="<#if item.sourceTaxonKey??><@s.url value='/species/${item.sourceTaxonKey?c}'/><#else>#</#if>"><strong>${item.vernacularName}</strong></a>
             <span class="note">${item.language!}</span>
           </h2>
           <#if item.lifeStage?? || item.sex?? || (item.country!'UNKNOWN') != 'UNKNOWN' || item.area??>
@@ -45,8 +46,8 @@
               <p>Remarks: ${item.remarks}</p>
             </#if>
 
-            <#if nub>
-              <p>According to ${(datasets.get(item.datasetKey).title)!"???"}</p>
+            <#if item.source?has_content>
+              <p>Source: ${item.source}</p>
             </#if>
 
           </div>

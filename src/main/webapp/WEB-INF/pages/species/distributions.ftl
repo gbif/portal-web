@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.species.DistributionAction" -->
 <#import "/WEB-INF/macros/pagination.ftl" as paging>
 <#import "/WEB-INF/macros/common.ftl" as common>
 <html>
@@ -58,8 +59,14 @@
                     <#if item.appendixCites??>Cites: ${item.appendixCites}</#if>
                     </p>
                   </#if>
+                  <#if u.source?has_content>
+                    <p>Source: ${u.source}</p>
+                  </#if>
+
                   <#if usage.nub>
-                    <p>Source: <a href='<@s.url value='/species/${item.usageKey?c}'/>'>${(datasets.get(item.datasetKey).title)!"???"}</a></p>
+                    <p>Source: <a href='<@s.url value='/species/${item.sourceTaxonKey?c}'/>'>${item.source!"checklist dataset"}</a></p>
+                  <#elseif item.source?has_content>
+                    <p>Source: ${item.source}</p>
                   </#if>
                 </div>
               </div>

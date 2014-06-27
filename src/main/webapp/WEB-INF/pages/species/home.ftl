@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.species.HomeAction" -->
 <#import "/WEB-INF/macros/common.ftl" as common>
 <html>
 <head>
@@ -21,9 +22,9 @@
         <button id="submitSearch" type="submit" class="search_button"><span>Search</span></button>
         <input id="checklist" name="dataset_key" type="hidden" value="${nubDatasetKey}"/>
       </form>
-      
+
       <div class="example">  </div>
-      
+
       <ul class="species">
         <li><a href="<@s.url value='/species/search?q=&dataset_key=${nubDatasetKey}&highertaxon_key=359'/>" title="Mammals">Mammals</a></li>
         <li><a href="<@s.url value='/species/search?q=&dataset_key=${nubDatasetKey}&highertaxon_key=212'/>" title="Birds">Birds</a></li>
@@ -41,10 +42,10 @@
       </ul>
 
       <div class="species-progress">
-        <#assign progress = (100*colSpecies) / nubSpecies> 
+        <#assign progress = (100*colSpecies) / nubSpecies>
         <ul>
           <li class="confirmed" style="width:${progress}%">
-            ${colSpecies} 
+            ${colSpecies}
           </li>
           <li class="unconfirmed" style="width:${100-progress}%">
             ${nubSpecies-colSpecies}
@@ -55,15 +56,15 @@
               Confirmed species in the <br/> <a href="<@s.url value='/dataset/${colKey}'/>">Catalogue of Life</a>
           </li>
           <li class="unconfirmed-text" style="width:${100-progress}%">
-            Names under review 
-            <@common.popup message="There is currently no complete checklist of all known species.  Checklists published through GBIF are integrated into a backbone taxonomy, but these names require review before being considered a species.   
+            Names under review
+            <@common.popup message="There is currently no complete checklist of all known species.  Checklists published through GBIF are integrated into a backbone taxonomy, but these names require review before being considered a species.
             GBIF is working with other initiatives to review names and help to complete a global species list." title="Names under review"/>
             </a></span>
           </li>
         </ul>
       </div>
     </div>
-    
+
     <footer></footer>
   </article>
 

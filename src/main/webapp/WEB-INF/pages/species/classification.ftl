@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.species.ClassificationAction" -->
 <html>
 <head>
   <title>${usage.canonicalOrScientificName!} - complete classification</title>
