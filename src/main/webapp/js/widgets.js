@@ -1600,7 +1600,7 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate) {
       $metaTitle.html(limitText($title, 60));
       $metaTitle.fadeIn(150);
     });
-    updateMetaProp("Image home", data.link, null);
+    updateMetaProp("Image home", data.references, null);
     if (data.creator || data.created) {
       if (data.creator && data.created) {
         $val = data.creator + ", " + data.created;
@@ -1682,14 +1682,17 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate) {
   function initImageData(data) {
 
     $this.show();
-    var images = data.results;
+    // strip non images from media
+    var images = _.filter(data.results, function(media) {
+      return media.type && media.type=="StillImage";
+    });
     var $photos = $scroller.find(".photos");
     var n = 0;
 
     _.each(images, function(imgJson) {
       n++;
       slideData.push(imgJson);
-      $photos.append("<li><div class='spinner'></div><a href='"+imgJson.image+"' class='fancybox' title='"+ (imgJson.title ? imgJson.title : '') +"'><img id='photo_"+n+"'src='" + imgJson.image + "' /></a></li>");
+      $photos.append("<li><div class='spinner'></div><a href='"+imgJson.identifier+"' class='fancybox' title='"+ (imgJson.title ? imgJson.title : '') +"'><img id='photo_"+n+"'src='" + imgJson.identifier + "' /></a></li>");
 
       var $img = $photos.find("#photo_" + n);
 
@@ -1734,23 +1737,12 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate) {
  * Species detail page slide show
  */
 $.fn.speciesSlideshow = function(usageID) {
-  var url = cfg.wsClb + "species/" + usageID + "/images?callback=?";
+  var url = cfg.wsClb + "species/" + usageID + "/media?callback=?";
   $(this).imageGallery(
     function(callback) {   // the data provider
       $.getJSON(url, callback);
     },
-    function($container, data) {  // postImageUpdate hook
-      // prepend the source link, linking to the source, or the original usage if none provided
-      $srcLink = data.link;
-      if (!data.link && data.usageKey != usageID) {
-        $srcLink = cfg.baseUrl + '/species/' + data.usageKey;
-      }
-      if ($srcLink) {
-        // load dataset title and keep it with image
-        getDatasetDetail(data.datasetKey, function(dataset) {
-          $container.prepend("<h3>Source</h3><p><a title='" + dataset.title + "' href='" + $srcLink + "'>" + limitText(dataset.title, 28) +"</a></p>");
-        });
-      }
+    function($container, data) { // postImageUpdate hook doing nothing
     }
   );
 };
@@ -1761,20 +1753,9 @@ $.fn.speciesSlideshow = function(usageID) {
 $.fn.occurrenceSlideshow = function(data, defaultTitle) {
   var $dataAsJson = $.parseJSON(data);
 
-  // strip non images from media
-  $dataAsJson.results = _.filter($dataAsJson.results, function(media) {
-    return media.type && media.type=="StillImage";
-  });
-
-  // Hack: append new terms to match the species image response such that:
-  //   - identifier -> image
-  //   - references -> link
-  _.each($dataAsJson.results, function(media) {
-    _.defaults(media, {
-      image: media.identifier,
-      link: media.references,
-      title: defaultTitle
-    });
+  // Add a default title if missing
+  _.defaults(data.results, {
+    title: defaultTitle
   });
 
   $(this).imageGallery(
@@ -1783,7 +1764,6 @@ $.fn.occurrenceSlideshow = function(data, defaultTitle) {
     },
     function($container, data) {  // postImageUpdate hook doing nothing
     }
-
   );
 };
 
