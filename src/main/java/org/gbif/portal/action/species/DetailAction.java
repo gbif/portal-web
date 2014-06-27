@@ -1,6 +1,7 @@
 package org.gbif.portal.action.species;
 
 import org.gbif.api.model.checklistbank.NameUsage;
+import org.gbif.api.model.checklistbank.NameUsageMediaObject;
 import org.gbif.api.model.checklistbank.Reference;
 import org.gbif.api.model.checklistbank.TableOfContents;
 import org.gbif.api.model.checklistbank.VernacularName;
@@ -16,6 +17,7 @@ import org.gbif.api.service.checklistbank.TypeSpecimenService;
 import org.gbif.api.service.checklistbank.VernacularNameService;
 import org.gbif.api.service.occurrence.OccurrenceDatasetIndexService;
 import org.gbif.api.vocabulary.Language;
+import org.gbif.api.vocabulary.MediaType;
 import org.gbif.api.vocabulary.Origin;
 import org.gbif.api.vocabulary.Rank;
 import org.gbif.portal.model.VernacularLocaleComparator;
@@ -81,6 +83,7 @@ public class DetailAction extends UsageBaseAction {
   private final List<NameUsage> related = Lists.newArrayList();
   private SortedMap<UUID, Integer> occurrenceDatasetCounts = Maps.newTreeMap(); // not final, since replaced
   private List<VernacularName> vernacularNames;
+  private NameUsageMediaObject primeImage;
   private boolean nubSourceExists = false;
 
   // various page sizes used
@@ -89,12 +92,10 @@ public class DetailAction extends UsageBaseAction {
   private final Pageable page10 = new PagingRequest(0, 10);
   private final Pageable page15 = new PagingRequest(0, 15);
   private final Pageable page20 = new PagingRequest(0, 20);
-  private final Pageable page50 = new PagingRequest(0, 50);
   private final Pageable page100 = new PagingRequest(0, 100);
   private static final int MAX_COMPONENTS = 10;
 
   private final static Joiner HABITAT_JOINER = Joiner.on(" ");
-  private final static Joiner VERNACULAR_JOINER = Joiner.on("").skipNulls();
 
 
   /**
@@ -196,12 +197,18 @@ public class DetailAction extends UsageBaseAction {
     usage.setSynonyms(usageService.listSynonyms(id, getLocale(), page6).getResults());
     usage.setVernacularNames(vernacularNameService.listByUsage(id, page100).getResults());
     usage.setDistributions(distributionService.listByUsage(id, page10).getResults());
-    usage.setMedia(imageService.listByUsage(id, page1).getResults()); // only load first, other are loaded via ajax
     usage.setIdentifiers(identifierService.listByUsage(id, page10).getResults());
     usage.setTypeSpecimens(typeSpecimenService.listByUsage(id, page10).getResults());
     TypesAction.removeInvalidTypes(usage.getTypeSpecimens());
     usage.setSpeciesProfiles(speciesProfileService.listByUsage(id, page20).getResults());
+
     toc = descriptionService.getToc(id);
+    for (NameUsageMediaObject m : imageService.listByUsage(id, page6).getResults()) {
+      if (m.getIdentifier() != null && MediaType.StillImage == m.getType()) {
+        primeImage = m;
+        break;
+      }
+    }
 
     usage.setReferenceList(FluentIterable.from(referenceService.listByUsage(id, page15).getResults())
       .filter(new Predicate<Reference>() {
@@ -296,5 +303,9 @@ public class DetailAction extends UsageBaseAction {
 
   public boolean isNubSourceExists() {
     return nubSourceExists;
+  }
+
+  public NameUsageMediaObject getPrimeImage() {
+    return primeImage;
   }
 }

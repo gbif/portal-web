@@ -289,15 +289,8 @@
   </#if>
 </div>
 
-<#-- Keep first image with url -->
-<#list usage.media as img>
-  <#if img.media??>
-    <#if !primeImage?exists><#assign primeImage=img/></#if>
-  </#if>
-</#list>
-
 <div class="right">
-  <#if primeImage?exists>
+  <#if primeImage??>
     <div class="species_image">
       <a href="#images" class="images"><span><img src="../img/placeholder.png" data-load="${action.getImageCache(primeImage.identifier,'s')}" /></span></a>
     </div>
