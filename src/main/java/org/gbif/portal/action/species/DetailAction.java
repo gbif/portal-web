@@ -1,15 +1,14 @@
 package org.gbif.portal.action.species;
 
-import org.gbif.api.model.checklistbank.Description;
 import org.gbif.api.model.checklistbank.NameUsage;
-import org.gbif.api.model.checklistbank.NameUsageComponent;
 import org.gbif.api.model.checklistbank.Reference;
+import org.gbif.api.model.checklistbank.TableOfContents;
 import org.gbif.api.model.checklistbank.VernacularName;
 import org.gbif.api.model.common.paging.Pageable;
 import org.gbif.api.model.common.paging.PagingRequest;
 import org.gbif.api.service.checklistbank.DescriptionService;
 import org.gbif.api.service.checklistbank.DistributionService;
-import org.gbif.api.service.checklistbank.ImageService;
+import org.gbif.api.service.checklistbank.MultimediaService;
 import org.gbif.api.service.checklistbank.ReferenceService;
 import org.gbif.api.service.checklistbank.SpeciesProfileService;
 import org.gbif.api.service.checklistbank.TypeSpecimenService;
@@ -20,13 +19,12 @@ import org.gbif.api.vocabulary.Origin;
 import org.gbif.api.vocabulary.Rank;
 import org.gbif.portal.model.VernacularLocaleComparator;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.TreeSet;
 import java.util.UUID;
-
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
@@ -34,7 +32,6 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
-import com.google.common.base.Strings;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -55,6 +52,8 @@ public class DetailAction extends UsageBaseAction {
   @Nullable
   private NameUsage basionym;
 
+  private TableOfContents toc;
+
   private boolean verbatimExists = false;
 
   @Inject
@@ -62,7 +61,7 @@ public class DetailAction extends UsageBaseAction {
   @Inject
   private DistributionService distributionService;
   @Inject
-  private ImageService imageService;
+  private MultimediaService imageService;
   @Inject
   private OccurrenceDatasetIndexService occurrenceDatasetService;
   @Inject
@@ -79,11 +78,10 @@ public class DetailAction extends UsageBaseAction {
     Language.fromIsoCode(getLocale().getISO3Language()));
 
   // Empty collections are created to safeguard against NPE in freemarker templates
-  private final DescriptionToc descriptionToc = new DescriptionToc();
   private final List<String> habitats = Lists.newArrayList();
   private final List<NameUsage> related = Lists.newArrayList();
   private SortedMap<UUID, Integer> occurrenceDatasetCounts = Maps.newTreeMap(); // not final, since replaced
-  private final LinkedHashMap<String, List<VernacularName>> vernacularNames = Maps.newLinkedHashMap();
+  private TreeSet<VernacularName> vernacularNames;
   private boolean nubSourceExists = false;
 
   // various page sizes used
@@ -126,21 +124,6 @@ public class DetailAction extends UsageBaseAction {
     for (NameUsage u : sublist(related, MAX_COMPONENTS)) {
       loadDataset(u.getDatasetKey());
     }
-    for (NameUsageComponent c : usage.getIdentifiers()) {
-      loadDataset(c.getDatasetKey());
-    }
-    for (NameUsageComponent c : usage.getDistributions()) {
-      loadDataset(c.getDatasetKey());
-    }
-    for (NameUsageComponent c : usage.getReferenceList()) {
-      loadDataset(c.getDatasetKey());
-    }
-    for (NameUsageComponent c : usage.getTypeSpecimens()) {
-      loadDataset(c.getDatasetKey());
-    }
-    for (NameUsageComponent c : usage.getVernacularNames()) {
-      loadDataset(c.getDatasetKey());
-    }
     for (UUID uuid : sublist(Lists.newArrayList(occurrenceDatasetCounts.keySet()), MAX_COMPONENTS)) {
       loadDataset(uuid);
     }
@@ -157,8 +140,8 @@ public class DetailAction extends UsageBaseAction {
   }
 
   @NotNull
-  public DescriptionToc getDescriptionToc() {
-    return descriptionToc;
+  public TableOfContents getDescriptionToc() {
+    return toc;
   }
 
   @NotNull
@@ -189,7 +172,7 @@ public class DetailAction extends UsageBaseAction {
   }
 
   @NotNull
-  public Map<String, List<VernacularName>> getVernacularNames() {
+  public TreeSet<VernacularName> getVernacularNames() {
     return vernacularNames;
   }
 
@@ -213,13 +196,11 @@ public class DetailAction extends UsageBaseAction {
     usage.setSynonyms(usageService.listSynonyms(id, getLocale(), page6).getResults());
     usage.setVernacularNames(vernacularNameService.listByUsage(id, page100).getResults());
     usage.setDistributions(distributionService.listByUsage(id, page10).getResults());
-    usage.setImages(imageService.listByUsage(id, page1).getResults()); // first only
+    usage.setMedia(imageService.listByUsage(id, page1).getResults()); // only load first, other are loaded via ajax
     usage.setTypeSpecimens(typeSpecimenService.listByUsage(id, page10).getResults());
     TypesAction.removeInvalidTypes(usage.getTypeSpecimens());
     usage.setSpeciesProfiles(speciesProfileService.listByUsage(id, page20).getResults());
-    for (Description d : descriptionService.listByUsage(id, page50).getResults()) {
-      descriptionToc.addDescription(d);
-    }
+    toc = descriptionService.getToc(id);
 
     final Set<String> seenRefs = Sets.newHashSet();
     usage.setReferenceList(FluentIterable.from(referenceService.listByUsage(id, page15).getResults())
@@ -249,9 +230,9 @@ public class DetailAction extends UsageBaseAction {
       verbatimExists = usageService.getVerbatim(id) != null;
     }
 
-    if (usage.isNub() && usage.getSourceKey() != null) {
+    if (usage.isNub() && usage.getSourceTaxonKey() != null) {
       // check if the source record actually exists
-      nubSourceExists = usageService.get(usage.getSourceKey(), null) != null;
+      nubSourceExists = usageService.get(usage.getSourceTaxonKey(), null) != null;
     }
   }
 
@@ -274,32 +255,9 @@ public class DetailAction extends UsageBaseAction {
    */
   @VisibleForTesting
   void populateVernacularNames() {
-    List<VernacularName> source = usage.getVernacularNames();
-    vernacularNames.clear();
-    // total ordering of the names, which is then respected in the sorted map
-    for (VernacularName name : Ordering.from(vernacularLocaleComparator).immutableSortedCopy(source)) {
-
-      // skip those that can't be displayed
-      if (Strings.isNullOrEmpty(name.getVernacularName())) {
-        continue;
-      }
-
-      // The names are keyed using name||language where language might be null
-      String languageCode = (name.getLanguage() == null) ? null : name.getLanguage().getIso2LetterCode();
-      String key = VERNACULAR_JOINER
-        .join(
-          name.getVernacularName().toLowerCase(),
-          "||",
-          languageCode);
-
-      // Add to our map index
-      List<VernacularName> values = vernacularNames.get(key);
-      if (values == null) {
-        values = Lists.newArrayList();
-        vernacularNames.put(key, values);
-      }
-      addVernacularNameIfNotExists(values, name);
-    }
+    TreeSet<VernacularName> uniqueNames = Sets.newTreeSet(vernacularLocaleComparator);
+    uniqueNames.addAll(usage.getVernacularNames());
+    vernacularNames = uniqueNames;
   }
 
   /**
@@ -311,9 +269,7 @@ public class DetailAction extends UsageBaseAction {
       @Override
       public boolean apply(VernacularName vernacularName) {
         return vernacularName.getVernacularName().equalsIgnoreCase(existingName.getVernacularName())
-          && vernacularName.getUsageKey().equals(existingName.getUsageKey())
-          && ((vernacularName.getDatasetKey() == null && existingName.getDatasetKey() == null)
-          || vernacularName.getDatasetKey().equals(existingName.getDatasetKey()));
+          && vernacularName.getSourceTaxonKey().equals(existingName.getSourceTaxonKey());
       }
     })) {
       vernacularNames.add(existingName);

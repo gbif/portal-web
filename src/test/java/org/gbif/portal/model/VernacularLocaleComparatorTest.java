@@ -26,41 +26,41 @@ public class VernacularLocaleComparatorTest {
     names.add( build(8,Language.AFRIKAANS, "dannebaum") );
 
     Collections.sort(names, new VernacularLocaleComparator(Language.GERMAN));
-    assertEquals((Integer) 1, names.get(0).getKey());
-    assertEquals((Integer) 7, names.get(1).getKey());
-    assertEquals((Integer) 5, names.get(2).getKey());
-    assertEquals((Integer) 8, names.get(3).getKey());
-    assertEquals((Integer) 4, names.get(4).getKey());
-    assertEquals((Integer) 6, names.get(5).getKey());
-    assertEquals((Integer) 2, names.get(6).getKey());
-    assertEquals((Integer) 3, names.get(7).getKey());
+    assertEquals((Integer) 1, names.get(0).getSourceTaxonKey());
+    assertEquals((Integer) 7, names.get(1).getSourceTaxonKey());
+    assertEquals((Integer) 5, names.get(2).getSourceTaxonKey());
+    assertEquals((Integer) 8, names.get(3).getSourceTaxonKey());
+    assertEquals((Integer) 4, names.get(4).getSourceTaxonKey());
+    assertEquals((Integer) 6, names.get(5).getSourceTaxonKey());
+    assertEquals((Integer) 2, names.get(6).getSourceTaxonKey());
+    assertEquals((Integer) 3, names.get(7).getSourceTaxonKey());
 
     Collections.sort(names, new VernacularLocaleComparator(Language.ENGLISH));
-    assertEquals((Integer) 7, names.get(0).getKey());
-    assertEquals((Integer) 5, names.get(1).getKey());
-    assertEquals((Integer) 8, names.get(2).getKey());
-    assertEquals((Integer) 4, names.get(3).getKey());
-    assertEquals((Integer) 1, names.get(4).getKey());
-    assertEquals((Integer) 6, names.get(5).getKey());
-    assertEquals((Integer) 2, names.get(6).getKey());
-    assertEquals((Integer) 3, names.get(7).getKey());
+    assertEquals((Integer) 7, names.get(0).getSourceTaxonKey());
+    assertEquals((Integer) 5, names.get(1).getSourceTaxonKey());
+    assertEquals((Integer) 8, names.get(2).getSourceTaxonKey());
+    assertEquals((Integer) 4, names.get(3).getSourceTaxonKey());
+    assertEquals((Integer) 1, names.get(4).getSourceTaxonKey());
+    assertEquals((Integer) 6, names.get(5).getSourceTaxonKey());
+    assertEquals((Integer) 2, names.get(6).getSourceTaxonKey());
+    assertEquals((Integer) 3, names.get(7).getSourceTaxonKey());
 
     Collections.sort(names, new VernacularLocaleComparator(null));
-    assertEquals((Integer) 7, names.get(0).getKey());
-    assertEquals((Integer) 5, names.get(1).getKey());
-    assertEquals((Integer) 8, names.get(2).getKey());
-    assertEquals((Integer) 4, names.get(3).getKey());
-    assertEquals((Integer) 1, names.get(4).getKey());
-    assertEquals((Integer) 6, names.get(5).getKey());
-    assertEquals((Integer) 2, names.get(6).getKey());
-    assertEquals((Integer) 3, names.get(7).getKey());
+    assertEquals((Integer) 7, names.get(0).getSourceTaxonKey());
+    assertEquals((Integer) 5, names.get(1).getSourceTaxonKey());
+    assertEquals((Integer) 8, names.get(2).getSourceTaxonKey());
+    assertEquals((Integer) 4, names.get(3).getSourceTaxonKey());
+    assertEquals((Integer) 1, names.get(4).getSourceTaxonKey());
+    assertEquals((Integer) 6, names.get(5).getSourceTaxonKey());
+    assertEquals((Integer) 2, names.get(6).getSourceTaxonKey());
+    assertEquals((Integer) 3, names.get(7).getSourceTaxonKey());
   }
 
 
 
   private VernacularName build(int key, Language lang, String name) {
     VernacularName v = new VernacularName();
-    v.setKey(key);
+    v.setSourceTaxonKey(key);
     v.setLanguage(lang);
     v.setVernacularName(name);
     return v;

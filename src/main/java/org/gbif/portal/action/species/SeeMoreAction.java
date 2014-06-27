@@ -1,21 +1,22 @@
 package org.gbif.portal.action.species;
 
-import org.gbif.api.model.checklistbank.NameUsageComponent;
+import org.gbif.api.model.checklistbank.NameUsageExtension;
 import org.gbif.api.model.common.paging.PagingRequest;
 import org.gbif.api.model.common.paging.PagingResponse;
-import org.gbif.api.service.checklistbank.NameUsageComponentService;
+import org.gbif.api.service.checklistbank.NameUsageExtensionService;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class SeeMoreAction<T extends NameUsageComponent> extends UsageBaseAction {
+import com.google.common.collect.Sets;
+
+public class SeeMoreAction<T extends NameUsageExtension> extends UsageBaseAction {
 
   private PagingResponse<T> page;
   private long offset = 0;
-  private final NameUsageComponentService<T> service;
+  private final NameUsageExtensionService<T> service;
 
-  public SeeMoreAction(NameUsageComponentService<T> service) {
+  public SeeMoreAction(NameUsageExtensionService<T> service) {
     this.service = service;
   }
 
@@ -28,9 +29,9 @@ public class SeeMoreAction<T extends NameUsageComponent> extends UsageBaseAction
 
     // load checklist lookup map if its a nub usage
     if (usage.isNub()) {
-      Set<UUID> cids = new HashSet<UUID>();
+      Set<UUID> cids = Sets.newHashSet();
       for (T comp : page.getResults()) {
-        cids.add(comp.getDatasetKey());
+//        cids.add(comp.getDatasetKey());
       }
       loadChecklists(cids);
     }

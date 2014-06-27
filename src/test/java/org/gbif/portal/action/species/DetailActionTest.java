@@ -6,7 +6,6 @@ import org.gbif.api.vocabulary.Language;
 import org.gbif.portal.action.ActionTestUtil;
 
 import java.util.List;
-import java.util.Map;
 
 import com.google.common.collect.ImmutableList;
 import org.apache.struts2.StrutsJUnit4TestCase;
@@ -25,7 +24,7 @@ public class DetailActionTest extends StrutsJUnit4TestCase<DetailAction> {
     n.setVernacularName(name);
     n.setLanguage(language);
     n.setPlural(plural);
-    n.setUsageKey(usageKey);
+    n.setSourceTaxonKey(usageKey);
     return n;
   }
 
@@ -63,9 +62,7 @@ public class DetailActionTest extends StrutsJUnit4TestCase<DetailAction> {
     action.usage.setVernacularNames(source);
     action.populateVernacularNames();
 
-    Map<String, List<VernacularName>> result = action.getVernacularNames();
+    List<VernacularName> result = action.getVernacularNames();
     assertEquals(4, result.size());
-    assertNotNull(result.get("a||ab")); // note that is lowercase
-    assertEquals(2, result.get("a||ab").size());
   }
 }
