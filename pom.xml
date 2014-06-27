@@ -60,7 +60,7 @@
     <!-- dependency versions -->
     <dwc-api.version>1.7</dwc-api.version>
     <gbif-api.version>0.15-SNAPSHOT</gbif-api.version>
-    <checklistbank-ws-client.version>2.7</checklistbank-ws-client.version>
+    <checklistbank-ws-client.version>2.8-SNAPSHOT</checklistbank-ws-client.version>
     <registry-ws-client.version>2.15</registry-ws-client.version>
     <occurrence-ws-client.version>0.18</occurrence-ws-client.version>
     <metrics-ws-client.version>0.14</metrics-ws-client.version>
