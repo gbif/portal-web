@@ -5,15 +5,15 @@ import org.gbif.api.model.checklistbank.NameUsage;
 import org.gbif.api.model.checklistbank.NameUsageMatch;
 import org.gbif.api.model.checklistbank.NameUsageMatch.MatchType;
 import org.gbif.api.model.checklistbank.search.NameUsageSearchParameter;
-import org.gbif.api.model.checklistbank.search.NameUsageSearchResult;
 import org.gbif.api.model.checklistbank.search.NameUsageSuggestRequest;
+import org.gbif.api.model.checklistbank.search.NameUsageSuggestResult;
 import org.gbif.api.model.common.search.SearchRequest;
 import org.gbif.api.model.occurrence.search.OccurrenceSearchParameter;
 import org.gbif.api.model.registry.Dataset;
 import org.gbif.api.model.registry.Network;
 import org.gbif.api.model.registry.search.DatasetSearchParameter;
-import org.gbif.api.model.registry.search.DatasetSearchResult;
 import org.gbif.api.model.registry.search.DatasetSuggestRequest;
+import org.gbif.api.model.registry.search.DatasetSuggestResult;
 import org.gbif.api.service.checklistbank.NameUsageMatchingService;
 import org.gbif.api.service.checklistbank.NameUsageSearchService;
 import org.gbif.api.service.checklistbank.NameUsageService;
@@ -98,22 +98,22 @@ public class FiltersActionHelper {
   public static final String IS_FMT = "Is %s";
 
   // Utility function to get key value of a NameUsage
-  private static final Function<NameUsageSearchResult, String> NU_RESULT_KEY_GETTER =
-    new Function<NameUsageSearchResult, String>() {
+  private static final Function<NameUsageSuggestResult, String> NU_RESULT_KEY_GETTER =
+    new Function<NameUsageSuggestResult, String>() {
 
       @Override
-      public String apply(@Nullable NameUsageSearchResult input) {
+      public String apply(@Nullable NameUsageSuggestResult input) {
         Preconditions.checkNotNull(input);
         return input.getKey().toString();
       }
     };
 
   // Utility function to get key value of a Dataset
-  private static final Function<DatasetSearchResult, String> DS_RESULT_KEY_GETTER =
-    new Function<DatasetSearchResult, String>() {
+  private static final Function<DatasetSuggestResult, String> DS_RESULT_KEY_GETTER =
+    new Function<DatasetSuggestResult, String>() {
 
       @Override
-      public String apply(@Nullable DatasetSearchResult input) {
+      public String apply(@Nullable DatasetSuggestResult input) {
         Preconditions.checkNotNull(input);
         return input.getKey().toString();
       }
@@ -430,7 +430,7 @@ public class FiltersActionHelper {
    * Replace the DATASET_KEY parameters that have a scientific name that could be interpreted directly.
    */
   public void processDatasetReplacements(SearchRequest<OccurrenceSearchParameter> searchRequest,
-    SearchSuggestions<DatasetSearchResult> suggestions) {
+    SearchSuggestions<DatasetSuggestResult> suggestions) {
     processReplacements(searchRequest, suggestions, OccurrenceSearchParameter.DATASET_KEY, DS_RESULT_KEY_GETTER);
 
   }
@@ -440,9 +440,9 @@ public class FiltersActionHelper {
    * If the value is not a number, a search by dataset title is performed and, if any, the available suggestions are
    * returned.
    */
-  public SearchSuggestions<DatasetSearchResult> processDatasetSuggestions(HttpServletRequest request) {
+  public SearchSuggestions<DatasetSuggestResult> processDatasetSuggestions(HttpServletRequest request) {
     String[] values = request.getParameterValues(OccurrenceSearchParameter.DATASET_KEY.name());
-    SearchSuggestions<DatasetSearchResult> searchSuggestions = new SearchSuggestions<DatasetSearchResult>();
+    SearchSuggestions<DatasetSuggestResult> searchSuggestions = new SearchSuggestions<DatasetSuggestResult>();
     if (values != null) { // there are not value
       // request instance is created here for future reuse
       DatasetSuggestRequest suggestRequest = new DatasetSuggestRequest();
@@ -452,7 +452,7 @@ public class FiltersActionHelper {
           suggestRequest.setQ(value);
           // By default only occurrence datasets are suggested
           suggestRequest.addParameter(DatasetSearchParameter.TYPE, DatasetType.OCCURRENCE);
-          List<DatasetSearchResult> suggestions = datasetSearchService.suggest(suggestRequest);
+          List<DatasetSuggestResult> suggestions = datasetSearchService.suggest(suggestRequest);
           // suggestions are stored in map: "parameter value" -> list of suggestions
           if (suggestions.size() == 1) {
             searchSuggestions.getReplacements().put(value, suggestions.get(0));
@@ -478,7 +478,7 @@ public class FiltersActionHelper {
    * Replace the taxon_key parameters that have a scientific name that could be interpreted directly.
    */
   public void processNameUsageReplacements(SearchRequest<OccurrenceSearchParameter> searchRequest,
-    SearchSuggestions<NameUsageSearchResult> suggestions) {
+    SearchSuggestions<NameUsageSuggestResult> suggestions) {
     processReplacements(searchRequest, suggestions, OccurrenceSearchParameter.TAXON_KEY, NU_RESULT_KEY_GETTER);
 
   }
@@ -488,9 +488,9 @@ public class FiltersActionHelper {
    * If the value is not a number, a search by scientific name is performed and, if any, the available suggestions are
    * returned.
    */
-  public SearchSuggestions<NameUsageSearchResult> processNameUsagesSuggestions(HttpServletRequest request) {
+  public SearchSuggestions<NameUsageSuggestResult> processNameUsagesSuggestions(HttpServletRequest request) {
     String[] values = request.getParameterValues(OccurrenceSearchParameter.TAXON_KEY.name());
-    SearchSuggestions<NameUsageSearchResult> nameUsagesSuggestion = new SearchSuggestions<NameUsageSearchResult>();
+    SearchSuggestions<NameUsageSuggestResult> nameUsagesSuggestion = new SearchSuggestions<NameUsageSuggestResult>();
     if (values != null) { // there are not value
       // request instance is created here for future reuse
       NameUsageSuggestRequest suggestRequest = new NameUsageSuggestRequest();
@@ -503,14 +503,14 @@ public class FiltersActionHelper {
             nameUsageMatch.getAlternatives() != null && !nameUsageMatch.getAlternatives().isEmpty();
           if (nameUsageMatch.getMatchType() == MatchType.NONE && !hasAlternatives) {
             suggestRequest.setQ(value);
-            List<NameUsageSearchResult> suggestions = nameUsageSearchService.suggest(suggestRequest);
+            List<NameUsageSuggestResult> suggestions = nameUsageSearchService.suggest(suggestRequest);
             // suggestions are stored in map: "parameter value" -> list of suggestions
             nameUsagesSuggestion.getSuggestions().put(value, suggestions);
           } else if (nameUsageMatch.getMatchType() == MatchType.NONE && hasAlternatives) {
             nameUsagesSuggestion.getSuggestions().put(value, toNameUsageResult(nameUsageMatch.getAlternatives()));
           } else {
-            NameUsageSearchResult nameUsageSearchResult = toNameUsageResult(nameUsageMatch);
-            nameUsagesSuggestion.getReplacements().put(value, nameUsageSearchResult);
+            NameUsageSuggestResult nameUsageSuggestResult = toNameUsageResult(nameUsageMatch);
+            nameUsagesSuggestion.getReplacements().put(value, nameUsageSuggestResult);
           }
         }
       }
@@ -745,8 +745,8 @@ public class FiltersActionHelper {
   /**
    * Converts a list of NameUsageMatch into a list of NameUsageSearchResult.
    */
-  private List<NameUsageSearchResult> toNameUsageResult(List<NameUsageMatch> nameUsageMatches) {
-    List<NameUsageSearchResult> suggestions = Lists.newArrayList();
+  private List<NameUsageSuggestResult> toNameUsageResult(List<NameUsageMatch> nameUsageMatches) {
+    List<NameUsageSuggestResult> suggestions = Lists.newArrayList();
     for (NameUsageMatch matchAlt : nameUsageMatches) {
       suggestions.add(toNameUsageResult(matchAlt));
     }
@@ -756,13 +756,13 @@ public class FiltersActionHelper {
   /**
    * Converts a NameUsageMatch into a NameUsageSearchResult.
    */
-  private NameUsageSearchResult toNameUsageResult(NameUsageMatch nameUsageMatch) {
-    NameUsageSearchResult nameUsageSearchResult = null;
+  private NameUsageSuggestResult toNameUsageResult(NameUsageMatch nameUsageMatch) {
+    NameUsageSuggestResult nameUsageSuggestResult = null;
 
     try {
-      nameUsageSearchResult = new NameUsageSearchResult();
-      PropertyUtils.copyProperties(nameUsageSearchResult, nameUsageMatch);
-      nameUsageSearchResult.setKey(nameUsageMatch.getUsageKey());
+      nameUsageSuggestResult = new NameUsageSuggestResult();
+      PropertyUtils.copyProperties(nameUsageSuggestResult, nameUsageMatch);
+      nameUsageSuggestResult.setKey(nameUsageMatch.getUsageKey());
     } catch (IllegalAccessException e) {
       LOG.error("Error converting NameUsageMatch to NameUsageSearchResult", e);
     } catch (InvocationTargetException e) {
@@ -771,7 +771,7 @@ public class FiltersActionHelper {
       LOG.error("Error converting NameUsageMatch to NameUsageSearchResult", e);
     }
 
-    return nameUsageSearchResult;
+    return nameUsageSuggestResult;
   }
 
 

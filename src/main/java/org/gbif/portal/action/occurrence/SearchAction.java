@@ -1,11 +1,11 @@
 package org.gbif.portal.action.occurrence;
 
 import org.gbif.api.model.Constants;
-import org.gbif.api.model.checklistbank.search.NameUsageSearchResult;
+import org.gbif.api.model.checklistbank.search.NameUsageSuggestResult;
 import org.gbif.api.model.occurrence.Occurrence;
 import org.gbif.api.model.occurrence.search.OccurrenceSearchParameter;
 import org.gbif.api.model.occurrence.search.OccurrenceSearchRequest;
-import org.gbif.api.model.registry.search.DatasetSearchResult;
+import org.gbif.api.model.registry.search.DatasetSuggestResult;
 import org.gbif.api.service.occurrence.OccurrenceSearchService;
 import org.gbif.api.vocabulary.BasisOfRecord;
 import org.gbif.api.vocabulary.Continent;
@@ -48,9 +48,9 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   private final FiltersActionHelper filtersActionHelper;
 
-  private SearchSuggestions<NameUsageSearchResult> nameUsagesSuggestions;
+  private SearchSuggestions<NameUsageSuggestResult> nameUsagesSuggestions;
 
-  private SearchSuggestions<DatasetSearchResult> datasetsSuggestions;
+  private SearchSuggestions<DatasetSuggestResult> datasetsSuggestions;
 
   private SearchSuggestions<String> collectorSuggestions;
 
@@ -230,10 +230,10 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Suggestions for dataset title search.
-   *
+   * 
    * @return the datasetsSuggestions
    */
-  public SearchSuggestions<DatasetSearchResult> getDatasetsSuggestions() {
+  public SearchSuggestions<DatasetSuggestResult> getDatasetsSuggestions() {
     return datasetsSuggestions;
   }
 
@@ -280,16 +280,16 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Suggestions for scientific name search.
-   *
+   * 
    * @return the nameUsagesSuggestions
    */
-  public SearchSuggestions<NameUsageSearchResult> getNameUsagesSuggestions() {
+  public SearchSuggestions<NameUsageSuggestResult> getNameUsagesSuggestions() {
     return nameUsagesSuggestions;
   }
 
   /**
    * Gets the title(name) of a node.
-   *
+   * 
    * @param networkKey node key/UUID
    */
   public String getNetworkTitle(String networkKey) {
@@ -310,7 +310,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Gets the configuration of fields and information to display.
-   *
+   * 
    * @return the table
    */
   public OccurrenceTable getTable() {
@@ -378,8 +378,8 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
    * Initializes the suggestion objects with empty values.
    */
   private void initSuggestions() {
-    nameUsagesSuggestions = new SearchSuggestions<NameUsageSearchResult>();
-    datasetsSuggestions = new SearchSuggestions<DatasetSearchResult>();
+    nameUsagesSuggestions = new SearchSuggestions<NameUsageSuggestResult>();
+    datasetsSuggestions = new SearchSuggestions<DatasetSuggestResult>();
     collectorSuggestions = new SearchSuggestions<String>();
     catalogNumberSuggestions = new SearchSuggestions<String>();
     institutionCodeSuggestions = new SearchSuggestions<String>();
@@ -429,7 +429,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Retrieve value for Term in interpreted fields map. Currently expecting only DwcTerm.
-   *
+   * 
    * @param term Term
    * @return value for Term in fields map, or null if it doesn't exist
    */

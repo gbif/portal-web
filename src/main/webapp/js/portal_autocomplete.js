@@ -191,8 +191,8 @@ $.fn.speciesAutosuggest = function(wsServiceUrl,limit,chklstKeysElementsSelector
       success: function(data){//response the data sent by the web service
         response( $.map(data, function( item ) {
           return {
-            label: item.scientificName,
-            value: item.scientificName,
+            label: item.canonicalName,
+            value: item.canonicalName,
             key: item.nubKey,
             rank: item.rank,
             higherClassificationMap: item.higherClassificationMap
