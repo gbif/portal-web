@@ -8,6 +8,7 @@ import org.gbif.api.model.common.paging.Pageable;
 import org.gbif.api.model.common.paging.PagingRequest;
 import org.gbif.api.service.checklistbank.DescriptionService;
 import org.gbif.api.service.checklistbank.DistributionService;
+import org.gbif.api.service.checklistbank.IdentifierService;
 import org.gbif.api.service.checklistbank.MultimediaService;
 import org.gbif.api.service.checklistbank.ReferenceService;
 import org.gbif.api.service.checklistbank.SpeciesProfileService;
@@ -63,6 +64,8 @@ public class DetailAction extends UsageBaseAction {
   @Inject
   private MultimediaService imageService;
   @Inject
+  private IdentifierService identifierService;
+  @Inject
   private OccurrenceDatasetIndexService occurrenceDatasetService;
   @Inject
   private SpeciesProfileService speciesProfileService;
@@ -114,7 +117,8 @@ public class DetailAction extends UsageBaseAction {
   public String execute() {
     loadUsage();
     loadUsageDetails();
-    vernacularNames = filterVernacularNames(usage.getVernacularNames(), Language.fromIsoCode(getLocale().getISO3Language()));
+    vernacularNames = filterVernacularNames(usage.getVernacularNames(),
+                                            Language.fromIsoCode(getLocale().getISO3Language()));
     populateHabitats();
 
     for (NameUsage u : sublist(related, MAX_COMPONENTS)) {
@@ -193,6 +197,7 @@ public class DetailAction extends UsageBaseAction {
     usage.setVernacularNames(vernacularNameService.listByUsage(id, page100).getResults());
     usage.setDistributions(distributionService.listByUsage(id, page10).getResults());
     usage.setMedia(imageService.listByUsage(id, page1).getResults()); // only load first, other are loaded via ajax
+    usage.setIdentifiers(identifierService.listByUsage(id, page10).getResults());
     usage.setTypeSpecimens(typeSpecimenService.listByUsage(id, page10).getResults());
     TypesAction.removeInvalidTypes(usage.getTypeSpecimens());
     usage.setSpeciesProfiles(speciesProfileService.listByUsage(id, page20).getResults());

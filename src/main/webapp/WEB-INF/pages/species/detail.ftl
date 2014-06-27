@@ -209,8 +209,8 @@
           <#if v_has_next && v_index==2>
             <#break />
           </#if>
-          <li class="more"><a href="<@s.url value='/species/${id?c}/vernaculars'/>">more</a></li>
         </#list>
+        <li class="more"><a href="<@s.url value='/species/${id?c}/vernaculars'/>">more</a></li>
       </ul>
     </#if>
 
@@ -320,9 +320,9 @@
     <dl class="identifier">
       <dt>GBIF ID</dt>
       <dd><a href="#" title="GBIF ID ${id?c}">${id?c}</a></dd>
-      <#if !nub && usage.sourceId??>
-        <dt>Source ID</dt>
-        <dd><a href="#" title="${usage.sourceId}">${usage.sourceId}</a></dd>
+      <#if !nub && usage.taxonID??>
+        <dt>Taxon ID</dt>
+        <dd><a href="#" title="${usage.taxonID}">${usage.taxonID}</a></dd>
       </#if>
       <#list usage.identifiers as i>
         <dt>${i.type}</dt>
@@ -624,9 +624,9 @@
     <#if usage.origin == "SOURCE">
       it was found in another checklist at the time the backbone was built.
       <#if nubSourceExists>
-        <br/>View the <a class="source" data-baseurl="<@s.url value='/species/'/>" href="<@s.url value='/species/${usage.sourceId}'/>">primary source name usage</a>.
+        <br/>View the <a class="source" data-baseurl="<@s.url value='/species/'/>" href="<@s.url value='/species/${usage.sourceTaxonKey}'/>">primary source name usage</a>.
       <#else>
-        The primary source name usage <#if usage.sourceId?has_content>(${usage.sourceId})</#if> has since been removed from the portal.
+        The primary source name usage <#if usage.sourceTaxonKey?has_content>(${usage.sourceTaxonKey})</#if> has since been removed from the portal.
       </#if>
     <#else>
       <@s.text name="enum.origin.${usage.origin}"/>.

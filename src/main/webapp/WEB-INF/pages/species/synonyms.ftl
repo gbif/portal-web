@@ -37,8 +37,8 @@
             <span class="note"><@s.text name='enum.rank.${u.rank!"UNKNOWN"}'/></span>
           </h2>
           <div class="footer">
-            <#if u.source?has_content>
-              <p>Source: ${u.source}</p>
+            <#if u.accordingTo?has_content>
+              <p>According to ${u.accordingTo}</p>
             </#if>
           </div>
         </div>
