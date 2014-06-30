@@ -12,7 +12,14 @@
     <session-timeout>-1</session-timeout>
   </session-config>
   
-  
+  <context-param>
+    <param-name>org.eclipse.jetty.servlet.SessionIdPathParameterName</param-name>
+    <param-value>none</param-value>
+  </context-param>
+  <context-param>
+    <param-name>disableURLRewriting</param-name>
+    <param-value>true</param-value>
+  </context-param>  
 
   <!-- The Guice configuration -->
   <listener>
