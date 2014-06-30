@@ -17,14 +17,18 @@
 
 <@common.notice title="Feedback sought">
   <p>The API is currently at vesion v0.9 and is nearing stability - it powers all functions of this portal.</p>
-  <p>Please report issues to <a href="mailto:dev@gbif.org">dev@gbif.org</a> and help us move to a stable v1.0
-  (expected May 2014)</p>
+  <p>Please report issues to <a href="mailto:dev@gbif.org">dev@gbif.org</a> and help us move to a stable v1
+  (expected June 2014)</p>
 </@common.notice>
 
 
 <@api.introArticle>
 <div class="left">
-    <p>The GBIF API provides registration, discovery and access and information services in a RESTful manner.</p>
+    <p>The GBIF API provides registration, discovery and access and information services.</p>
+    <p>The API is a RESTful JSON based API. The base URL for v0.9 you are going to use is:</p>
+    <ul class="indent">
+        <li><strong>${action.cfg.apiBaseUrl}</strong></li>
+    </ul>
     <p>The API is split into logical sections to ease understanding:</p>
     <ul class="indent">
       <li><strong>Registry:</strong> Provides means to create, edit, update and search for information about the datasets,
@@ -41,21 +45,26 @@
       content for various themes.</li>
     </ul>
     <p>
-      The API is a RESTful JSON based API, and for all components Java libraries exist.
+      For the <strong>Registry</strong>, <strong>Species</strong>, <strong>Occurrence</strong>, and <strong>Maps</strong> sections, Java web service clients exist. Please see each section's introduction for more information.
     </p>
     <p>
-      While the API is nearing stability for the first formal release, this documentation is also in first edition.  Please
-      consider reporting issues found with the documentation using the "feedback" button on the right to help improve the
-      content.
+      You can also sign up to the <a href="http://lists.gbif.org/mailman/listinfo/api-users" target="_blank">GBIF API users mailing list</a> to post your questions,
+        and to keep informed about the API. We will announce new versions, and scheduled maintenance downtimes before they happen.
     </p>
     <p>
       We welcome any example uses of the API to guest feature on the <a href="http://gbif.blogspot.com">GBIF developer blog</a>.
+    </p>
+    <p>
+        Lastly while the API is nearing stability for the first formal release, this documentation is also in first edition.  Please
+        consider reporting issues found with the documentation using the "feedback" button on the right to help improve the
+        content.
     </p>
 </div>
 <div class="right">
     <ul>
       <li><a href="#common">Common operations</a></li>
-      <li><a href="#roadmap">Roadmap to v1.0</a></li>
+      <li><a href="#roadmap">Roadmap to v1</a></li>
+      <li><a href="http://lists.gbif.org/mailman/listinfo/api-users" target="_blank">GBIF API users mailing list</a></li>
     </ul>
 </div>
 </@api.introArticle>
@@ -98,13 +107,13 @@
   </div>
 </@common.article>
 
-<@common.article id="roadmap" title="Roadmap to v1.0">
+<@common.article id="roadmap" title="Roadmap to v1">
   <div class="fullwidth">
-  <p>The GBIF api is currently at v0.9 which means:<p>
+  <p>The GBIF API is currently at v0.9 which means:<p>
   <ol class="indent">
-     <li>The API is nearing stability but changes might occur before v1.0</li>
+     <li>The API is nearing stability but changes might occur before v1 (see below for a list of known changes)</li>
      <li>Developers building applications using the API should be ready to follow any changes in the API, which will be announced</li>
-     <li>v0.9 <em>may</em> not be maintained when v1.0 is released</li>
+     <li>When v1 is released, adopters will be encouraged to update immediately, since v0.9 will only be kept online for a brief transition period</li>
      <li>The base URL includes the version as appropriate</li>
   </ol>
   <p>Known changes that will occur:</p>
@@ -114,9 +123,9 @@
     <li>All query parameters for countries will be converted into ISO country codes where currently (e.g.) DENMARK is used</li>
     <li>Occurrence multimedia will be interpreted</li>
   </ol>
-  <p>Feedback is sought from developers on the API structure, before the frozen v1.0 will be released to <a href="mailto:dev@gbif.org">dev@gbif.org</a></p>
+  <p>Feedback is sought from developers on the API structure, before the frozen v1 will be released to <a href="mailto:dev@gbif.org">dev@gbif.org</a></p>
 
-  <p>v1.0 is expected in <strong>May 2014</strong> unless feedback received indicates it should be delayed</p>
+  <p>v1 is expected in <strong>June 2014</strong> unless feedback received indicates it should be delayed</p>
   </div>
 </@common.article>
 
