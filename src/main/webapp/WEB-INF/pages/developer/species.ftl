@@ -89,7 +89,7 @@
       Fuzzy matches scientific names against the GBIF Backbone Taxonomy with the optional classification provided.
       If a classification is provided and strict is not set to true, the default matching will also try to match against these if no direct match is found for the name parameter alone.
     </@trow>
-    <@trow url="/search" resp="NameUsage Page" respLink="/species/search?q=Puma&rank=GENUS" paging=true params=["q","datasetKey","rank","highertaxonKey","status","isExtinct","habitat","threat","nameType","nomenclaturalStatus","hl","facet","facet_only","facet_mincount","facet_multiselect"]>
+    <@trow url="/search" resp="NameUsage Page" respLink="/species/search?q=Puma&rank=GENUS" paging=true params=["q","datasetKey","rank","highertaxonKey","status","isExtinct","habitat","threat","nameType","nomenclaturalStatus","hl","facet","facetMincount","facetMultiselect"]>
         Full text search of name usages covering the scientific and vernacular name, the species description, distribution and the entire classification
         across all name usages of all or some checklists. Results are ordered by relevance as this search usually returns a lot of results.</@trow>
     <@trow url="/suggest" resp="NameUsage Page" respLink="/species/suggest?datasetKey=d7dddbf4-2cf0-4f39-9b2a-bb099caae36c&q=Puma%20con" paging=false params=["q","datasetKey","rank"]>
