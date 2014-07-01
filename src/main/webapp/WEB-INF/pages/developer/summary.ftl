@@ -104,6 +104,13 @@
       For example:
       <code><@api.url '/occurrence/search?year=1800,1899'/></code>
     </p>
+
+      <h3>Authentication</h3>
+      <p>POST, PUT, and DELETE requests require authentication. The GBIF API uses basic authentication with any GBIF
+          user account that you have created before.
+          For example:
+          <code>$ curl -i --user yourUserName:<YOUR_PASSWORD> -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d @dataset.json ${action.cfg.apiBaseUrl}/dataset</code>
+      </p>
   </div>
 </@common.article>
 
