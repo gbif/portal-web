@@ -1565,7 +1565,7 @@ $.fn.bindDialogPopover = function(opt) {
  * @param imageProvider that will be triggered to provide the data and passed a callback to continue
  * @param postImageUpdate an optional function that will be called after image changed
  */
-$.fn.imageGallery = function(imageProvider, postImageUpdate) {
+$.fn.imageGallery = function(imageProvider, postImageUpdate, defaultTitle) {
   var
   slideData        = [],
   photoWidth       = 627,
@@ -1689,6 +1689,11 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate) {
     var $photos = $scroller.find(".photos");
     var n = 0;
 
+    // Add a default title if missing
+    _.defaults(images, {
+      title: defaultTitle
+    });
+
     _.each(images, function(imgJson) {
       n++;
       slideData.push(imgJson);
@@ -1736,14 +1741,15 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate) {
 /**
  * Species detail page slide show
  */
-$.fn.speciesSlideshow = function(usageID) {
+$.fn.speciesSlideshow = function(usageID, defaultTitle) {
   var url = cfg.wsClb + "species/" + usageID + "/media?callback=?";
   $(this).imageGallery(
     function(callback) {   // the data provider
       $.getJSON(url, callback);
     },
     function($container, data) { // postImageUpdate hook doing nothing
-    }
+    },
+    defaultTitle
   );
 };
 
@@ -1752,18 +1758,13 @@ $.fn.speciesSlideshow = function(usageID) {
  */
 $.fn.occurrenceSlideshow = function(data, defaultTitle) {
   var $dataAsJson = $.parseJSON(data);
-
-  // Add a default title if missing
-  _.defaults(data.results, {
-    title: defaultTitle
-  });
-
   $(this).imageGallery(
     function(callback) {
 	    callback($dataAsJson);
     },
     function($container, data) {  // postImageUpdate hook doing nothing
-    }
+    },
+    defaultTitle
   );
 };
 

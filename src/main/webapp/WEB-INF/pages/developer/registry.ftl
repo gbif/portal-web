@@ -267,9 +267,9 @@
     <@trowNe url="/{UUID}/tag" method="GET" resp="Tag List" respLink="/network/7ddd1f14-a2b0-4838-95b0-785846f656f3/tag">Lists all tags for a network</@trowNe>
     <@trowNe url="/{UUID}/tag" method="POST" resp="ID" auth=true>Creates and adds a network tag</@trowNe>
     <@trowNe url="/{UUID}/tag/{ID}" method="DELETE" auth=true>Deletes the network tag with tag identifier {ID}</@trowNe>
-    <@trowNe url="/{UUID}/machinetag" method="GET" resp="Machine Tag List" respLink="/network/7ddd1f14-a2b0-4838-95b0-785846f656f3/machinetag">Lists all machine tags for the network</@trowNe>
-    <@trowNe url="/{UUID}/machinetag" method="POST" resp="ID" auth=true>Creates and adds a network machine tag</@trowNe>
-    <@trowNe url="/{UUID}/machinetag/{ID}" method="DELETE">Deletes the network machine tag with machine tag identifier {ID}</@trowNe>
+    <@trowNe url="/{UUID}/machineTag" method="GET" resp="Machine Tag List" respLink="/network/7ddd1f14-a2b0-4838-95b0-785846f656f3/machineTag">Lists all machine tags for the network</@trowNe>
+    <@trowNe url="/{UUID}/machineTag" method="POST" resp="ID" auth=true>Creates and adds a network machine tag</@trowNe>
+    <@trowNe url="/{UUID}/machineTag/{ID}" method="DELETE">Deletes the network machine tag with machine tag identifier {ID}</@trowNe>
     <@trowNe url="/{UUID}/comment" method="GET" resp="Comment List" respLink="/network/7ddd1f14-a2b0-4838-95b0-785846f656f3/comment">Lists all comments for the network</@trowNe>
     <@trowNe url="/{UUID}/comment" method="POST" resp="ID" auth=true>Creates and adds a network comment</@trowNe>
     <@trowNe url="/{UUID}/comment" method="DELETE" auth=true>Deletes the network comment with comment identifier {ID}</@trowNe>

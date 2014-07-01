@@ -138,7 +138,7 @@
         initDescriptions();
 
         // image slideshow
-        $("#images").speciesSlideshow(${id?c});
+        $("#images").speciesSlideshow(${id?c}, '${usage.scientificName!"Untitled"}');
       });
     </script>
     <style type="text/css">
