@@ -78,12 +78,14 @@
 
 <@api.article id="datasets" title="Datasets">
   <p>The dataset API provides CRUD and discovery services for datasets. Its most prominent use on the GBIF portal is to drive the <a href="/dataset">dataset search</a> and dataset pages.</p>
+  <p>Please note deletion of datasets is logical, meaning dataset entries remain registered forever and only get a deleted timestamp.
+     On the other hand, deletion of a dataset's contacts, endpoints, identifiers, tags, machine tags, comments, and metadata descriptions is physical, meaning the entries are permanently removed.</p>
   <@api.apiTable>
     <@trowD url="" resp="Dataset List" respLink="/dataset" paging=true params=["q","country","type","identifier","identifierType"]>Lists all datasets</@trowD>
     <@trowD url="" method="POST" resp="UUID" auth=true>Creates a new dataset</@trowD>
     <@trowD url="/{UUID}" resp="Dataset" respLink="/dataset/4fa7b334-ce0d-4e88-aaae-2e0c138d049e">Gets details for the single dataset</@trowD>
     <@trowD url="/{UUID}" method="PUT" auth=true>Updates the dataset</@trowD>
-    <@trowD url="/{UUID}" method="DELETE" auth=true>Deletes the dataset</@trowD>
+    <@trowD url="/{UUID}" method="DELETE" auth=true>Deletes the dataset. The dataset entry gets a deleted timestamp but remains registered.</@trowD>
     <@trowD url="/{UUID}/contact" method="GET" resp="Contact List" respLink="/dataset/4fa7b334-ce0d-4e88-aaae-2e0c138d049e/contact">Lists all contacts for the dataset</@trowD>
     <@trowD url="/{UUID}/contact" method="POST" resp="ID" auth=true>Create and add a dataset contact</@trowD>
     <@trowD url="/{UUID}/contact/{ID}" method="DELETE" auth=true>Deletes a dataset contact with contact identifier {ID}</@trowD>
@@ -120,7 +122,7 @@
 <@api.article id="datasetSearch" title="Dataset Search">
   <p>The dataset search API provides search services for datasets.</p>
   <@api.apiTable auth=false >
-    <@trowS url="/search" respLink="/dataset/search?q=plant&publishingCountry=AR" paging=true params=["q","country","type","subtype","keyword","publishingOrg","hostingOrg","decade","publishingCountry","continent","hl","facet","facet_only","facet_mincount","facet_multiselect"]>Full text search across all datasets.
+    <@trowS url="/search" respLink="/dataset/search?q=plant&publishingCountry=AR" paging=true params=["q","country","type","subtype","keyword","publishingOrg","hostingOrg","decade","publishingCountry","continent","hl","facet","facetMincount","facetMultiselect"]>Full text search across all datasets.
         Results are ordered by relevance.</@trowS>
     <@trowS url="/suggest" respLink="/dataset/suggest?q=Amazon&type=OCCURRENCE" params=["q","country","type","subtype","keyword","publishingOrg","hostingOrg","decade","publishingCountry","continent"]>Search that returns up to 20 matching datasets.
         Results are ordered by relevance.</@trowS>
@@ -139,12 +141,14 @@
 
 <@api.article id="installations" title="Installations">
   <p>The installation API provides CRUD and discovery services for installations.</p>
+  <p>Please note deletion of installations is logical, meaning installation entries remain registered forever and only get a deleted timestamp.
+    On the other hand, deletion of an installation's contacts, endpoints, identifiers, tags, machine tags, and comments is physical, meaning the entries are permanently removed.</p>
   <@api.apiTable>
     <@trowI url="" resp="Installation List" respLink="/installation" paging=true params=["q","identifier","identifierType"]>Lists all installations</@trowI>
     <@trowI url="" method="POST" resp="UUID" auth=true>Creates a new installation</@trowI>
     <@trowI url="/{UUID}" resp="Installation" respLink="/installation/a957a663-2f17-415f-b1c8-5cf6398df8ed">Gets details for the single installation</@trowI>
     <@trowI url="/{UUID}" method="PUT" auth=true>Updates the installation</@trowI>
-    <@trowI url="/{UUID}" method="DELETE" auth=true>Deletes the installation</@trowI>
+    <@trowI url="/{UUID}" method="DELETE" auth=true>Deletes the installation. The installation entry gets a deleted timestamp but remains registered.</@trowI>
     <@trowI url="/{UUID}/contact" method="GET" resp="Contact List" respLink="/installation/a957a663-2f17-415f-b1c8-5cf6398df8ed/contact">Lists all contacts for the installation</@trowI>
     <@trowI url="/{UUID}/contact" method="POST" resp="ID" auth=true>Creates and adds an installation contact</@trowI>
     <@trowI url="/{UUID}/contact/{ID}" method="DELETE" auth=true>Deletes an installation contact with contact identifier {ID}</@trowI>
@@ -175,12 +179,14 @@
 
 <@api.article id="organizations" title="Organizations">
   <p>The organization API provides CRUD and discovery services for organizations. Its most prominent use on the GBIF portal is to drive the <a href="/publisher/search">data publisher search</a>.</p>
+  <p>Please note deletion of organizations is logical, meaning organization entries remain registered forever and only get a deleted timestamp.
+    On the other hand, deletion of an organization's contacts, endpoints, identifiers, tags, machine tags, and comments is physical, meaning the entries are permanently removed.</p>
   <@api.apiTable>
     <@trowO url="" resp="Organization List" respLink="/organization" paging=true params=["q","country","identifier","identifierType"]>Lists all organizations</@trowO>
     <@trowO url="" method="POST" resp="UUID" auth=true>Creates a new organization</@trowO>
     <@trowO url="/{UUID}" resp="Organization" respLink="/organization/e2e717bf-551a-4917-bdc9-4fa0f342c530">Gets details for the single organization</@trowO>
     <@trowO url="/{UUID}" method="PUT" auth=true>Updates the organization</@trowO>
-    <@trowO url="/{UUID}" method="DELETE" auth=true>Deletes the organization</@trowO>
+    <@trowO url="/{UUID}" method="DELETE" auth=true>Deletes the organization. The organization entry gets a deleted timestamp but remains registered.</@trowO>
     <@trowO url="/{UUID}/contact" method="GET" resp="Contact List" respLink="/organization/e2e717bf-551a-4917-bdc9-4fa0f342c530/contact">Lists all contacts for the organization</@trowO>
     <@trowO url="/{UUID}/contact" method="POST" resp="ID" auth=true>Creates and adds an organization contact</@trowO>
     <@trowO url="/{UUID}/contact/{ID}" method="DELETE" auth=true>Deletes an organization contact with contact identifier {ID}</@trowO>
@@ -213,12 +219,14 @@
 
 <@api.article id="nodes" title="Nodes">
   <p>The node API provides CRUD and discovery services for nodes. Its most prominent use on the GBIF portal is to drive the <a href="/country">country pages</a>.</p>
+  <p>Please note deletion of nodes is logical, meaning node entries remain registered forever and only get a deleted timestamp.
+    On the other hand, deletion of an node's contacts, endpoints, identifiers, tags, machine tags, and comments is physical, meaning the entries are permanently removed.</p>
   <@api.apiTable>
     <@trowNo url="" resp="Node List" respLink="/node" paging=true params=["q","identifier","identifierType"]>Lists all nodes</@trowNo>
     <@trowNo url="" method="POST" resp="UUID" auth=true>Creates a new node</@trowNo>
     <@trowNo url="/{UUID}" resp="Node" respLink="/node/0909d601-bda2-42df-9e63-a6d51847ebce">Gets details for the single node</@trowNo>
     <@trowNo url="/{UUID}" method="PUT" auth=true>Updates the node</@trowNo>
-    <@trowNo url="/{UUID}" method="DELETE" auth=true>Deletes the node</@trowNo>
+    <@trowNo url="/{UUID}" method="DELETE" auth=true>Deletes the node. The node entry gets a deleted timestamp but remains registered.</@trowNo>
     <@trowNo url="/{UUID}/organization" method="GET" resp="Organization" respLink="/node/0909d601-bda2-42df-9e63-a6d51847ebce/organization" paging=true>Lists organizations endorsed by the node</@trowNo>
     <@trowNo url="/{UUID}/endpoint" method="GET" resp="Endpoint List" respLink="/node/1f94b3ca-9345-4d65-afe2-4bace93aa0fe/endpoint">Lists the node endpoints</@trowNo>
     <@trowNo url="/{UUID}/endpoint" method="POST" resp="ID" auth=true>Creates a node endpoint</@trowNo>
@@ -248,12 +256,14 @@
 
 <@api.article id="networks" title="Networks">
   <p>The network API provides CRUD and discovery services for networks.</p>
+  <p>Please note deletion of networks is logical, meaning network entries remain registered forever and only get a deleted timestamp.
+    On the other hand, deletion of an network's contacts, endpoints, identifiers, tags, machine tags, and comments is physical, meaning the entries are permanently removed.</p>
   <@api.apiTable>
     <@trowNe url="" resp="Network List" respLink="/network" paging=true params=["q","identifier","identifierType"]>Lists all networks</@trowNe>
     <@trowNe url="" method="POST" resp="UUID" auth=true>Creates a new network</@trowNe>
     <@trowNe url="/{UUID}" resp="Network" respLink="/network/7ddd1f14-a2b0-4838-95b0-785846f656f3">Gets details for the single network</@trowNe>
     <@trowNe url="/{UUID}" method="PUT" auth=true>Updates the network</@trowNe>
-    <@trowNe url="/{UUID}" method="DELETE" auth=true>Deletes the network</@trowNe>
+    <@trowNe url="/{UUID}" method="DELETE" auth=true>Deletes the network. The network entry gets a deleted timestamp but remains registered.</@trowNe>
     <@trowNe url="/{UUID}/contact" method="GET" resp="Contact List" respLink="/network/7ddd1f14-a2b0-4838-95b0-785846f656f3/contact">Lists all contacts for the network</@trowNe>
     <@trowNe url="/{UUID}/contact" method="POST" resp="ID" auth=true>Creates and adds a network contact</@trowNe>
     <@trowNe url="/{UUID}/contact/{ID}" method="DELETE" auth=true>Deletes a network contact with contact identifier {ID}</@trowNe>
@@ -290,7 +300,7 @@
   "keyword": "Filters datasets by a case insensitive plain text keyword. The search is done on the merged collection of tags, the dataset keywordCollections and temporalCoverages.",
   "publishingOrg": "Filters datasets by their publishing organization UUID key",
   "hostingOrg": "Filters datasets by their hosting organization UUID key",
-  "decade": "Filters datasets by their temporal coverage broken down to decades. Decades are given as a full year, e.g. 1880, 1960, 2000, etc, and will return datasets wholly contained in the decade as well as those that cover the entire decade or more. Facet by decade to get the break down, e.g. <a href='${action.cfg.apiBaseUrl}/dataset/search?facet=DECADE&facet_only=true' target='_blank'>/search?facet=DECADE&facet_only=true</a>",
+  "decade": "Filters datasets by their temporal coverage broken down to decades. Decades are given as a full year, e.g. 1880, 1960, 2000, etc, and will return datasets wholly contained in the decade as well as those that cover the entire decade or more. Facet by decade to get the break down, e.g. <a href='${action.cfg.apiBaseUrl}/dataset/search?facet=DECADE&limit=0' target='_blank'>/search?facet=DECADE&limit=0</a>",
   "publishingCountry": "Filters datasets by their owining organization's country given as a ISO 639-1 (2 letter) country code",
   "continent": "Not yet implemented, but will eventually allow filtering datasets by their continent(s) as given in our <a href='${api.apidocs}/vocabulary/Continent.html' target='_blank'>Continent enum</a>.",
   "facet": "A list of facet names used to retrieve the 100 most frequent values for a field. Allowed facets are: type, keyword, publishingOrg, hostingOrg, decade, and publishingCountry. Additionally subtype and country are legal values but not yet implemented, so data will not yet be returned for them."
