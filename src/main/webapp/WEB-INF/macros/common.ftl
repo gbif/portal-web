@@ -107,7 +107,7 @@
 <#macro address address >
 <div class="address">
   <#if address.address?has_content>
-    <span>${para(address.address)}</span>
+    <span><#list address.address as a>${a!}<#if a_has_next><br/></#if></#list></span>
   </#if>
 
   <#if address.postalCode?has_content || address.zip?has_content || address.city?has_content>
@@ -129,11 +129,19 @@
   </#if>
 
   <#if address.email?has_content>
-      <span class="email"><a href="mailto:${address.email}" title="email">${address.email}</a></span>
+    <#list address.email as email>
+      <#if email?has_content>
+        <span class="email"><a href="mailto:${email}" title="email">${email}</a></span>
+      </#if>
+    </#list>
   </#if>
 
   <#if address.phone?has_content>
-    <span class="phone">${address.phone}</span>
+    <#list address.phone as phone>
+     <#if phone?has_content>
+      <span class="phone">${phone}</span>
+     </#if>
+    </#list>
   </#if>
 
 </div>
@@ -162,7 +170,7 @@
   <div>
     <#if con.position?has_content>
      <div class="contactPosition">
-      ${con.position!}
+      <#list con.position as p>${p!}<#if p_has_next>, </#if></#list>
      </div>
     </#if>
     <#if con.organization?has_content>
