@@ -53,7 +53,7 @@
   member.type != common.biocaseInstallationType &&
   member.type != common.httpInstallationType >
     <h3>Address</h3>
-    <@common.address address=member />
+    <@common.address adr=member />
   </#if>
 
   <#if member.homepage?has_content>

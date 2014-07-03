@@ -103,41 +103,51 @@
 </#macro>
 
 
-<#-- Creates just an address block for a given WritableMember or Contact instance -->
-<#macro address address >
+<#-- Creates just an address block for a given Node or Contact instance implementing our Address interface-->
+<#macro address adr>
 <div class="address">
-  <#if address.address?has_content>
-    <span><#list address.address as a>${a!}<#if a_has_next><br/></#if></#list></span>
+  <#if adr.organization?has_content>
+    <span>${adr.organization}</span>
+  <#--
+    See whether span or div is better !!!
+    <div class="contactInstitution">
+    ${adr.organization!}
+    </div>
+  -->
   </#if>
 
-  <#if address.postalCode?has_content || address.zip?has_content || address.city?has_content>
+  <#if adr.address?has_content>
+    <span><#list adr.address as a>${a!}<#if a_has_next><br/></#if></#list></span>
+  </#if>
+
+  <#if adr.postalCode?has_content || adr.zip?has_content || adr.city?has_content>
     <span class="city">
     <#-- members use zip, but Contact postalCode -->
-    <#if address.postalCode?has_content || address.zip?has_content>
-      ${address.postalCode!address.zip}
+    <#if adr.postalCode?has_content || adr.zip?has_content>
+      ${adr.postalCode!adr.zip}
     </#if>
-    ${address.city!}
+    ${adr.city!}
     </span>
   </#if>
 
-  <#if address.province?has_content>
-    <span class="province">${address.province}</span>
+  <#if adr.province?has_content>
+    <span class="province">${adr.province}</span>
   </#if>
 
-  <#if address.country?has_content && address.country != 'UNKNOWN'>
-    <span class="country">${address.country.title}</span>
+  <#if adr.country?has_content && adr.country != 'UNKNOWN'>
+    <span class="country">${adr.country.title}</span>
   </#if>
 
-  <#if address.email?has_content>
-    <#list address.email as email>
+  <#if adr.email?has_content>
+    <#list adr.email as email>
       <#if email?has_content>
         <span class="email"><a href="mailto:${email}" title="email">${email}</a></span>
       </#if>
     </#list>
   </#if>
 
-  <#if address.phone?has_content>
-    <#list address.phone as phone>
+  <#if adr.phone?has_content>
+    <#list adr.phone as phone>
      <#if phone?has_content>
       <span class="phone">${phone}</span>
      </#if>
@@ -173,12 +183,7 @@
       <#list con.position as p>${p!}<#if p_has_next>, </#if></#list>
      </div>
     </#if>
-    <#if con.organization?has_content>
-     <div class="contactInstitution">
-       ${con.organization!}
-     </div>
-    </#if>
-    <@address address=con />
+    <@address adr=con />
   </div>
 </div>
 </#macro>

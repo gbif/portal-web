@@ -67,10 +67,7 @@
         <p>${node.title}</p>
 
         <h3>Address</h3>
-        <#if node.institution?has_content>
-          <p>${node.institution}</p>
-        </#if>
-        <@common.address address=node />
+        <@common.address adr=node />
 
         <#if node.homepage?has_content>
           <h3>Website</h3>
