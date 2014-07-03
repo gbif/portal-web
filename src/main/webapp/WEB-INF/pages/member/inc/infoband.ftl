@@ -9,8 +9,8 @@
   <h1 class="fullwidth">${common.limit(member.title, 70)}</h1>
 
   <h3>
-    <@s.text name="enum.membertype.${type}"/><#if member.homepage?has_content>.
-      More info at: <a href="${member.homepage}" target="_blank" title="Homepage">${member.homepage}</a>
+    <@s.text name="enum.membertype.${type}"/><#if member.homepage?has_content && member.homepage[0]?has_content>.
+      More info at: <a href="${member.homepage[0]}" target="_blank" title="Homepage">${member.homepage[0]}</a>
     </#if>
   </h3>
 

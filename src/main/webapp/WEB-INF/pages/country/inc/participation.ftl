@@ -71,7 +71,11 @@
 
         <#if node.homepage?has_content>
           <h3>Website</h3>
-          <p><a href="${node.homepage}" target="_blank">${node.homepage}</a></p>
+          <#list node.homepage as home>
+            <#if home?has_content>
+              <p><a href="${home}" target="_blank">${home}</a></p>
+            </#if>
+          </#list>
         </#if>
       </#if>
     </div>

@@ -71,8 +71,8 @@
               <#if showCountry>
                 <td><a href="<@s.url value='/country/${p.country.getIso2LetterCode()}/participation'/>">${p.country.title}</a></td>
                 <td>
-                  <#if p.homepage?has_content>
-                    <a href="${p.homepage}">${p.title!}</a>
+                  <#if p.homepage?has_content && p.homepage[0]?has_content>
+                    <a href="${p.homepage[0]}">${p.title!}</a>
                   <#else>
                     ${p.title!}
                   </#if>
