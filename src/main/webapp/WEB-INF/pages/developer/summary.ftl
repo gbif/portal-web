@@ -15,17 +15,10 @@
 
 <body class="api">
 
-<@common.notice title="Feedback sought">
-  <p>The API is currently at vesion v0.9 and is nearing stability - it powers all functions of this portal.</p>
-  <p>Please report issues to <a href="mailto:dev@gbif.org">dev@gbif.org</a> and help us move to a stable v1
-  (expected June 2014)</p>
-</@common.notice>
-
-
 <@api.introArticle>
 <div class="left">
     <p>The GBIF API provides registration, discovery and access and information services.</p>
-    <p>The API is a RESTful JSON based API. The base URL for v0.9 you are going to use is:</p>
+    <p>The API is a RESTful JSON based API. The base URL for v1 you are going to use is:</p>
     <ul class="indent">
         <li><strong>${action.cfg.apiBaseUrl}</strong></li>
     </ul>
@@ -63,7 +56,7 @@
 <div class="right">
     <ul>
       <li><a href="#common">Common operations</a></li>
-      <li><a href="#roadmap">Roadmap to v1</a></li>
+      <li><a href="#roadmap">Roadmap to v2</a></li>
       <li><a href="http://lists.gbif.org/mailman/listinfo/api-users" target="_blank">GBIF API users mailing list</a></li>
     </ul>
 </div>
@@ -109,30 +102,21 @@
       <p>POST, PUT, and DELETE requests require authentication. The GBIF API uses basic authentication with any GBIF
           user account that you have created before.
           For example:
-          <code>$ curl -i --user yourUserName:<YOUR_PASSWORD> -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d @dataset.json ${action.cfg.apiBaseUrl}/dataset</code>
+          <code>$ curl -i --user yourUserName:yourPassword -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d @dataset.json ${action.cfg.apiBaseUrl}/dataset</code>
       </p>
   </div>
 </@common.article>
 
-<@common.article id="roadmap" title="Roadmap to v1">
+<@common.article id="roadmap" title="Roadmap to v2">
   <div class="fullwidth">
-  <p>The GBIF API is currently at v0.9 which means:<p>
-  <ol class="indent">
-     <li>The API is nearing stability but changes might occur before v1 (see below for a list of known changes)</li>
-     <li>Developers building applications using the API should be ready to follow any changes in the API, which will be announced</li>
-     <li>When v1 is released, adopters will be encouraged to update immediately, since v0.9 will only be kept online for a brief transition period</li>
-     <li>The base URL includes the version as appropriate</li>
-  </ol>
-  <p>Known changes that will occur:</p>
-  <ol class="indent">
-    <li>The occurrence response will be reviewed to align closer to the Darwin Core</li>
-    <li>The occurrence API will support searching by scientific name</li>
-    <li>All query parameters for countries will be converted into ISO country codes where currently (e.g.) DENMARK is used</li>
-    <li>Occurrence multimedia will be interpreted</li>
-  </ol>
-  <p>Feedback is sought from developers on the API structure, before the frozen v1 will be released to <a href="mailto:dev@gbif.org">dev@gbif.org</a></p>
-
-  <p>v1 is expected in <strong>June 2014</strong> unless feedback received indicates it should be delayed</p>
+    <p>The GBIF API is currently at v1 which means:<p>
+    <ol class="indent">
+      <li>The API is stable but changes might occur in the future leading to v2 (currently there are no known changes)</li>
+       <li>Developers building applications using the API should be ready to follow any changes in the API, which will be announced</li>
+       <li>When v2 is released, adopters will be encouraged to update immediately, since v1 will only be kept online for a brief transition period</li>
+       <li>The base URL includes the version as appropriate</li>
+    </ol>
+    <p>Feedback from developers on the API can be sent to <a href="mailto:dev@gbif.org">dev@gbif.org</a></p>
   </div>
 </@common.article>
 

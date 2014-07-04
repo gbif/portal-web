@@ -1,6 +1,6 @@
 <content tag="infoband">
     <h1>${(tab!"webservice")?capitalize} API</h1>
-    <h3>version v0.9</h3>
+    <h3>version v1</h3>
 </content>
 
 <content tag="tabs">
