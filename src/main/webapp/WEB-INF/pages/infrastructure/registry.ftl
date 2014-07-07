@@ -90,19 +90,5 @@ This was known as the Global Biodiversity Resources Discovery System (GBRDS)</p>
   </div>
 </@common.article>
 
-<@common.article id="relationship" title="Relationship with other registries"  titleRight="See also" class="rte">
-  <div class="left">
-<p>Work is currently underway led by the Smithsonian to combine the content of three existing overlapping online registries (Index Herbariorum, BCI and biorepositories.org) and their most important functionalities into the new Global Registry of Biorepositories (GRBio).</p>
-<p>All the data elements found in these three registries will be incorporated in GRBio, including the LSIDs assigned by BCI as well as BCI’s web services.  This is expected to launch in October on the domain name www.grbio.org.  The BCI has already shut down and will direct people to GRBio and biorepositories.org will do the same in October.  Improvements are planned for the GRBio that will add some remaining Index Herbariorum functionalities.</p>
-<p>Once complete, parties will aim to synchronize the GBRio content with the GBIF registry content, to ensure identifiers are preserved and understood across both systems. Future collaborations might see these initiatives merge completely.</p> 
-  </div>
-  <div class="right">
-    <ul>
-      <li><a href="http://biorepositories.org" target="_blank" title="Global Registry of Biorepositories (GRBio)">Biorepositories</a></li>
-    </ul>
-  </div>
-</@common.article>
-
-
 </body>
 </html>
