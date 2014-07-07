@@ -17,7 +17,6 @@
       <li><a href="#purpose" title="Purpose">Purpose</a></li>
       <li><a href="#componentArchitecture" title="Component architecture">Component architecture</a></li>
       <li><a href="#evolution" title="Evolution">Evolution</a></li>
-      <li><a href="#relationship" title="Relationship with other registries">Relationship with other registries</a></li>
     </ul>
   </div>
 </@common.article>
