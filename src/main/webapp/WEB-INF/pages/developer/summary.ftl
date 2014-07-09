@@ -55,7 +55,12 @@
 <div class="right">
     <ul>
       <li><a href="#common">Common operations</a></li>
+<<<<<<< Updated upstream
       <li><a href="#roadmap">Roadmap to v2</a></li>
+=======
+      <li><a href="#authentication">Authentication</a></li>
+      <li><a href="#roadmap">Roadmap to v1</a></li>
+>>>>>>> Stashed changes
       <li><a href="http://lists.gbif.org/mailman/listinfo/api-users" target="_blank">GBIF API users mailing list</a></li>
     </ul>
 </div>
@@ -106,7 +111,25 @@
   </div>
 </@common.article>
 
+<<<<<<< Updated upstream
 <@common.article id="roadmap" title="Roadmap to v2">
+=======
+
+<@common.article id="authentication" title="Authentication">
+<div class="fullwidth">
+    <h3>Authentication</h3>
+    <p>POST, PUT, and DELETE requests require authentication.
+        The GBIF API uses <a href="http://en.wikipedia.org/wiki/Basic_access_authentication">HTTP Basic Authentication</a>
+        with any <a href="<@s.url value='/user/register'/>">GBIF user account</a> that you have created before.
+    </p>
+    <p>For example to issue a new download programmatically using curl with a <a href="<@s.url value='/developer/occurrence#predicates'/>">query filter as JSON</a> in a file called filter.json:
+        <code>$ curl -i --user yourUserName:<YOUR_PASSWORD> -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d @filter.json ${action.cfg.apiBaseUrl}/occurrence/download/request</code>
+    </p>
+</div>
+</@common.article>
+
+<@common.article id="roadmap" title="Roadmap to v1">
+>>>>>>> Stashed changes
   <div class="fullwidth">
     <p>The GBIF API is currently at v1 which means:<p>
     <ol class="indent">

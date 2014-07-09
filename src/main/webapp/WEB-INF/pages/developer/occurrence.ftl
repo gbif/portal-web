@@ -28,6 +28,7 @@
         <li><a href="#occurrence">Occurrences</a></li>
         <li><a href="#search">Search Occurrences</a></li>
         <li><a href="#download">Occurrence Downloads</a></li>
+        <li><a href="#predicates">Occurrence Download Filters</a></li>
         <li><a href="#metrics">Occurrence Metrics</a></li>
         <li><a href="#inventories">Occurrence Inventories</a></li>
     </ul>
@@ -181,7 +182,7 @@
 <div class="fullwidth">
 <p>A download predicate is an query expression to retrieve occurrence record downloads.</p>
 <p>If you are interested in seeing some examples of how to use the Java API to build predicates, there are some <a href="https://github.com/gbif/occurrence/blob/master/occurrence-ws/src/test/java/org/gbif/occurrence/download/service/HiveQueryVisitorTest.java" target="_blank">test cases</a> that can be used as a reference.</p>
-<p>The table below lists the supported predicates that can be combined to build download requests.</p>
+<p>The table below lists the supported predicates that can be combined to build download requests that can be POSTed to the <a href="#download">download API</a>.</p>
 
 <table class='table table-bordered table-striped table-params'>
 <thead>
