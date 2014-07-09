@@ -34,7 +34,7 @@
       <li><strong>Occurrence:</strong> Provides access to occurrence information crawled and indexed by GBIF and search services
       to do real time paged search and asynchronous download services to do large batch downloads.</li>
       <li><strong>Maps:</strong> Provides simple services to show the maps of GBIF mobilized content on other sites.</li>
-      <li><strong>News feed:</strong> Provides services to stream useful information such as papers published using GBIF mobilized
+      <li><strong>News:</strong> Provides services to stream useful information such as papers published using GBIF mobilized
       content for various themes.</li>
     </ul>
     <p>
@@ -55,12 +55,8 @@
 <div class="right">
     <ul>
       <li><a href="#common">Common operations</a></li>
-<<<<<<< Updated upstream
-      <li><a href="#roadmap">Roadmap to v2</a></li>
-=======
       <li><a href="#authentication">Authentication</a></li>
-      <li><a href="#roadmap">Roadmap to v1</a></li>
->>>>>>> Stashed changes
+      <li><a href="#roadmap">Roadmap to v2</a></li>
       <li><a href="http://lists.gbif.org/mailman/listinfo/api-users" target="_blank">GBIF API users mailing list</a></li>
     </ul>
 </div>
@@ -101,19 +97,9 @@
       For example:
       <code><@api.url '/occurrence/search?year=1800,1899'/></code>
     </p>
-
-      <h3>Authentication</h3>
-      <p>POST, PUT, and DELETE requests require authentication. The GBIF API uses basic authentication with any GBIF
-          user account that you have created before.
-          For example:
-          <code>$ curl -i --user yourUserName:yourPassword -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d @dataset.json ${action.cfg.apiBaseUrl}/dataset</code>
-      </p>
   </div>
 </@common.article>
 
-<<<<<<< Updated upstream
-<@common.article id="roadmap" title="Roadmap to v2">
-=======
 
 <@common.article id="authentication" title="Authentication">
 <div class="fullwidth">
@@ -128,8 +114,8 @@
 </div>
 </@common.article>
 
-<@common.article id="roadmap" title="Roadmap to v1">
->>>>>>> Stashed changes
+
+<@common.article id="roadmap" title="Roadmap to v2">
   <div class="fullwidth">
     <p>The GBIF API is currently at v1 which means:<p>
     <ol class="indent">
