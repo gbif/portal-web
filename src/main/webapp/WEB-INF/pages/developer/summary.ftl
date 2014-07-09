@@ -18,7 +18,7 @@
 <@api.introArticle>
 <div class="left">
     <p>The GBIF API provides registration, discovery and access and information services.</p>
-    <p>The API is a RESTful JSON based API. The base URL for v1 you are going to use is:</p>
+    <p>The API is a RESTful JSON based API. The base URL for v1 you should use is:</p>
     <ul class="indent">
         <li><strong>${action.cfg.apiBaseUrl}</strong></li>
     </ul>
@@ -48,9 +48,8 @@
       We welcome any example uses of the API to guest feature on the <a href="http://gbif.blogspot.com">GBIF developer blog</a>.
     </p>
     <p>
-        Lastly while the API is nearing stability for the first formal release, this documentation is also in first edition.  Please
-        consider reporting issues found with the documentation using the "feedback" button on the right to help improve the
-        content.
+        The API should be considered stable following its first formal release, as should this accompanying documentation. Please
+        report any issues you find with either the API itself or the documentation using the "feedback" button on the right.
     </p>
 </div>
 <div class="right">
@@ -111,10 +110,14 @@
   <div class="fullwidth">
     <p>The GBIF API is currently at v1 which means:<p>
     <ol class="indent">
-      <li>The API is stable but changes might occur in the future leading to v2 (currently there are no known changes)</li>
-       <li>Developers building applications using the API should be ready to follow any changes in the API, which will be announced</li>
-       <li>When v2 is released, adopters will be encouraged to update immediately, since v1 will only be kept online for a brief transition period</li>
-       <li>The base URL includes the version as appropriate</li>
+      <li>The API is stable - this means we won't rename or remove any REST resources or response properties to ensure
+          backwards compatibility, but we might add new resources to the API. Any additions will be announced via the API
+          mailing list.</li>
+      <li>Any bug fixes or additions will result in minor version changes which are not reflected in the API URL, only
+          in the documentation and our Java client code.</li>
+       <li>If and when the need for breaking changes arises we will document our intent here and on the mailing list,
+           and give considerable warning before moving to a future v2.</li>
+       <li>The base URL includes the version as appropriate.</li>
     </ol>
     <p>Feedback from developers on the API can be sent to <a href="mailto:dev@gbif.org">dev@gbif.org</a></p>
   </div>
