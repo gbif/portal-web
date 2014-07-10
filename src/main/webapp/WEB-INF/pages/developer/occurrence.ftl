@@ -82,13 +82,13 @@
   <@api.apiTable auth=false>
     <@trowS url="" respLink="/occurrence/search?taxonKey=1"  paging=true params=["datasetKey","year","month","eventDate","lastInterpreted","decimalLatitude","decimalLongitude","country","continent","publishingCountry","elevation","depth","institutionCode", "collectionCode", "catalogNumber","recordedBy","recordNumber","basisOfRecord","taxonKey","scientificName","hasCoordinate","geometry","spatialIssues", "issue", "mediaType"]>Full search across all occurrences.
     Results are ordered by relevance.</@trowS>
-    <@trowS url="/catalog_number" respLink="/occurrence/search/catalog_number?q=122&limit=5" params=["q","limit"]>Search that returns matching catalog numbers.
+    <@trowS url="/catalogNumber" respLink="/occurrence/search/catalogNumber?q=122&limit=5" params=["q","limit"]>Search that returns matching catalog numbers.
     Results are ordered by relevance.</@trowS>
-    <@trowS url="/collection_code" respLink="/occurrence/search/collection_code?q=12&limit=5" params=["q","limit"]>Search that returns matching collection codes.
+    <@trowS url="/collectionCode" respLink="/occurrence/search/collectionCode?q=12&limit=5" params=["q","limit"]>Search that returns matching collection codes.
     Results are ordered by relevance.</@trowS>
-    <@trowS url="/collector_name" respLink="/occurrence/search/collector_name?q=juan&limit=5" params=["q","limit"]>Search that returns matching collector names.
+    <@trowS url="/recordedBy" respLink="/occurrence/search/recordedBy?q=juan&limit=5" params=["q","limit"]>Search that returns matching collector names.
     Results are ordered by relevance.</@trowS>
-    <@trowS url="/institution_code" respLink="/occurrence/search/institution_code?q=GB&limit=5" params=["q","limit"]>Search that returns matching institution codes.
+    <@trowS url="/institutionCode" respLink="/occurrence/search/institutionCode?q=GB&limit=5" params=["q","limit"]>Search that returns matching institution codes.
     Results are ordered by relevance.</@trowS>
   </@api.apiTable>
 </@api.article>
@@ -104,10 +104,10 @@
 
   <@api.apiTable params=false>
     <@trowD url="/request" resp="Download key" method="POST" authRequired=true>Starts the process of creating a download file. See the <a href="#predicates">predicates</a> section to consult the requests accepted by this service.</@trowD>
-    <@trowD url="/request/{key}" resp="Download file" respLink="/occurrence/download/request/0000447-130906152512535" method="GET" authRequired=false>Retrieves the download file if it is available.</@trowD>
+    <@trowD url="/request/{key}" resp="Download file" respLink="/occurrence/download/request/0003589-140616093749225" method="GET" authRequired=false>Retrieves the download file if it is available.</@trowD>
     <@trowD url="/request/{key}" method="DELETE" authRequired=true>Cancels the download process.</@trowD>
     <@trowD url="" method="GET" resp="Download Page" authRequired=true paging=true>Lists all the downloads. This operation can be executed by the role ADMIN only.</@trowD>
-    <@trowD url="/{key}" resp="Download" respLink="/occurrence/download/0000447-130906152512535" method="GET">Retrieves the occurrence download metadata by its unique key.</@trowD>
+    <@trowD url="/{key}" resp="Download" respLink="/occurrence/download/0003589-140616093749225" method="GET">Retrieves the occurrence download metadata by its unique key.</@trowD>
     <@trowD url="/{key}" method="PUT" authRequired=true>Updates the status of an existing occurrence download. This operation can be executed by the role ADMIN only.</@trowD>
     <@trowD url="/{key}" method="POST" authRequired=true>Creates the metadata about an occurrence download. This operation can be executed by the role ADMIN only.</@trowD>
     <@trowD url="/user/{user}" method="GET" resp="Download Page" authRequired=true paging=true>Lists the downloads created by a user. Only role ADMIN can list downloads of other users.</@trowD>
@@ -136,11 +136,11 @@
 </p>
 
   <@api.apiTable auth=false paging=false>
-    <@trowM url="/occurrence/counts/basis_of_record" resp="Counts" respLink="/occurrence/counts/basis_of_record">Lists occurrence counts by basis of record.</@trowM>
+    <@trowM url="/occurrence/counts/basisOfRecord" resp="Counts" respLink="/occurrence/counts/basisOfRecord">Lists occurrence counts by basis of record.</@trowM>
     <@trowM url="/occurrence/counts/year" resp="Counts" respLink="/occurrence/counts/year?year=1981,2012" params=["year"]>Lists occurrence counts by year.</@trowM>
     <@trowM url="/occurrence/counts/datasets" resp="Counts" respLink="/occurrence/counts/datasets?country=DE" params=["country","taxonKey"]>Lists occurrence counts for datasets that cover a given taxon or country.</@trowM>
     <@trowM url="/occurrence/counts/countries" resp="Counts" respLink="/occurrence/counts/countries?publishingCountry=DE" params=["publishingCountry"]>Lists occurrence counts for all countries covered by the data published by the given country.</@trowM>
-    <@trowM url="/occurrence/counts/publishing_country" resp="Counts" respLink="/occurrence/counts/publishing_countries?country=DE" params=["country"]>Lists occurrence counts for all countries that publish data about the given country.</@trowM>
+    <@trowM url="/occurrence/counts/publishingCountry" resp="Counts" respLink="/occurrence/counts/publishingCountries?country=DE" params=["country"]>Lists occurrence counts for all countries that publish data about the given country.</@trowM>
   </@api.apiTable>
 </@api.article>
 
@@ -153,7 +153,7 @@
   "decimalLatitude": "Latitude in decimals between -90 and 90 based on WGS 84.. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
   "decimalLongitude": "Longitude in decimals between -180 and 180 based on WGS 84.. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
   "country": "The 2-letter country code (as per <a href='http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm' target='_blank'>ISO-3166-1</a>) of the country in which the occurrence was recorded.",
-  "continent": "Continent, as defined in our <a href='${api.apidocs}vocabulary/Continent.html' target='_blank'>Continent enum</a>",
+  "continent": "Continent, as defined in our <a href='${api.apidocs}/vocabulary/Continent.html' target='_blank'>Continent enum</a>",
   "publishingCountry" : "The 2-letter country code (as per <a href='http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm' target='_blank'>ISO-3166-1</a>) of the owining organization's country.",
   "elevation": "Elevation (altitude) in meters above sea level. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
   "depth" : "Depth in meters relative to altitude. For example 10 meters below a lake surface with given altitude. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
@@ -162,14 +162,14 @@
   "catalogNumber": "An identifier of any form assigned by the source within a physical collection or digital dataset for the record which may not be unique, but should be fairly unique in combination with the institution and collection code.",
   "recordedBy": "The person who recorded the occurrence.",
   "recordNumber": "An identifier given to the record at the time it was recorded in the field.",
-  "basisOfRecord": "Basis of record, as defined in our <a href='${api.apidocs}vocabulary/BasisOfRecord.html' target='_blank'>BasisOfRecord enum</a>",
+  "basisOfRecord": "Basis of record, as defined in our <a href='${api.apidocs}/vocabulary/BasisOfRecord.html' target='_blank'>BasisOfRecord enum</a>",
   "taxonKey": "A taxon key from the GBIF backbone. All included and synonym taxa are included in the search, so a search for aves with taxonKey=212 (i.e. <a href='${action.cfg.apiBaseUrl}/occurrence/search?taxonKey=212' target='_blank'>/occurrence/search?taxonKey=212</a>) will match all birds, no matter which species.",
   "scientificName": "A scientific name from the <a href='${baseUrl}/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c'>GBIF backbone</a>. All included and synonym taxa are included in the search. Under the hood a call to the <a href='${baseUrl}/developer/species#searching'>species match service</a> is done first to retrieve a taxonKey. Only unique scientific names will return results, homonyms (many monomials) return nothing! Consider to use the taxonKey parameter instead and the species match service directly",
   "hasCoordinate": "Limits searches to occurrence records which contain a value in both latitude and longitude (i.e. hasCoordinate=true limits to occurrence records with coordinate values and hasCoordinate=false limits to occurrence records without coordinate values).",
   "geometry": "Searches for occurrences inside a polygon described in Well Known Text (WKT) format. Only POINT, LINESTRING, LINEARRING and POLYGON are accepted WKT types. For example, a shape written as POLYGON ((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1)) would be queried as is, i.e. <a href='${action.cfg.apiBaseUrl}/occurrence/search?geometry=POLYGON((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1))' target='_blank'>/occurrence/search?geometry=POLYGON((30.1 10.1, 10 20, 20 40, 40 40, 30.1 10.1))</a>.",
   "spatialIssues": "Includes/excludes occurrence records which contain spatial issues (as determined in our record interpretation), i.e. spatialIssues=true returns only those records with spatial issues while spatialIssues=false includes only records without spatial issues. The absence of this parameter returns any record with or without spatial issues.",
-  "issue": "A specific interpretation issue as defined in our <a href='${api.apidocs}vocabulary/OccurrenceIssue.html' target='_blank'>OccurrenceIssue enum</a>",
-  "mediaType": "The kind of multimedia associated with an occurrence as defined in our <a href='${api.apidocs}vocabulary/MediaType.html' target='_blank'>MediaType enum</a>",
+  "issue": "A specific interpretation issue as defined in our <a href='${api.apidocs}/vocabulary/OccurrenceIssue.html' target='_blank'>OccurrenceIssue enum</a>",
+  "mediaType": "The kind of multimedia associated with an occurrence as defined in our <a href='${api.apidocs}/vocabulary/MediaType.html' target='_blank'>MediaType enum</a>",
   "q" : "Simple search parameter. The value for this parameter can be a simple word or a phrase.",
   "limit": "The maximum number of results to return. This can't be greater than 300, any value greater is set to 300."
 } />
