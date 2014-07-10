@@ -72,17 +72,6 @@ public class DetailAction extends UsageBaseAction {
 
   private final static Joiner HABITAT_JOINER = Joiner.on(" ");
 
-  // Predicate used to filter valid type specimens
-  private Predicate<TypeSpecimen> isNameType = new Predicate<TypeSpecimen>() {
-
-    @Override
-    public boolean apply(TypeSpecimen input) {
-      return usage.getRank() != null && !usage.getRank().isSpeciesOrBelow() && input.getScientificName() != null;
-    }
-
-  };
-
-
   /**
    * Should flag be present, then the habitat named by the flagName is appended to the habitats.
    */
@@ -183,9 +172,9 @@ public class DetailAction extends UsageBaseAction {
     usage.setVernacularNames(vernacularNameService.listByUsage(id, page100).getResults());
     usage.setDistributions(distributionService.listByUsage(id, page10).getResults());
     usage.setIdentifiers(identifierService.listByUsage(id, page10).getResults());
-    usage.setTypeSpecimens(typeSpecimenService.listByUsage(id, page10).getResults());
-    TypesAction.removeInvalidTypes(usage.getTypeSpecimens());
     usage.setSpeciesProfiles(speciesProfileService.listByUsage(id, page20).getResults());
+    usage.setTypeSpecimens(typeSpecimenService.listByUsage(id, page10).getResults());
+    usage.setTypeSpecimens(TypesAction.filterNameTypes(usage));
 
     toc = descriptionService.getToc(id);
     for (NameUsageMediaObject m : imageService.listByUsage(id, page6).getResults()) {
@@ -287,17 +276,6 @@ public class DetailAction extends UsageBaseAction {
 
   public NameUsageMediaObject getPrimeImage() {
     return primeImage;
-  }
-
-  /**
-   * Filters out the type specimens that can't be shown in the UI.
-   */
-  public Collection<TypeSpecimen> getNameTypes() {
-    if (usage.getTypeSpecimens() != null) {
-      return Collections2.filter(usage.getTypeSpecimens(), isNameType);
-    } else {
-      return Lists.newArrayList();
-    }
   }
 
 }

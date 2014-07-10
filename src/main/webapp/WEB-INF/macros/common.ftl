@@ -54,33 +54,6 @@
   </#if>
 </#macro>
 
-<#macro usageSource component showChecklistSource=false showChecklistSourceOnly=false>
-  <#if showChecklistSourceOnly>
-    <#assign source=""/>
-    <#else>
-      <#assign source=(component.source!"")?trim/>
-  </#if>
-  <#if showChecklistSource && component.sourceTaxonKey??>
-    <#assign source><a href='<@s.url value='/species/${component.sourceTaxonKey?c}'/>'>${(datasets.get(component.datasetKey).title)!"???"}</a><br/>${source}</#assign>
-  </#if>
-  <#if source?has_content || component.remarks?has_content>
-    <a class="sourcePopup" data-message="${source!}" data-remarks="${component.remarks!}"></a>
-  </#if>
-</#macro>
-
-<#macro usageSources components popoverTitle="Sources" showSource=true showChecklistSource=true>
-  <#assign source>
-    <#list components as comp>
-      <p>
-        <#if showSource>${comp.source!""}</#if>
-        <#if showSource && showChecklistSource><br/></#if>
-        <#if showChecklistSource && comp.sourceTaxonKey??><a href='<@s.url value='/species/${comp.sourceTaxonKey?c}'/>'>${(datasets.get(comp.datasetKey).title)!"???"}</a></#if>
-      </p><br/>
-    </#list>
-  </#assign>
-  <a class="sourcePopup" title="${popoverTitle}" data-message="${source!}" data-remarks=""></a>
-</#macro>
-
 <#macro popup message remarks="" title="Source">
   <#if message?has_content>
   <a class="sourcePopup" title="${title}" data-message="${message}" data-remarks="${remarks!}"></a>

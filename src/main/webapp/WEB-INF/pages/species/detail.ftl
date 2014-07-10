@@ -538,12 +538,11 @@
   </@common.article>
 </#if>
 
-<#assign nameTypes = action.nameTypes />
-<#if (nameTypes?size>0)>
+<#if (usage.typeSpecimens?has_content)>
   <@common.article id="types" title="Types">
     <div class="fullwidth">
-      <#list nameTypes as ts>        
-        <#-- require a type status or assume its type species/genus for higher ranks in case its null and we got a sciname -->                        
+      <#list usage.typeSpecimens as ts>
+        <#-- require a type status or assume its type species/genus for higher ranks in case its null and we got a sciname -->
         <ul>
           <li>
             <strong>${(ts.typeStatus!"TYPE")?capitalize}</strong>
@@ -553,11 +552,10 @@
               <#else>
                   <a href="<@s.url value='/occurrence/search?TAXON_KEY=${ts.scientificName}'/>">${ts.scientificName}</a>
               </#if>
-              <@common.usageSource component=ts showChecklistSource=nub />
             </#if>
             <@types.details ts />
           </li>
-        </ul>                    
+        </ul>
         <#-- only show 4 type specimens at max -->
         <#if ts_has_next && ts_index==3>
           <p class="more">

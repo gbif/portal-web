@@ -34,10 +34,19 @@
       <#list page.results as item>
         <div class="result">
           <h2>
-            <strong>
-              <@types.status item />
-            </strong>
-            <span class="note"></span>
+            <a href="<#if item.sourceTaxonKey??><@s.url value='/species/${item.sourceTaxonKey?c}'/><#else>#</#if>">
+                <strong>
+                <#if item.typeStatus?has_content>${item.typeStatus?capitalize}
+                <#else>
+                  Specimen
+                </#if>
+                </strong>
+            </a>
+            <#if item.scientificName?has_content>
+                <span class="note">
+                  - <a href="<@s.url value='/species/search?q=${item.scientificName}'/>">${item.scientificName}</a>
+                </span>
+            </#if>
           </h2>
 
           <div class="footer">
