@@ -59,7 +59,7 @@
                     <#if item.appendixCites??>Cites: ${item.appendixCites}</#if>
                     </p>
                   </#if>
-                  <#if u.source?has_content>
+                  <#if item.source?has_content>
                     <p>Source: ${u.source}</p>
                   </#if>
 

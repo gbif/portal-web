@@ -162,6 +162,7 @@
 
 <#assign tab="info"/>
 <#include "/WEB-INF/pages/species/inc/infoband.ftl">
+
 <#if !nub>
 <#-- Warn that this is not a nub page -->
 <@common.notice title="This is a particular view of ${usage.canonicalOrScientificName!}">
@@ -169,24 +170,18 @@
     as seen by
       <#if constituent??><a href="<@s.url value='/dataset/${constituent.key}'/>">${constituent.title}</a>, a constituent of the </#if>
       <a href="<@s.url value='/dataset/${usage.datasetKey}'/>">${(dataset.title)!"???"}</a> checklist.
+      <#if usage.nubKey?exists>
+          Remember that you can also check the
+          <a href="<@s.url value='/species/${usage.nubKey?c}'/>">GBIF view on ${usage.canonicalOrScientificName!}</a>.
+      </#if>
   </p>
 
   <p>
-    <#if usage.nubKey?exists>
-      Remember that you can also check the
-      <a href="<@s.url value='/species/${usage.nubKey?c}'/>">GBIF view on ${usage.canonicalOrScientificName!}</a><#if usage.origin! != "SOURCE" || !verbatimExists>.</#if>
-    </#if>
+    <#-- only show the link to a verbatim page for source usages -->
     <#if usage.origin! == "SOURCE">
-      <#-- only show the link to a verbatim page if it indeed exists. Some old checklists need to be reindexed to have verbatim data stored -->
-      <#if verbatimExists>
-        <#if usage.nubKey?exists> or <#else> You can also see </#if>
-        the <a href="<@s.url value='/species/${id?c}/verbatim'/>">verbatim version</a>
-        submitted by the data publisher.
-      </#if>
+        There may be more details available about this name usage in the
+        <a href="<@s.url value='/species/${id?c}/verbatim'/>">verbatim version</a> of the record.
     <#else>
-      </p>
-
-      <p>
       This record has been created during indexing and did not explicitly exist in the source data as such.
       It was created as <@s.text name="enum.origin.${usage.origin}"/>.
     </#if>
@@ -602,13 +597,7 @@
 <@common.citationArticle rights=usage.rights!dataset.rights! dataset=dataset publisher=publisher prefix=prefix />
 
 
-<#if !usage.isNub()>
-  <@common.notice title="Further information">
-  <p>There may be more details available about this name usage in the
-    <a href="<@s.url value='/species/${id?c}/verbatim'/>">verbatim version</a> of the record
-  </p>
-  </@common.notice>
-<#elseif usage.origin??>
+<#if nub>
   <@common.notice title="Source information">
   <p>This backbone name usage exists because
     <#if usage.origin == "SOURCE">

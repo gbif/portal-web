@@ -1,50 +1,24 @@
 package org.gbif.portal.action.species;
 
-import org.gbif.api.model.checklistbank.NameUsage;
-import org.gbif.api.model.checklistbank.NameUsageMediaObject;
-import org.gbif.api.model.checklistbank.Reference;
-import org.gbif.api.model.checklistbank.TableOfContents;
-import org.gbif.api.model.checklistbank.TypeSpecimen;
-import org.gbif.api.model.checklistbank.VernacularName;
-import org.gbif.api.model.common.paging.Pageable;
-import org.gbif.api.model.common.paging.PagingRequest;
-import org.gbif.api.service.checklistbank.DescriptionService;
-import org.gbif.api.service.checklistbank.DistributionService;
-import org.gbif.api.service.checklistbank.IdentifierService;
-import org.gbif.api.service.checklistbank.MultimediaService;
-import org.gbif.api.service.checklistbank.ReferenceService;
-import org.gbif.api.service.checklistbank.SpeciesProfileService;
-import org.gbif.api.service.checklistbank.TypeSpecimenService;
-import org.gbif.api.service.checklistbank.VernacularNameService;
-import org.gbif.api.service.occurrence.OccurrenceDatasetIndexService;
-import org.gbif.api.vocabulary.Language;
-import org.gbif.api.vocabulary.MediaType;
-import org.gbif.api.vocabulary.Origin;
-import org.gbif.api.vocabulary.Rank;
-import org.gbif.portal.model.VernacularLocaleComparator;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.UUID;
-
-import javax.annotation.Nullable;
-import javax.validation.constraints.NotNull;
-
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Ordering;
-import com.google.common.collect.Sets;
+import com.google.common.collect.*;
 import com.google.inject.Inject;
+import org.gbif.api.model.checklistbank.*;
+import org.gbif.api.model.common.paging.Pageable;
+import org.gbif.api.model.common.paging.PagingRequest;
+import org.gbif.api.service.checklistbank.*;
+import org.gbif.api.service.occurrence.OccurrenceDatasetIndexService;
+import org.gbif.api.vocabulary.Language;
+import org.gbif.api.vocabulary.MediaType;
+import org.gbif.api.vocabulary.Rank;
+import org.gbif.portal.model.VernacularLocaleComparator;
+
+import javax.annotation.Nullable;
+import javax.validation.constraints.NotNull;
+import java.util.*;
 
 /**
  * Populates the models for the detail page of any taxon.
@@ -59,8 +33,6 @@ public class DetailAction extends UsageBaseAction {
   private NameUsage basionym;
 
   private TableOfContents toc;
-
-  private boolean verbatimExists = false;
 
   @Inject
   private DescriptionService descriptionService;
@@ -248,10 +220,6 @@ public class DetailAction extends UsageBaseAction {
       }))
       );
 
-    if (Origin.SOURCE == usage.getOrigin()) {
-      verbatimExists = usageService.getVerbatim(id) != null;
-    }
-
     if (usage.isNub() && usage.getSourceTaxonKey() != null) {
       // check if the source record actually exists
       nubSourceExists = usageService.get(usage.getSourceTaxonKey(), null) != null;
@@ -311,10 +279,6 @@ public class DetailAction extends UsageBaseAction {
     })) {
       vernacularNames.add(existingName);
     }
-  }
-
-  public boolean isVerbatimExists() {
-    return verbatimExists;
   }
 
   public boolean isNubSourceExists() {
