@@ -16,12 +16,20 @@
 
   <#if member.email?has_content>
   <h3>Email</h3>
-  <p>${member.email}</p>
+   <#list member.email as email>
+    <#if email?has_content>
+      <p><a href="mailto:${email}">${email}</a></p>
+    </#if>
+   </#list>
   </#if>
 
   <#if member.phone?has_content>
   <h3>Phone</h3>
-  <p>${member.phone}</p>
+  <#list member.phone as phone>
+    <#if phone?has_content>
+      <p>${phone}</p>
+    </#if>
+  </#list>
   </#if>
 
   <#-- only publisher pages need to separate contacts into primary and other -->
@@ -38,6 +46,7 @@
   </#if>
 </div>
 
+
 <div class="right">
   <#if member.logoUrl?has_content>
     <div class="logo_holder">
@@ -46,12 +55,7 @@
   </#if>
 
   <#-- No address shown for members of type installation -->
-  <#if member.type?? &&
-  member.type != common.iptInstallationType &&
-  member.type != common.digirInstallationType &&
-  member.type != common.tapirInstallationType &&
-  member.type != common.biocaseInstallationType &&
-  member.type != common.httpInstallationType >
+  <#if type != "INSTALLATION">
     <h3>Address</h3>
     <@common.address adr=member />
   </#if>
