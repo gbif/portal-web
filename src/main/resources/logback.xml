@@ -37,8 +37,6 @@
     </encoder>
   </appender>
 
-  <!-- TODO: revert org.gbif and root to INFO -->
-  <logger name="org.gbif" level="DEBUG"/>
   <logger name="com.opensymphony" level="WARN"/>
   <logger name="org.apache" level="WARN"/>
   <logger name="org.struts" level="WARN"/>
@@ -47,7 +45,7 @@
   <logger name="com.gargoylesoftware" level="WARN"/>
   <logger name="cache" level="WARN"/>
 
-  <root level="DEBUG">
+  <root level="INFO">
     <appender-ref ref="FILE"/>
     <appender-ref ref="ERROR_FILE"/>
   </root>
