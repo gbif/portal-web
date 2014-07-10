@@ -1689,13 +1689,12 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate, defaultTitle) {
     var $photos = $scroller.find(".photos");
     var n = 0;
 
-    // Add a default title if missing
-    _.defaults(images, {
-      title: defaultTitle
-    });
-
     _.each(images, function(imgJson) {
       n++;
+      // Add a default title if missing
+      _.defaults(imgJson, {
+        title: defaultTitle
+      });
       slideData.push(imgJson);
       $photos.append("<li><div class='spinner'></div><a href='"+imgJson.identifier+"' class='fancybox' title='"+ (imgJson.title ? imgJson.title : '') +"'><img id='photo_"+n+"'src='" + imgJson.identifier + "' /></a></li>");
 
