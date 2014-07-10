@@ -99,9 +99,9 @@
     <@trowD url="/{UUID}/tag" method="GET" resp="Tag List" respLink="/dataset/4fa7b334-ce0d-4e88-aaae-2e0c138d049e/tag">Lists all tags for a dataset</@trowD>
     <@trowD url="/{UUID}/tag" method="POST" resp="ID" auth=true>Create and add a dataset tag</@trowD>
     <@trowD url="/{UUID}/tag/{ID}" method="DELETE" auth=true>Deletes the dataset tag with tag identifier {ID}</@trowD>
-    <@trowD url="/{UUID}/machinetag" method="GET" resp="Machine Tag List" respLink="/dataset/8575f23e-f762-11e1-a439-00145eb45e9a/machinetag">Lists all machine tags for a dataset</@trowD>
-    <@trowD url="/{UUID}/machinetag" method="POST" resp="ID" auth=true>Create and add a dataset machine tag</@trowD>
-    <@trowD url="/{UUID}/machinetag/{ID}" method="DELETE">Deletes the dataset machine tag with machine tag identifier {ID}</@trowD>
+    <@trowD url="/{UUID}/machineTag" method="GET" resp="Machine Tag List" respLink="/dataset/8575f23e-f762-11e1-a439-00145eb45e9a/machineTag">Lists all machine tags for a dataset</@trowD>
+    <@trowD url="/{UUID}/machineTag" method="POST" resp="ID" auth=true>Create and add a dataset machine tag</@trowD>
+    <@trowD url="/{UUID}/machineTag/{ID}" method="DELETE">Deletes the dataset machine tag with machine tag identifier {ID}</@trowD>
     <@trowD url="/{UUID}/comment" method="GET" resp="Comment List" respLink="/dataset/4fa7b334-ce0d-4e88-aaae-2e0c138d049e/comment">Lists all comments for a dataset</@trowD>
     <@trowD url="/{UUID}/comment" method="POST" resp="ID" auth=true>Create and add a dataset comment</@trowD>
     <@trowD url="/{UUID}/comment" method="DELETE" auth=true>Deletes the dataset comment with comment identifier {ID}</@trowD>
@@ -162,9 +162,9 @@
     <@trowI url="/{UUID}/tag" method="GET" resp="Tag List" respLink="/installation/a957a663-2f17-415f-b1c8-5cf6398df8ed/tag">Lists all tags for an installation</@trowI>
     <@trowI url="/{UUID}/tag" method="POST" resp="ID" auth=true>Creates and adds an installation tag</@trowI>
     <@trowI url="/{UUID}/tag/{ID}" method="DELETE" auth=true>Deletes the installation tag with tag identifier {ID}</@trowI>
-    <@trowI url="/{UUID}/machinetag" method="GET" resp="Machine Tag List" respLink="/installation/a957a663-2f17-415f-b1c8-5cf6398df8ed/machinetag">Lists all machine tags for an installation</@trowI>
-    <@trowI url="/{UUID}/machinetag" method="POST" resp="ID" auth=true>Creates and adds an installation machine tag</@trowI>
-    <@trowI url="/{UUID}/machinetag/{ID}" method="DELETE">Deletes the installation machine tag with machine tag identifier {ID}</@trowI>
+    <@trowI url="/{UUID}/machineTag" method="GET" resp="Machine Tag List" respLink="/installation/a957a663-2f17-415f-b1c8-5cf6398df8ed/machineTag">Lists all machine tags for an installation</@trowI>
+    <@trowI url="/{UUID}/machineTag" method="POST" resp="ID" auth=true>Creates and adds an installation machine tag</@trowI>
+    <@trowI url="/{UUID}/machineTag/{ID}" method="DELETE">Deletes the installation machine tag with machine tag identifier {ID}</@trowI>
     <@trowI url="/{UUID}/comment" method="GET" resp="Comment List" respLink="/installation/a957a663-2f17-415f-b1c8-5cf6398df8ed/comment">Lists all comments for an installation</@trowI>
     <@trowI url="/{UUID}/comment" method="POST" resp="ID" auth=true>Creates and adds an installation comment</@trowI>
     <@trowI url="/{UUID}/comment" method="DELETE" auth=true>Deletes the installation comment with comment identifier {ID}</@trowI>
@@ -200,9 +200,9 @@
     <@trowO url="/{UUID}/tag" method="GET" resp="Tag List" respLink="/organization/e2e717bf-551a-4917-bdc9-4fa0f342c530/tag">Lists all tags for an organization</@trowO>
     <@trowO url="/{UUID}/tag" method="POST" resp="ID" auth=true>Creates and adds an organization tag</@trowO>
     <@trowO url="/{UUID}/tag/{ID}" method="DELETE" auth=true>Deletes the organization tag with tag identifier {ID}</@trowO>
-    <@trowO url="/{UUID}/machinetag" method="GET" resp="Machine Tag List" respLink="/organization/e2e717bf-551a-4917-bdc9-4fa0f342c530/machinetag">Lists all machine tags for an organization</@trowO>
-    <@trowO url="/{UUID}/machinetag" method="POST" resp="ID" auth=true>Creates and adds an organization machine tag</@trowO>
-    <@trowO url="/{UUID}/machinetag/{ID}" method="DELETE">Deletes the organization machine tag with machine tag identifier {ID}</@trowO>
+    <@trowO url="/{UUID}/machineTag" method="GET" resp="Machine Tag List" respLink="/organization/e2e717bf-551a-4917-bdc9-4fa0f342c530/machineTag">Lists all machine tags for an organization</@trowO>
+    <@trowO url="/{UUID}/machineTag" method="POST" resp="ID" auth=true>Creates and adds an organization machine tag</@trowO>
+    <@trowO url="/{UUID}/machineTag/{ID}" method="DELETE">Deletes the organization machine tag with machine tag identifier {ID}</@trowO>
     <@trowO url="/{UUID}/comment" method="GET" resp="Comment List" respLink="/organization/e2e717bf-551a-4917-bdc9-4fa0f342c530/comment">Lists all comments for an organization</@trowO>
     <@trowO url="/{UUID}/comment" method="POST" resp="ID" auth=true>Creates and adds an organization comment</@trowO>
     <@trowO url="/{UUID}/comment" method="DELETE" auth=true>Deletes the organization comment with comment identifier {ID}</@trowO>
@@ -237,9 +237,9 @@
     <@trowNo url="/{UUID}/tag" method="GET" resp="Tag List" respLink="/node/0909d601-bda2-42df-9e63-a6d51847ebce/tag">Lists all tags for a node</@trowNo>
     <@trowNo url="/{UUID}/tag" method="POST" resp="ID" auth=true>Creates and adds a node tag</@trowNo>
     <@trowNo url="/{UUID}/tag/{ID}" method="DELETE" auth=true>Deletes the node tag with tag identifier {ID}</@trowNo>
-    <@trowNo url="/{UUID}/machinetag" method="GET" resp="Machine Tag List" respLink="/node/0909d601-bda2-42df-9e63-a6d51847ebce/machinetag">Lists all machine tags for a node</@trowNo>
-    <@trowNo url="/{UUID}/machinetag" method="POST" resp="ID" auth=true>Creates and adds a node machine tag</@trowNo>
-    <@trowNo url="/{UUID}/machinetag/{ID}" method="DELETE">Deletes the node machine tag with machine tag identifier {ID}</@trowNo>
+    <@trowNo url="/{UUID}/machineTag" method="GET" resp="Machine Tag List" respLink="/node/0909d601-bda2-42df-9e63-a6d51847ebce/machineTag">Lists all machine tags for a node</@trowNo>
+    <@trowNo url="/{UUID}/machineTag" method="POST" resp="ID" auth=true>Creates and adds a node machine tag</@trowNo>
+    <@trowNo url="/{UUID}/machineTag/{ID}" method="DELETE">Deletes the node machine tag with machine tag identifier {ID}</@trowNo>
     <@trowNo url="/{UUID}/comment" method="GET" resp="Comment List" respLink="/node/0909d601-bda2-42df-9e63-a6d51847ebce/comment">Lists all comments for a node</@trowNo>
     <@trowNo url="/{UUID}/comment" method="POST" resp="ID" auth=true>Creates and adds a node comment</@trowNo>
     <@trowNo url="/{UUID}/comment" method="DELETE" auth=true>Deletes the node comment with comment identifier {ID}</@trowNo>
