@@ -48,8 +48,8 @@
       We welcome any example uses of the API to guest feature on the <a href="http://gbif.blogspot.com">GBIF developer blog</a>.
     </p>
     <p>
-        The API should be considered stable following its first formal release, as should this accompanying documentation. Please
-        report any issues you find with either the API itself or the documentation using the "feedback" button on the right.
+        The API should be considered stable, as should this accompanying documentation. Please report any issues you
+        find with either the API itself or the documentation using the "feedback" button on the right.
     </p>
 </div>
 <div class="right">
