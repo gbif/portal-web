@@ -573,7 +573,7 @@
       <#assign suggestion = nameUsagesSuggestions.replacements[sciname]>
       <div class="suggestionBox" data-replacement="${sciname}">
         <div class="warningBox"> <span class="warningCounter">!</span> The scientific name <strong>"${sciname}"</strong> was replaced by: <br>
-          ${suggestion.scientificName}
+          ${suggestion.canonicalName}
           <ul class="taxonomy">
             <#list suggestion.higherClassificationMap?values as classificationName>
               <li <#if !classificationName_has_next> class="last" </#if>>${classificationName}</li>
@@ -588,7 +588,7 @@
          <#if suggestions?has_content>
           <div class="warningBox"> <span class="warningCounter">!</span> We found more than one scientific name that matched <strong>"${sciname}"</strong>.Please select a name from the list below.</div>
           <#list suggestions as nameUsageSearchResult>
-              <input id="searchResult${nameUsageSearchResult.key?c}" type="radio" value="${nameUsageSearchResult.key?c}" name="TAXON_KEY" class="suggestion" data-suggestion="${sciname}"/><label for="searchResult${nameUsageSearchResult.key?c}">${nameUsageSearchResult.scientificName}</label>
+              <input id="searchResult${nameUsageSearchResult.key?c}" type="radio" value="${nameUsageSearchResult.key?c}" name="TAXON_KEY" class="suggestion" data-suggestion="${sciname}"/><label for="searchResult${nameUsageSearchResult.key?c}">${nameUsageSearchResult.canonicalName}</label>
               </br>
               <ul class="taxonomy">
                 <#list nameUsageSearchResult.higherClassificationMap?values as classificationName>
