@@ -543,29 +543,26 @@
   </@common.article>
 </#if>
 
-<#if (usage.typeSpecimens?size>0)>
+<#assign nameTypes = action.nameTypes />
+<#if (nameTypes?size>0)>
   <@common.article id="types" title="Types">
     <div class="fullwidth">
-      <#list usage.typeSpecimens as ts>
+      <#list nameTypes as ts>        
+        <#-- require a type status or assume its type species/genus for higher ranks in case its null and we got a sciname -->                        
         <ul>
           <li>
-          <#-- require a type status or assume its type species/genus for higher ranks in case its null and we got a sciname -->
-            <#assign isNameType = (usage.rank?? && !usage.rank.isSpeciesOrBelow() && ts.scientificName?has_content) />
-            <#if ts.typeStatus?has_content || isNameType>
-              <strong>${(ts.typeStatus!"TYPE")?capitalize}</strong>
-              <#if ts.scientificName?has_content> -
-                <#if isNameType || ts.typeStatus=='TYPE_GENUS' || ts.typeStatus=='TYPE_SPECIES'>
-                    <a href="<@s.url value='/species/search?q=${ts.scientificName}'/>">${ts.scientificName}</a>
-                <#else>
-                    <a href="<@s.url value='/occurrence/search?TAXON_KEY=${ts.scientificName}'/>">${ts.scientificName}</a>
-                </#if>
-                <@common.usageSource component=ts showChecklistSource=nub />
+            <strong>${(ts.typeStatus!"TYPE")?capitalize}</strong>
+            <#if ts.scientificName?has_content> -
+              <#if ts.typeStatus=='TYPE_GENUS' || ts.typeStatus=='TYPE_SPECIES'>
+                  <a href="<@s.url value='/species/search?q=${ts.scientificName}'/>">${ts.scientificName}</a>
+              <#else>
+                  <a href="<@s.url value='/occurrence/search?TAXON_KEY=${ts.scientificName}'/>">${ts.scientificName}</a>
               </#if>
-              <@types.details ts />
+              <@common.usageSource component=ts showChecklistSource=nub />
             </#if>
+            <@types.details ts />
           </li>
-        </ul>
-
+        </ul>                    
         <#-- only show 4 type specimens at max -->
         <#if ts_has_next && ts_index==3>
           <p class="more">

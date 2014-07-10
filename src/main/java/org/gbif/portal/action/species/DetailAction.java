@@ -4,6 +4,7 @@ import org.gbif.api.model.checklistbank.NameUsage;
 import org.gbif.api.model.checklistbank.NameUsageMediaObject;
 import org.gbif.api.model.checklistbank.Reference;
 import org.gbif.api.model.checklistbank.TableOfContents;
+import org.gbif.api.model.checklistbank.TypeSpecimen;
 import org.gbif.api.model.checklistbank.VernacularName;
 import org.gbif.api.model.common.paging.Pageable;
 import org.gbif.api.model.common.paging.PagingRequest;
@@ -28,6 +29,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.UUID;
+
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
@@ -35,6 +37,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -97,6 +100,16 @@ public class DetailAction extends UsageBaseAction {
 
   private final static Joiner HABITAT_JOINER = Joiner.on(" ");
 
+  // Predicate used to filter valid type specimens
+  private Predicate<TypeSpecimen> isNameType = new Predicate<TypeSpecimen>() {
+
+    @Override
+    public boolean apply(TypeSpecimen input) {
+      return usage.getRank() != null && !usage.getRank().isSpeciesOrBelow() && input.getScientificName() != null;
+    }
+
+  };
+
 
   /**
    * Should flag be present, then the habitat named by the flagName is appended to the habitats.
@@ -119,7 +132,7 @@ public class DetailAction extends UsageBaseAction {
     loadUsage();
     loadUsageDetails();
     vernacularNames = filterVernacularNames(usage.getVernacularNames(),
-                                            Language.fromIsoCode(getLocale().getISO3Language()));
+      Language.fromIsoCode(getLocale().getISO3Language()));
     populateHabitats();
 
     for (NameUsage u : sublist(related, MAX_COMPONENTS)) {
@@ -212,6 +225,7 @@ public class DetailAction extends UsageBaseAction {
 
     usage.setReferenceList(FluentIterable.from(referenceService.listByUsage(id, page15).getResults())
       .filter(new Predicate<Reference>() {
+
         private final Set<String> seenRefs = Sets.newHashSet();
 
         public boolean apply(@Nullable Reference r) {
@@ -263,21 +277,23 @@ public class DetailAction extends UsageBaseAction {
   @VisibleForTesting
   List<VernacularName> filterVernacularNames(Collection<VernacularName> vernaculars, @Nullable Language locale) {
     return FluentIterable.from(vernaculars).filter(new Predicate<VernacularName>() {
-        private Set<String> seen = Sets.newHashSet();
-        @Override
-        public boolean apply(@Nullable VernacularName v) {
-          StringBuilder sb = new StringBuilder();
-          sb.append(v.getLanguage() == null ? Language.ENGLISH.getIso2LetterCode() : v.getLanguage().getIso2LetterCode());
-          sb.append(":");
-          sb.append(v.getVernacularName());
-          final String unique = sb.toString().toLowerCase();
-          if (seen.contains(unique)) {
-            return false;
-          }
-          seen.add(unique);
-          return true;
+
+      private Set<String> seen = Sets.newHashSet();
+
+      @Override
+      public boolean apply(@Nullable VernacularName v) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(v.getLanguage() == null ? Language.ENGLISH.getIso2LetterCode() : v.getLanguage().getIso2LetterCode());
+        sb.append(":");
+        sb.append(v.getVernacularName());
+        final String unique = sb.toString().toLowerCase();
+        if (seen.contains(unique)) {
+          return false;
         }
-      })
+        seen.add(unique);
+        return true;
+      }
+    })
       .toSortedList(new VernacularLocaleComparator(locale));
   }
 
@@ -308,4 +324,16 @@ public class DetailAction extends UsageBaseAction {
   public NameUsageMediaObject getPrimeImage() {
     return primeImage;
   }
+
+  /**
+   * Filters out the type specimens that can't be shown in the UI.
+   */
+  public Collection<TypeSpecimen> getNameTypes() {
+    if (usage.getTypeSpecimens() != null) {
+      return Collections2.filter(usage.getTypeSpecimens(), isNameType);
+    } else {
+      return Lists.newArrayList();
+    }
+  }
+
 }

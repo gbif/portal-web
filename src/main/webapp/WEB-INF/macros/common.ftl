@@ -60,11 +60,11 @@
     <#else>
       <#assign source=(component.source!"")?trim/>
   </#if>
-  <#if showChecklistSource>
-    <#assign source><a href='<@s.url value='/species/${component.usageKey?c}'/>'>${(datasets.get(component.datasetKey).title)!"???"}</a><br/>${source}</#assign>
+  <#if showChecklistSource && component.sourceTaxonKey??>
+    <#assign source><a href='<@s.url value='/species/${component.sourceTaxonKey?c}'/>'>${(datasets.get(component.datasetKey).title)!"???"}</a><br/>${source}</#assign>
   </#if>
   <#if source?has_content || component.remarks?has_content>
-  <a class="sourcePopup" data-message="${source!}" data-remarks="${component.remarks!}"></a>
+    <a class="sourcePopup" data-message="${source!}" data-remarks="${component.remarks!}"></a>
   </#if>
 </#macro>
 
@@ -74,7 +74,7 @@
       <p>
         <#if showSource>${comp.source!""}</#if>
         <#if showSource && showChecklistSource><br/></#if>
-        <#if showChecklistSource><a href='<@s.url value='/species/${comp.usageKey?c}'/>'>${(datasets.get(comp.datasetKey).title)!"???"}</a></#if>
+        <#if showChecklistSource && comp.sourceTaxonKey??><a href='<@s.url value='/species/${comp.sourceTaxonKey?c}'/>'>${(datasets.get(comp.datasetKey).title)!"???"}</a></#if>
       </p><br/>
     </#list>
   </#assign>
