@@ -3,7 +3,7 @@
 <#import "/WEB-INF/macros/common.ftl" as common>
 <html>
 <head>
-  <title>Vernacular Names for ${usage.canonicalOrScientificName!}</title>
+  <title>Bibliography for ${usage.canonicalOrScientificName!}</title>
 </head>
 
 <body class="species">
@@ -24,7 +24,7 @@
 
       <div class="header">
         <div class="left">
-          <h2>${page.count!""} References for "${usage.canonicalOrScientificName!}"</h2>
+          <h2>${page.count!""} Bibliography for "${usage.canonicalOrScientificName!}"</h2>
         </div>
       </div>
 
@@ -32,20 +32,23 @@
 
         <#list page.results as item>
         <div class="result">
-          <h2><strong>${item.title!item.citation!}</strong>
-            <span class="note">${item.type!}<#if item.link?has_content> <a href="#" target="_blank">link</a></#if></span>
+          <h2><strong>${item.title!item.author!(item.date?date?string)!}</strong>
+            <span class="note">${item.type!}<#if item.link?has_content> <a href="${item.link}" target="_blank">link</a></#if></span>
           </h2>
+
+        <p>
+          <#if item.citation?has_content>
+              ${item.citation!}
+          </#if>
+        </p>
           <div class="footer">
-            <#if item.citation?has_content>
-              ${item.citation}
-            <#else>
-              ${item.author!} ${item.title!} ${(item.date?date?string)!}
-            </#if>
-            <br/>
             <#if item.doi?has_content>
-              <a href="http://dx.doi.org/${item.doi}" target="_blank">DOI ${item.doi}</a>
+              <p>DOI: <a href="http://dx.doi.org/${item.doi}" target="_blank">${item.doi}</a></p>
             </#if>
-        </div>
+            <#if item.source?has_content>
+                <p>Source: ${item.source}</p>
+            </#if>
+          </div>
         </div>
         </#list>
 
