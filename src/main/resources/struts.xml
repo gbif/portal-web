@@ -414,8 +414,8 @@
     <action name="occurrences" class="org.gbif.portal.action.DefaultHomeAction">
       <result>/WEB-INF/pages/infrastructure/occurrences.ftl</result>
     </action>
-    <action name="names" class="org.gbif.portal.action.DefaultHomeAction">
-      <result>/WEB-INF/pages/infrastructure/names.ftl</result>
+    <action name="dataprocessing" class="org.gbif.portal.action.DefaultHomeAction">
+      <result>/WEB-INF/pages/infrastructure/dataprocessing.ftl</result>
     </action>
     <action name="tools" class="org.gbif.portal.action.DefaultHomeAction">
       <result>/WEB-INF/pages/infrastructure/tools.ftl</result>
