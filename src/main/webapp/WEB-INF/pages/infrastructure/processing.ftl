@@ -115,7 +115,7 @@
 
     <ol><li>dwc:decimalLatitude &amp; dwc:decimalLongitude</li>
       <li>dwc:verbatimLatitude &amp; dwc:verbatimLongitude</li>
-      <li>dwc:verbatimCoordinate</li>
+      <li>dwc:verbatimCoordinates</li>
     </ol><p>If a geodetic datum is given we then try to interpret the datum and, if different from WGS84, do a <a href="http://gbif.blogspot.com/TODO">reprojection into WGS84</a>. In addition if a literal country was indicated we verify that the coordinate falls within the given country. Frequently lat/lon values are swapped or have negated values which we can also often detect by looking at the expected country.</p>
 
     <h3>Vertical position</h3>
