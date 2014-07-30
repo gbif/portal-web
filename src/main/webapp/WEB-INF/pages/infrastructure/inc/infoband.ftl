@@ -8,7 +8,7 @@
     <li<#if (tab!"")=="summary"> class='selected'</#if>><a href="<@s.url value='/infrastructure'/>" ><span>Summary</span></a></li>
     <li<#if (tab!"")=="registry"> class='selected'</#if>><a href="<@s.url value='/infrastructure/registry'/>" ><span>Registry</span></a></li>
     <li<#if (tab!"")=="occurrences"> class='selected'</#if>><a href="<@s.url value='/infrastructure/occurrences'/>" ><span>Occurrences</span></a></li>
-    <li<#if (tab!"")=="processing"> class='selected'</#if>><a href="<@s.url value='/infrastructure/dataprocessing'/>" ><span>Data processing</span></a></li>
+    <li<#if (tab!"")=="processing"> class='selected'</#if>><a href="<@s.url value='/infrastructure/processing'/>" ><span>Data processing</span></a></li>
     <li<#if (tab!"")=="tools"> class='selected'</#if>><a href="<@s.url value='/infrastructure/tools'/>" ><span>Tools</span></a></li>
   </ul>
 </content>
