@@ -30,16 +30,12 @@
         .plos-block .actions {
             bottom: 0;
             cursor: pointer;
-            display: none;
             list-style-type: none;
             margin: 0;
             padding: 0;
             position: absolute;
             right: 0;
             z-index: 2;
-        }
-        .plos-block:hover .actions {
-            display: block;
         }
         .plos-block .actions li {
             border-right: 1px solid #616161;
@@ -52,7 +48,7 @@
             width: 340px;
         }
         .plos-block .actions li a {
-            background: none repeat scroll 0 0 #333;
+            background: none repeat scroll 0 0 #09c;
             color: #fff;
             display: block;
             font-size: 15px;
@@ -60,10 +56,6 @@
             line-height: 40px;
             text-align: center;
             text-decoration: none;
-        }
-        .plos-block .actions li a:hover {
-            background: none repeat scroll 0 0 #09c;
-            color: #fff;
         }
     </style>
 </head>
