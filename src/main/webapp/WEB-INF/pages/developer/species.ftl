@@ -66,7 +66,7 @@
     <@trow url="/{int}/synonyms" resp="NameUsage Page" paging=true params=["language"] respLink="/species/5231190/synonyms">Lists all synonyms for a name usage</@trow>
     <@trow url="/{int}/descriptions" resp="Description Page" paging=true respLink="/species/5231190/descriptions">Lists all descriptions for a name usage</@trow>
     <@trow url="/{int}/distributions" resp="Distribution Page" paging=true respLink="/species/5231190/distributions">Lists all distributions for a name usage</@trow>
-    <@trow url="/{int}/images" resp="Image Page" paging=true respLink="/species/5231190/images">Lists all images for a name usage</@trow>
+    <@trow url="/{int}/media" resp="Media Page" paging=true respLink="/species/5231190/media">Lists all media items for a name usage</@trow>
     <@trow url="/{int}/references" resp="Reference Page" paging=true respLink="/species/5231190/references">Lists all references for a name usage</@trow>
     <@trow url="/{int}/speciesProfiles" resp="SpeciesProfile Page" paging=true respLink="/species/5231190/speciesProfiles">Lists all species profiles for a name usage</@trow>
     <@trow url="/{int}/vernacularNames" resp="VernacularName Page" paging=true respLink="/species/5231190/vernacularNames">Lists all vernacular names for a name usage</@trow>
