@@ -25,7 +25,7 @@
 
   <groupId>org.gbif</groupId>
   <artifactId>portal-web</artifactId>
-  <version>0.15.1-SNAPSHOT</version>
+  <version>0.15.1</version>
   <packaging>war</packaging>
 
   <name>GBIF Portal</name>
@@ -36,7 +36,7 @@
     <connection>scm:git:git@github.com:gbif/portal-web.git</connection>
     <url>https://github.com/gbif/portal-web</url>
     <developerConnection>scm:git:git@github.com:gbif/portal-web.git</developerConnection>
-    <tag>portal-web-0.15</tag>
+    <tag>portal-web-0.15.1</tag>
   </scm>
 
   <properties>
