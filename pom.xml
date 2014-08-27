@@ -36,7 +36,6 @@
     <connection>scm:git:git@github.com:gbif/portal-web.git</connection>
     <url>https://github.com/gbif/portal-web</url>
     <developerConnection>scm:git:git@github.com:gbif/portal-web.git</developerConnection>
-    <tag>portal-web-0.15</tag>
   </scm>
 
   <properties>
