@@ -3,6 +3,61 @@
 <html>
 <head>
     <title>IPT</title>
+    <style>
+        .plos-block {
+            float: left;
+            height: 160px;
+            margin-top: 20px;
+            overflow: hidden;
+            position: relative;
+            width: 597px;
+        }
+        .plos-block .details {
+            bottom: 40px;
+            height: 120px;
+            padding: 27px 20px 0;
+            position: absolute;
+            right: 0;
+            width: 570px;
+            z-index: 2;
+            font-size: 20px;
+            line-height: 23px;
+        }
+
+        .plos-block .details a {
+            color: #09c;
+        }
+        .plos-block .actions {
+            bottom: 0;
+            cursor: pointer;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            right: 0;
+            z-index: 2;
+        }
+        .plos-block .actions li {
+            border-right: 1px solid #616161;
+            display: inline;
+            float: left;
+            width: 250px;
+        }
+        .plos-block .actions li.last {
+            border: medium none;
+            width: 340px;
+        }
+        .plos-block .actions li a {
+            background: none repeat scroll 0 0 #09c;
+            color: #fff;
+            display: block;
+            font-size: 15px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <#include "/WEB-INF/pages/ipt/inc/infoband.ftl" />
@@ -15,6 +70,20 @@
         <p>The Integrated Publishing Toolkit (IPT) is a free open source software tool written in Java that is used to publish and share biodiversity datasets through the GBIF network. Designed for interoperability, it enables the publishing of content in databases, Microsoft Excel spreadsheets, or text files using open standards namely the <a href="http://rs.tdwg.org/dwc/terms/" title="Darwin Core Terms" target="_blank">Darwin Core</a> and the <a href="http://knb.ecoinformatics.org/software/eml/" title="EML" target="_blank">Ecological Metadata Language</a>. You can also use a 'one-click' service to convert your metadata into a draft <a href="/publishingdata/datapapers" title="How to publish data papers">data paper manuscript</a> for submission to a peer-reviewed journal.</p>
         <p>The core development of the IPT happens at the GBIF Secretariat, but the coding, documentation, and internationalization are a community effort and everyone is welcome to join in. New versions incorporate the feedback from the people who actually use the IPT. In this way, users can help get the features they want by becoming involved. The IPT really is a community-driven tool.</p>
         <p>You can see the work that has gone into each iterative version since v2.0.3 (released in November 2011) under the <a href="/ipt/releases" title="IPT Releases Tab">Releases</a> tab. You can check out the <a href="/ipt/stats" title="IPT Stats Tab">Stats</a> page to find out how many institutions around the world are using the IPT today.</p>
+        <p>For a more in-depth description of the IPT, including why it was developed, you can read <a href="http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0102623" title="The GBIF Integrated Publishing Toolkit: Facilitating the Efficient Publishing of Biodiversity Data on the Internet">this</a> article published in PLOS ONE on August 6, 2014.</p>
+        <div class="plos-block">
+
+            <div class="details">
+                <img alt="PLOS ONE" src="/img/ipt/plos_one_logo.png" width="191" height="41" border="0"/>
+                <div>
+                    <a href="http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0102623">The GBIF Integrated Publishing Toolkit: Facilitating the Efficient Publishing of Biodiversity Data on the Internet</a>
+                </div>
+            </div>
+            <ul class="actions">
+                <li><a href="http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0102623">Full Text</a></li>
+                <li class="last"><a href="http://www.plosone.org/article/fetchObject.action?uri=info%3Adoi%2F10.1371%2Fjournal.pone.0102623&representation=PDF">Download: Full Article PDF Version</a></li>
+            </ul>
+        </div>
     </div>
     <div class="right">
         <h3>Resources</h3>
