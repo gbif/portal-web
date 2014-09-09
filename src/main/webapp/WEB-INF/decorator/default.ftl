@@ -82,7 +82,7 @@
       <div id="logo">
         <a href="${cfg.drupal}/" class="logo"><img src="<@s.url value='/img/header/logo.png'/>" alt="GBIF"/></a>
 
-        <h1><a href="${cfg.drupal}/" title="GBIF.ORG">GBIF.ORG</a></h1>
+        <h1><a href="${cfg.drupal}/" title="GBIF.org">GBIF.org</a></h1>
         <span>Free and open access to biodiversity data</span>
       </div>
     </#if>
