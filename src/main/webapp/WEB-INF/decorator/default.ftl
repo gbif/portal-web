@@ -99,6 +99,7 @@
               <li><a href="<@s.url value='/dataset'/>"><@s.text name="menu.dataset"/></a></li>
               <li><a href="<@s.url value='/species'/>"><@s.text name="menu.species"/></a></li>
               <li><a href="<@s.url value='/country'/>"><@s.text name="menu.country"/></a></li>
+              <li><a href="${cfg.drupal}/analytics/global">Explore data trends</a></li>
               <li class="divider"></li>
               <li><a href="${cfg.drupal}/publishingdata/summary">Publishing data</a></li>
               <li><a href="${cfg.drupal}/usingdata/summary">Using data</a></li>
