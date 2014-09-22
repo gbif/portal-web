@@ -60,7 +60,7 @@
                     </p>
                   </#if>
                   <#if item.source?has_content>
-                    <p>Source: ${u.source}</p>
+                    <p>Source: ${item.source}</p>
                   </#if>
 
                   <#if usage.nub>
