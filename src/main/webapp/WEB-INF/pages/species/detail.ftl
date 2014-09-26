@@ -76,16 +76,19 @@
               }
               $("#description div.inner").append($htmlContent);
               $("#description div.inner").append("<br/><br/>");
-              if (data.source) {
-                $("#descriptionSrc"+index).append(data.source);
-              } else {
-                <#if nub>
-                  $.getJSON(cfg.wsReg + "dataset/" + data.datasetKey + "?callback=?", function(dataset) {
-                    $("#descriptionSrc"+index).append(dataset.title);
+              <#if nub>
+                  $.getJSON(cfg.wsClb + "species/" + data.sourceTaxonKey+ "?callback=?", function(species) {
+                      $.getJSON(cfg.wsReg + "dataset/" + species.datasetKey + "?callback=?", function(dataset) {
+                          $("#descriptionSrc"+index).append(dataset.title);
+                      });
                   });
-                <#else>
+              </#if>
+              if (data.source) {
+                  $("#descriptionSrc"+index).append(data.source);
+              <#if !nub>
+              } else {
                   $("#descriptionSrc"+index).hide();
-                </#if>
+              </#if>
               }
             });
           }
