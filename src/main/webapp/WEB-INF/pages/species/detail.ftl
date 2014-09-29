@@ -79,7 +79,7 @@
               <#if nub>
                   $.getJSON(cfg.wsClb + "species/" + data.sourceTaxonKey+ "?callback=?", function(species) {
                       $.getJSON(cfg.wsReg + "dataset/" + species.datasetKey + "?callback=?", function(dataset) {
-                          $("#descriptionSrc"+index).append(dataset.title);
+                          $("#descriptionSrc"+index).append('<a href="'+cfg.baseUrl+'/species/'+data.sourceTaxonKey+'">'+dataset.title+'</a>');
                       });
                   });
               </#if>
