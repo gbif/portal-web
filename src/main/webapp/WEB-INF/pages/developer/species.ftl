@@ -82,7 +82,7 @@
   </p>
 
   <@api.apiTable auth=false>
-    <@trow url="" resp="NameUsage Page" respLink="/species?name=Puma%20concolor" paging=true params=["language","datasetKey","name"] >
+    <@trow url="" resp="NameUsage Page" respLink="/species?name=Puma%20concolor" paging=true params=["language","datasetKey","sourceId","name"] >
       Lists name usages across all or some checklists that share the exact same canonical name, i.e. without authorship.
     </@trow>
     <@trow url="/match" resp="NameUsage Page" respLink="/species/match?verbose=true&kingdom=Plantae&name=Oenante" paging=false params=["rank","name","strict","verbose","kingdom","phylum","class","order","family","genus"]>
