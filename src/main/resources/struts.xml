@@ -423,13 +423,6 @@
   </package>
 
   <!-- COUNTRIES -->
-  <package name="participation" namespace="/participation" extends="default">
-    <action name="list" class="org.gbif.portal.action.participation.ListAction">
-      <result>/WEB-INF/pages/participation/list.ftl</result>
-    </action>
-  </package>
-
-  <!-- COUNTRIES -->
   <package name="country" namespace="/country" extends="default">
 
     <action name="*" class="org.gbif.portal.action.country.SummaryAction">

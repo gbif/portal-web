@@ -60,7 +60,7 @@
     <!-- dependency versions -->
     <dwc-api.version>1.8</dwc-api.version>
     <gbif-api.version>0.15</gbif-api.version>
-    <checklistbank-ws-client.version>2.8</checklistbank-ws-client.version>
+    <checklistbank-ws-client.version>2.9-SNAPSHOT</checklistbank-ws-client.version>
     <registry-ws-client.version>2.16</registry-ws-client.version>
     <occurrence-ws-client.version>0.20</occurrence-ws-client.version>
     <metrics-ws-client.version>0.16</metrics-ws-client.version>
@@ -526,7 +526,6 @@
         <url.includeContext>false</url.includeContext>
         <registry.ws.url>http://api.gbif.org/v1/</registry.ws.url>
         <checklistbank.ws.url>http://api.gbif.org/v1/</checklistbank.ws.url>
-        <checklistbank.search.ws.url>http://api.gbif.org/v1/species/</checklistbank.search.ws.url>
         <checklistbank.match.ws.url>http://api.gbif.org/v1/species/match/</checklistbank.match.ws.url>
         <occurrence.ws.url>http://api.gbif.org/v1/</occurrence.ws.url>
         <occurrence.ws.url.public>http://api.gbif.org/v1/</occurrence.ws.url.public>
@@ -561,7 +560,6 @@
         <url.includeContext>false</url.includeContext>
         <registry.ws.url>http://api.gbif-uat.org/v1/</registry.ws.url>
         <checklistbank.ws.url>http://api.gbif-uat.org/v1/</checklistbank.ws.url>
-        <checklistbank.search.ws.url>http://api.gbif-uat.org/v1/species/</checklistbank.search.ws.url>
         <checklistbank.match.ws.url>http://api.gbif-uat.org/v1/species/match/</checklistbank.match.ws.url>
         <occurrence.ws.url>http://api.gbif-uat.org/v1/</occurrence.ws.url>
         <occurrence.ws.url.public>http://api.gbif-uat.org/v1/</occurrence.ws.url.public>
@@ -597,7 +595,6 @@
         <url.includeContext>false</url.includeContext>
         <registry.ws.url>http://api.gbif-dev.org/v1/</registry.ws.url>
         <checklistbank.ws.url>http://api.gbif-dev.org/v1/</checklistbank.ws.url>
-        <checklistbank.search.ws.url>http://api.gbif-dev.org/v1/species/</checklistbank.search.ws.url>
         <checklistbank.match.ws.url>http://api.gbif-dev.org/v1/species/match/</checklistbank.match.ws.url>
         <occurrence.ws.url>http://api.gbif-dev.org/v1/</occurrence.ws.url>
         <occurrence.ws.url.public>http://api.gbif-dev.org/v1/</occurrence.ws.url.public>
