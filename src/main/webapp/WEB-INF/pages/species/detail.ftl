@@ -192,6 +192,16 @@
 </@common.notice>
 </#if>
 
+<#if usage.issues?has_content>
+  <@common.notice id="issues" title="Interpretation issues">
+  <p>GBIF found issues interpreting the <a href="<@s.url value='/species/${id?c}/verbatim'/>">verbatim content</a> of this record:</p>
+  <ul>
+    <#list usage.issues as issue>
+        <li><p><@s.text name="enum.usageissue.${issue.name()}"/></p></li>
+    </#list>
+  </ul>
+  </@common.notice>
+</#if>
 
 <@common.article id="overview" title="Overview">
 <div class="left">

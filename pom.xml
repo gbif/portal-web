@@ -59,9 +59,9 @@
 
     <!-- dependency versions -->
     <dwc-api.version>1.8</dwc-api.version>
-    <gbif-api.version>0.15</gbif-api.version>
+    <gbif-api.version>0.16-SNAPSHOT</gbif-api.version>
     <checklistbank-ws-client.version>2.9-SNAPSHOT</checklistbank-ws-client.version>
-    <registry-ws-client.version>2.16</registry-ws-client.version>
+    <registry-ws-client.version>2.18-SNAPSHOT</registry-ws-client.version>
     <occurrence-ws-client.version>0.20</occurrence-ws-client.version>
     <metrics-ws-client.version>0.16</metrics-ws-client.version>
     <drupal-mybatis.version>0.13</drupal-mybatis.version>
