@@ -17,7 +17,7 @@
           $("#occkingdoms").setupPie(${numOccurrences?c});
           $("#bor").setupPie(${numOccurrences?c});
           $("#types").setupPie(${numOccurrences?c});
-          $("#issues").setupPie(${numOccurrences?c});
+          $("#occIssues").setupPie(${numOccurrences?c});
         </#if>
 
         <#-- CHECKLIST -->
@@ -26,9 +26,9 @@
           console.debug( "TOTAL USAGES: " + total );
 
           // basics
-          $("#synonyms").setupPie(total);
           $("#kingdoms").setupPie(total);
           $("#ranks").setupPie(total);
+          $("#chkIssues").setupPie(total);
 
           // overlap
           $("#pieNub").bindPie(36.5, Math.floor(${metrics.nubCoveragePct}));
@@ -77,16 +77,6 @@
    <@common.article id="chkmetrics" title="Checklist Metrics">
      <div class="fullwidth">
        <ul class="pies">
-           <li><h3>Synonyms</h3>
-             <p>Number of synonyms and accepted taxa.</p>
-             <div id="synonyms" class="pieMultiLegend">
-               <ul>
-                 <li><a href="<@s.url value='/species/search?dataset_key=${id}&status=accepted'/>">Accepted</a> <span class="number" data-cnt="${(numUsages - metrics.synonymsCount)?c}">${numUsages - metrics.synonymsCount}</span></li>
-                 <li><a href="<@s.url value='/species/search?dataset_key=${id}&status=synonym'/>">Synonyms</a> <span class="number" data-cnt="${metrics.synonymsCount?c}">${metrics.synonymsCount}</span></li>
-               </ul>
-             </div>
-           </li>
-
          <li><h3>Kingdoms</h3>
            <#if metrics.countByKingdom?has_content>
              <p>Number of name usages within kingdoms of the GBIF Backbone.</p>
@@ -122,6 +112,23 @@
             <p>This dataset does not include any rank information.</p>
            </#if>
          </li>
+
+         <li>
+             <h3>Interpretation Issues</h3>
+           <#if metrics.countByIssue?has_content>
+               <div id="chkIssues" class="pieMultiLegend">
+                   <ul>
+                     <#list metrics.countByIssue?keys as k>
+                       <#assign val=metrics.countByIssue(k) />
+                         <li><a href="<@s.url value='/species/search?dataset_key=${id}&issue=${k}'/>">${common.enumLabel(k)}</a> <span class="number" data-cnt="${val?c}">${val}</span></li>
+                     </#list>
+                   </ul>
+               </div>
+           <#else>
+               <p>This dataset does not have any issue.</p>
+           </#if>
+         </li>
+
        </ul>
      </div>
 
@@ -141,6 +148,8 @@
        </ul>
   </div>
   <div class="right">
+      <p>There are <a href="<@s.url value='/species/search?dataset_key=${id}&status=synonym'/>">${metrics.synonymsCount} synonyms</a> in this dataset.</p>
+
     <h3>UNIQUE NAMES</h3>
     <p>There are ${metrics.distinctNamesCount} unique names in this dataset.
     <#if metrics.distinctNamesCount gt 0>
@@ -178,7 +187,7 @@
 <!-- OCCURRENCS -->
 <!-- Do we have any checklist metrics and records at all? -->
 <#if numOccurrences! lt 1>
-  <@common.article id="occmetrics" title="No Metrics">
+  <@common.article id="occmetrics" title="Occurrence Metrics">
   <div class="fullwidth">
     <p>We are sorry, but for this dataset there are no occurrence metrics available.</p>
   </div>
@@ -233,7 +242,7 @@
       <li>
         <h3>Interpretation Issues</h3>
         <#if countByIssues?has_content>
-          <div id="issues" class="pieMultiLegend">
+          <div id="occIssues" class="pieMultiLegend">
             <ul>
               <#list countByIssues?keys as k>
                 <#assign val=countByIssues(k) />

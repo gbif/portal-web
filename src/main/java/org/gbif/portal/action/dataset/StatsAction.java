@@ -39,7 +39,7 @@ public class StatsAction extends DetailAction {
   // breakdown by types
   private Map<TypeStatus, Long> countByTypes = Maps.newHashMap();
   // breakdown by issues
-  private Map<OccurrenceIssue, Long> countByIssues = Maps.newHashMap();
+  private Map<Enum<?>, Long> countByIssues = Maps.newHashMap();
 
   @Inject
   public StatsAction(DatasetService datasetService, CubeService cubeService,
@@ -129,7 +129,7 @@ public class StatsAction extends DetailAction {
     return countByTypes;
   }
 
-  public Map<OccurrenceIssue, Long> getCountByIssues() {
+  public Map<?, Long> getCountByIssues() {
     return countByIssues;
   }
 }

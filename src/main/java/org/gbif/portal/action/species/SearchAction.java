@@ -50,6 +50,7 @@ public class SearchAction
   private Function<String, String> getRankTitle;
   private Function<String, String> getThreatStatusTitle;
   private Function<String, String> getNameTypeTitle;
+  private Function<String, String> getIssueTitle;
 
   @Inject
   public SearchAction(NameUsageSearchService nameUsageSearchService, NameUsageService usageService,
@@ -95,8 +96,11 @@ public class SearchAction
     // replace threat status keys values
     lookupFacetTitles(NameUsageSearchParameter.THREAT, getThreatStatusTitle);
 
-    // replace threat status keys values
+    // replace name type key values
     lookupFacetTitles(NameUsageSearchParameter.NAME_TYPE, getNameTypeTitle);
+
+    // replace issue key values
+    lookupFacetTitles(NameUsageSearchParameter.ISSUE, getIssueTitle);
 
     return SUCCESS;
   }
@@ -235,6 +239,14 @@ public class SearchAction
       @Override
       public String apply(String name) {
         return getEnumTitle("nametype", name);
+      }
+    };
+
+    getIssueTitle = new Function<String, String>() {
+
+      @Override
+      public String apply(String name) {
+        return getEnumTitle("usageissue", name);
       }
     };
   }

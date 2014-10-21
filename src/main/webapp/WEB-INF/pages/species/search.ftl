@@ -109,7 +109,7 @@
           </div>
 
           <#assign seeAllFacets = ["HIGHERTAXON_KEY","RANK","DATASET_KEY", "NOMENCLATURAL_STATUS"]>
-          <#assign facets= ["DATASET_KEY","HIGHERTAXON_KEY","RANK","STATUS","IS_EXTINCT","THREAT","HABITAT", "NOMENCLATURAL_STATUS", "NAME_TYPE"]>
+          <#assign facets= ["DATASET_KEY","HIGHERTAXON_KEY","RANK","STATUS","IS_EXTINCT","THREAT","HABITAT", "NOMENCLATURAL_STATUS", "NAME_TYPE", "ISSUE"]>
           <#include "/WEB-INF/inc/facets.ftl">
         </div>
       </div>
