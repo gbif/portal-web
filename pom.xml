@@ -524,6 +524,10 @@
         <drupal.url>http://www.gbif.org</drupal.url>
         <google.analytics>UA-42057855-1</google.analytics>
         <url.includeContext>false</url.includeContext>
+        <!-- http clients -->
+        <httpTimeout>60000</httpTimeout>
+        <maxHttpConnections>100</maxHttpConnections>
+        <maxHttpConnectionsPerRoute>100</maxHttpConnectionsPerRoute>
         <registry.ws.url>http://api.gbif.org/v1/</registry.ws.url>
         <checklistbank.ws.url>http://api.gbif.org/v1/</checklistbank.ws.url>
         <checklistbank.match.ws.url>http://api.gbif.org/v1/species/match/</checklistbank.match.ws.url>
@@ -532,12 +536,15 @@
         <tile-server.url>http://api.gbif.org/v1/map</tile-server.url>
         <image-cache.url>http://api.gbif.org/v1/image</image-cache.url>
         <metrics.ws.url>http://api.gbif.org/v1/</metrics.ws.url>
+
         <drupal.cookiename>SESS751c3c6f031b889581268415447c0191</drupal.cookiename>
-        <drupal.db.url>jdbc:mysql://nerf.gbif.org:3306/drupal_live?useUnicode=true&amp;characterEncoding=UTF8&amp;characterSetResults=UTF8</drupal.db.url>
+
+        <!-- CMS credentials are used for IMS infos and the authentication so can be a read only account -->
+        <drupal.db.host>nerf.gbif.org</drupal.db.host>
+        <drupal.db.name>drupal_live</drupal.db.name>
         <drupal.db.username>drupal_live</drupal.db.username>
-        <httpTimeout>60000</httpTimeout>
-        <maxHttpConnections>100</maxHttpConnections>
-        <maxHttpConnectionsPerRoute>100</maxHttpConnectionsPerRoute>
+        <drupal.db.poolSize>8</drupal.db.poolSize>
+        <drupal.db.connectionTimeout>2000</drupal.db.connectionTimeout>
       </properties>
     </profile>
 
