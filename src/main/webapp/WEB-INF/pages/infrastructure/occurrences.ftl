@@ -94,8 +94,8 @@ distributed <a href="http://hadoop.apache.org/" title="Hadoop project" target="_
     <a href="http://hive.apache.org/" title="Hive project" target="_blank">Apache Hive</a> is used to provide a "SQL like" query language, which iterates over the HBase content
     to produce the output file</li>
     <li>Once complete, subsequent workflow stages run which produce the necessary citation and metadata files by using the <a href="../../developer/registry">Registry API</a></li>
-    <li>Finally all pieces are converted into a <a href="http://www.gbif.org/orc/?doc_id=2816&l=en" target="_blank">Darwin Core Archive</a> by zipping together.  For large datasets
-    this is the most time consuming stage, as the Zip format is very slow to produce as it cannot be parallelized, but is the most compatible.</li>
+    <li>Finally all pieces are converted into a <a href="http://www.gbif.org/orc/?doc_id=2816&l=en" target="_blank">Darwin Core Archive</a> by zipping together.  
+    The Zip format is chosen as it is the most compatible.</li>
   </ol>
   
   </li>
