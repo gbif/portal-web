@@ -16,7 +16,7 @@
         <#if download.available>
           <!-- cfg.wsOcc is not public, but needed for authentication. Therefore wsOccPublic was created which is public -->
          <p>Your download is ready for <a href="${cfg.wsOccPublic}occurrence/download/request/${download.key}.zip">download</a> since ${download.modified?datetime?string.short_medium}</p>
-         <p>This file can be cited by using the DOI <a href="${download.doi}">${download.doi}</a></p>
+         <p>This file can be cited by using the DOI <a href="http://doi.org/${download.doi}">${download.doi}</a></p>
          <p>Download information: <#if download.size?has_content>${action.getHumanRedeableBytesSize(download.getSize())} - </#if>
               <#if download.totalRecords?has_content>${download.totalRecords} records - </#if>
               <#if download.numberDatasets?has_content>${download.numberDatasets} datasets</#if>
