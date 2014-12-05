@@ -205,7 +205,12 @@
       <!-- Configure params interceptor to exclude some params:
       http://struts.apache.org/2.3.7/docs/parameters-interceptor.html -->
       <interceptor-ref name="loginStack"/>
-      <result>/WEB-INF/pages/occurrence/download.ftl</result>
+      <result>/WEB-INF/pages/occurrence/download_result.ftl</result>
+    </action>
+
+    <action name="download/detail/*" class="org.gbif.portal.action.occurrence.DownloadDetailAction">
+      <param name="key">{1}</param>
+      <result>/WEB-INF/pages/occurrence/download_detail.ftl</result>
     </action>
 
     <action name="*/verbatim" class="org.gbif.portal.action.occurrence.DetailAction" method="verbatim">

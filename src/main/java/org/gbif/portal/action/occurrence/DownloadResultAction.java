@@ -20,7 +20,6 @@ public class DownloadResultAction extends BaseAction {
   private static final String TITLE_READY_KEY = "download.title.ready";
   private static final String TITLE_STARTED_KEY = "download.title.started";
   private static final String TITLE_ERROR_KEY = "download.title.error";
-  private static final String DOWNLOAD_KEY_PARAM = "key";
   private static final Logger LOG = LoggerFactory.getLogger(DownloadResultAction.class);
 
 
@@ -38,12 +37,12 @@ public class DownloadResultAction extends BaseAction {
       download = downloadService.get(key);
       LOG.debug("Fetching key for download [{}] and user [{}]", download, getCurrentUser());
       if (download == null || !download.getRequest().getCreator().equals(getCurrentUser().getUserName())) {
-        logAndSetError(DOWNLOAD_EXIST_ERR_KEY);
+        DownloadsActionUtils.setDownloadError(this, DOWNLOAD_EXIST_ERR_KEY,key);
       } else {
         key = download.getKey();
       }
     } else {
-      logAndSetError(DOWNLOAD_NULL_ERR_KEY);
+      DownloadsActionUtils.setDownloadError(this, DOWNLOAD_NULL_ERR_KEY,key);
     }
     return SUCCESS;
   }
@@ -91,14 +90,5 @@ public class DownloadResultAction extends BaseAction {
 
   public void setKey(String key) {
     this.key = key;
-  }
-
-  /**
-   * Log and error and set an error to the field jobId.
-   */
-  private void logAndSetError(String messageKey) {
-    String errorText = getText(messageKey, new String[] {key});
-    LOG.error(errorText);
-    addFieldError(DOWNLOAD_KEY_PARAM, errorText);
   }
 }

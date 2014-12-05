@@ -13,6 +13,7 @@ import org.gbif.api.service.registry.DatasetOccurrenceDownloadUsageService;
 import org.gbif.api.service.registry.DatasetService;
 import org.gbif.api.service.registry.OrganizationService;
 import org.gbif.api.util.occurrence.HumanFilterBuilder;
+import org.gbif.portal.action.occurrence.DownloadsActionUtils;
 import org.gbif.portal.action.user.DownloadsAction;
 import org.gbif.utils.file.FileUtils;
 
@@ -55,19 +56,8 @@ public class ActivityAction extends DetailAction {
     return SUCCESS;
   }
 
-  // TODO: the same code is also used in DownloadsAction share it showhow!!!
   public Map<OccurrenceSearchParameter, LinkedList<String>> getHumanFilter(Predicate p) {
-    if (p != null) {
-      try {
-        // not thread safe!
-        HumanFilterBuilder builder = new HumanFilterBuilder(this.getTexts(), datasetService, nameUsageService, true);
-        return builder.humanFilter(p);
-
-      } catch (Exception e) {
-        LOG.warn("Cannot create human representation for predicate {}", p);
-      }
-    }
-    return null;
+    return DownloadsActionUtils.getHumanFilter(p,datasetService,nameUsageService,getTexts());
   }
 
   public String getHumanRedeableBytesSize(long bytes) {

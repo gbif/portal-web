@@ -116,10 +116,15 @@
  - action.getQueryParams()
  - action.isDownloadRunning()
 -->
-<#macro downloadFilter download showCancel=false>
+<#macro downloadFilter download showCancel=false showStatus=true>
 <div class="result">
   <div class="footer">
       <dl>
+          <#if download.doi??>
+            <dt>DOI</dt>
+            <dd><a class="doi" href="${download.doi}">${download.doi}</a></dd>
+          </#if>
+
           <dt>Filter</dt>
           <dd>
               <#assign filterMap=action.getHumanFilter(download.request.predicate)!""/>
@@ -130,26 +135,40 @@
               </#if>
               <table class="table">
               <#if !download.request.predicate?has_content>
-                <tr data-target="${searchLink}" class="rowlink">
+                <tr>
                   <th>None</th>
                   <td></td>
                 </tr>
               <#elseif filterMap?has_content>
                 <#list filterMap?keys as param>
-                  <tr data-target="${searchLink}" class="rowlink">
+                  <tr>
                     <th><@s.text name="search.facet.${param}" /></th>
                     <td><#list filterMap.get(param) as val><span>${val}</span><#if val_has_next>,</#if></#list></td>
                   </tr>
                 </#list>
               <#else>
-                  <tr data-target="${searchLink}" class="rowlink">
+                  <tr>
                     <th>Raw Filter</th>
                     <td>${download.request.predicate!"None"}</td>
                   </tr>
               </#if>
+              <tr>
+                <th></th>
+                <td>
+                  <div class="notice">
+                    <div class="content">
+                      <img id="notice_icon" src="<@s.url value='/img/icons/notice_icon.png'/>" />
+                      <p>Reproduce this query <a target="_blank" href="<@s.url value='/occurrence/search?'+ queryParams!""/>">here</a>.</p>
+                      <p>Search results will be retained for as long as feasible, but might be deleted in the future.</p>
+                    </div>
+                </td>
+  </div>
+                </td>
+              </tr>
               </table>
           </dd>
 
+          <#if showStatus>
           <dt>Status</dt>
           <dd>
             <#if download.available>
@@ -164,7 +183,7 @@
               <@s.text name="enum.downloadstatus.${download.status}" />
             </#if>
           </dd>
-
+          </#if>
           <dt>Created</dt>
           <dd>${download.created?date?string.medium}</dd>
 
@@ -172,5 +191,24 @@
       </dl>
   </div>
 
+</div>
+</#macro>
+
+<#macro downloadUsage downloadUsage>
+<div class="result">
+  <div class="footer">
+    <dl>
+      <dt>Dataset</dt>
+      <dd><a href="<@s.url value='/dataset/${downloadUsage.datasetKey}'/>">${downloadUsage.datasetTitle} </a><#if downloadUsage.datasetDOI??><br> <a class="doi" href="${downloadUsage.datasetDOI}">${downloadUsage.datasetDOI}</a></#if></dd>
+
+      <dt>Records</dt>
+      <dd>${downloadUsage.numberRecords}</dd>
+
+      <#if downloadUsage.datasetCitation??>
+      <dt>Citation</dt>
+      <dd>${downloadUsage.datasetCitation}</dd>
+      </#if>
+    </dl>
+  </div>
 </div>
 </#macro>

@@ -363,7 +363,7 @@ span {
         line-height: 20px;
       }
     }
-  }  
+  }
 
   .select_box {
     position: relative;
@@ -1471,5 +1471,37 @@ a.atlwdg-trigger {
     transition:         color @hover-speed ease-in-out;
     cursor:pointer;
   }
+}
+
+//Used to display a disclaimer for the download filters
+div.notice {
+
+  margin: 2px !important;
+  padding: 2px !important;
+  border-style: solid !important;
+  border-radius: 10px !important;
+  border-color: #666;
+  background-color: lightyellow !important;
+  div.content {
+    background-color: lightyellow !important;
+    padding: 0px !important;
+    p {
+      font-size: 12px !important;
+      margin: 0 0 5px 0;
+      background-color: lightyellow !important;
+    }
+
+    p a {
+      color: @cGray2;
+      text-decoration: underline;
+      font-size: 12px !important;
+    }
+  }
+  img {
+    position: relative;
+    padding-left: 20px;
+    float: right;
+  }
+
 }
 
