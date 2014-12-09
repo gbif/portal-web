@@ -326,3 +326,9 @@
     <span class="note">${type?lower_case?cap_first} dataset. <#if modified?has_content>Updated ${modified?date}.</#if> <#if (count &gt; 0)>${count} records <#if geoCount &gt; 0>(${geoCount} georeferenced)</#if></#if> <#if publishingOrganizationKey?has_content && publishingOrganizationTitle?has_content> Published by <a href="<@s.url value='/publisher/${publishingOrganizationKey}'/>" title="${publishingOrganizationTitle}">${publishingOrganizationTitle}</a></#if></span>
   </li>
 </#macro>
+
+<#-- writes a standard, styled DOI link taking a doi instance-->
+<#macro doi doi>
+<span class="doi"><a href="${doi.getUrl()}">${doi.getName()}</a></span>
+</#macro>
+

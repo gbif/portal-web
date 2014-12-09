@@ -151,6 +151,10 @@
           title="${publisher.title!"Unknown"}">${publisher.title!"Unknown"}</a></p>
   </#if>
 
+  <#if dataset.doi??>
+    <p><@common.doi dataset.doi /></p>
+  </#if>
+  
   <#if dataset.pubDate?has_content>
     <h3>Publication Date</h3>
     <p>${(dataset.pubDate?date)}</p>
