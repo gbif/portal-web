@@ -122,7 +122,7 @@
       <dl>
           <#if download.doi??>
             <dt>DOI</dt>
-            <dd><a class="doi" href="http://doi.org/${download.doi}">${download.doi}</a></dd>
+            <dd><a class="doi" href="${download.url}">${download.doi}</a></dd>
           </#if>
 
           <dt>Filter</dt>
@@ -199,7 +199,7 @@
   <div class="footer">
     <dl>
       <dt>Dataset</dt>
-      <dd><a href="<@s.url value='/dataset/${downloadUsage.datasetKey}'/>"><#if downloadUsage.datasetTitle??>${downloadUsage.datasetTitle}<#else>${downloadUsage.datasetKey}</#if></a><#if downloadUsage.datasetDOI??><br> <a class="doi" href="http://doi.org/${downloadUsage.datasetDOI}">${downloadUsage.datasetDOI}</a></#if></dd>
+      <dd><a href="<@s.url value='/dataset/${downloadUsage.datasetKey}'/>"><#if downloadUsage.datasetTitle??>${downloadUsage.datasetTitle}<#else>${downloadUsage.datasetKey}</#if></a><#if downloadUsage.datasetDOI??><br> <a class="doi" href="${downloadUsage.datasetDOI.url}">${downloadUsage.datasetDOI}</a></#if></dd>
 
       <dt>Records</dt>
       <dd>${downloadUsage.numberRecords}</dd>
