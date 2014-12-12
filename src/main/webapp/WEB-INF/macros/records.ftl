@@ -121,8 +121,7 @@
   <div class="footer">
       <dl>
           <#if download.doi??>
-            <dt>DOI</dt>
-            <dd><@common.doi download.doi /></dd>
+            <dd style="margin-left: 20px;"><@common.doi download.doi /></dd>
           </#if>
 
           <dt>Filter</dt>
