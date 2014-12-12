@@ -9,7 +9,13 @@
 
 <content tag="infoband">
   <div class="content">
-    <h1>Occurrence Download</h1>
+    <h1>Occurrence download</h1>
+    <#if download.doi??>
+        <h3>
+          <a href="${download.doi.getUrl()}">${download.doi.getUrl()}</a>
+        </h3>
+    </#if>
+      <h3>${download.created?date?string.medium}</h3>
   </div>
   <#if action.showDownload()>
     <div class="box">
@@ -22,11 +28,18 @@
     </div>
   </#if>
 </content>
+
+
+<@common.notice title="Query links">
+    <p>Live query links below will take you to current results and might differ from the download result presented here.</p>
+    <p>Search results will be retained for as long as feasible, but might be deleted in the future.</p>
+</@common.notice>
+
 <@common.article id="details" title="Download details" class="results">
   <div class="fullwidth">
   <#-- Shows the information if the download exists -->
   <#if !action.hasFieldErrors() && download??>
-    <@records.downloadFilter download=download showCancel=false showStatus=false>
+    <@records.downloadFilter download=download showCancel=false showStatus=false showResultDivider=false>
       <#if download.size??>
         <dt>Size</dt>
         <dd>${action.getHumanRedeableBytesSize(download.getSize())}</dd>
@@ -44,6 +57,7 @@
         <dd><@s.text name="enum.downloadstatus.${download.status}" /></dd>
       </#if>
     </@records.downloadFilter>
+
   <#else>
     <#-- Shows the error message -->
     <p><@s.fielderror fieldName="key"/></p>

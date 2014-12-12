@@ -64,7 +64,7 @@
 </#if>
 
 <#-- SUMMARY -->
-<@common.article id="summary" title="Summary">
+<@common.article id="summary" title="Summary" >
 <div class="left">
   <h3>Full Title</h3>
   <p>${dataset.title}</p>
@@ -140,6 +140,10 @@
     </div>
   </#if>
 
+  <#if dataset.doi??>
+      <p><@common.doi dataset.doi /></p>
+  </#if>
+
   <#if parentDataset??>
     <h3>Constituent of</h3>
     <p><a href="<@s.url value='/dataset/${parentDataset.key}'/>" title="${parentDataset.title!"Unknown"}">${parentDataset.title!"Unknown"}</a></p>
@@ -151,10 +155,6 @@
           title="${publisher.title!"Unknown"}">${publisher.title!"Unknown"}</a></p>
   </#if>
 
-  <#if dataset.doi??>
-    <p><@common.doi dataset.doi /></p>
-  </#if>
-  
   <#if dataset.pubDate?has_content>
     <h3>Publication Date</h3>
     <p>${(dataset.pubDate?date)}</p>

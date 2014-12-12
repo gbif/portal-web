@@ -20,7 +20,14 @@
 <#assign tab="download"/>
 <#include "/WEB-INF/pages/user/inc/infoband.ftl">
 
-  <@common.article title="Your Downloads" class="results">
+<#if page.results?has_content>
+<@common.notice title="Query links">
+    <p>Live query links below will take you to current results and might differ from the download result presented here.</p>
+    <p>Search results will be retained for as long as feasible, but might be deleted in the future.</p>
+</@common.notice>
+</#if>
+
+  <@common.article title="Your downloads" class="results">
     <div class="fullwidth">
       <#if !page.results?has_content>
         <p>You did not download any data so far.</p>
