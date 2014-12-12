@@ -329,6 +329,6 @@
 
 <#-- writes a standard, styled DOI link taking a doi instance-->
 <#macro doi doi>
-<span class="doi"><a href="${doi.getUrl()}">${doi.getName()}</a></span>
+<span class="doi"><a href="${doi.getUrl()}">${doi.getDoiName()}</a></span>
 </#macro>
 

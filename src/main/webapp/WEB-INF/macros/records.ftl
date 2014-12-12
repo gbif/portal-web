@@ -122,7 +122,7 @@
       <dl>
           <#if download.doi??>
             <dt>DOI</dt>
-            <dd><a class="doi" href="${download.url}">${download.doi}</a></dd>
+            <dd><@common.doi download.doi /></dd>
           </#if>
 
           <dt>Filter</dt>

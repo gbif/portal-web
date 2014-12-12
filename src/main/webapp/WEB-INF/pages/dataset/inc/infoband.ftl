@@ -35,7 +35,6 @@
 
   <h1<#if !box> class="fullwidth"</#if>>${common.limit(dataset.title, titleLength)}</h1>
 
-  <#if dataset.doi??><h3><a class="doi" href="${dataset.doi.url}" title="${dataset.doi}">${dataset.doi}</a></h3></#if>
   <h3>
     <@s.text name="enum.datasettype.${dataset.type!'UNKNOWN'}"/>
     <#if parentDataset?has_content>
