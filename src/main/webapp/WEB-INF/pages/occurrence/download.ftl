@@ -72,13 +72,17 @@
       <dt>Filter</dt>
       <dd><@records.dFilter download /></dd>
 
-      <#if download.size??>
+      <#if download.isAvailable()>
           <dt>Size</dt>
           <dd>${action.getHumanRedeableBytesSize(download.size)}</dd>
       </#if>
 
       <dt>Status</dt>
-      <dd><@s.text name="enum.downloadstatus.${download.status}" /></dd>
+      <#if download.status == "SUCCEEDED" && !action.dwcaExists()>
+          <dd><@s.text name="enum.downloadstatus.unavailable" /></dd>
+      <#else>
+          <dd><@s.text name="enum.downloadstatus.${download.status}" /></dd>
+      </#if>
     </dl>
   </div>
 </@common.article>

@@ -35,6 +35,7 @@ public class DownloadAction extends BaseAction {
   private String key;
   private Download download;
   private PagingResponse<DatasetOccurrenceDownloadUsage> datasetUsages;
+  private Boolean exists = null;
 
   @Inject
   public DownloadAction(OccurrenceDownloadService downloadService, NameUsageService nameUsageService,
@@ -77,7 +78,11 @@ public class DownloadAction extends BaseAction {
   }
 
   public boolean dwcaExists() {
-    return DownloadsActionUtils.dwcaExists(download);
+    if (exists == null) {
+      // cache result so we can reuse it in the ftl without multiple http calls
+      exists = DownloadsActionUtils.dwcaExists(download);
+    }
+    return exists;
   }
 
   public void setKey(String key) {

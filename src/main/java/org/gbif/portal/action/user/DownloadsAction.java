@@ -23,6 +23,7 @@ import org.gbif.utils.file.FileUtils;
 import java.util.LinkedList;
 import java.util.Map;
 
+import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +47,7 @@ public class DownloadsAction extends BaseAction {
 
   private PagingResponse<Download> page;
   private long offset;
+  private Map<String, Boolean> dwcaExists = Maps.newHashMap();
 
   @Override
   public String execute() throws Exception {
@@ -77,7 +79,11 @@ public class DownloadsAction extends BaseAction {
   }
 
   public boolean dwcaExists(Download download) {
-    return DownloadsActionUtils.dwcaExists(download);
+    if (!dwcaExists.containsKey(download.getKey())) {
+      // cache result so we can reuse it in the ftl without multiple http calls
+      dwcaExists.put(download.getKey(), DownloadsActionUtils.dwcaExists(download));
+    }
+    return dwcaExists.get(download.getKey());
   }
 
   public void setOffset(long offset) {

@@ -47,7 +47,7 @@
                     <#if action.dwcaExists(download)>
                         Ready for <a href="${download.downloadLink}">download</a>
                     <#else>
-                        Unavailable, exceeding maximum storage time
+                        <@s.text name="enum.downloadstatus.unavailable" />
                     </#if>
                     <#if download.size?has_content>(${action.getHumanRedeableBytesSize(download.getSize())} </#if>
                     <#if download.totalRecords?has_content>${download.totalRecords} records - </#if>
