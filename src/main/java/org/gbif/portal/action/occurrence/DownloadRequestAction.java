@@ -18,10 +18,10 @@ import org.slf4j.LoggerFactory;
  * Executes a download request.
  * This action has to be executed using a POST method, and error is thrown in any other case.
  */
-public class ExecuteDownloadAction extends BaseAction {
+public class DownloadRequestAction extends BaseAction {
 
   private static final long serialVersionUID = 3653614424275432914L;
-  private static final Logger LOG = LoggerFactory.getLogger(ExecuteDownloadAction.class);
+  private static final Logger LOG = LoggerFactory.getLogger(DownloadRequestAction.class);
   private static final Splitter EMAIL_SPLITTER = Splitter.on(';').trimResults().omitEmptyStrings();
   private final PredicateFactory predicateFactory = new PredicateFactory();
 

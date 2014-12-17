@@ -1,4 +1,4 @@
-package org.gbif.portal.action.occurrence;
+package org.gbif.portal.action.occurrence.util;
 
 import org.gbif.api.model.occurrence.Download;
 import org.gbif.api.model.occurrence.predicate.Predicate;
@@ -6,15 +6,13 @@ import org.gbif.api.model.occurrence.search.OccurrenceSearchParameter;
 import org.gbif.api.service.checklistbank.NameUsageService;
 import org.gbif.api.service.registry.DatasetService;
 import org.gbif.api.util.occurrence.HumanFilterBuilder;
-import org.gbif.portal.action.BaseAction;
+import org.gbif.api.util.occurrence.QueryParameterFilterBuilder;
 
 import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import com.google.common.base.Enums;
-import com.google.common.base.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +21,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DownloadsActionUtils {
 
-  public static final String DOWNLOAD_EXIST_ERR_KEY = "download.doesnt.exist";
-  public static final String DOWNLOAD_NULL_ERR_KEY = "download.key.null";
   private static final String DOWNLOAD_KEY_PARAM = "key";
 
   public static final EnumSet<Download.Status> RUNNING_STATUSES = EnumSet.of(Download.Status.PREPARING,
@@ -39,9 +35,8 @@ public class DownloadsActionUtils {
     // Utility class must have private constructors only
   }
 
-  public static boolean isDownloadRunning(String strStatus) {
-    Optional<Download.Status> optStatus = Enums.getIfPresent(Download.Status.class, strStatus);
-    return optStatus.isPresent() && RUNNING_STATUSES.contains(optStatus.get());
+  public static boolean isRunning(Download download) {
+    return RUNNING_STATUSES.contains(download.getStatus());
   }
 
   /**
@@ -61,12 +56,17 @@ public class DownloadsActionUtils {
     return null;
   }
 
-  /**
-   * Log and error and set an error to the field jobId.
-   */
-  public static void setDownloadError(BaseAction action, String messageKey, String downloadKey) {
-    String errorText = action.getText(messageKey, new String[] {downloadKey});
-    LOG.error(errorText);
-    action.addFieldError(DOWNLOAD_KEY_PARAM, errorText);
+  public static String getQueryParams(Predicate p) {
+    if (p != null) {
+      try {
+        // not thread safe!
+        QueryParameterFilterBuilder builder = new QueryParameterFilterBuilder();
+        return builder.queryFilter(p);
+
+      } catch (Exception e) {
+        LOG.warn("Cannot create query parameter representation for predicate {}", p);
+      }
+    }
+    return null;
   }
 }

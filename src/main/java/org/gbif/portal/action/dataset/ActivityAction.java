@@ -12,8 +12,7 @@ import org.gbif.api.service.metrics.CubeService;
 import org.gbif.api.service.registry.DatasetOccurrenceDownloadUsageService;
 import org.gbif.api.service.registry.DatasetService;
 import org.gbif.api.service.registry.OrganizationService;
-import org.gbif.api.util.occurrence.HumanFilterBuilder;
-import org.gbif.portal.action.occurrence.DownloadsActionUtils;
+import org.gbif.portal.action.occurrence.util.DownloadsActionUtils;
 import org.gbif.portal.action.user.DownloadsAction;
 import org.gbif.utils.file.FileUtils;
 

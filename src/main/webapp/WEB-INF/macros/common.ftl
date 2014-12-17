@@ -328,7 +328,7 @@
 </#macro>
 
 <#-- writes a standard, styled DOI link taking a doi instance-->
-<#macro doi doi>
-<span class="doi"><a href="${doi.getUrl()}">${doi.getDoiName()}</a></span>
+<#macro doi doi url="">
+<span class="doi"><a href="<#if url?has_content><@s.url value='${url}'/><#else>${doi.getUrl()}</#if>">${doi.getDoiName()}</a></span>
 </#macro>
 

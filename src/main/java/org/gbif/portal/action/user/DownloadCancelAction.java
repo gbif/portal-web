@@ -12,7 +12,7 @@ import org.gbif.api.model.occurrence.Download;
 import org.gbif.api.service.occurrence.DownloadRequestService;
 import org.gbif.api.service.registry.OccurrenceDownloadService;
 import org.gbif.portal.action.BaseAction;
-import org.gbif.portal.action.occurrence.DownloadsActionUtils;
+import org.gbif.portal.action.occurrence.util.DownloadsActionUtils;
 
 import com.google.common.base.Strings;
 import com.google.inject.Inject;

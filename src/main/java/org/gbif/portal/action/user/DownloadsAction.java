@@ -16,10 +16,8 @@ import org.gbif.api.model.occurrence.search.OccurrenceSearchParameter;
 import org.gbif.api.service.checklistbank.NameUsageService;
 import org.gbif.api.service.registry.DatasetService;
 import org.gbif.api.service.registry.OccurrenceDownloadService;
-import org.gbif.api.util.occurrence.HumanFilterBuilder;
-import org.gbif.api.util.occurrence.QueryParameterFilterBuilder;
 import org.gbif.portal.action.BaseAction;
-import org.gbif.portal.action.occurrence.DownloadsActionUtils;
+import org.gbif.portal.action.occurrence.util.DownloadsActionUtils;
 import org.gbif.utils.file.FileUtils;
 
 import java.util.LinkedList;
@@ -39,33 +37,15 @@ public class DownloadsAction extends BaseAction {
 
   private static Logger LOG = LoggerFactory.getLogger(DownloadsAction.class);
 
-  private PagingResponse<Download> page;
-
-  private long offset;
-
-
   @Inject
   private OccurrenceDownloadService downloadService;
-
   @Inject
   private NameUsageService usageService;
   @Inject
   private DatasetService datasetService;
 
-
-  public static String getQueryParams(Predicate p) {
-    if (p != null) {
-      try {
-        // not thread safe!
-        QueryParameterFilterBuilder builder = new QueryParameterFilterBuilder();
-        return builder.queryFilter(p);
-
-      } catch (Exception e) {
-        LOG.warn("Cannot create query parameter representation for predicate {}", p);
-      }
-    }
-    return null;
-  }
+  private PagingResponse<Download> page;
+  private long offset;
 
   @Override
   public String execute() throws Exception {
@@ -74,19 +54,8 @@ public class DownloadsAction extends BaseAction {
     return SUCCESS;
   }
 
-  // TODO: the same code is also used in ActivityAction share it showhow!!!
   public Map<OccurrenceSearchParameter, LinkedList<String>> getHumanFilter(Predicate p) {
-    if (p != null) {
-      try {
-        // not thread safe!
-        HumanFilterBuilder builder = new HumanFilterBuilder(this.getTexts(), datasetService, usageService, true);
-        return builder.humanFilter(p);
-
-      } catch (Exception e) {
-        LOG.warn("Cannot create human representation for predicate {}", p);
-      }
-    }
-    return null;
+    return DownloadsActionUtils.getHumanFilter(p,datasetService,usageService,getTexts());
   }
 
   // used by the freemarker macro to render human readable file sizes
@@ -94,14 +63,18 @@ public class DownloadsAction extends BaseAction {
     return FileUtils.humanReadableByteCount(bytes, true);
   }
 
+  // needed by freemarker filter macro
+  public String getQueryParams(Predicate p) {
+    return DownloadsActionUtils.getQueryParams(p);
+  }
+
   public PagingResponse<Download> getPage() {
     return page;
   }
 
-  public boolean isDownloadRunning(String strStatus) {
-    return DownloadsActionUtils.isDownloadRunning(strStatus);
+  public boolean isRunning(Download download) {
+    return DownloadsActionUtils.isRunning(download);
   }
-
 
   public void setOffset(long offset) {
     this.offset = offset;

@@ -114,6 +114,41 @@
 
  - action.getHumanFilter()
  - action.getQueryParams()
+-->
+<#macro dFilter download>
+  <#assign filterMap=action.getHumanFilter(download.request.predicate)!""/>
+  <#assign queryParams=action.getQueryParams(download.request.predicate)!""/>
+  <#assign searchLink='/occurrence/search'/>
+  <#if queryParams?has_content>
+    <#assign searchLink='/occurrence/search?'+ queryParams!""/>
+  </#if>
+  <table class="table">
+    <#if !download.request.predicate?has_content>
+        <tr data-target="${searchLink}" class="rowlink">
+            <th>None</th>
+            <td></td>
+        </tr>
+    <#elseif filterMap?has_content>
+      <#list filterMap?keys as param>
+          <tr data-target="${searchLink}" class="rowlink">
+              <th><@s.text name="search.facet.${param}" /></th>
+              <td><#list filterMap.get(param) as val><span>${val}</span><#if val_has_next>,</#if></#list></td>
+          </tr>
+      </#list>
+    <#else>
+        <tr data-target="${searchLink}" class="rowlink">
+            <th>Raw Filter</th>
+            <td>${download.request.predicate!"None"}</td>
+        </tr>
+    </#if>
+  </table>
+</#macro>
+
+<#--
+  requires a few action methods to exist !!!:
+
+ - action.getHumanFilter()
+ - action.getQueryParams()
  - action.isDownloadRunning()
 -->
 <#macro downloadFilter download showCancel=false showStatus=true showResultDivider=true>
