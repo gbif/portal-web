@@ -4,6 +4,15 @@
 <html>
 <head>
   <title>Occurrence Download - GBIF</title>
+  <content tag="extra_scripts">
+      <script>
+          $(document).ready(function() {
+              $('tr.rowlink').click(function() {
+                  window.location = $(this).data("target");
+              });
+          });
+      </script>
+  </content>
 </head>
 <body class="search">
 
