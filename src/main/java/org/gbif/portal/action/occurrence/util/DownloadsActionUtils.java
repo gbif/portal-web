@@ -8,6 +8,8 @@ import org.gbif.api.service.registry.DatasetService;
 import org.gbif.api.util.occurrence.HumanFilterBuilder;
 import org.gbif.api.util.occurrence.QueryParameterFilterBuilder;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.Map;
@@ -68,5 +70,25 @@ public class DownloadsActionUtils {
       }
     }
     return null;
+  }
+
+  /**
+   * Checks whether an available download URL actually dwcaExists by trying a http head request.
+   */
+  public static boolean dwcaExists(Download download){
+    if (download == null || !download.isAvailable()) {
+      return false;
+    }
+    try {
+      URL url = new URL(download.getDownloadLink());
+      HttpURLConnection con = (HttpURLConnection) url.openConnection();
+      con.setInstanceFollowRedirects(false);
+      con.setRequestMethod("HEAD");
+      return con.getResponseCode() == HttpURLConnection.HTTP_OK;
+
+    } catch (Exception e) {
+      LOG.warn("Error testing download file existance {}", download.getDownloadLink(), e);
+      return false;
+    }
   }
 }

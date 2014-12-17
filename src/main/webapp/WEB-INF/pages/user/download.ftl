@@ -44,11 +44,15 @@
                 <dt>Status</dt>
                 <dd>
                   <#if download.available>
-                      <!-- cfg.wsOcc is not public, but needed for authentication. Therefore wsOccPublic was created which is public -->
-                      Ready for <a href="${cfg.wsOccPublic}occurrence/download/request/${download.key}.zip">download</a>
+                    <#if action.dwcaExists(download)>
+                        Ready for <a href="${download.downloadLink}">download</a>
+                    <#else>
+                        Unavailable, exceeding maximum storage time
+                    </#if>
                     <#if download.size?has_content>(${action.getHumanRedeableBytesSize(download.getSize())} </#if>
                     <#if download.totalRecords?has_content>${download.totalRecords} records - </#if>
                     <#if download.numberDatasets?has_content>${download.numberDatasets} datasets)</#if>
+
                   <#elseif action.isRunning(download)>
                       Still running. Do you want to <a href="<@s.url value='/user/download/cancel?key=${download.key}'/>">cancel</a> the query?
                   <#else>

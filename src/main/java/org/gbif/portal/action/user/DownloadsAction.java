@@ -76,6 +76,10 @@ public class DownloadsAction extends BaseAction {
     return DownloadsActionUtils.isRunning(download);
   }
 
+  public boolean dwcaExists(Download download) {
+    return DownloadsActionUtils.dwcaExists(download);
+  }
+
   public void setOffset(long offset) {
     this.offset = offset;
   }

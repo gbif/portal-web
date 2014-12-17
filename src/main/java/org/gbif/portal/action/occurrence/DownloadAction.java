@@ -76,6 +76,10 @@ public class DownloadAction extends BaseAction {
     return DownloadsActionUtils.isRunning(download);
   }
 
+  public boolean dwcaExists() {
+    return DownloadsActionUtils.dwcaExists(download);
+  }
+
   public void setKey(String key) {
     this.key = key;
   }

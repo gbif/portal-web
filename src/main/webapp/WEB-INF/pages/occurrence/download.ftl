@@ -13,7 +13,7 @@
     <h3><a href="${download.doi.getUrl()}">${download.doi.getUrl()}</a></h3>
     <h3>${download.created?date?string.medium}</h3>
   </div>
-  <#if download.isAvailable()>
+  <#if action.dwcaExists()>
     <div class="box">
       <div class="content">
         <ul>
@@ -74,7 +74,7 @@
   </div>
 </@common.article>
 
-<#-- Shows the dataset information only if download exists -->
+<#-- Shows the dataset information only if download dwcaExists -->
 <#if download.isAvailable()>
   <#assign dCount=(page.count)!0/>
   <@common.article id="datasets" title="${dCount} dataset${(dCount > 1)?string('s','')} in this download" class="results">
