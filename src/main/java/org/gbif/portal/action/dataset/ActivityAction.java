@@ -13,7 +13,6 @@ import org.gbif.api.service.registry.DatasetOccurrenceDownloadUsageService;
 import org.gbif.api.service.registry.DatasetService;
 import org.gbif.api.service.registry.OrganizationService;
 import org.gbif.portal.action.occurrence.util.DownloadsActionUtils;
-import org.gbif.portal.action.user.DownloadsAction;
 import org.gbif.utils.file.FileUtils;
 
 import java.util.LinkedList;
@@ -69,7 +68,7 @@ public class ActivityAction extends DetailAction {
 
 
   public String getQueryParams(Predicate p) {
-    return DownloadsAction.getQueryParams(p);
+    return DownloadsActionUtils.getQueryParams(p);
   }
 
   public void setOffset(long offset) {
