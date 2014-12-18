@@ -137,8 +137,10 @@
             <td>${download.request.predicate!"None"}</td>
         </tr>
     </#if>
+      <tr>
+        <td colspan="2"><a href='/occurrence/search?${queryParams!""}'>Reproduce query</a> on latest data</td>
+      </tr>
   </table>
-  <p style="font-size:small;"><a href='/occurrence/search?${queryParams!""}'>Reproduce query on latest data</a></p>
 </#macro>
 
 <#--
@@ -222,6 +224,9 @@
 
     <dt>Records</dt>
     <dd><a href="<@s.url value='/occurrence/search?${queryParams}'/>">${du.numberRecords} records</a> from this dataset included at time of download</dd>
+
+    <dt>Identifier</dt>
+    <dd><@common.doilink doi=du.datasetDOI /></dd>
 
   <#if du.datasetCitation??>
       <dt>Citation</dt>

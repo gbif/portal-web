@@ -4,15 +4,6 @@
 <html>
 <head>
   <title>Occurrence Download - GBIF</title>
-  <content tag="extra_scripts">
-      <script>
-          $(document).ready(function() {
-              $('tr.rowlink').click(function() {
-                  window.location = $(this).data("target");
-              });
-          });
-      </script>
-  </content>
 </head>
 <body class="search">
 
@@ -70,12 +61,12 @@
       <dt>Cite as</dt>
       <dd><@common.citeDownload download/></dd>
 
-      <dt>Query used</dt>
+      <dt>Query</dt>
       <dd><@records.dFilter download /></dd>
 
       <#if download.isAvailable()>
-          <dt>Size</dt>
-          <dd>${action.getHumanRedeableBytesSize(download.size)}</dd>
+        <dt>Size</dt>
+        <dd>${action.getHumanRedeableBytesSize(download.size)}</dd>
       </#if>
 
       <dt>Status</dt>

@@ -21,6 +21,7 @@ import com.google.common.collect.Maps;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class PredicateFactoryTest {
@@ -85,6 +86,53 @@ public class PredicateFactoryTest {
     GreaterThanOrEqualsPredicate gp = (GreaterThanOrEqualsPredicate) p;
     assertEquals(OccurrenceSearchParameter.DECIMAL_LATITUDE, gp.getKey());
     assertEquals("10.07", gp.getValue());
+  }
+
+  // http://www.gbif-dev.org/occurrence/search?COUNTRY=DE&BASIS_OF_RECORD=HUMAN_OBSERVATION
+  // &DATASET_KEY=7a22e1e4-f762-11e1-a439-00145eb45e9a
+  // &DATASET_KEY=78ff18a6-1c32-11e2-af65-00145eb45e9a
+  // &DATASET_KEY=856734ce-f762-11e1-a439-00145eb45e9a
+  // &DATASET_KEY=85685a84-f762-11e1-a439-00145eb45e9a
+  // &DEPTH=0%2C*#
+  @Test
+  public void testBuild2() {
+    PredicateFactory pf = new PredicateFactory();
+    Map<String, String[]> params = new HashMap<String, String[]>();
+    params.put("BASIS_OF_RECORD", new String[] {"HUMAN_OBSERVATION"});
+    params.put("COUNTRY", new String[] {"DE"});
+    params.put("DATASET_KEY", new String[] {"7a22e1e4-f762-11e1-a439-00145eb45e9a", "78ff18a6-1c32-11e2-af65-00145eb45e9a", "856734ce-f762-11e1-a439-00145eb45e9a", "85685a84-f762-11e1-a439-00145eb45e9a"});
+    params.put("DEPTH", new String[] {"0,*"});
+    Predicate p = pf.build(params);
+
+    assertTrue(p instanceof ConjunctionPredicate);
+    ConjunctionPredicate and = (ConjunctionPredicate) p;
+    assertEquals(4, and.getPredicates().size());
+
+    Iterator<Predicate> iter = and.getPredicates().iterator();
+    p = iter.next();
+    assertTrue(p instanceof EqualsPredicate);
+    EqualsPredicate eq = (EqualsPredicate) p;
+    assertEquals(OccurrenceSearchParameter.BASIS_OF_RECORD, eq.getKey());
+    assertEquals("HUMAN_OBSERVATION", eq.getValue());
+
+    p = iter.next();
+    assertTrue(p instanceof EqualsPredicate);
+    eq = (EqualsPredicate) p;
+    assertEquals(OccurrenceSearchParameter.COUNTRY, eq.getKey());
+    assertEquals("DE", eq.getValue());
+
+    p = iter.next();
+    assertTrue(p instanceof DisjunctionPredicate);
+    DisjunctionPredicate or = (DisjunctionPredicate) p;
+    assertEquals(4, or.getPredicates().size());
+    Iterator<Predicate> dsIter = or.getPredicates().iterator();
+    while (dsIter.hasNext()) {
+      p = dsIter.next();
+      assertTrue(p instanceof EqualsPredicate);
+      eq = (EqualsPredicate) p;
+      assertEquals(OccurrenceSearchParameter.DATASET_KEY, eq.getKey());
+      assertNotNull(UUID.fromString(eq.getValue()));
+    }
   }
 
   @Test

@@ -33,7 +33,7 @@
                       <dt>Records</dt>
                       <dd><a href="<@s.url value='/occurrence/search?${queryParams}'/>">${du.numberRecords} records</a> from this dataset included at time of download</dd>
 
-                      <dt>Filter</dt>
+                      <dt>Query</dt>
                       <dd><@records.dFilter du.download /></dd>
                   </dl>
               </div>
