@@ -61,7 +61,7 @@
                 </dd>
 
                 <dt>Created</dt>
-                <dd>${download.created?date?string.medium}</dd>
+                <dd>${niceDate(download.created)}</dd>
             </dl>
           </div>
         </div>

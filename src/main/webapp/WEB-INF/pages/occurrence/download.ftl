@@ -69,6 +69,9 @@
       <dt>Identifier</dt>
       <dd><@common.doi download.doi /></dd>
 
+      <dt>Cite as</dt>
+      <dd>GBIF.org (${niceDate(download.created)}) ${download.doi?lower_case}</dd>
+
       <dt>Filter</dt>
       <dd><@records.dFilter download /></dd>
 
@@ -78,8 +81,8 @@
       </#if>
 
       <dt>Status</dt>
-      <#if download.status == "SUCCEEDED" && !action.dwcaExists()>
-          <dd><@s.text name="enum.downloadstatus.unavailable" /></dd>
+      <#if download.isAvailable() && !action.dwcaExists()>
+          <dd><@s.text name="enum.downloadstatus.unavailable" />. Please contact <a href="mailto:helpdesk@gbif.org">GBIF helpdesk</a> to restore it.</dd>
       <#else>
           <dd><@s.text name="enum.downloadstatus.${download.status}" /></dd>
       </#if>
