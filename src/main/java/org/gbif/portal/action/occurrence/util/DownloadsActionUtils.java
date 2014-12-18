@@ -14,6 +14,8 @@ import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
 public class DownloadsActionUtils {
 
   private static final String DOWNLOAD_KEY_PARAM = "key";
+  private static final Pattern DATASET_FILTER_PATTERN = Pattern.compile("DATASET_?KEY=[0-9abcdef-]+&?", Pattern.CASE_INSENSITIVE);
 
   public static final EnumSet<Download.Status> RUNNING_STATUSES = EnumSet.of(Download.Status.PREPARING,
     Download.Status.RUNNING, Download.Status.SUSPENDED);
@@ -70,6 +73,15 @@ public class DownloadsActionUtils {
       }
     }
     return null;
+  }
+
+  public static String getQueryParamsWithoutDataset(Predicate p) {
+    String query = DownloadsActionUtils.getQueryParams(p);
+    Matcher m = DATASET_FILTER_PATTERN.matcher(query);
+    while (m.find()) {
+      m.replaceAll("");
+    }
+    return query;
   }
 
   /**

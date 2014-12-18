@@ -329,6 +329,21 @@
 
 <#-- writes a standard, styled DOI link taking a doi instance-->
 <#macro doi doi url="">
-<span class="doi"><a href="<#if url?has_content><@s.url value='${url}'/><#else>${doi.getUrl()}</#if>">${doi.getDoiName()}</a></span>
+<span class="doi"><@doilink doi url/></span>
 </#macro>
 
+<#-- writes an unstyled DOI link taking a doi instance and an optional url-->
+<#macro doilink doi url="">
+<a href="<#if url?has_content><@s.url value='${url}'/><#else>${doi.getUrl()}</#if>">${doi.getDoiName()}</a>
+</#macro>
+
+
+<#-- writes an html anchor link to the GBIF helpdesk-->
+<#macro helpdesk>
+<a href="mailto:helpdesk@gbif.org" title="GBIF Helpdesk Email">GBIF Helpdesk</a>
+</#macro>
+
+<#-- writes a download citation text -->
+<#macro citeDownload download>
+GBIF.org (${niceDate(download.created)}) ${download.doi}
+</#macro>

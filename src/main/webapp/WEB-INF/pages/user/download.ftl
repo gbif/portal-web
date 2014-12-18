@@ -38,7 +38,7 @@
           <div class="footer">
             <div class="label"><@common.doi doi=download.doi url="/occurrence/download/${download.key}"/></div>
             <dl>
-                <dt>Filter</dt>
+                <dt>Query</dt>
                 <dd><@records.dFilter download /></dd>
 
                 <dt>Status</dt>

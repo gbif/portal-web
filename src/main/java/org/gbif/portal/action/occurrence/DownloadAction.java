@@ -97,6 +97,11 @@ public class DownloadAction extends BaseAction {
     return datasetUsages;
   }
 
+  // needed by dataset record query link
+  public String getQueryParamsWithoutDataset(Predicate p) {
+    return DownloadsActionUtils.getQueryParamsWithoutDataset(p);
+  }
+
   // needed by freemarker filter macro
   public String getQueryParams(Predicate p) {
     return DownloadsActionUtils.getQueryParams(p);

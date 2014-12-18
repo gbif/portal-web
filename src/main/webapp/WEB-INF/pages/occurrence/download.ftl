@@ -19,8 +19,7 @@
 <content tag="infoband">
   <div class="content">
     <h1>Occurrence download</h1>
-    <h3><a href="${download.doi.getUrl()}">${download.doi.getUrl()}</a></h3>
-    <h3>${download.created?date?string.medium}</h3>
+    <h3>${niceDate(download.created)} <@common.doilink doi=download.doi /></h3>
   </div>
   <#if action.dwcaExists()>
     <div class="box">
@@ -36,43 +35,42 @@
 
 
 <#if action.isRunning()>
-  <@common.notice title="Download runnning">
-      <p>Your download has been started and is currently being processed.</p>
-      <p>Please expect 10 to 15 minutes for the download to complete. <br/>
-         A notification email with a link to download the results will be sent to the following addresses once ready:
-      </p>
-      <ul>
-      <#list download.request.notificationAddresses as email>
-          <li>${email}</li>
-      </#list>
-      </ul>
+  <@common.notice title="Download running">
+      <p>The download has been started and is currently being processed.</p>
+      <p>Please expect 10 to 15 minutes for the download to complete.</p>
+      <#if currentUser?? && currentUser.userName=download.request.creator>
+        <p>A notification email with a link to download the results will be sent to the following addresses once ready:
+          <ul>
+            <#list download.request.notificationAddresses as email>
+                <li>${email}</li>
+            </#list>
+          </ul>
+        </p>
+      </#if>
   </@common.notice>
 
 <#elseif download.isAvailable()>
-  <@common.notice title="Query links">
-      <p>Live query links below will take you to current results and might differ from the download result presented here.</p>
-      <p>Search results will be retained for as long as feasible, but might be deleted in the future.</p>
+  <@common.notice title="Please note">
+      <p>The download result will be retained for as long as possible, but might be removed in the future.</p>
+      <p>The <@common.doilink doi=download.doi url="/occurrence/download/${download.key}"/> will always resolve to this page, even if the download is removed.</p>
   </@common.notice>
 
 <#else>
-  <@common.notice title="${download.status?capitalize}">
-      <p>Your download request was unsuccessful. Please try it again or contact the <a href="mailto:helpdesk@gbif.org">GBIF helpdesk</a>.</p>
+  <@common.notice title="${download.status}">
+      <p>The download request was unsuccessful. Please try it again or contact the <@common.helpdesk/>.</p>
   </@common.notice>
 </#if>
 
 <@common.article id="details" title="Download details" class="results">
   <div class="fullwidth">
-    <#--
-    <div class="label"><@common.doi download.doi /></div>
-    -->
     <dl>
       <dt>Identifier</dt>
       <dd><@common.doi download.doi /></dd>
 
       <dt>Cite as</dt>
-      <dd>GBIF.org (${niceDate(download.created)}) ${download.doi?lower_case}</dd>
+      <dd><@common.citeDownload download/></dd>
 
-      <dt>Filter</dt>
+      <dt>Query used</dt>
       <dd><@records.dFilter download /></dd>
 
       <#if download.isAvailable()>
@@ -82,7 +80,7 @@
 
       <dt>Status</dt>
       <#if download.isAvailable() && !action.dwcaExists()>
-          <dd><@s.text name="enum.downloadstatus.unavailable" />. Please contact <a href="mailto:helpdesk@gbif.org">GBIF helpdesk</a> to restore it.</dd>
+          <dd><@s.text name="enum.downloadstatus.unavailable" />. Please contact <@common.helpdesk/> to restore it.</dd>
       <#else>
           <dd><@s.text name="enum.downloadstatus.${download.status}" /></dd>
       </#if>
@@ -93,11 +91,17 @@
 <#-- Shows the dataset information only if download dwcaExists -->
 <#if download.isAvailable()>
   <#assign dCount=(page.count)!0/>
-  <@common.article id="datasets" title="${dCount} dataset${(dCount > 1)?string('s','')} in this download" class="results">
+  <@common.article id="datasets" title="${dCount} dataset${(dCount > 1)?string('s','')} contributed data to this download" class="results">
     <div class="fullwidth">
       <#if page?? && page.results?has_content && page.count &gt; 0 >
         <#list page.results as du>
-          <@records.downloadUsage downloadUsage=du/>
+          <#assign queryParams=action.getQueryParamsWithoutDataset(du.download.request.predicate)!""/>
+          <#if queryParams?has_content>
+            <#assign queryParams=queryParams + "&datasetKey=" + du.datasetKey />
+          <#else>
+            <#assign queryParams="datasetKey=" + du.datasetKey />
+          </#if>
+          <@records.downloadUsage du=du queryParams=queryParams />
         </#list>
         <div class="footer">
           <@paging.pagination page=page url=currentUrlWithoutPage/>

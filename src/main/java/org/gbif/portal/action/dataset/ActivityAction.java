@@ -71,6 +71,10 @@ public class ActivityAction extends DetailAction {
     return DownloadsActionUtils.getQueryParams(p);
   }
 
+  public String getQueryParamsWithoutDataset(Predicate p) {
+    return DownloadsActionUtils.getQueryParamsWithoutDataset(p);
+  }
+
   public void setOffset(long offset) {
     request.setOffset(offset);
   }

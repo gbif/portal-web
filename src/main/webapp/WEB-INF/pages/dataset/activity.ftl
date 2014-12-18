@@ -17,14 +17,27 @@
         </#if>
 
         <#list page.results as du>
-          <#assign queryParams=action.getQueryParams(du.download.request.predicate)!""/>
+          <#assign queryParams=action.getQueryParamsWithoutDataset(du.download.request.predicate)!""/>
           <#if queryParams?has_content>
             <#assign queryParams=queryParams + "&datasetKey=" + dataset.key />
+          <#else>
+            <#assign queryParams="datasetKey=" + dataset.key />
           </#if>
-          <@records.downloadFilter download=du.download>
-              <dt>Records</dt>
-              <dd><a href="<@s.url value='/occurrence/search?${queryParams}'/>">${du.numberRecords} records</a> from this dataset included at time of download</dd>
-          </@records.downloadFilter>
+
+          <div class="result">
+              <div class="footer">
+                  <dl>
+                      <dt>Download</dt>
+                      <dd><@common.doilink doi=du.download.doi url="/occurrence/download/${du.download.key}" /> ${niceDate(du.download.created)}</dd>
+
+                      <dt>Records</dt>
+                      <dd><a href="<@s.url value='/occurrence/search?${queryParams}'/>">${du.numberRecords} records</a> from this dataset included at time of download</dd>
+
+                      <dt>Filter</dt>
+                      <dd><@records.dFilter du.download /></dd>
+                  </dl>
+              </div>
+          </div>
         </#list>
 
           <div class="footer">

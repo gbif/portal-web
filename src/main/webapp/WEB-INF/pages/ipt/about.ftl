@@ -162,7 +162,7 @@
         <h3>Code</h3>
         <p>Is the IPT missing a key feature, or is the GBIF Secretariat too slow getting around to implementing an existing feature request or bug fix? Feel free to contribute a code patch yourself. To start, check out the latest version of the source code <a href="https://code.google.com/p/gbif-providertoolkit/source/checkout" title="Link to download IPT source code from SVN" target="_blank">here</a>.</p>
         <h3>Documentation</h3>
-        <p>Is there a mistake in the IPT documentation? Perhaps some topic in the IPT wiki is missing? If so, please contact the <a href="mailto:helpdesk@gbif.org" title="GBIF Helpdesk Email">GBIF Helpdesk</a> with your ideas, and we will grant you author privileges to the IPT wiki.</p>
+        <p>Is there a mistake in the IPT documentation? Perhaps some topic in the IPT wiki is missing? If so, please contact the <@common.helpdesk/> with your ideas, and we will grant you author privileges to the IPT wiki.</p>
     </div>
     <div class="right">
         <p>"Darwin Core Archives are required for data harvest to our new portal. We see IPT as a great tool to facilitate the creation of these files and to provide hosting of them for our participating institutions." - <em>Laura Russell, VertNet</em></p>

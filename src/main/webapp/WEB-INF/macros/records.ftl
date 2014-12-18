@@ -118,29 +118,26 @@
 <#macro dFilter download>
   <#assign filterMap=action.getHumanFilter(download.request.predicate)!""/>
   <#assign queryParams=action.getQueryParams(download.request.predicate)!""/>
-  <#assign searchLink='/occurrence/search'/>
-  <#if queryParams?has_content>
-    <#assign searchLink='/occurrence/search?'+ queryParams!""/>
-  </#if>
-  <table class="table">
+  <table class="download-filter">
     <#if !download.request.predicate?has_content>
-        <tr data-target="${searchLink}" class="rowlink">
+        <tr>
             <th>None</th>
             <td></td>
         </tr>
     <#elseif filterMap?has_content>
       <#list filterMap?keys as param>
-          <tr data-target="${searchLink}" class="rowlink">
+          <tr>
               <th><@s.text name="search.facet.${param}" /></th>
               <td><#list filterMap.get(param) as val><span>${val}</span><#if val_has_next>,</#if></#list></td>
           </tr>
       </#list>
     <#else>
-        <tr data-target="${searchLink}" class="rowlink">
+        <tr>
             <th>Raw Filter</th>
             <td>${download.request.predicate!"None"}</td>
         </tr>
     </#if>
+    <p>You can <a href='/occurrence/search?${queryParams!""}'>reproduce the query on the latest data</a></p>
   </table>
 </#macro>
 
@@ -217,18 +214,18 @@
   </#if>
 </#macro>
 
-<#macro downloadUsage downloadUsage>
+<#macro downloadUsage du queryParams>
 <@result>
 <dl>
     <dt>Dataset</dt>
-    <dd><a href="<@s.url value='/dataset/${downloadUsage.datasetKey}'/>"><#if downloadUsage.datasetTitle??>${downloadUsage.datasetTitle}<#else>${downloadUsage.datasetKey}</#if></a><#if downloadUsage.datasetDOI??><br> <a class="doi" href="${downloadUsage.datasetDOI.url}">${downloadUsage.datasetDOI}</a></#if></dd>
+    <dd><a href="<@s.url value='/dataset/${du.datasetKey}'/>"><#if du.datasetTitle??>${du.datasetTitle}<#else>${du.datasetKey}</#if></a><#if du.datasetDOI??><br> <a class="doi" href="${du.datasetDOI.url}">${du.datasetDOI}</a></#if></dd>
 
     <dt>Records</dt>
-    <dd>${downloadUsage.numberRecords}</dd>
+    <dd><a href="<@s.url value='/occurrence/search?${queryParams}'/>">${du.numberRecords} records</a> from this dataset included at time of download</dd>
 
-  <#if downloadUsage.datasetCitation??>
+  <#if du.datasetCitation??>
       <dt>Citation</dt>
-      <dd>${downloadUsage.datasetCitation}</dd>
+      <dd>${du.datasetCitation}</dd>
   </#if>
 </dl>
 </@result>
