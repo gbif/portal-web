@@ -19,7 +19,7 @@
 <content tag="infoband">
   <div class="content">
     <h1>Occurrence download</h1>
-    <h3>${niceDate(download.created)} <@common.doilink doi=download.doi /></h3>
+    <h3><@common.doilink doi=download.doi /> ${niceDate(download.created)}</h3>
   </div>
   <#if action.dwcaExists()>
     <div class="box">

@@ -334,7 +334,7 @@
 
 <#-- writes an unstyled DOI link taking a doi instance and an optional url-->
 <#macro doilink doi url="">
-<a href="<#if url?has_content><@s.url value='${url}'/><#else>${doi.getUrl()}</#if>">${doi.getDoiName()}</a>
+<a href="<#if url?has_content><@s.url value='${url}'/><#else>${doi.getUrl()}</#if>">${doi}</a>
 </#macro>
 
 

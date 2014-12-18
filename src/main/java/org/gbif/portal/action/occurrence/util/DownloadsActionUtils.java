@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,9 +78,11 @@ public class DownloadsActionUtils {
 
   public static String getQueryParamsWithoutDataset(Predicate p) {
     String query = DownloadsActionUtils.getQueryParams(p);
-    Matcher m = DATASET_FILTER_PATTERN.matcher(query);
-    while (m.find()) {
-      m.replaceAll("");
+    if (!Strings.isNullOrEmpty(query)) {
+      Matcher m = DATASET_FILTER_PATTERN.matcher(query);
+      if (m.find()) {
+        return m.replaceAll("");
+      }
     }
     return query;
   }

@@ -137,8 +137,8 @@
             <td>${download.request.predicate!"None"}</td>
         </tr>
     </#if>
-    <p>You can <a href='/occurrence/search?${queryParams!""}'>reproduce the query on the latest data</a></p>
   </table>
+  <p style="font-size:small;"><a href='/occurrence/search?${queryParams!""}'>Reproduce query on latest data</a></p>
 </#macro>
 
 <#--

@@ -36,8 +36,10 @@
       <#list page.results as download>
         <div class="result">
           <div class="footer">
-            <div class="label"><@common.doi doi=download.doi url="/occurrence/download/${download.key}"/></div>
             <dl>
+                <dt>Download</dt>
+                <dd><@common.doilink doi=download.doi url="/occurrence/download/${download.key}" /> ${niceDate(download.created)}</dd>
+
                 <dt>Query</dt>
                 <dd><@records.dFilter download /></dd>
 
@@ -59,9 +61,6 @@
                     <@s.text name="enum.downloadstatus.${download.status}" />
                   </#if>
                 </dd>
-
-                <dt>Created</dt>
-                <dd>${niceDate(download.created)}</dd>
             </dl>
           </div>
         </div>
