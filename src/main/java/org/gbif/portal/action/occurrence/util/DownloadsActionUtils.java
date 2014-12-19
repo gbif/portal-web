@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DownloadsActionUtils {
 
-  private static final String DOWNLOAD_KEY_PARAM = "key";
   private static final Pattern DATASET_FILTER_PATTERN = Pattern.compile("DATASET_?KEY=[0-9abcdef-]+&?", Pattern.CASE_INSENSITIVE);
 
   public static final EnumSet<Download.Status> RUNNING_STATUSES = EnumSet.of(Download.Status.PREPARING,
@@ -52,7 +51,7 @@ public class DownloadsActionUtils {
     if (p != null) {
       try {
         // not thread safe!
-        HumanFilterBuilder builder = new HumanFilterBuilder(resourceBundle, datasetService, nameUsageService, true);
+        HumanFilterBuilder builder = new HumanFilterBuilder(datasetService, nameUsageService, true);
         return builder.humanFilter(p);
 
       } catch (Exception e) {
