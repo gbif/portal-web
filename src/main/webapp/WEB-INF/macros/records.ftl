@@ -225,8 +225,10 @@
     <dt>Records</dt>
     <dd><a href="<@s.url value='/occurrence/search?${queryParams}'/>">${du.numberRecords} records</a> from this dataset included at time of download</dd>
 
+  <#if du.datasetDOI??>
     <dt>Identifier</dt>
     <dd><@common.doilink doi=du.datasetDOI /></dd>
+  </#if>
 
   <#if du.datasetCitation??>
       <dt>Citation</dt>
