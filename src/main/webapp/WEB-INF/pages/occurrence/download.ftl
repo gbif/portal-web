@@ -75,8 +75,10 @@
       <#else>
           <dd><@s.text name="enum.downloadstatus.${download.status}" /></dd>
       </#if>
+
+      <dt></dt>
+      <dd class="small"><@records.dLink download /></dd>
     </dl>
-    <p class="small no_bottom"><a href='/occurrence/search?${action.getQueryParams(download.request.predicate)!""}'>Reproduce query</a> on latest data</p>
   </div>
 </@common.article>
 

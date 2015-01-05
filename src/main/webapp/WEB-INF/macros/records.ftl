@@ -109,6 +109,10 @@
 </#macro>
 
 
+<#macro dLink download>
+<a href='/occurrence/search?${action.getQueryParams(download.request.predicate)!""}'>query</a> latest data
+</#macro>
+
 <#--
   requires a few action methods to exist !!!:
 

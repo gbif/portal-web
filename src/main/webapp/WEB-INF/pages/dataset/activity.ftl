@@ -35,8 +35,10 @@
 
                       <dt>Query</dt>
                       <dd><@records.dFilter du.download /></dd>
+
+                      <dt></dt>
+                      <dd class="small"><@records.dLink du.download /></dd>
                   </dl>
-                  <p class="small no_bottom"><a href='/occurrence/search?${action.getQueryParams(du.download.request.predicate)!""}'>Reproduce query</a> on latest data</p>
               </div>
           </div>
         </#list>
