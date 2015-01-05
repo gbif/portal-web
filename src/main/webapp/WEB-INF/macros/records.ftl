@@ -121,7 +121,7 @@
   <table class="download-filter">
     <#if !download.request.predicate?has_content>
         <tr>
-            <th>None</th>
+            <th>All data</th>
             <td></td>
         </tr>
     <#elseif filterMap?has_content>
@@ -133,13 +133,10 @@
       </#list>
     <#else>
         <tr>
-            <th>Raw Filter</th>
-            <td>${download.request.predicate!"None"}</td>
+            <th>Raw query</th>
+            <td>${download.request.predicate!"All data"}</td>
         </tr>
     </#if>
-      <tr>
-        <td colspan="2"><a href='/occurrence/search?${queryParams!""}'>Reproduce query</a> on latest data</td>
-      </tr>
   </table>
 </#macro>
 
