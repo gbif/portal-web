@@ -13,9 +13,8 @@ import org.gbif.api.model.common.paging.PagingResponse;
 import org.gbif.api.model.occurrence.Download;
 import org.gbif.api.model.occurrence.predicate.Predicate;
 import org.gbif.api.model.occurrence.search.OccurrenceSearchParameter;
-import org.gbif.api.service.checklistbank.NameUsageService;
-import org.gbif.api.service.registry.DatasetService;
 import org.gbif.api.service.registry.OccurrenceDownloadService;
+import org.gbif.occurrence.query.TitleLookup;
 import org.gbif.portal.action.BaseAction;
 import org.gbif.portal.action.occurrence.util.DownloadsActionUtils;
 import org.gbif.utils.file.FileUtils;
@@ -38,16 +37,18 @@ public class DownloadsAction extends BaseAction {
 
   private static Logger LOG = LoggerFactory.getLogger(DownloadsAction.class);
 
-  @Inject
-  private OccurrenceDownloadService downloadService;
-  @Inject
-  private NameUsageService usageService;
-  @Inject
-  private DatasetService datasetService;
+  private final OccurrenceDownloadService downloadService;
+  private final TitleLookup titleLookup;
 
   private PagingResponse<Download> page;
   private long offset;
   private Map<String, Boolean> dwcaExists = Maps.newHashMap();
+
+  @Inject
+  public DownloadsAction(OccurrenceDownloadService downloadService, TitleLookup titleLookup) {
+    this.downloadService = downloadService;
+    this.titleLookup = titleLookup;
+  }
 
   @Override
   public String execute() throws Exception {
@@ -57,7 +58,7 @@ public class DownloadsAction extends BaseAction {
   }
 
   public Map<OccurrenceSearchParameter, LinkedList<String>> getHumanFilter(Predicate p) {
-    return DownloadsActionUtils.getHumanFilter(p,datasetService,usageService,getTexts());
+    return DownloadsActionUtils.getHumanFilter(p, titleLookup);
   }
 
   // used by the freemarker macro to render human readable file sizes

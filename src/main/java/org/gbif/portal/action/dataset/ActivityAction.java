@@ -7,11 +7,11 @@ import org.gbif.api.model.occurrence.predicate.Predicate;
 import org.gbif.api.model.occurrence.search.OccurrenceSearchParameter;
 import org.gbif.api.model.registry.DatasetOccurrenceDownloadUsage;
 import org.gbif.api.service.checklistbank.DatasetMetricsService;
-import org.gbif.api.service.checklistbank.NameUsageService;
 import org.gbif.api.service.metrics.CubeService;
 import org.gbif.api.service.registry.DatasetOccurrenceDownloadUsageService;
 import org.gbif.api.service.registry.DatasetService;
 import org.gbif.api.service.registry.OrganizationService;
+import org.gbif.occurrence.query.TitleLookup;
 import org.gbif.portal.action.occurrence.util.DownloadsActionUtils;
 import org.gbif.utils.file.FileUtils;
 
@@ -32,18 +32,18 @@ public class ActivityAction extends DetailAction {
   private static Logger LOG = LoggerFactory.getLogger(ActivityAction.class);
 
   private final DatasetOccurrenceDownloadUsageService downloadUsageService;
-  private final NameUsageService nameUsageService;
+  private final TitleLookup titleLookup;
   private PagingResponse<DatasetOccurrenceDownloadUsage> response;
   private final PagingRequest request;
   private static final int DEFAULT_LIMIT = 10;
 
   @Inject
   public ActivityAction(DatasetService datasetService, DatasetOccurrenceDownloadUsageService downloadUsageService,
-    NameUsageService nameUsageService, CubeService cubeService, DatasetMetricsService datasetMetricsService,
-    OrganizationService organizationService) {
+    CubeService cubeService, DatasetMetricsService datasetMetricsService,
+    OrganizationService organizationService, TitleLookup titleLookup) {
     super(datasetService, cubeService, datasetMetricsService, organizationService);
     this.downloadUsageService = downloadUsageService;
-    this.nameUsageService = nameUsageService;
+    this.titleLookup = titleLookup;
     request = new PagingRequest(0, DEFAULT_LIMIT);
   }
 
@@ -55,7 +55,7 @@ public class ActivityAction extends DetailAction {
   }
 
   public Map<OccurrenceSearchParameter, LinkedList<String>> getHumanFilter(Predicate p) {
-    return DownloadsActionUtils.getHumanFilter(p,datasetService,nameUsageService,getTexts());
+    return DownloadsActionUtils.getHumanFilter(p, titleLookup);
   }
 
   public String getHumanRedeableBytesSize(long bytes) {

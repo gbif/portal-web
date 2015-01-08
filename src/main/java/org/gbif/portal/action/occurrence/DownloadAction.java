@@ -6,9 +6,8 @@ import org.gbif.api.model.occurrence.Download;
 import org.gbif.api.model.occurrence.predicate.Predicate;
 import org.gbif.api.model.occurrence.search.OccurrenceSearchParameter;
 import org.gbif.api.model.registry.DatasetOccurrenceDownloadUsage;
-import org.gbif.api.service.checklistbank.NameUsageService;
-import org.gbif.api.service.registry.DatasetService;
 import org.gbif.api.service.registry.OccurrenceDownloadService;
+import org.gbif.occurrence.query.TitleLookup;
 import org.gbif.portal.action.BaseAction;
 import org.gbif.portal.action.occurrence.util.DownloadsActionUtils;
 import org.gbif.portal.exception.NotFoundException;
@@ -28,8 +27,7 @@ public class DownloadAction extends BaseAction {
   private static final int DEFAULT_LIMIT = 25;
 
   private final OccurrenceDownloadService downloadService;
-  private final NameUsageService nameUsageService;
-  private final DatasetService datasetService;
+  private final TitleLookup titleLookup;
   private final PagingRequest request = new PagingRequest(0, DEFAULT_LIMIT);
 
   private String key;
@@ -38,11 +36,9 @@ public class DownloadAction extends BaseAction {
   private Boolean exists = null;
 
   @Inject
-  public DownloadAction(OccurrenceDownloadService downloadService, NameUsageService nameUsageService,
-    DatasetService datasetService){
+  public DownloadAction(OccurrenceDownloadService downloadService, TitleLookup titleLookup){
     this.downloadService = downloadService;
-    this.nameUsageService = nameUsageService;
-    this.datasetService = datasetService;
+    this.titleLookup = titleLookup;
   }
   @Override
   public String execute() {
@@ -109,6 +105,6 @@ public class DownloadAction extends BaseAction {
 
   // needed by freemarker filter macro
   public Map<OccurrenceSearchParameter, LinkedList<String>> getHumanFilter(Predicate p) {
-    return DownloadsActionUtils.getHumanFilter(p,datasetService,nameUsageService,getTexts());
+    return DownloadsActionUtils.getHumanFilter(p, titleLookup);
   }
 }

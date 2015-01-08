@@ -3,17 +3,15 @@ package org.gbif.portal.action.occurrence.util;
 import org.gbif.api.model.occurrence.Download;
 import org.gbif.api.model.occurrence.predicate.Predicate;
 import org.gbif.api.model.occurrence.search.OccurrenceSearchParameter;
-import org.gbif.api.service.checklistbank.NameUsageService;
-import org.gbif.api.service.registry.DatasetService;
-import org.gbif.api.util.occurrence.HumanFilterBuilder;
-import org.gbif.api.util.occurrence.QueryParameterFilterBuilder;
+import org.gbif.occurrence.query.HumanFilterBuilder;
+import org.gbif.occurrence.query.QueryParameterFilterBuilder;
+import org.gbif.occurrence.query.TitleLookup;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,11 +45,11 @@ public class DownloadsActionUtils {
   /**
    * Returns the human readable filter of an occurrence download.
    */
-  public static Map<OccurrenceSearchParameter, LinkedList<String>> getHumanFilter(Predicate p, DatasetService datasetService, NameUsageService nameUsageService, ResourceBundle resourceBundle) {
+  public static Map<OccurrenceSearchParameter, LinkedList<String>> getHumanFilter(Predicate p, TitleLookup titleLookup) {
     if (p != null) {
       try {
         // not thread safe!
-        HumanFilterBuilder builder = new HumanFilterBuilder(datasetService, nameUsageService, true);
+        HumanFilterBuilder builder = new HumanFilterBuilder(titleLookup);
         return builder.humanFilter(p);
 
       } catch (Exception e) {

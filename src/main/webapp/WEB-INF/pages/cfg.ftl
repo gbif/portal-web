@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.DefaultHomeAction" -->
 var cfg = new Object();
 cfg.context="<@s.url value="/"/>";
 cfg.currentUrl="${currentUrl!}";
@@ -10,7 +11,6 @@ cfg.wsReg="${cfg.wsReg!}";
 cfg.wsRegSearch="${cfg.wsRegSearch!}";
 cfg.wsRegSuggest="${cfg.wsRegSuggest!}";
 cfg.wsOcc="${cfg.wsOcc!}";
-cfg.wsOccPublic="${cfg.wsOccPublic!}";
 cfg.wsOccSearch="${cfg.wsOccSearch!}";
 cfg.wsMetrics="${cfg.wsMetrics!}";
 cfg.tileServerBaseUrl="${cfg.tileServerBaseUrl!}";

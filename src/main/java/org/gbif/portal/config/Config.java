@@ -27,6 +27,7 @@ public class Config {
 
   public static final String APPLICATION_PROPERTIES = "application.properties";
   private static final String STRUTS_PROPERTIES = "struts.properties";
+  public static final String API_BASEURL_PROPERTY = "api.baseurl";
 
   public static final String SERVERNAME = "servername";
   public static final String SUGGEST_PATH = "suggest";
@@ -45,7 +46,6 @@ public class Config {
   private String wsClbSearch;
   private String wsClbSuggest;
   private String wsOcc;
-  private String wsOccPublic;
   private String wsOccCatalogNumberSearch;
   private String wsOccCollectorNameSearch;
   private String wsOccRecordNumberSearch;
@@ -77,27 +77,27 @@ public class Config {
       cfg.googleAnalytics = StringUtils.trimToNull(properties.getProperty("google.analytics"));
       cfg.drupal = getPropertyUrl(properties, "drupal.url", false);
       cfg.drupalCookieName = properties.getProperty("drupal.cookiename");
-      cfg.wsClb = getPropertyUrl(properties, "checklistbank.ws.url", true);
-      cfg.wsClbSearch = cfg.wsClb + "species/search";
-      cfg.wsClbSuggest = cfg.wsClb + "species/suggest";
-      cfg.wsReg = getPropertyUrl(properties, "registry.ws.url", true);
-      cfg.wsRegSearch = cfg.wsReg + "dataset/search";
-      cfg.wsRegSuggest = cfg.wsReg + "dataset/suggest";
-      cfg.wsOcc = getPropertyUrl(properties, "occurrence.ws.url", true);
-      cfg.wsOccPublic = getPropertyUrl(properties, "occurrence.ws.url.public", true);
-      cfg.wsOccSearch = cfg.wsOcc + OCC_SEARCH_PATH;
       cfg.maxOccDowloadSize = Integer.parseInt(properties.getProperty("occurrence.download.size.limit"));
       cfg.maxOccSearchOffset = Integer.parseInt(properties.getProperty("occurrence.search.maxoffset"));
-      cfg.wsMetrics = getPropertyUrl(properties, "metrics.ws.url", true);
+      cfg.includeContext = Boolean.parseBoolean(properties.getProperty("struts.url.includeContext"));
+      // API URLs
+      cfg.apiBaseUrl = getPropertyUrl(properties, API_BASEURL_PROPERTY, true);
+      cfg.wsClb = cfg.apiBaseUrl;
+      cfg.wsClbSearch = cfg.wsClb + "species/search";
+      cfg.wsClbSuggest = cfg.wsClb + "species/suggest";
+      cfg.wsReg = cfg.apiBaseUrl;
+      cfg.wsRegSearch = cfg.wsReg + "dataset/search";
+      cfg.wsRegSuggest = cfg.wsReg + "dataset/suggest";
+      cfg.wsOcc = cfg.apiBaseUrl;
+      cfg.wsOccSearch = cfg.wsOcc + OCC_SEARCH_PATH;
+      cfg.tileServerBaseUrl = cfg.apiBaseUrl + "map";
+      cfg.wsImageCache = cfg.apiBaseUrl + "image";
+      cfg.wsMetrics = cfg.apiBaseUrl;
       cfg.wsOccCatalogNumberSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + CATALOG_NUMBER_PATH;
       cfg.wsOccCollectorNameSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + RECORDED_BY_PATH;
       cfg.wsOccCollectionCodeSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + COLLECTION_CODE_PATH;
       cfg.wsOccInstitutionCodeSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + INSTITUTION_CODE_PATH;
       cfg.wsOccRecordNumberSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + RECORD_NUMBER_PATH;
-      cfg.apiBaseUrl = getPropertyUrl(properties, "api.baseurl", false);
-      cfg.tileServerBaseUrl = getPropertyUrl(properties, "tile-server.url", false);
-      cfg.wsImageCache = getPropertyUrl(properties, "image-cache.url", false);
-      cfg.includeContext = Boolean.parseBoolean(properties.getProperty("struts.url.includeContext"));
     } catch (IOException e) {
       throw new ConfigurationException("application.properties cannot be read", e);
     }
@@ -217,15 +217,6 @@ public class Config {
 
   public String getWsOccCollectorNameSearch() {
     return wsOccCollectorNameSearch;
-  }
-
-  /**
-   * Get the occurrence download web service url that uses the public API used in links.
-   * 
-   * @return the occurrence download web service url that uses the public API
-   */
-  public String getWsOccPublic() {
-    return wsOccPublic;
   }
 
   /**
