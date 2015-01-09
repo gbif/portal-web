@@ -65,31 +65,31 @@
     <registry-ws-client.version>2.19-SNAPSHOT</registry-ws-client.version>
     <occurrence-ws-client.version>0.24-SNAPSHOT</occurrence-ws-client.version>
     <metrics-ws-client.version>0.18-SNAPSHOT</metrics-ws-client.version>
-    <drupal-mybatis.version>0.14</drupal-mybatis.version>
+    <drupal-mybatis.version>0.15-SNAPSHOT</drupal-mybatis.version>
     <gbif-common.version>0.17</gbif-common.version>
-    <gbif-common-ws.version>0.16</gbif-common-ws.version>
+    <gbif-common-ws.version>0.17-SNAPSHOT</gbif-common-ws.version>
 
     <freemarker.version>2.3.21</freemarker.version>
     <guice.version>3.0</guice.version>
-    <jersey.version>1.17.1</jersey.version>
-    <junit.version>4.11</junit.version>
+    <jersey.version>1.18.3</jersey.version>
+    <junit.version>4.12</junit.version>
     <guava.version>18.0</guava.version>
     <logback.version>1.1.2</logback.version>
     <mockito.version>1.9.5</mockito.version>
     <!-- 2.35 is the last version that uses httpclient 4.2.x -->
-    <selenium.version>2.35.0</selenium.version>
+    <selenium.version>2.44.0</selenium.version>
     <servletapi.version>3.0.1</servletapi.version>
-    <slf4j.version>1.7.7</slf4j.version>
+    <slf4j.version>1.7.10</slf4j.version>
     <struts.version>2.3.15.3</struts.version>
     <bval.version>0.5</bval.version>
     <xerces.version>2.9.1</xerces.version>
     <jsp.version>2.2</jsp.version>
-    <findbugs-jsr305.version>2.0.3</findbugs-jsr305.version>
+    <findbugs-jsr305.version>3.0.0</findbugs-jsr305.version>
     <commons-io.version>2.4</commons-io.version>
     <javax-validation-api.version>1.1.0.Final</javax-validation-api.version>
     <commons-beanutils.version>1.9.2</commons-beanutils.version>
     <lucene.version>4.4.0</lucene.version>
-    <httpclient.version>4.2.6</httpclient.version>
+    <httpclient.version>4.3.6</httpclient.version>
     <commons-lang3.version>3.3.2</commons-lang3.version>
   </properties>
 
@@ -301,11 +301,6 @@
         <exclusion>
           <artifactId>commons-logging</artifactId>
           <groupId>commons-logging</groupId>
-        </exclusion>
-        <!-- excluding it as it causes conflicts with the latest httpclient version -->
-        <exclusion>
-          <artifactId>httpclient</artifactId>
-          <groupId>org.apache.httpcomponents</groupId>
         </exclusion>
       </exclusions>
     </dependency>
