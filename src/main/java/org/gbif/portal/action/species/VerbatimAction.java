@@ -1,5 +1,6 @@
 package org.gbif.portal.action.species;
 
+import org.gbif.api.model.Constants;
 import org.gbif.api.model.checklistbank.VerbatimNameUsage;
 import org.gbif.portal.exception.NotFoundException;
 
@@ -18,9 +19,10 @@ public class VerbatimAction extends UsageBaseAction {
 
     verbatim = usageService.getVerbatim(id);
     if (verbatim == null) {
-      throw new NotFoundException("No verbatim usage found with id " + id);
+      if (Constants.NUB_DATASET_KEY.equals(usage.getDatasetKey())) {
+        throw new NotFoundException("GBIF backbone taxa do not have a verbatim version");
+      }
     }
-
     return SUCCESS;
   }
 
