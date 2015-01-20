@@ -31,7 +31,13 @@
           <div class="footer">
             <dl>
                 <dt>Download</dt>
-                <dd><@common.doilink doi=download.doi url="/occurrence/download/${download.key}" /> ${niceDate(download.created)}</dd>
+                <dd>
+                  <#if download.doi?has_content>
+                    <@common.doilink doi=download.doi url="/occurrence/download/${download.key}" /> ${niceDate(download.created)}
+                  <#else>
+                    <a href="${download.downloadLink}">${download.downloadLink}</a> ${niceDate(download.created)}
+                  </#if>
+                </dd>
 
                 <dt>Query</dt>
                 <dd><@records.dFilter download /></dd>
