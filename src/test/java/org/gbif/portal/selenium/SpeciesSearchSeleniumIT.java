@@ -80,8 +80,7 @@ public class SpeciesSearchSeleniumIT extends SeleniumTestBase {
   @Test
   public void testVernacularNameSearch() {
     assertNameSearch("Abies pinsapo", true, 17, 2685464);
-    // TODO: vernacular nub names are currently not searchable: http://dev.gbif.org/issues/browse/CLB-163
-    //assertNameSearch("Spanische", true, 11, 3898019);
+    assertNameSearch("Spanische", true, 11, 3898019);
   }
 
 }
