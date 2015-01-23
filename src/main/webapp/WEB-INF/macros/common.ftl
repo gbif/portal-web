@@ -345,5 +345,5 @@
 
 <#-- writes a download citation text -->
 <#macro citeDownload download>
-GBIF.org (${niceDate(download.created)}) GBIF Occurrence Download <a href="${doi.getUrl()}">${doi.getUrl()}</a>
+GBIF.org (${niceDate(download.created)}) GBIF Occurrence Download <a href="${download.doi.getUrl()}">${download.doi.getUrl()}</a>
 </#macro>
