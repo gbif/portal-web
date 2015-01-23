@@ -220,7 +220,7 @@
 <@result>
 <dl>
     <dt>Dataset</dt>
-    <dd><a href="<@s.url value='/dataset/${du.datasetKey}'/>"><#if du.datasetTitle??>${du.datasetTitle}<#else>${du.datasetKey}</#if></a><#if du.datasetDOI??><br> <a class="doi" href="${du.datasetDOI.url}">${du.datasetDOI}</a></#if></dd>
+    <dd><a href="<@s.url value='/dataset/${du.datasetKey}'/>">${du.datasetTitle!"???"}</a></dd>
 
     <dt>Records</dt>
     <dd><a href="<@s.url value='/occurrence/search?${queryParams}'/>">${du.numberRecords} records</a> from this dataset included at time of download</dd>

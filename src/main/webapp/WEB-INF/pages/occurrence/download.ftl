@@ -41,11 +41,15 @@
   </@common.notice>
 
 <#elseif download.isAvailable()>
-  <@common.notice title="Please note">
+  <#if action.dwcaExists()>
+    <@common.notice title="Please note">
       <p>The download result will be retained for as long as possible, but might be removed in the future.</p>
       <p>The <@common.doilink doi=download.doi url="/occurrence/download/${download.key}"/> will always resolve to this page, even if the download is removed.</p>
-  </@common.notice>
-
+    </@common.notice>
+  <#else>
+      <p>The download result for this search is no longer available.</p>
+      <p>Please contact <@common.helpdesk/> to restore it.</p>
+  </#if>
 <#else>
   <@common.notice title="${download.status}">
       <p>The download request was unsuccessful. Please try it again or contact the <@common.helpdesk/>.</p>
@@ -71,7 +75,7 @@
 
       <dt>Status</dt>
       <#if download.isAvailable() && !action.dwcaExists()>
-          <dd><@s.text name="enum.downloadstatus.unavailable" />. Please contact <@common.helpdesk/> to restore it.</dd>
+          <dd><@s.text name="enum.downloadstatus.unavailable" /></dd>
       <#else>
           <dd><@s.text name="enum.downloadstatus.${download.status}" /></dd>
       </#if>
