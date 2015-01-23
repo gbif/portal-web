@@ -41,15 +41,15 @@
   </@common.notice>
 
 <#elseif download.isAvailable()>
-  <#if action.dwcaExists()>
-    <@common.notice title="Please note">
+  <@common.notice title="Please note">
+    <#if action.dwcaExists()>
       <p>The download result will be retained for as long as possible, but might be removed in the future.</p>
       <p>The <@common.doilink doi=download.doi url="/occurrence/download/${download.key}"/> will always resolve to this page, even if the download is removed.</p>
-    </@common.notice>
-  <#else>
+    <#else>
       <p>The download result for this search is no longer available.</p>
       <p>Please contact <@common.helpdesk/> to restore it.</p>
-  </#if>
+    </#if>
+  </@common.notice>
 <#else>
   <@common.notice title="${download.status}">
       <p>The download request was unsuccessful. Please try it again or contact the <@common.helpdesk/>.</p>
