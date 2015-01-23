@@ -345,5 +345,5 @@
 
 <#-- writes a download citation text -->
 <#macro citeDownload download>
-GBIF.org (${niceDate(download.created)}) ${download.doi}
+GBIF.org (${niceDate(download.created)}) <@doilink download.doi/>
 </#macro>
