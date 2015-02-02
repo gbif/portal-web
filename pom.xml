@@ -81,6 +81,71 @@
   <build>
     <defaultGoal>jetty:run</defaultGoal>
     <plugins>
+        <plugin>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-maven-plugin</artifactId>
+          <configuration>
+            <webAppConfig>
+              <contextPath>/</contextPath>
+            </webAppConfig>
+            <!-- no scan if used with JRebel -->
+            <scanIntervalSeconds>0</scanIntervalSeconds>
+            <stopKey>stop</stopKey>
+            <stopPort>9362</stopPort>
+            <systemProperties>
+              <systemProperty>
+                <name>servername</name>
+                <value>http://localhost:${jetty.port}</value>
+              </systemProperty>
+            </systemProperties>
+          </configuration>
+          <executions>
+            <execution>
+              <id>start-jetty</id>
+              <phase>pre-integration-test</phase>
+              <goals>
+                <goal>run</goal>
+              </goals>
+              <configuration>
+                <scanIntervalSeconds>0</scanIntervalSeconds>
+                <daemon>true</daemon>
+              </configuration>
+            </execution>
+            <execution>
+              <id>stop-jetty</id>
+              <phase>post-integration-test</phase>
+              <goals>
+                <goal>stop</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <configuration>
+            <systemProperties>
+              <property>
+                <name>servername</name>
+                <value>http://localhost:${jetty.port}</value>
+              </property>
+            </systemProperties>
+          </configuration>
+          <executions>
+            <execution>
+              <id>integration-test</id>
+              <goals>
+                <goal>integration-test</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>verify</id>
+              <goals>
+                <goal>verify</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       <plugin>
           <groupId>org.lesscss</groupId>
           <artifactId>lesscss-maven-plugin</artifactId>
