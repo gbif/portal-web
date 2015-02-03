@@ -28,7 +28,13 @@
               <div class="footer">
                   <dl>
                       <dt>Download</dt>
-                      <dd><@common.doilink doi=du.download.doi url="/occurrence/download/${du.download.key}" /> ${niceDate(du.download.created)}</dd>
+                      <dd>
+                        <#if du.download.doi?has_content>
+                          <@common.doilink doi=du.download.doi url="/occurrence/download/${du.download.key}" /> ${niceDate(du.download.created)}
+                        <#else>
+                            <a href="${du.download.downloadLink}">${du.download.downloadLink}</a> ${niceDate(du.download.created)}
+                        </#if>
+                      </dd>
 
                       <dt>Records</dt>
                       <dd><a href="<@s.url value='/occurrence/search?${queryParams}'/>">${du.numberRecords} records</a> from this dataset included at time of download</dd>
