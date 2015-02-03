@@ -55,7 +55,7 @@ public class PortalModule extends AbstractModule {
     final String api = properties.getProperty(Config.API_BASEURL_PROPERTY);
     properties.put("registry.ws.url", api);
     properties.put("checklistbank.ws.url", api);
-    properties.put("checklistbank.match.ws.url", api);
+    properties.put("checklistbank.match.ws.url", api+"/species/match");
     properties.put("occurrence.ws.url", api);
     properties.put("metrics.ws.url", api);
   }
