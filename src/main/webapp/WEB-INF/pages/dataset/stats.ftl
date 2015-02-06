@@ -177,14 +177,13 @@
          <div id="extensions" class="right">
            <p>There are ${numUsages} records in the checklist. For each extension type, the total number of extension records are illustrated as the average coverage per taxon.</p>
          </div>
-       </div>
     </@common.article>
     </#if>
   </#if>
 </#if>
 
 
-<!-- OCCURRENCS -->
+<!-- OCCURRENCES -->
 <!-- Do we have any checklist metrics and records at all? -->
 <#if numOccurrences! lt 1>
   <@common.article id="occmetrics" title="Occurrence Metrics">
