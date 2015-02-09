@@ -60,9 +60,9 @@
 <p>This API provides services related to the retrieval of single occurrence records.</p>
 
   <@api.apiTable auth=false paging=false params=false>
-    <@trowO url="/{key}" respLink="/occurrence/252408386">Gets details for a single, interpreted occurrence</@trowO>
-    <@trowO url="/{key}/fragment" respLink="/occurrence/252408386/fragment">Get a single occurrence fragment in its raw form (xml or json)</@trowO>
-    <@trowO url="/{key}/verbatim" resp="VerbatimOccurrence" respLink="/occurrence/252408386/verbatim">Gets the verbatim occurrence record without any interpretation</@trowO>
+    <@trowO url="/{key}" respLink="occurrence/252408386">Gets details for a single, interpreted occurrence</@trowO>
+    <@trowO url="/{key}/fragment" respLink="occurrence/252408386/fragment">Get a single occurrence fragment in its raw form (xml or json)</@trowO>
+    <@trowO url="/{key}/verbatim" resp="VerbatimOccurrence" respLink="occurrence/252408386/verbatim">Gets the verbatim occurrence record without any interpretation</@trowO>
   </@api.apiTable>
 
 </@api.article>
@@ -80,15 +80,15 @@
 </p>
 
   <@api.apiTable auth=false>
-    <@trowS url="" respLink="/occurrence/search?taxonKey=1"  paging=true params=["datasetKey","year","month","eventDate","lastInterpreted","decimalLatitude","decimalLongitude","country","continent","publishingCountry","elevation","depth","institutionCode", "collectionCode", "catalogNumber","recordedBy","recordNumber","basisOfRecord","taxonKey","scientificName","hasCoordinate","geometry","spatialIssues", "issue", "mediaType"]>Full search across all occurrences.
+    <@trowS url="" respLink="occurrence/search?taxonKey=1"  paging=true params=["datasetKey","year","month","eventDate","lastInterpreted","decimalLatitude","decimalLongitude","country","continent","publishingCountry","elevation","depth","institutionCode", "collectionCode", "catalogNumber","recordedBy","recordNumber","basisOfRecord","taxonKey","scientificName","hasCoordinate","geometry","spatialIssues", "issue", "mediaType"]>Full search across all occurrences.
     Results are ordered by relevance.</@trowS>
-    <@trowS url="/catalogNumber" respLink="/occurrence/search/catalogNumber?q=122&limit=5" params=["q","limit"]>Search that returns matching catalog numbers.
+    <@trowS url="/catalogNumber" respLink="occurrence/search/catalogNumber?q=122&limit=5" params=["q","limit"]>Search that returns matching catalog numbers.
     Results are ordered by relevance.</@trowS>
-    <@trowS url="/collectionCode" respLink="/occurrence/search/collectionCode?q=12&limit=5" params=["q","limit"]>Search that returns matching collection codes.
+    <@trowS url="/collectionCode" respLink="occurrence/search/collectionCode?q=12&limit=5" params=["q","limit"]>Search that returns matching collection codes.
     Results are ordered by relevance.</@trowS>
-    <@trowS url="/recordedBy" respLink="/occurrence/search/recordedBy?q=juan&limit=5" params=["q","limit"]>Search that returns matching collector names.
+    <@trowS url="/recordedBy" respLink="occurrence/search/recordedBy?q=juan&limit=5" params=["q","limit"]>Search that returns matching collector names.
     Results are ordered by relevance.</@trowS>
-    <@trowS url="/institutionCode" respLink="/occurrence/search/institutionCode?q=GB&limit=5" params=["q","limit"]>Search that returns matching institution codes.
+    <@trowS url="/institutionCode" respLink="occurrence/search/institutionCode?q=GB&limit=5" params=["q","limit"]>Search that returns matching institution codes.
     Results are ordered by relevance.</@trowS>
   </@api.apiTable>
 </@api.article>
@@ -104,10 +104,10 @@
 
   <@api.apiTable params=false>
     <@trowD url="/request" resp="Download key" method="POST" authRequired=true>Starts the process of creating a download file. See the <a href="#predicates">predicates</a> section to consult the requests accepted by this service.</@trowD>
-    <@trowD url="/request/{key}" resp="Download file" respLink="/occurrence/download/request/0003589-140616093749225" method="GET" authRequired=false>Retrieves the download file if it is available.</@trowD>
+    <@trowD url="/request/{key}" resp="Download file" respLink="occurrence/download/request/0003589-140616093749225" method="GET" authRequired=false>Retrieves the download file if it is available.</@trowD>
     <@trowD url="/request/{key}" method="DELETE" authRequired=true>Cancels the download process.</@trowD>
     <@trowD url="" method="GET" resp="Download Page" authRequired=true paging=true>Lists all the downloads. This operation can be executed by the role ADMIN only.</@trowD>
-    <@trowD url="/{key}" resp="Download" respLink="/occurrence/download/0003589-140616093749225" method="GET">Retrieves the occurrence download metadata by its unique key.</@trowD>
+    <@trowD url="/{key}" resp="Download" respLink="occurrence/download/0003589-140616093749225" method="GET">Retrieves the occurrence download metadata by its unique key.</@trowD>
     <@trowD url="/{key}" method="PUT" authRequired=true>Updates the status of an existing occurrence download. This operation can be executed by the role ADMIN only.</@trowD>
     <@trowD url="/{key}" method="POST" authRequired=true>Creates the metadata about an occurrence download. This operation can be executed by the role ADMIN only.</@trowD>
     <@trowD url="/user/{user}" method="GET" resp="Download Page" authRequired=true paging=true>Lists the downloads created by a user. Only role ADMIN can list downloads of other users.</@trowD>
@@ -121,11 +121,11 @@
 </p>
 
   <@api.apiTable auth=false paging=false>
-    <@trowM url="/occurrence/count" resp="Count" respLink="/occurrence/count">Returns occurrence counts for a predefined set of dimensions.
+    <@trowM url="/occurrence/count" resp="Count" respLink="occurrence/count">Returns occurrence counts for a predefined set of dimensions.
     The supported dimensions are enumerated in the <a href="${action.cfg.apiBaseUrl}/occurrence/count/schema" target="_blank">/occurrence/count/schema</a> service.
     An example for the count of georeferenced observations from Canada: <a href="${action.cfg.apiBaseUrl}/occurrence/count?country=CA&isGeoreferenced=true&basisOfRecord=OBSERVATION" target="_blank">/occurrence/count?country=CA&isGeoreferenced=true&basisOfRecord=OBSERVATION</a>.
     </@trowM>
-    <@trowM url="/occurrence/count/schema" resp="Count" respLink="/occurrence/count/schema">List the supported metrics by the service.</@trowM>
+    <@trowM url="/occurrence/count/schema" resp="Count" respLink="occurrence/count/schema">List the supported metrics by the service.</@trowM>
   </@api.apiTable>
 </@api.article>
 
@@ -136,11 +136,11 @@
 </p>
 
   <@api.apiTable auth=false paging=false>
-    <@trowM url="/occurrence/counts/basisOfRecord" resp="Counts" respLink="/occurrence/counts/basisOfRecord">Lists occurrence counts by basis of record.</@trowM>
-    <@trowM url="/occurrence/counts/year" resp="Counts" respLink="/occurrence/counts/year?year=1981,2012" params=["year"]>Lists occurrence counts by year.</@trowM>
-    <@trowM url="/occurrence/counts/datasets" resp="Counts" respLink="/occurrence/counts/datasets?country=DE" params=["country","taxonKey"]>Lists occurrence counts for datasets that cover a given taxon or country.</@trowM>
-    <@trowM url="/occurrence/counts/countries" resp="Counts" respLink="/occurrence/counts/countries?publishingCountry=DE" params=["publishingCountry"]>Lists occurrence counts for all countries covered by the data published by the given country.</@trowM>
-    <@trowM url="/occurrence/counts/publishingCountry" resp="Counts" respLink="/occurrence/counts/publishingCountries?country=DE" params=["country"]>Lists occurrence counts for all countries that publish data about the given country.</@trowM>
+    <@trowM url="/occurrence/counts/basisOfRecord" resp="Counts" respLink="occurrence/counts/basisOfRecord">Lists occurrence counts by basis of record.</@trowM>
+    <@trowM url="/occurrence/counts/year" resp="Counts" respLink="occurrence/counts/year?year=1981,2012" params=["year"]>Lists occurrence counts by year.</@trowM>
+    <@trowM url="/occurrence/counts/datasets" resp="Counts" respLink="occurrence/counts/datasets?country=DE" params=["country","taxonKey"]>Lists occurrence counts for datasets that cover a given taxon or country.</@trowM>
+    <@trowM url="/occurrence/counts/countries" resp="Counts" respLink="occurrence/counts/countries?publishingCountry=DE" params=["publishingCountry"]>Lists occurrence counts for all countries covered by the data published by the given country.</@trowM>
+    <@trowM url="/occurrence/counts/publishingCountry" resp="Counts" respLink="occurrence/counts/publishingCountries?country=DE" params=["country"]>Lists occurrence counts for all countries that publish data about the given country.</@trowM>
   </@api.apiTable>
 </@api.article>
 
