@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.gbif</groupId>
     <artifactId>motherpom</artifactId>
-    <version>19</version>
+    <version>16</version>
   </parent>
 
   <groupId>org.gbif</groupId>
@@ -45,14 +45,14 @@
     <!-- dependency versions -->
     <dwc-api.version>1.8</dwc-api.version>
     <gbif-api.version>0.17</gbif-api.version>
-    <checklistbank-ws-client.version>2.10</checklistbank-ws-client.version>
-    <download-query-tools.version>1.0</download-query-tools.version>
-    <registry-ws-client.version>2.19</registry-ws-client.version>
-    <occurrence-ws-client.version>0.24</occurrence-ws-client.version>
+    <checklistbank-ws-client.version>2.11</checklistbank-ws-client.version>
+    <download-query-tools.version>1.1</download-query-tools.version>
+    <registry-ws-client.version>2.22</registry-ws-client.version>
+    <occurrence-ws-client.version>0.25</occurrence-ws-client.version>
     <metrics-ws-client.version>0.19</metrics-ws-client.version>
     <drupal-mybatis.version>0.15</drupal-mybatis.version>
     <gbif-common.version>0.17</gbif-common.version>
-    <gbif-common-ws.version>0.17</gbif-common-ws.version>
+    <gbif-common-ws.version>0.18</gbif-common-ws.version>
 
     <freemarker.version>2.3.21</freemarker.version>
     <guice.version>3.0</guice.version>
