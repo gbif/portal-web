@@ -74,9 +74,9 @@
   In order to retrieve all results for a given search filter you need to issue individual requests for each page,
   which is limited to a maximum size of 300 records per page.
 
-  Note that for technical reasons we also have a hard limit for any query of 1 million records.
-  You will get an error if the offset exceeds 1.000.000.
-  To retrieve all records beyond a million you should use our asynchronous <a href="#download">download service</a> instead.
+  Note that for technical reasons we also have a hard limit for any query of 200.000 records.
+  You will get an error if the offset + limit exceeds 200.000.
+  To retrieve all records beyond 200.000 you should use our asynchronous <a href="#download">download service</a> instead.
 </p>
 
   <@api.apiTable auth=false>
