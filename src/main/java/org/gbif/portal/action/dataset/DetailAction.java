@@ -115,8 +115,7 @@ public class DetailAction extends DatasetBaseAction {
     renderMaps = getNumGeoreferencedOccurrences() != null && getNumGeoreferencedOccurrences() > 0;
     if (!renderMaps) {
       for (GeospatialCoverage gc : member.getGeographicCoverages()) {
-        renderMaps = renderMaps
-          || (gc.getBoundingBox() != null && !gc.getBoundingBox().isGlobalCoverage());
+        renderMaps = gc.getBoundingBox() != null && !gc.getBoundingBox().isGlobalCoverage();
         if (renderMaps) {
           break; // for speed
         }

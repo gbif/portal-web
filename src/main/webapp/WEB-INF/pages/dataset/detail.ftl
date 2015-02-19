@@ -300,38 +300,12 @@
 
 </@common.article>
 
-
-<#-- TAXONOMIC COVERAGE -->
-<#if organizedCoverages?has_content >
-  <@common.article id="taxonomic_coverage" title="Taxonomic Coverage">
-  <div class="fullwidth">
-    <div class="scrollable">
-      <#list organizedCoverages as ocs>
-        <#if ocs.description?has_content>
-            <p>${ocs.description}</p>
-        </#if>
-        <dl>
-        <#list ocs.coverages as oc>
-            <dt>${oc.rank}</dt>
-            <dd>
-              <#list oc.displayableNames as dis>
-                <a href="<@s.url value='/species/search?q=${dis.scientificName!dis.commonName}'/><#if (dis.rank.interpreted)?has_content>&rank=${dis.rank.interpreted!}</#if>">${dis.displayName}</a><#if dis_has_next>, </#if>
-              </#list>
-            </dd>
-        </#list>
-        </dl>
-      </#list>
-    </div>
-  </div>
-</@common.article>
-</#if>
-
 <#if dataset.type! == "CHECKLIST" && metrics?? && metrics.usagesCount gt 0>
-<@common.article id="taxonomy" title="Browse Classification" class="taxonomies">
-<div class="fullwidth">
-  <div id="taxonomicBrowser"></div>
-</div>
-</@common.article>
+  <@common.article id="taxonomy" title="Browse Taxonomy" class="taxonomies">
+      <div class="fullwidth">
+          <div id="taxonomicBrowser"></div>
+      </div>
+  </@common.article>
 </#if>
 
 <#-- MAPS -->
@@ -365,25 +339,49 @@
        </div>
     </div>
   </@common.article>
-</#if>
-
-<#if dataset.geographicCoverages?has_content>
-<article>
-  <header></header>
-  <div class="content">
-    <div class="header">
-      <div class="left"><h2>Geographic Coverage</h2></div>
-    </div>
-    <div class="fullwidth">
-      <div class="scrollable">
-        <#list dataset.geographicCoverages as geo>
-          <p>${geo.description!}</p>
-        </#list>
+<#elseif dataset.geographicCoverages?has_content>
+  <article>
+    <header></header>
+    <div class="content">
+      <div class="header">
+        <div class="left"><h2>Geographic Coverage</h2></div>
+      </div>
+      <div class="fullwidth">
+        <div class="">
+          <#list dataset.geographicCoverages as geo>
+            <p>${geo.description!}</p>
+          </#list>
+        </div>
       </div>
     </div>
-  </div>
-  <footer></footer>
-</article>
+    <footer></footer>
+  </article>
+</#if>
+
+
+<#-- TAXONOMIC COVERAGE -->
+<#if organizedCoverages?has_content >
+  <@common.article id="taxonomic_coverage" title="Taxonomic Coverage">
+      <div class="fullwidth">
+          <div class="">
+            <#list organizedCoverages as ocs>
+              <#if ocs.description?has_content>
+                  <p>${ocs.description}</p>
+              </#if>
+                <dl>
+                  <#list ocs.coverages as oc>
+                      <dt>${oc.rank}</dt>
+                      <dd>
+                        <#list oc.displayableNames as dis>
+                            <a href="<@s.url value='/species/search?q=${dis.scientificName!dis.commonName}'/><#if (dis.rank.interpreted)?has_content>&rank=${dis.rank.interpreted!}</#if>">${dis.displayName}</a><#if dis_has_next>, </#if>
+                        </#list>
+                      </dd>
+                  </#list>
+                </dl>
+            </#list>
+          </div>
+      </div>
+  </@common.article>
 </#if>
 
 <#-- PROJECT -->
