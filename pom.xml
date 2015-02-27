@@ -43,11 +43,11 @@
     <occurrence.search.maxoffset>10000</occurrence.search.maxoffset>
 
     <!-- dependency versions -->
-    <dwc-api.version>1.8</dwc-api.version>
+    <dwc-api.version>1.11-SNAPSHOT</dwc-api.version>
     <gbif-api.version>0.17</gbif-api.version>
     <checklistbank-ws-client.version>2.11</checklistbank-ws-client.version>
     <download-query-tools.version>1.1</download-query-tools.version>
-    <registry-ws-client.version>2.22</registry-ws-client.version>
+    <registry-ws-client.version>2.25</registry-ws-client.version>
     <occurrence-ws-client.version>0.25</occurrence-ws-client.version>
     <metrics-ws-client.version>0.19</metrics-ws-client.version>
     <drupal-mybatis.version>0.15</drupal-mybatis.version>
