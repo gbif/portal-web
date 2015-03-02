@@ -34,7 +34,8 @@
 <#if showBox>
   <div class="box">
     <div class="content">
-      <ul>
+      <#-- This margin is used when the species doesn't have occurrence and because that the background image has a fixed size-->
+      <ul <#if numOccurrences == 0> style='margin-top: 20px !important;'</#if>>
         <li><h4>${numOccurrences}</h4>Occurrences</li>
         <#if usage.rank.isSpeciesOrBelow()>
           <li class="last"><h4>${usage.numDescendants}</h4>Infraspecies</li>
@@ -42,7 +43,10 @@
           <li class="last"><h4>${usageMetrics.numSpecies}</h4>Species</li>
         </#if>
       </ul>
-      <a href="<@s.url value='/occurrence/search?taxon_key=${usage.key?c}'/>" title="View Occurrences" class="candy_blue_button"><span>View occurrences</span></a>
+      <#-- Hide box if there not occurrences for this species-->
+      <#if numOccurrences gt 0>
+        <a href="<@s.url value='/occurrence/search?taxon_key=${usage.key?c}'/>" title="View Occurrences" class="candy_blue_button"><span>View occurrences</span></a>
+      </#if>
     </div>
   </div>
 </#if>
