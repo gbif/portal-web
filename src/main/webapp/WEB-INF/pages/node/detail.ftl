@@ -16,18 +16,27 @@
 <#assign tab="info"/>
 <#include "/WEB-INF/pages/node/inc/infoband.ftl">
 
-<#include "/WEB-INF/pages/country/inc/participation.ftl">
-
-<#if node.contacts?has_content>
-<#assign rtitle><span class="showAllContacts small">show all</span></#assign>
-<@common.article id="contacts" title="Contacts" titleRight=rtitle>
-    <div class="fullwidth">
-      <#if node.contacts?has_content>
+<#--
+  The Participant Node Managers Committee
+  is an entity that is used to endorse publishers who otherwise would struggle to find
+  an endorsing node.  It is considered a persistent stable id.
+-->
+<#if node.key == common.participantNMCKey>
+  <#include "/WEB-INF/pages/node/inc/committee.ftl">
+<#else>
+  <#include "/WEB-INF/pages/country/inc/participation.ftl">
+  <#if node.contacts?has_content>
+    <#assign rtitle><span class="showAllContacts small">show all</span></#assign>
+    <@common.article id="contacts" title="Contacts" titleRight=rtitle>
+      <div class="fullwidth">
+        <#if node.contacts?has_content>
         <@common.contactList node.contacts />
       </#if>
-    </div>
-</@common.article>
+      </div>
+    </@common.article>
+  </#if>
 </#if>
+
 
 <#include "/WEB-INF/pages/country/inc/endorsing_article.ftl">
 

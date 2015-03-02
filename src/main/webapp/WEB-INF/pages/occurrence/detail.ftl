@@ -236,7 +236,7 @@
     </div>
 
     <div class="right">
-        <div class="scrollable330">
+        <div class="scrollable medium">
 
             <h3>Locality</h3>
             <p class="no_bottom">${locality!}<#if occ.country??><#if locality?has_content>, </#if><a href="<@s.url value='/country/${occ.country.iso2LetterCode}'/>">${occ.country.title}</a></#if></p>

@@ -197,7 +197,7 @@ public class MockOccurrenceFactory {
     mockOccurrence.getVerbatimFields().put(DwcTerm.occurrenceRemarks, "Found dead on road");
     mockOccurrence.getVerbatimFields().put(DwcTerm.recordNumber, "OPP 7101");
     mockOccurrence.getVerbatimFields().put(DwcTerm.recordedBy, "Jane Smith");
-    mockOccurrence.getVerbatimFields().put(DwcTerm.individualID, "Smedley");
+    mockOccurrence.getVerbatimFields().put(DwcTerm.organismID, "Smedley");
     mockOccurrence.getVerbatimFields().put(DwcTerm.individualCount, "25");
     mockOccurrence.getVerbatimFields().put(DwcTerm.sex, "female");
     mockOccurrence.getVerbatimFields().put(DwcTerm.lifeStage, "adult");

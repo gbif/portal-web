@@ -79,7 +79,7 @@
        <ul class="pies">
          <li><h3>Kingdoms</h3>
            <#if metrics.countByKingdom?has_content>
-             <p>Number of name usages within kingdoms of the GBIF Backbone.</p>
+             <p>Taxa within GBIF backbone kingdoms.</p>
              <div id="kingdoms" class="pieMultiLegend">
                <ul>
                <#list kingdoms as k>
@@ -97,7 +97,7 @@
 
          <li><h3>Ranks</h3>
            <#if metrics.countByRank?has_content>
-             <p>Number of accepted taxa by major ranks.</p>
+             <p>Number of accepted taxa by ranks.</p>
              <div id="ranks" class="pieMultiLegend">
                <ul>
                  <#list sortedMetricRanks as r>
@@ -116,6 +116,7 @@
          <li>
              <h3>Interpretation Issues</h3>
            <#if metrics.countByIssue?has_content>
+               <p>Issues flagged during GBIF processing.</p>
                <div id="chkIssues" class="pieMultiLegend">
                    <ul>
                      <#list metrics.countByIssue?keys as k>
