@@ -24,7 +24,7 @@
 
       <div class="header">
         <div class="left">
-          <h2><@s.text name="enum.datasettype.${type!'UNKNOWN'}"/>s with "${usage.canonicalOrScientificName!}"</h2>
+          <h2><em>${usage.canonicalOrScientificName!}</em> appears in:</h2>
         </div>
       </div>
 
@@ -32,19 +32,24 @@
 
       <#list page.results as item>
         <#assign ds = item.dataset/>
+        <#-- be defendive, we have checklists with occurrences: http://dev.gbif.org/issues/browse/POR-614 -->
+        <#if ds.type=="CHECKLIST" && item.usage??>
+          <#assign linkSpecies = true />
+          <#assign link = '/species/${item.usage.key?c}'/>
+        <#else>
+          <#assign linkSpecies = false />
+          <#assign link = '/occurrence/search?taxon_key=${usage.nubKey?c}&dataset_key=${ds.key}' />
+        </#if>
+
         <div class="result">
-          <h2><strong>
-            <a title="${ds.title!}" href="<@s.url value='/dataset/${ds.key}'/>">${common.limit(ds.title!, 100)}</a>
-            </strong>
-          </h2>
+          <h2><strong><a title="${ds.title!}" href="<@s.url value='${link}'/>">${common.limit(ds.title!, 100)}</a></strong></h2>
 
           <div class="footer">
-            <@s.text name="enum.datasettype.${ds.type!'UNKNOWN'}"/>
-          <#-- be defendive, we have checklists with occurrences apparently: http://dev.gbif.org/issues/browse/POR-614 -->
-          <#if ds.type=="CHECKLIST" && item.usage??>
-            including <em><a href="<@s.url value='/species/${item.usage.key?c}'/>">${item.usage.scientificName}</a></em>
+          <#if linkSpecies>
+            as <em>${item.usage.scientificName}</em>
           <#else>
-            with <a href="<@s.url value='/occurrence/search?taxon_key=${usage.nubKey?c}&dataset_key=${ds.key}'/>">${item.numOccurrences} records of <em>${usage.canonicalOrScientificName!}</em></a>
+            <@s.text name="enum.datasettype.${ds.type!'UNKNOWN'}"/>
+            with ${item.numOccurrences} records of <em>${usage.canonicalOrScientificName!}</em>
           </#if>
           </div>
 
