@@ -1058,10 +1058,8 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
     var self = this;
     this.filterElement.find(':checkbox[name="HAS_COORDINATE"]').change( function(e) {
       self.removeFilterByParamName('HAS_COORDINATE');
+      //only remove elements if the selected checkbox is 'isNotGeoreferenced'
       if ($(this).attr('checked')) {
-        self.filterElement.find(".map_control,.leaflet-control-draw").hide();
-        self.removeFilterByParamName(self.getId());
-        self.removeAllPolygons();
         var val = $(this).val();
         self.filters.push({label:val == 'true' ?'Yes':'No',value: val, key: null,paramName:'HAS_COORDINATE', submitted: false,hidden:true});
         self.filterElement.find(':checkbox[name="HAS_COORDINATE"][id!=' + $(this).attr('id') + ']').removeAttr('checked');
@@ -1076,7 +1074,10 @@ var OccurrenceLocationWidget = (function ($,_,OccurrenceWidget) {
         self.filterElement.find(".map_control,.leaflet-control-draw").show();
       }
       if ($(this).attr('id') == 'isNotGeoreferenced') {
+        self.removeFilterByParamName(self.getId());
         self.filterElement.find('#has_geospatial_issue > :input').removeAttr('disabled');
+        self.filterElement.find(".map_control,.leaflet-control-draw").hide();
+        self.removeAllPolygons();
       }
       self.showFilters();
       self.filterElement.find(".apply").show();
@@ -1531,7 +1532,7 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
   };
   //Inherits everything from OccurrenceWidget
   InnerOccurrenceMultiSelectWidget.prototype = $.extend(true,{}, new OccurrenceWidget());
-  
+
   /**
    * Re-defines the showFilters function, iterates over the selection list to get the selected values and then show them as filters.
    */
@@ -1540,11 +1541,11 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
       var self = this;
       if(this.hasFilterWithValue('*')){
         this.filterElement.find(".multi-select > li").each( function() {
-    	  $(this).addClass("selected");	        
+    	  $(this).addClass("selected");
     	});
     	this.setShowAll(true);
       } else {
-        this.filterElement.find(".multi-select > li").each( function() {	    
+        this.filterElement.find(".multi-select > li").each( function() {
           $(this).removeClass("selected");
           for(var i=0; i < self.filters.length; i++) {
             if(self.filters[i].value == $(this).attr("key") && !$(this).hasClass("selected")) {
@@ -1554,7 +1555,7 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
         });
       }
     }
-  };  
+  };
 
   /**
    * Checks if all the elements are selected.
@@ -1562,7 +1563,7 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
   InnerOccurrenceMultiSelectWidget.prototype.hasAllSelected = function() {
    return this.filterElement && this.filterElement.find(".multi-select > li").length == this.filterElement.find(".multi-select > li.selected").length;
   };
-  
+
   /**
    * Checks if all the elements are selected.
    */
@@ -1598,7 +1599,7 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
           $(this).addClass("selected");
           self.setShowAll(self.hasAllSelected());
           if(!self.getShowAll()){
-        	self.removeFilter({value:'*'});              
+        	self.removeFilter({value:'*'});
           } else {
         	self.clearFilters();
         	self.addFilter({value:'*'});
@@ -2095,7 +2096,7 @@ var OccurrenceWidgetManager = (function ($,_) {
        */
       initWidgets : function(){
         for(var i=0; i < widgets.length; i++){
-          widgets[i].showSummaryView();          
+          widgets[i].showSummaryView();
         }
       },
 
@@ -2179,7 +2180,7 @@ var OccurrenceWidgetManager = (function ($,_) {
                     occWidget.addGeometry(self.createPolygon(filter.value));
                   }
                 }
-                occWidget.filters.push(filter);                
+                occWidget.filters.push(filter);
               }
             });
           });
