@@ -110,7 +110,9 @@
     <@trowD url="/{key}" resp="Download" respLink="occurrence/download/0000251-150304104939900" method="GET">Retrieves the occurrence download metadata by its unique key.</@trowD>
     <@trowD url="/{key}" method="PUT" authRequired=true>Updates the status of an existing occurrence download. This operation can be executed by the role ADMIN only.</@trowD>
     <@trowD url="/{key}" method="POST" authRequired=true>Creates the metadata about an occurrence download. This operation can be executed by the role ADMIN only.</@trowD>
+    <@trowD url="/{key}/datasets" method="GET" authRequired=false resp="Datasets" respLink="occurrence/download/0000251-150304104939900/datasets">Lists all the datasets of an occurrence download.</@trowD>
     <@trowD url="/user/{user}" method="GET" resp="Download Page" authRequired=true paging=true>Lists the downloads created by a user. Only role ADMIN can list downloads of other users.</@trowD>
+    <@trowD url="occurrence/download/dataset/{datasetKey}" method="GET" resp="Downloads list" authRequired=true paging=true respLink="occurrence/download/dataset/7f2edc10-f762-11e1-a439-00145eb45e9a">Lists the downloads activity of dataset.</@trowD>
   </@api.apiTable>
 </@api.article>
 
