@@ -5,7 +5,7 @@
 #content article.ocurrence_results {
   z-index:1000;
   .content { padding: 0; }
-  
+
   .content  > .footer {
     padding: 24px 26px;
 
@@ -25,27 +25,27 @@
       font-size: 13px;
       text-align: center;
     }
-  }  
+  }
 
   div.location_option {
-    border: 1px solid #F0F0F0; 
+    border: 1px solid #F0F0F0;
     border-radius:4px;
   }
 
   .location_option_geo {
-    border: 1px solid @cGray4; 
+    border: 1px solid @cGray4;
     border-radius:4px;
     background-color:#F2FAFB;
     margin:10px;
   }
 
   fieldset {
-    legend { 
+    legend {
       font-size: 11px;
       color: @cGray2;
       text-transform: uppercase;
       vertical-align: baseline;
-    }      
+    }
     input[type='checkbox'] {
       vertical-align: baseline;
     }
@@ -54,18 +54,18 @@
   div.summary_view {
     div.title {
       display:inline-block !important;
-    } 
+    }
     ul {
       list-style-image: none !important;
       list-style: none !important;
-      margin-bottom: 2px;         
-      font-size: 13px;            
+      margin-bottom: 2px;
+      font-size: 13px;
     }
     div.filter {
-      border: 1px solid #DDDDDD;            
+      border: 1px solid #DDDDDD;
       border-width: 1px !important;
       -moz-border-radius: 4px !important;
-      border-radius: 4px !important;                           
+      border-radius: 4px !important;
     }
   }
   .filter_content{
@@ -80,14 +80,14 @@
     border: 1px solid #DDDDDD;
     border-radius: 4px 4px 4px 4px;
 
-    clear:both; 
+    clear:both;
 
-    .center { 
+    .center {
 
       clear:both;
       overflow:hidden;
       margin: auto;
-      width: 128px; 
+      width: 128px;
       padding: 0 4px;
 
       .button { float: left; width: 128px; }
@@ -99,13 +99,13 @@
       background-color: #F5F5F5;
       border: 1px solid #DDDDDD;
       border-radius: 4px 0 4px 0;
-      color: #9DA0A4;        
+      color: #9DA0A4;
       font-size: 12px;
       left: -1px;
       padding: 3px 7px;
       position: absolute;
       top: -1px;
-    } 
+    }
 
     div.filter, #bboxContainer {
 
@@ -120,7 +120,7 @@
       }
 
       // (UGLY) fix the location of the zoom controls
-      // This should be removed when the occurrence filters are styled 
+      // This should be removed when the occurrence filters are styled
       div#zoom_in {
         top: 122px;
         left: 50px;
@@ -148,32 +148,32 @@
       }
     }
 
-    .close {        
-      border: none;                
+    .close {
+      border: none;
       right: -1px;
       top: -1px;
       padding: 1px;
       margin-top: 2px;
-      position: absolute;        
+      position: absolute;
     }
 
-    label { 
+    label {
       font-size: 11px;
       color: @cGray2;
       text-transform: uppercase;
       vertical-align: baseline;
-    }   
+    }
 
     ul.multi-select {
       list-style: none;
       background-color: #F5F5F5;
       border: 1px solid #DDDDDD;
       border-radius: 4px;
-      color: #9DA0A4;        
-      font-size: 15px;        
+      color: #9DA0A4;
+      font-size: 15px;
       padding: 2px;
       padding-right: 10px;
-      margin-bottom:0px !important;   
+      margin-bottom:0px !important;
       li {
         margin: 0 0 6px 0 !important;
         padding-left: 20px !important;
@@ -187,13 +187,13 @@
           font-weight:normal !important;
         }
 
-        &.selected { 
+        &.selected {
           background: url(../img/tick.png) no-repeat 0 3px !important;
           a { font-size: 15px !important; font-weight: bold !important;}
         }
-      }  
+      }
     }
-    
+
     div.select-controls {
       display: table;
       float: right;
@@ -201,13 +201,13 @@
        font-size: 11px;
 	   cursor: pointer;
 	   display: table-cell;
-	  }   
+	  }
     }
-    
+
     a.apply {
       cursor: pointer;
       padding: 0 0 0 1px;
-    }       
+    }
   }
 
   table.results {
@@ -233,10 +233,10 @@
       margin-right:auto;
       &:active { box-shadow: inset 0px 1px 3px 0px rgba(0,0,0,0.5), 0px 1px 1px 0px rgba(255,255,255,1) !important; }
       &:hover { box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.9); background: #99cefc; }
-    }    
+    }
 
     tr.result:hover td         { background: #FFFFF5; }
-    tr.header:hover td  { background: #FFFFFF; }    
+    tr.header:hover td  { background: #FFFFFF; }
 
     tr.error_summary {
       div,a {display:inline-block;}
@@ -258,7 +258,7 @@
       padding: 16px 20px;
 
       // we use this to solve a problem with relative td in Firefox
-      .inner { position:relative; }      
+      .inner { position:relative; }
 
       .button {
         width: 128px;
@@ -278,26 +278,26 @@
         font-size: 13px;
       }
 
-      .configure_dates {  
+      .configure_dates {
         float:right;
-        font-size:10px; 
+        font-size:10px;
         cursor:pointer;
         i {
           margin-top: -3px;
           .size(18px);
           background: url(../img/icons/cog.png) no-repeat;
-        }   
+        }
       }
 
       .configure_dates_box {
-        border: 1px solid @cGray4; 
+        border: 1px solid @cGray4;
         border-radius:4px;
         background-color:#F2FAFB;
         margin:0px;
         padding: 5px;
         display:inline-block;
         table tr td{
-          padding: 3px 3px; 
+          padding: 3px 3px;
         }
         .label{
           text-transform: uppercase;
@@ -398,7 +398,7 @@
           }
         }
 
-        .dropdown-menu.filters, .dropdown-menu.configure {          
+        .dropdown-menu.filters, .dropdown-menu.configure {
 
           label{vertical-align: baseline; font-size:12px;}
           input{vertical-align: baseline;  font-size:12px;}
@@ -458,13 +458,13 @@
         }
       }
     }
-    
+
     tr.result td {
       max-width: 200px;
     }
-    
+
     tr td {
-      height: 100px;      
+      height: 100px;
       padding: 0 20px;
 
       line-height: normal;
@@ -490,6 +490,11 @@
 
       a.title {
         font-weight: bold;
+      }
+
+      a.title-disable {
+        font-weight: bold;
+        color: #999;
       }
 
       .header { font-size: 13px; color: #CCCCCC; }
@@ -521,7 +526,7 @@
         right: 0;
         top: 23px;
         background:url(../img/icons/filter_close.png) no-repeat;
-        cursor: pointer;        
+        cursor: pointer;
       }
 
       a.edit {
@@ -550,12 +555,12 @@
         display:inline;
         margin: 0;
 
-      }                  
-    }    
+      }
+    }
 
 
 
-  }  
+  }
   div.date-filter {
 
     min-width: 350px;
@@ -607,13 +612,13 @@ table.hor-minimalist-b tbody tr:hover td {
   background-color: #E5F5FA;
 }
 
-.error{     
+.error{
   border-color: red !important;
   border-style: solid !important;
   border-width: 1px !important;
 }
 
-.filter-error{     
+.filter-error{
   border-color: red !important;
   border-style: solid !important;
   border-width: 1px !important;
@@ -669,18 +674,18 @@ div.filterlist {
   display: block;
   margin: 0;
   border-width: 1px;
-  border-style:solid;  
+  border-style:solid;
   border-color: #ECECEC;
   background-color: #FFFFFF;
-  text-transform: none;    
+  text-transform: none;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
   max-height:200px;
   max-width:400px;
-  width:300px; 
+  width:300px;
   overflow-y: auto;
-  clear:both;  
+  clear:both;
 }
 
 div.suggestionBox {
@@ -688,50 +693,50 @@ div.suggestionBox {
   display: block;
   margin: 10px;
   border-width: 1px;
-  border-style:solid;  
+  border-style:solid;
   border-color: #ECECEC;
   background-color: #FFFFFF;
-  text-transform: none;    
+  text-transform: none;
   font-size:12px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
-  border-radius: 4px;  
+  border-radius: 4px;
   overflow-y: auto;
-  clear:both;   
+  clear:both;
 }
 
 
-div.warningBox, span.warningBox {  
+div.warningBox, span.warningBox {
   display: block;
   margin: 5px;
   padding: 5px;
   border-width: 1px;
-  border-style:solid;  
+  border-style:solid;
   border-color: red;
   background-color: #FFFFFF;
-  text-transform: none;    
+  text-transform: none;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
-  border-radius: 4px;  
+  border-radius: 4px;
   overflow-y: auto;
   clear:both;
-  width: 360px;    
+  width: 360px;
 }
 
-span.warningCounter {  
+span.warningCounter {
   display: inline;
   margin: 2px;
   padding: 2px;
   border-width: 1px;
-  border-style:solid;  
+  border-style:solid;
   border-color: red;
   background-color: red;
   text-transform: none;
-  color: white;    
+  color: white;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
-  border-radius: 10px;    
-  clear:both;  
+  border-radius: 10px;
+  clear:both;
 }
 
 div.suggestionBox ul.taxonomy {
@@ -757,20 +762,20 @@ div.suggestionBox ul.taxonomy {
     li:last-child {
       background: none;
     }
-  }       
+  }
 }
 header #infoband .content {
   .table_title {
     float:left;
-  }   
+  }
   div.download{
-    float:right; position:relative;right:0;    
-  }  
+    float:right; position:relative;right:0;
+  }
 }
 
-#map.map_widget {  
+#map.map_widget {
   position: relative !important;
-  top: 0px !important;  
+  top: 0px !important;
   margin-bottom: 1px !important;
   margin-left: 1px !important;
   margin-right: 1px !important;

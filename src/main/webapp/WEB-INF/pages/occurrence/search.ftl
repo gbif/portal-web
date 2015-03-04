@@ -239,7 +239,13 @@
                   <div class="code">Type status: ${action.getFilterTitle('typeStatus',occ.typeStatus)!}</div>
                 </#if>
               </div>
-              <#if showScientificName && occ.scientificName?has_content><a class="title" title="${occ.scientificName}" href="<@s.url value='/occurrence/${occ.key?c}'/>">${common.limit(occ.scientificName,40)}</a></#if>
+              <#if showScientificName>
+                <#if occ.scientificName?has_content>
+                  <a class="title" title="${occ.scientificName}" href="<@s.url value='/occurrence/${occ.key?c}'/>">${common.limit(occ.scientificName,40)}</a>
+                <#else>
+                  <a class="title-disable" title="Unknown species" href="<@s.url value='/occurrence/${occ.key?c}'/>">Unknown species</a>
+                </#if>
+              </#if>
               <#if showDataset && occ.datasetKey?has_content>
                <#assign datasetTitle =  action.getDatasetTitle(occ.datasetKey)!>
                <div class="footer" title="${datasetTitle}">Published in ${common.limit(datasetTitle,60)}</div>
