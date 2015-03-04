@@ -10,6 +10,8 @@ import java.net.URLEncoder;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.annotation.Nullable;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.opensymphony.xwork2.ActionSupport;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.utils.URIUtils;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -37,6 +40,9 @@ public abstract class BaseAction extends ActionSupport
   protected static Logger LOG = LoggerFactory.getLogger(BaseAction.class);
   private static Joiner QUERY_JOINER = Joiner.on('&');
   private static Splitter QUERY_SPLITTER = Splitter.on("&");
+  // negative lookbehind expressions must cannot take an unlimited operator as * or +
+  // we allow 5 spaces
+  private static final Pattern LINKS = Pattern.compile("(?<!=\\s{0,5}[\"'])(?<!\\s{6})((?:ftp://|https?://|(?<![./])www\\.)\\S+[a-zA-Z0-9/_-])", Pattern.CASE_INSENSITIVE);
 
   protected Map<String, Object> session;
   protected HttpServletRequest request;
@@ -64,6 +70,29 @@ public abstract class BaseAction extends ActionSupport
       }
     }
     return false;
+  }
+
+  /**
+   * Wraps plain http(y) links in text with html anchors unless they already exist.
+   * re.sub('(https?://\S+[a-zA-Z0-9/_-])', "<a href='\\1'>\\1</a>", x)
+   */
+  public String linkText(String text) {
+    if (!StringUtils.isBlank(text)) {
+      Matcher m = LINKS.matcher(text);
+      StringBuffer sb = new StringBuffer();
+      while (m.find()) {
+        String url = m.group(1);
+        if (url.startsWith("www")) {
+          url = "http://" + url;
+        }
+        m.appendReplacement(sb, String.format("<a target='_blank' href='%s'>%s</a>", url, m.group(1)));
+      }
+      if (sb.length() > 0) {
+        m.appendTail(sb);
+        return sb.toString();
+      }
+    }
+    return text;
   }
 
 
