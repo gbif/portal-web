@@ -51,7 +51,7 @@
     <@toolsTable>
       <@trow name="Integrated Publishing Toolkit (IPT)" link="/ipt" categories="Data publishing, Metadata authoring, Data discovery" demoLink="http://ipt.gbif.org/" projectLink="https://code.google.com/p/gbif-providertoolkit/" mailingList="http://lists.gbif.org/mailman/listinfo/ipt">Publishes primary occurrence data, species checklists and taxonomies, and general metadata about data sources. It can also serve as a repository for data referenced in an article.</@trow>
       <@trow name="Nodes Portal Toolkit (NPT) Startup" link="#npt" categories="Data discovery" demoLink="http://nptstartup.gbif.org" projectLink="https://github.com/gbif/gbif-npt-startup" mailingList="http://lists.gbif.org/mailman/listinfo/npt-users">Enables participants to establish a simple, GBIF-compliant web presence</@trow>
-      <@trow name="Darwin Core Archive Validator" link="#validator" categories="Data assessment" demoLink="http://tools.gbif.org/dwca-validator" projectLink="https://code.google.com/p/darwincore/">Validates that a Darwin Core Archive complies with the Darwin Core Text Guidelines</@trow>
+      <@trow name="Darwin Core Archive Validator" link="#validator" categories="Data assessment" demoLink="http://tools.gbif.org/dwca-validator" projectLink="https://github.com/gbif/dwca-validator3/">Validates that a Darwin Core Archive complies with the Darwin Core Text Guidelines</@trow>
       <@trow name="Name Parser" link="#parser" categories="Data cleaning" demoLink="http://tools.gbif.org/nameparser/" projectLink="https://code.google.com/p/taxon-name-processing/wiki/NameParsing">Atomizes scientific names, and validates that a scientific name is a well-formed 3-part name</@trow>
     </@toolsTable>
   </div>
@@ -132,11 +132,11 @@
         <ul>
             <li><a href="http://tools.gbif.org/dwca-validator" title="Darwin Core Archive Validator HTML form" target="_blank">Try it out</a></li>
             <li><a href="http://tools.gbif.org/dwca-validator/api.do" title="Darwin Core Archive Validator API" target="_blank">Web service API</a></li>
-            <li><a href="https://code.google.com/p/darwincore/" title="Darwin Core Archive Validator project home" target="_blank">Project site</a></li>
+            <li><a href="https://github.com/gbif/dwca-validator3/" title="Darwin Core Archive Validator project home" target="_blank">Project site</a></li>
         </ul>
         <h3>Feedback</h3>
         <ul>
-            <li><a href="https://code.google.com/p/darwincore/issues/entry" title="Darwin Core Archive Validator Report a bug" target="_blank">Report an issue</a></li>
+            <li><a href="https://github.com/gbif/dwca-validator3/issues" title="Darwin Core Archive Validator Report a bug" target="_blank">Report an issue</a></li>
         </ul>
     </div>
 </@common.article>
@@ -161,12 +161,9 @@
           <ul>
               <li><a href="http://tools.gbif.org/nameparser/" title="Name Parser HTML form" target="_blank">Try it out</a></li>
               <li><a href="http://tools.gbif.org/nameparser/api.do" title="Name Parser API" target="_blank">Web service API</a></li>
-              <li><a href="https://code.google.com/p/taxon-name-processing" title="Name Parser project home" target="_blank">Project site</a></li>
+              <li><a href="https://github.com/gbif/name-parser" title="Name Parser project home" target="_blank">Project site</a></li>
               <li><a href="https://code.google.com/p/taxon-name-processing/wiki/NameParsing" title="NPT wiki" target="_blank">Wiki</a></li>
           </ul>
-          <h3>Feedback</h3>
-          <ul>
-              <li><a href="https://code.google.com/p/taxon-name-processing/issues/entry" title="Name Parser Report a bug" target="_blank">Report an issue</a></li>
           </ul>
       </div>
   </@common.article>
