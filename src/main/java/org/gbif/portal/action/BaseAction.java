@@ -1,5 +1,6 @@
 package org.gbif.portal.action;
 
+import org.gbif.api.model.common.DOI;
 import org.gbif.api.model.common.User;
 import org.gbif.portal.config.Config;
 import org.gbif.portal.config.Constants;
@@ -42,7 +43,7 @@ public abstract class BaseAction extends ActionSupport
   private static Splitter QUERY_SPLITTER = Splitter.on("&");
   // negative lookbehind expressions must cannot take an unlimited operator as * or +
   // we allow 5 spaces
-  private static final Pattern LINKS = Pattern.compile("(?<!=\\s{0,5}[\"'])(?<!\\s{6})((?:ftp://|https?://|(?<![./])www\\.)\\S+[a-zA-Z0-9/_-])", Pattern.CASE_INSENSITIVE);
+  private static final Pattern LINKS = Pattern.compile("(?<!=\\s{0,5}[\"'])(?<!\\s{6})((?:ftp://|https?://|(?<![./])www\\.|(?:doi:)?10.[0-9]{2,}/)\\S+[a-zA-Z0-9/_-])", Pattern.CASE_INSENSITIVE);
 
   protected Map<String, Object> session;
   protected HttpServletRequest request;
@@ -73,19 +74,26 @@ public abstract class BaseAction extends ActionSupport
   }
 
   /**
-   * Wraps plain http(y) links in text with html anchors unless they already exist.
-   * re.sub('(https?://\S+[a-zA-Z0-9/_-])', "<a href='\\1'>\\1</a>", x)
+   * Wraps plain http(s), ftp links or DOIs in text with html anchors unless they already exist.
    */
   public String linkText(String text) {
     if (!StringUtils.isBlank(text)) {
       Matcher m = LINKS.matcher(text);
       StringBuffer sb = new StringBuffer();
       while (m.find()) {
-        String url = m.group(1);
-        if (url.startsWith("www")) {
-          url = "http://" + url;
+        try {
+          String url = m.group(1);
+          if (url.startsWith("www")) {
+            url = "http://" + url;
+          }else if (url.startsWith("doi:") || url.startsWith("10.")) {
+              DOI doi = new DOI(url);
+              url = doi.getUrl().toString();
+          }
+          m.appendReplacement(sb, String.format("<a target='_blank' href='%s'>%s</a>", url, m.group(1)));
+        } catch (IllegalArgumentException e) {
+          // keep it as it was in case we get errors
+          m.appendReplacement(sb, m.group(1));
         }
-        m.appendReplacement(sb, String.format("<a target='_blank' href='%s'>%s</a>", url, m.group(1)));
       }
       if (sb.length() > 0) {
         m.appendTail(sb);
