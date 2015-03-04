@@ -50,7 +50,7 @@
 
       <#if (showDescription!false) && node.description?has_content>
         <h3>Description</h3>
-        <p>${node.description}</p>
+        <p>${action.linkText(node.description)}</p>
       </#if>
 
     </div>

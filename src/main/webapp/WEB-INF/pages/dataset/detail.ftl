@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.dataset.DetailAction" -->
 <#import "/WEB-INF/macros/common.ftl" as common>
 <html>
 <head>
@@ -71,17 +72,17 @@
 
   <#if dataset.description?has_content>
     <h3>Description</h3>
-    <p>${dataset.description}</p>
+    <p>${action.linkText(dataset.description)}</p>
   </#if>
 <#-- purpose doesn't exist yet -->
   <#if dataset.purpose?has_content>
     <h3>Purpose</h3>
-    <p>${dataset.purpose}</p>
+    <p>${action.linkText(dataset.purpose)}</p>
   </#if>
 <#-- additionalInformation doesn't exist yet -->
   <#if dataset.additionalInfo?has_content>
     <h3>Additional Information</h3>
-    <p>${dataset.additionalInfo}</p>
+    <p>${action.linkText(dataset.additionalInfo)}</p>
   </#if>
 
   <#if dataset.temporalCoverages?has_content>
@@ -349,7 +350,7 @@
       <div class="fullwidth">
         <div class="">
           <#list dataset.geographicCoverages as geo>
-            <p>${geo.description!}</p>
+            <p>${action.linkText(geo.description!)}</p>
           </#list>
         </div>
       </div>
@@ -393,17 +394,17 @@
     <#assign proj=dataset.project />
     <#if proj.studyAreaDescription?has_content>
       <h3>Study area description</h3>
-      <p>${proj.studyAreaDescription}</p>
+      <p>${action.linkText(proj.studyAreaDescription)}</p>
     </#if>
 
     <#if proj.designDescription?has_content>
       <h3>Design description</h3>
-      <p>${proj.designDescription}</p>
+      <p>${action.linkText(proj.designDescription)}</p>
     </#if>
 
     <#if proj.funding?has_content>
       <h3>Funding</h3>
-      <p>${proj.funding}</p>
+      <p>${action.linkText(proj.funding)}</p>
     </#if>
 
     <#if proj.contacts?has_content>
@@ -442,17 +443,17 @@
 
   <#if sd.studyExtent?has_content>
     <h3>Study extent</h3>
-    <p>${sd.studyExtent}</p>
+    <p>${action.linkText(sd.studyExtent)}</p>
   </#if>
 
   <#if sd.sampling?has_content>
     <h3>Sampling description</h3>
-    <p>${sd.sampling}</p>
+    <p>${action.linkText(sd.sampling)}</p>
   </#if>
 
   <#if sd.qualityControl?has_content>
     <h3>Quality control</h3>
-    <p>${sd.qualityControl}</p>
+    <p>${action.linkText(sd.qualityControl)}</p>
   </#if>
 
   <#if sd.methodSteps?has_content>
@@ -460,7 +461,7 @@
     <ol>
       <#list sd.methodSteps as step>
         <#if step?has_content>
-         <li>${step}</li>
+         <li>${action.linkText(step)}</li>
         </#if>
       </#list>
     </ol>
@@ -472,17 +473,17 @@
     <#list dataset.collections as col>
       <#if col.collectionName?has_content>
         <h3>Collection name</h3>
-        <p>${col.collectionName}</p>
+        <p>${action.linkText(col.collectionName)}</p>
       </#if>
 
       <#if col.collectionIdentifier?has_content>
         <h3>Collection Identifier</h3>
-        <p>${col.collectionIdentifier}</p>
+        <p>${action.linkText(col.collectionIdentifier)}</p>
       </#if>
 
       <#if col.parentCollectionIdentifier?has_content>
         <h3>Parent Collection Identifier</h3>
-        <p>${col.parentCollectionIdentifier}</p>
+        <p>${action.linkText(col.parentCollectionIdentifier)}</p>
       </#if>
 
       <#if col.specimenPreservationMethod?has_content>

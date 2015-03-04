@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.network.DetailAction" -->
 <#import "/WEB-INF/macros/common.ftl" as common>
 <html>
 <head>

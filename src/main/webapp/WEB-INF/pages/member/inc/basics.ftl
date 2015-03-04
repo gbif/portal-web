@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.member.MemberBaseAction" -->
 <#import "/WEB-INF/macros/common.ftl" as common>
 
 <div class="left">
@@ -6,7 +7,7 @@
 
   <#if member.description?has_content>
     <h3>Description</h3>
-    <p>${member.description}</p>
+    <p>${action.linkText(member.description)}</p>
   </#if>
 
   <#if member.metadataLanguage?has_content>
