@@ -21,7 +21,7 @@
 <#if dataset.type! == "OCCURRENCE" || (dataset.type! == "CHECKLIST" && !parentDataset?has_content)>
   <#assign box=true />
   <#assign maxKeywordChars=140 />
-  <#assign titleLength = 36 />
+  <#assign titleLength = 38 />
   <#assign subtitleLength = 70 />
 <#else>
   <#assign box=false />
@@ -72,8 +72,8 @@
             <a href="<@s.url value='/occurrence/search?datasetKey=${id!}'/>" title="View occurrences" class="candy_blue_button"><span>View occurrences</span></a>
         <#elseif dataset.type! == "CHECKLIST">
             <ul>
-                <li><h4>${(metrics.getCountByRank(speciesRank))!"?"}</h4>Species</li>
-                <li class="last"><h4>${(metrics.usagesCount)!"?"}</h4>Taxa</li>
+                <li><h3>${(metrics.getCountByRank(speciesRank))!"?"}</h3>Species</li>
+                <li class="last"><h3>${(metrics.usagesCount)!"?"}</h3>Taxa</li>
             </ul>
             <a href="<@s.url value='/species/search?dataset_key=${id!}'/>" title="View species" class="candy_blue_button"><span>View species</span></a>
         </#if>
