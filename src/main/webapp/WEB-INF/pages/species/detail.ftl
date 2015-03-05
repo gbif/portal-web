@@ -1,6 +1,5 @@
 <#-- @ftlvariable name="" type="org.gbif.portal.action.species.DetailAction" -->
 <#import "/WEB-INF/macros/common.ftl" as common>
-<#import "/WEB-INF/macros/typespecimen.ftl" as types>
 <html>
 <head>
   <title>${usage.scientificName} - Checklist View</title>
@@ -551,35 +550,56 @@
   </@common.article>
 </#if>
 
-<#if (usage.typeSpecimens?has_content)>
-  <@common.article id="types" title="Types">
+<#-- usage.typeSpecimens is misleading proeprty name, this is ONLY EVERY TYPE NAMES IN CLB -->
+<#if usage.typeSpecimens?has_content>
+  <#-- show CLB typification records -->
+  <@common.article id="types" title="Typification">
     <div class="fullwidth">
+      <ul class="notes">
       <#list usage.typeSpecimens as ts>
-        <#-- require a type status or assume its type species/genus for higher ranks in case its null and we got a sciname -->
-        <ul>
-          <li>
-            <strong>${(ts.typeStatus!"TYPE")?capitalize}</strong>
-            <#if ts.scientificName?has_content> -
-              <#if ts.typeStatus=='TYPE_GENUS' || ts.typeStatus=='TYPE_SPECIES'>
-                  <a href="<@s.url value='/species/search?q=${ts.scientificName}'/>">${ts.scientificName}</a>
-              <#else>
-                  <a href="<@s.url value='/occurrence/search?TAXON_KEY=${ts.scientificName}'/>">${ts.scientificName}</a>
-              </#if>
-            </#if>
-            <@types.details ts />
-          </li>
-        </ul>
-        <#-- only show 4 type specimens at max -->
-        <#if ts_has_next && ts_index==3>
-          <p class="more">
-            <a href="<@s.url value='/species/${id?c}/types'/>">more</a>
-          </p>
-          <#break>
-        </#if>
+          <#-- require a sciname -->
+          <#if ts.scientificName?has_content>
+              <li>
+                <a href="<@s.url value='/species/search?q=${ts.scientificName}'/>">${ts.scientificName}</a>
+                <#if ts.typeDesignationType?has_content || ts.typeDesignatedBy?has_content>
+                  <span class="note">${ts.typeDesignationType!}
+                    <#if ts.typeDesignatedBy?has_content>
+                        designated by ${ts.typeDesignatedBy!}
+                    </#if>
+                  </span>
+                </#if>
+                <#if ts.citation?has_content>
+                    <span class="note">${ts.citation}</span>
+                </#if>
+                <#if ts.source?has_content>
+                    <span class="note">Source: ${ts.source}</span>
+                </#if>
+              </li>
+          </#if>
       </#list>
+      </ul>
+    </div>
+  </@common.article>
+
+<#elseif typeSpecimen?has_content>
+  <#-- show type specimens from occurrences -->
+  <@common.article id="types" title="Type Specimen">
+    <div class="fullwidth">
+      <ul class="notes">
+      <#list typeSpecimen as occ>
+              <li>
+                  <#assign catnum = action.termValue(occ, 'catalogNumber')! />
+                  <a href="<@s.url value='/occurrence/${occ.key?c}'/>">${occ.typeStatus} ${catnum!}</a>
+                  <span class="note">
+                    of <#if occ.typifiedName?has_content>${occ.typifiedName}<#else>${occ.scientificName!"?"}</#if>
+                  </span>
+              </li>
+      </#list>
+      </ul>
     </div>
   </@common.article>
 </#if>
+
 
 <#if (usage.referenceList?size>0)>
   <@common.article id="references" title="Bibliography">
