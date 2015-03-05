@@ -11,9 +11,11 @@
  To show yellow tabs instead of default grey ones please assign:
   <#assign tabhl=true />
 -->
+Plantae › Marchantiophyta › Jungermanniopsida › Jungermanniales › Pseudolepicoleaceae › Blepharostoma › Blepharostoma trichophyllum
 
 <#assign showBox = usage.nub && !(tabhl!false) />
 <#assign titleLength = 36 />
+<#assign classificationLineLength = 85 />
 <#if !showBox>
   <#assign titleLength = 48 />
 </#if>
@@ -26,8 +28,19 @@
   </h3>
   <h3>
   <#assign classification=usage.higherClassificationMap />
+  <#assign classificationLength = 0 />
   <#list classification?keys as key>
-    <a href="<@s.url value='/species/${key?c}'/>">${classification.get(key)!}</a><#if key_has_next> &#x203A; </#if>
+    <#assign classificationText = classification.get(key) />
+    <#if classificationText?has_content>
+      <#assign classificationLength = classificationLength + classificationText?length />
+    </#if>
+
+    <a href="<@s.url value='/species/${key?c}'/>">${classificationText!}</a><#if key_has_next> &#x203A;
+    <#assign classificationLength = classificationLength + 3/></#if>
+    <#if classificationLength gte classificationLineLength>
+      <#assign classificationLength = 0/>
+      <br>
+    </#if>
   </#list>
   </h3>
 
