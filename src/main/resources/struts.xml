@@ -164,11 +164,6 @@
       <result>/WEB-INF/pages/dataset/constituents.ftl</result>
     </action>
 
-    <action name="*/contacts" class="org.gbif.portal.action.dataset.DetailAction">
-      <param name="id">{1}</param>
-      <result>/WEB-INF/pages/dataset/contacts.ftl</result>
-    </action>
-
     <action name="*/geographicCoverage" class="org.gbif.portal.action.dataset.DetailAction">
       <param name="id">{1}</param>
       <result>/WEB-INF/pages/dataset/geographicCoverage.ftl</result>

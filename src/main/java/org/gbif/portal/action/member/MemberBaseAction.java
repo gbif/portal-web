@@ -4,6 +4,7 @@ import org.gbif.api.model.checklistbank.DatasetMetrics;
 import org.gbif.api.model.common.paging.PagingResponse;
 import org.gbif.api.model.metrics.cube.OccurrenceCube;
 import org.gbif.api.model.metrics.cube.ReadBuilder;
+import org.gbif.api.model.registry.Contact;
 import org.gbif.api.model.registry.Dataset;
 import org.gbif.api.model.registry.NetworkEntity;
 import org.gbif.api.model.registry.Organization;
@@ -42,6 +43,8 @@ public class MemberBaseAction<T extends NetworkEntity & Taggable> extends org.gb
   private final MemberType type;
   private List<String> keywords;
   private Map<UUID, Organization> orgMap = Maps.newHashMap();
+  private List<Contact> primaryContacts;
+  private List<Contact> otherContacts;
 
   protected MemberBaseAction(MemberType type, NetworkEntityService<T> memberService,
     CubeService cubeService, DatasetMetricsService datasetMetricsService, OrganizationService organizationService) {
@@ -148,5 +151,42 @@ public class MemberBaseAction<T extends NetworkEntity & Taggable> extends org.gb
     Organization o = organizationService.get(key);
     orgMap.put(key, o);
     return o;
+  }
+
+  /**
+   * Get a list of members's contacts that are designated as primary.
+   *
+   * @return a list of members's contacts that are designated as primary
+   */
+  public List<Contact> getPrimaryContacts() {
+    return primaryContacts;
+  }
+
+  /**
+   * Get a list of members's contacts that are not designated as primary.
+   *
+   * @return a list of members's contacts that are not designated as primary
+   */
+  public List<Contact> getOtherContacts() {
+    return otherContacts;
+  }
+
+  /**
+   * Separate member's contacts into 2 lists: primary contacts, and others.
+   */
+  protected void separateContacts(List<Contact> ... contacts) {
+    primaryContacts = Lists.newLinkedList();
+    otherContacts = Lists.newLinkedList();
+    for (List<Contact> clist : contacts) {
+      if (clist != null) {
+        for (Contact contact : clist) {
+          if (contact.isPrimary()) {
+            primaryContacts.add(contact);
+          } else {
+            otherContacts.add(contact);
+          }
+        }
+      }
+    }
   }
 }

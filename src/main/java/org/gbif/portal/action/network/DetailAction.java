@@ -29,6 +29,7 @@ public class DetailAction extends MemberBaseAction<Network> {
   @Override
   public String execute() throws Exception {
     super.execute();
+    separateContacts(member.getContacts());
 
     // load first 10 datasets
     page = networkService.listConstituents(id, new PagingRequest(0, 10));

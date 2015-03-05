@@ -22,6 +22,8 @@
   <#include "/WEB-INF/pages/member/inc/basics.ftl">
 </@common.article>
 
+<@common.contactArticle primaryContacts=primaryContacts otherContacts=otherContacts />
+
 <#if page.results?has_content>
 
   <#-- Occurrence cube provides no publisher metrics, so we have no way to know if the map has content -->

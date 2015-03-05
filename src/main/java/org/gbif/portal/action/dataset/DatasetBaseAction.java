@@ -178,6 +178,8 @@ public class DatasetBaseAction extends MemberBaseAction<Dataset> {
       metrics = new DatasetMetrics();
     }
 
+    separateContacts(member.getContacts(), member.getProject() != null ? member.getProject().getContacts() : null);
+
     populateOccurrenceCounts(); // only when a key exists
   }
 

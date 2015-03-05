@@ -110,15 +110,11 @@
     <@common.enumParagraph dataset.dataLanguage />
   </#if>
 
-  <#if (preferredContacts?size>0) >
-    <div id="primaryContacts">
-      <#list preferredContacts as c>
-        <@common.contact con=c />
-      </#list>
-    </div>
+  <#if primaryContacts?has_content>
+    <@common.contactList contacts=primaryContacts columns=3 showAllButton=false />
   </#if>
 
-  <#-- Display the full keywords / tags if they were too many to show in the title (see infoband.ftl) -->
+<#-- Display the full keywords / tags if they were too many to show in the title (see infoband.ftl) -->
   <#if keywordsTruncatedInTitle>
     <a id="keywords"/>
     <h3>Keywords and tags</h3>
@@ -359,6 +355,7 @@
   </article>
 </#if>
 
+<@common.contactArticle primaryContacts=primaryContacts otherContacts=otherContacts />
 
 <#-- TAXONOMIC COVERAGE -->
 <#if organizedCoverages?has_content >
@@ -386,10 +383,10 @@
 </#if>
 
 <#-- PROJECT -->
-<#if dataset.project?has_content || (otherContacts?size>0) >
+<#if dataset.project?has_content>
 <#assign rtitle><span class="showAllContacts small">show all</span></#assign>
 <@common.article id="project" title='${(dataset.project.title)!"Project"}' titleRight=rtitle>
-<div class="left">
+<div class="fullwidth">
   <#if dataset.project?has_content>
     <#assign proj=dataset.project />
     <#if proj.studyAreaDescription?has_content>
@@ -417,19 +414,6 @@
         </#if>
       </#list>
     </#if>
-  </#if>
-</div>
-
-<div class="right">
-  <#if (otherContacts?size>0) >
-    <h3>Associated parties</h3>
-    <#list otherContacts as ap>
-      <@common.contact con=ap />
-      <#if ap_has_next && ap_index==2>
-        <div class="more"> <a href="<@s.url value='/dataset/${dataset.key}/contacts'/>">more</a> </div>
-        <#break />
-      </#if>
-    </#list>
   </#if>
 </div>
 </@common.article>

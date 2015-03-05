@@ -15,35 +15,8 @@
   <p>${member.metadataLanguage}</p>
   </#if>
 
-  <#if member.email?has_content>
-  <h3>Email</h3>
-   <#list member.email as email>
-    <#if email?has_content>
-      <p><a href="mailto:${email}">${email}</a></p>
-    </#if>
-   </#list>
-  </#if>
-
-  <#if member.phone?has_content>
-  <h3>Phone</h3>
-  <#list member.phone as phone>
-    <#if phone?has_content>
-      <p>${phone}</p>
-    </#if>
-  </#list>
-  </#if>
-
-  <#-- only publisher pages need to separate contacts into primary and other -->
-  <#if primaryContacts?? && otherContacts??>
-    <#if primaryContacts?has_content>
-    <#-- show all link should get shown at bottom of other contacts, depending on whether there are other contacts -->
-      <@common.contactList contacts=primaryContacts columns=3  showAllButton=(otherContacts?size == 0) title='Primary contacts'/>
-    </#if>
-    <#if otherContacts?has_content>
-      <@common.contactList contacts=otherContacts columns=3 showAllButton=true title="Other contacts"/>
-    </#if>
-  <#elseif member.contacts?has_content>
-      <@common.contactList contacts=member.contacts columns=3 showAllButton=true/>
+  <#if primaryContacts?has_content>
+    <@common.contactList contacts=primaryContacts columns=3 showAllButton=false />
   </#if>
 </div>
 

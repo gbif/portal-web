@@ -10,7 +10,6 @@ package org.gbif.portal.action.dataset;
 
 import org.gbif.api.model.common.paging.PagingRequest;
 import org.gbif.api.model.common.paging.PagingResponse;
-import org.gbif.api.model.registry.Contact;
 import org.gbif.api.model.registry.Dataset;
 import org.gbif.api.model.registry.Endpoint;
 import org.gbif.api.model.registry.Network;
@@ -79,8 +78,6 @@ public class DetailAction extends DatasetBaseAction {
     return "\\b(" + Joiner.on("|").join(b.build()) + ")\\b";
   }
 
-  private final List<Contact> preferredContacts = Lists.newArrayList();
-  private final List<Contact> otherContacts = Lists.newArrayList();
   private final List<Endpoint> links = Lists.newArrayList();
   private final List<Endpoint> dataLinks = Lists.newArrayList();
   private final List<Endpoint> metaLinks = Lists.newArrayList();
@@ -102,7 +99,6 @@ public class DetailAction extends DatasetBaseAction {
   public String execute() {
     loadDetail();
     insertCountryLinks();
-    populateContacts(member.getContacts());
     populateLinks(member.getEndpoints());
     // only datasets with a key (internal) can have constituents
     if (id != null) {
@@ -164,20 +160,10 @@ public class DetailAction extends DatasetBaseAction {
     return metaLinks;
   }
 
-  @NotNull
-  public List<Contact> getOtherContacts() {
-    return otherContacts;
-  }
-
   @Override
   @Nullable
   public Dataset getParentDataset() {
     return parentDataset;
-  }
-
-  @NotNull
-  public List<Contact> getPreferredContacts() {
-    return preferredContacts;
   }
 
   /**
@@ -235,22 +221,6 @@ public class DetailAction extends DatasetBaseAction {
         }
         m.appendTail(sb);
         gc.setDescription(sb.toString());
-      }
-    }
-  }
-
-  /**
-   * Populates the preferred and other contact lists from the unified contact list.
-   */
-  private void populateContacts(@NotNull List<Contact> contacts) {
-    Preconditions.checkNotNull(contacts, "Contacts cannot be null - expected empty list for no contacts");
-    preferredContacts.clear(); // for safety
-    otherContacts.clear();
-    for (Contact contact : contacts) {
-      if (contact.isPrimary()) {
-        preferredContacts.add(contact);
-      } else {
-        otherContacts.add(contact);
       }
     }
   }

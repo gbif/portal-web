@@ -33,6 +33,7 @@ public class DetailAction extends MemberBaseAction<Installation> {
 
   public String datasets() throws Exception {
     super.execute();
+    separateContacts(member.getContacts());
     page = installationService.getHostedDatasets(id, new PagingRequest(offset, 25));
     return SUCCESS;
   }

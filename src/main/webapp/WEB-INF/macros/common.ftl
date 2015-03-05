@@ -188,6 +188,21 @@
 </#if>
 </#macro>
 
+
+<#-- produces a full contact block -->
+<#macro contactArticle primaryContacts otherContacts columns=3 showAllButton=false>
+  <#if otherContacts?has_content >
+    <@article id="other_contacts" title="Other Contacts">
+    <div class="fullwidth">
+      <#if otherContacts?has_content >
+        <@contactList contacts=otherContacts columns=3/>
+      </#if>
+    </div>
+    </@article>
+  </#if>
+</#macro>
+
+
 <#--
 	Construct a Endpoint. Parameter is the actual endpoint object.
 -->

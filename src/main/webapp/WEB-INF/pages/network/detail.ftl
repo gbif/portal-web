@@ -13,6 +13,8 @@
   <#include "/WEB-INF/pages/member/inc/basics.ftl">
 </@common.article>
 
+<@common.contactArticle primaryContacts=primaryContacts otherContacts=otherContacts />
+
 <#if page.results?has_content>
 <@common.article id="datasets" title="Participating datasets: ${member.numConstituents}">
   <div class="fullwidth">
