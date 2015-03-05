@@ -104,13 +104,15 @@
 
   <@api.apiTable params=false>
     <@trowD url="/request" resp="Download key" method="POST" authRequired=true>Starts the process of creating a download file. See the <a href="#predicates">predicates</a> section to consult the requests accepted by this service.</@trowD>
-    <@trowD url="/request/{key}" resp="Download file" respLink="occurrence/download/request/0003589-140616093749225" method="GET" authRequired=false>Retrieves the download file if it is available.</@trowD>
+    <@trowD url="/request/{key}" resp="Download file" respLink="occurrence/download/request/0000251-150304104939900" method="GET" authRequired=false>Retrieves the download file if it is available.</@trowD>
     <@trowD url="/request/{key}" method="DELETE" authRequired=true>Cancels the download process.</@trowD>
     <@trowD url="" method="GET" resp="Download Page" authRequired=true paging=true>Lists all the downloads. This operation can be executed by the role ADMIN only.</@trowD>
-    <@trowD url="/{key}" resp="Download" respLink="occurrence/download/0003589-140616093749225" method="GET">Retrieves the occurrence download metadata by its unique key.</@trowD>
+    <@trowD url="/{key}" resp="Download" respLink="occurrence/download/0000251-150304104939900" method="GET">Retrieves the occurrence download metadata by its unique key.</@trowD>
     <@trowD url="/{key}" method="PUT" authRequired=true>Updates the status of an existing occurrence download. This operation can be executed by the role ADMIN only.</@trowD>
     <@trowD url="/{key}" method="POST" authRequired=true>Creates the metadata about an occurrence download. This operation can be executed by the role ADMIN only.</@trowD>
+    <@trowD url="/{key}/datasets" method="GET" authRequired=false resp="Datasets" respLink="occurrence/download/0000251-150304104939900/datasets">Lists all the datasets of an occurrence download.</@trowD>
     <@trowD url="/user/{user}" method="GET" resp="Download Page" authRequired=true paging=true>Lists the downloads created by a user. Only role ADMIN can list downloads of other users.</@trowD>
+    <@trowD url="occurrence/download/dataset/{datasetKey}" method="GET" resp="Downloads list" authRequired=true paging=true respLink="occurrence/download/dataset/7f2edc10-f762-11e1-a439-00145eb45e9a">Lists the downloads activity of dataset.</@trowD>
   </@api.apiTable>
 </@api.article>
 
@@ -170,6 +172,7 @@
   "spatialIssues": "Includes/excludes occurrence records which contain spatial issues (as determined in our record interpretation), i.e. spatialIssues=true returns only those records with spatial issues while spatialIssues=false includes only records without spatial issues. The absence of this parameter returns any record with or without spatial issues.",
   "issue": "A specific interpretation issue as defined in our <a href='${api.apidocs}/vocabulary/OccurrenceIssue.html' target='_blank'>OccurrenceIssue enum</a>",
   "mediaType": "The kind of multimedia associated with an occurrence as defined in our <a href='${api.apidocs}/vocabulary/MediaType.html' target='_blank'>MediaType enum</a>",
+ "typeStatus": "Nomenclatural type (type status, typified scientific name, publication) applied to the subject.",
   "q" : "Simple search parameter. The value for this parameter can be a simple word or a phrase.",
   "limit": "The maximum number of results to return. This can't be greater than 300, any value greater is set to 300."
 } />
