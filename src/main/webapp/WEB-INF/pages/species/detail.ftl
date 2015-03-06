@@ -645,5 +645,21 @@
   </@common.notice>
 </#if>
 
+<@common.notice title="Record history">
+  <#if usage.lastInterpreted?has_content>
+  <p>
+    This record was last modified in GBIF on ${usage.lastInterpreted?date?string.medium}.
+    <#if usage.lastCrawled?has_content>
+      The source was last visited by GBIF on ${usage.lastCrawled?date?string.medium}.
+    </#if>
+    <#if usage.modified??>
+      It was last updated according to the publisher on ${usage.modified?date?string.medium}.
+    </#if>
+  </p>
+  </#if>
+<p>
+  A record will be modified by GBIF when either the source record has been changed by the publisher, or improvements in the GBIF processing warrant an update.
+</p>
+</@common.notice>
 </body>
 </html>
