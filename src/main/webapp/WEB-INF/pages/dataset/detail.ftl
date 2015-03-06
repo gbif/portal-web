@@ -195,7 +195,7 @@
     <h3>Links</h3>
     <ul>
       <#if dataset.homepage?has_content>
-      <li><a href="<@s.url value='${dataset.homepage}' target='_blank'/>" title="Dataset homepage">Dataset homepage</a></li>
+      <li><a href="<@s.url value='${dataset.homepage}'/>" target="_blank" title="Dataset homepage">Dataset homepage</a></li>
       </#if>
       <#list links as p>
         <#if p.url?has_content>
