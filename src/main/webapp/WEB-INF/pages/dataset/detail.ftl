@@ -493,15 +493,18 @@
 </@common.article>
 </#if>
 
-<#-- CITATIONS -->
+<#-- REFERENCES -->
 <#if dataset.bibliographicCitations?has_content >
 <@common.article id="references" title="References">
 <div class="fullwidth">
   <div class="scrollable">
     <#if (dataset.bibliographicCitations?size>0)>
       <#list dataset.bibliographicCitations as ref>
-        <p>
-          <@common.citation ref/>
+        <p>${ref.text!}
+          <#if ref.identifier?has_content>
+            <#if ref.text?has_content><br/></#if>
+            <span class="note">${ref.identifier!}</span>
+          </#if>
         </p>
       </#list>
     </#if>

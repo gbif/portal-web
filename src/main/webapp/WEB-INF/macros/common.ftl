@@ -244,13 +244,6 @@
 </p>
 </#macro>
 
-<#macro citation c>
-  ${c.text!}
-  <#if c.identifier?has_content>
-    <#if c.text?has_content>,</#if> <a href="${c.identifier}">${c.identifier}</a>
-  </#if>
-</#macro>
-
 <#macro citationArticle rights dataset publisher prefix="">
   <@common.article id="legal" title="Citation and licensing" class="mono_line">
   <div class="fullwidth">
