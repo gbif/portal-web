@@ -59,10 +59,6 @@
                     <#if item.appendixCites??>Cites: ${item.appendixCites}</#if>
                     </p>
                   </#if>
-                  <#if item.source?has_content>
-                    <p>Source: ${item.source}</p>
-                  </#if>
-
                   <#if usage.nub>
                     <p>Source: <a href='<@s.url value='/species/${item.sourceTaxonKey?c}'/>'>${item.source!"checklist dataset"}</a></p>
                   <#elseif item.source?has_content>

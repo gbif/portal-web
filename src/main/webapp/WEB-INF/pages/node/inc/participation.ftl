@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="" type="org.gbif.portal.action.country.CountryBaseAction" -->
+<#-- @ftlvariable name="" type="org.gbif.portal.action.node.NodeAction -->
 <#import "/WEB-INF/macros/common.ftl" as common>
 
 <#if node?? && node.participationStatus != 'OBSERVER' && node.participationStatus != 'FORMER'>

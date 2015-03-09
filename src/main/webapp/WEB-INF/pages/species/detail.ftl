@@ -312,7 +312,10 @@
     <li><a target="_blank" href="http://eol.org/search/?q=${usage.canonicalOrScientificName}" title="Encyclopedia of Life">Encyclopedia of Life</a></li>
   </#if>
   <#if usage.canonicalName??>
-    <li><a target="_blank" href="http://www.catalogueoflife.org/col/search/all/key/${usage.canonicalName?replace(' ','+')}" title="Catalogue of Life">Catalogue of Life</a></li>
+    <#-- hide CoL search for CoL usages -->
+    <#if usage.datasetKey != common.colKey>
+      <li><a target="_blank" href="http://www.catalogueoflife.org/col/search/all/key/${usage.canonicalName?replace(' ','+')}" title="Catalogue of Life">Catalogue of Life</a></li>
+    </#if>
     <li><a target="_blank" href="http://www.biodiversitylibrary.org/name/${usage.canonicalName?replace(' ','_')}">Biodiversity Heritage Library</a></li>
   </#if>
   </ul>
@@ -369,37 +372,45 @@
   </div>
   <footer></footer>
 </article>
-<#else>
-  <#if usage.distributions?has_content>
+
+</#if>
+<#if usage.distributions?has_content>
+  <#assign items=[] />
+  <#list usage.distributions as d>
+    <#if d.locationId?has_content || d.country?has_content || d.locality?has_content >
+      <#assign item >
+        <a href='<@s.url value='/species/${(d.sourceTaxonKey!usage.key)?c}'/>'>
+        <@s.text name='enum.occurrencestatus.${d.status!"PRESENT"}'/>
+        <#if d.establishmentMeans??> <@s.text name='enum.establishmentmeans.${d.establishmentMeans}'/></#if>
+         in
+        <#if d.country??>${d.country.title} ${d.locationId!}
+          <@common.showIfDifferent d.country.title d.locality!></@common.showIfDifferent>
+        <#else>
+          ${d.locationId!} ${d.locality!}
+        </#if>
+        </a>
+        <#if d.sourceTaxonKey?has_content || d.source?has_content>
+          <span class="note">Source: ${d.source!("ChecklistBank "+d.sourceTaxonKey?c)}</span>
+        </#if>
+        <#if d.lifeStage?has_content || d.temporal?has_content || d.threatStatus?has_content || d.appendixCites?has_content>
+        <span class="note">
+          ${d.lifeStage!} ${d.temporal!}
+            <#if d.threatStatus??><@s.text name="enum.threatstatus.${d.threatStatus}"/></#if>
+            <#if d.appendixCites??>Cites ${d.appendixCites}</#if>
+        </span>
+        </#if>
+      </#assign>
+      <#assign items= items + [item] />
+    </#if>
+  </#list>
   <@common.article id="distribution" title="Distribution range">
     <div class="fullwidth">
-      <ul class="notes">
-        <#assign skipped=0/>
-        <#list usage.distributions as d>
-          <#if d.locationId?? || d.country?? || d.locality?? >
-            <li>
-              <#if d.country??>${d.country.title}</#if>
-              ${d.locationId!} ${d.locality!}
-              <span class="note">
-                ${d.lifeStage!} ${d.temporal!} <@s.text name='enum.occurrencestatus.${d.status!"PRESENT"}'/>
-                <#if d.threatStatus??><@s.text name="enum.threatstatus.${d.threatStatus}"/></#if>
-                <#if d.establishmentMeans??><@s.text name='enum.establishmentmeans.${d.establishmentMeans}'/></#if>
-                <#if d.appendixCites??>Cites ${d.appendixCites}</#if>
-              </span>
-            </li>
-          <#else>
-            <#assign skipped=skipped+1/>
-          </#if>
-          <#-- only show 8 distributions at max -->
-          <#if d_has_next && d_index==7+skipped>
-           <li class="more"><a href="<@s.url value='/species/${id?c}/distributions'/>">more</a></li>
-            <#break />
-          </#if>
-        </#list>
-      </ul>
+      <@common.multiColList items=items columns=2 />
+      <#if usage.distributions?size gte 10>
+        <p><a href="<@s.url value='/species/${id?c}/distributions'/>">more distributions</a> ...</p>
+      </#if>
     </div>
   </@common.article>
-  </#if>
 </#if>
 
 

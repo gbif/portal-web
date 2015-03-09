@@ -1,8 +1,11 @@
 <#-- @ftlvariable name="" type="org.gbif.portal.action.node.NodeAction" -->
 <#import "/WEB-INF/macros/common.ftl" as common>
+<#import "/WEB-INF/macros/records.ftl" as records>
+<#include "/WEB-INF/pages/node/inc/title.ftl">
 <html>
 <head>
-  <title>Node detail of ${node.title}</title>
+    <title>${title} - ${subtitle} | GBIF.ORG</title>
+
 <#include "/WEB-INF/inc/feed_templates.ftl">
   <script type="text/javascript">
     $(function() {
@@ -23,9 +26,18 @@
   an endorsing node.  It is considered a persistent stable id.
 -->
 <#if node.key == common.participantNMCKey>
-  <#include "/WEB-INF/pages/node/inc/committee.ftl">
+  <@common.article id="summary" title="About" titleRight="" fullWidthTitle=true>
+      <div class="fullwidth">
+        <p>
+          The Participant Node Managers Committee is a body that can endorse an institution to publish data through the GBIF network.
+          Wherever possible, a national Node or thematic network is preferred to endorse an institution to help ensure the most relevant technical and administrative support is given.
+          In the absence of such a suitable Node the committee can endorse publishers.
+          To request endorsement please contact the <@common.helpdesk />.
+        </p>
+      </div>
+  </@common.article>
 <#else>
-  <#include "/WEB-INF/pages/country/inc/participation.ftl">
+  <#include "/WEB-INF/pages/node/inc/participation.ftl">
   <#if node.contacts?has_content>
     <#assign rtitle><span class="showAllContacts small">show all</span></#assign>
     <@common.article id="contacts" title="Contacts" titleRight=rtitle>
@@ -39,8 +51,30 @@
 </#if>
 
 
-<#include "/WEB-INF/pages/country/inc/endorsing_article.ftl">
+<@common.article id="publishers" title="Endorsed publishers">
+    <div class="fullwidth">
+      <#if publisherPage.results?has_content>
+          <ul class="notes">
+            <#list publisherPage.results as pub>
+              <@records.publisher publisher=pub />
+            </#list>
+            <#if !publisherPage.endOfRecords>
+                <li class="more">
+                ${publisherPage.count - publisherPage.limit}
+                  <#if country??>
+                      <a href="<@s.url value='/country/${isocode}/publishers'/>">more</a>
+                  <#else>
+                      <a href="<@s.url value='/node/${member.key}/publishers'/>">more</a>
+                  </#if>
+                </li>
+            </#if>
+          </ul>
+      <#else>
+          <p>None endorsed.</p>
+      </#if>
 
+    </div>
+</@common.article>
 
 <#if feed??>
    <#assign titleRight = "News" />
