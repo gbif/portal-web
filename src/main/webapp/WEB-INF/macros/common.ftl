@@ -189,6 +189,23 @@
 </#macro>
 
 
+<#-- Creates a multi column list of some items -->
+<#macro multiColList items columns=2>
+  <#assign maxRows=items?size / columns />
+  <#list 1..columns as col>
+  <div class="col">
+    <ul class="notes">
+    <#list items as i>
+      <#if (i_index < maxRows * col) && (i_index >= maxRows*(col-1))>
+        <li>${i}</li>
+      </#if>
+    </#list>
+    </ul>
+  </div>
+  </#list>
+</#macro>
+
+
 <#-- produces a full contact block -->
 <#macro contactArticle primaryContacts otherContacts columns=3 showAllButton=false>
   <#if otherContacts?has_content >
@@ -363,4 +380,13 @@
 <#-- writes a download citation text -->
 <#macro citeDownload download>
 GBIF.org (${niceDate(download.created)}) GBIF Occurrence Download <a href="${download.doi.getUrl()}">${download.doi.getUrl()}</a>
+</#macro>
+
+<#--
+	Construct a Endpoint. Parameter is the actual endpoint object.
+-->
+<#macro showIfDifferent master copy>
+<#compress>
+<#if (master!"")?trim?replace(" ","")?lower_case != (copy!"")?trim?replace(" ","")?lower_case>${copy!}</#if>
+</#compress>
 </#macro>
