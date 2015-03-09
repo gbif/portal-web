@@ -84,14 +84,13 @@ public class FiltersActionHelper {
 
   public static final String POLYGON_PATTERN = "POLYGON((%s))";
 
-
-  public static final String BEFORE_FMT = "Is before %s";
+  public static final String TO_FMT = "To %s";
 
   public static final String GREATER_THAN_FMT = "Greater than %s";
 
   public static final String LESS_THAN_FMT = "Less than %s";
 
-  public static final String AFTER_FMT = "Is after %s";
+  public static final String FROM_FMT = "From %s";
 
   public static final String BETWEEN_FMT = "Between %s and %s";
 
@@ -242,7 +241,7 @@ public class FiltersActionHelper {
 
   /**
    * Gets the title(name) of a country.
-   * 
+   *
    * @param isoCode iso 2/3 country code
    */
   public String getCountryTitle(String isoCode) {
@@ -357,7 +356,7 @@ public class FiltersActionHelper {
 
   /**
    * Gets the title(name) of a node.
-   * 
+   *
    * @param networkKey node key/UUID
    */
   public String getNetworkTitle(String networkKey) {
@@ -563,9 +562,9 @@ public class FiltersActionHelper {
     final String[] rangeValue = value.split(",");
     if (rangeValue.length == 2) {
       if (rangeValue[0].equals(QUERY_WILDCARD)) {
-        return String.format(BEFORE_FMT, rangeValue[1]);
+        return String.format(TO_FMT, rangeValue[1]);
       } else if (rangeValue[1].equals(QUERY_WILDCARD)) {
-        return String.format(AFTER_FMT, rangeValue[0]);
+        return String.format(FROM_FMT, rangeValue[0]);
       } else {
         return String.format(BETWEEN_FMT, rangeValue[0], rangeValue[1]);
       }
@@ -619,9 +618,9 @@ public class FiltersActionHelper {
     final String[] rangeValue = value.split(",");
     if (rangeValue.length == 2) {
       if (rangeValue[0].equals(QUERY_WILDCARD)) {
-        return String.format(BEFORE_FMT, getMonthName(Integer.parseInt(rangeValue[1])));
+        return String.format(TO_FMT, getMonthName(Integer.parseInt(rangeValue[1])));
       } else if (rangeValue[1].equals(QUERY_WILDCARD)) {
-        return String.format(AFTER_FMT, getMonthName(Integer.parseInt(rangeValue[0])));
+        return String.format(FROM_FMT, getMonthName(Integer.parseInt(rangeValue[0])));
       } else {
         return String.format(BETWEEN_FMT, getMonthName(Integer.parseInt(rangeValue[0])),
           getMonthName(Integer.parseInt(rangeValue[1])));
@@ -657,9 +656,9 @@ public class FiltersActionHelper {
     final String[] rangeValue = value.split(",");
     if (rangeValue.length == 2) {
       if (rangeValue[0].equals(QUERY_WILDCARD)) {
-        return String.format(BEFORE_FMT, rangeValue[1]);
+        return String.format(TO_FMT, rangeValue[1]);
       } else if (rangeValue[1].equals(QUERY_WILDCARD)) {
-        return String.format(AFTER_FMT, rangeValue[0]);
+        return String.format(FROM_FMT, rangeValue[0]);
       } else {
         return String.format(BETWEEN_FMT, rangeValue[0], rangeValue[1]);
       }

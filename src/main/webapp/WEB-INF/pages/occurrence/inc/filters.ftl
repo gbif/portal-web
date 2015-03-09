@@ -16,8 +16,8 @@
                       <td>
                         <select name="predicate" class="predicate">
                           <option value="eq">Is</option>
-                          <option value="lte">Is before</option>
-                          <option value="gte">Is after</option>
+                          <option value="gte">From</option>
+                          <option value="lte">To</option>
                           <option value="bt">Between</option>
                         </select>
                       </td>
@@ -383,8 +383,8 @@
                   <td>
                     <select name="predicate" class="predicate">
                       <option value="eq">Is</option>
-                      <option value="lte">Is before</option>
-                      <option value="gte">Is after</option>
+                      <option value="gte">From</option>
+                      <option value="lte">To</option>
                       <option value="bt">Between</option>
                     </select>
                     <input type="text" size="17" maxlength="15" name="<%=paramName%>" class="min_value <%= inputClasses %>" placeholder="<%= placeholder %>" style="width:90px;"/>
