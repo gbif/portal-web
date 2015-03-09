@@ -21,12 +21,12 @@
 <#if dataset.type! == "OCCURRENCE" || (dataset.type! == "CHECKLIST" && !parentDataset?has_content)>
   <#assign box=true />
   <#assign maxKeywordChars=140 />
-  <#assign titleLength = 38 />
+  <#assign titleLength = 37 />
   <#assign subtitleLength = 70 />
 <#else>
   <#assign box=false />
   <#assign maxKeywordChars=250 />
-  <#assign titleLength = 52 />
+  <#assign titleLength = 51 />
   <#assign subtitleLength = 86 />
 </#if>
 
