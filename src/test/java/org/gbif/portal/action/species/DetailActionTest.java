@@ -39,9 +39,9 @@ public class DetailActionTest extends StrutsJUnit4TestCase<DetailAction> {
     assertNotNull(action);
     assertNotNull(action.getHabitats());
     assertEquals(0, action.getHabitats().size());
-    action.appendHabitat(true, "enum.habitat.freshwater");
+    action.appendHabitat(true, "enum.habitat.FRESHWATER");
     assertEquals(1, action.getHabitats().size());
-    action.appendHabitat(false, "enum.habitat.terrestrial");
+    action.appendHabitat(false, "enum.habitat.TERRESTRIAL");
     assertEquals(2, action.getHabitats().size());
     action.appendHabitat(true, "THE_MOON");
     assertEquals(3, action.getHabitats().size());

@@ -44,11 +44,11 @@
 
     <!-- dependency versions -->
     <dwc-api.version>1.11-SNAPSHOT</dwc-api.version>
-    <gbif-api.version>0.17</gbif-api.version>
-    <checklistbank-ws-client.version>2.11</checklistbank-ws-client.version>
+    <gbif-api.version>0.18-SNAPSHOT</gbif-api.version>
+    <checklistbank-ws-client.version>2.12-SNAPSHOT</checklistbank-ws-client.version>
     <download-query-tools.version>1.1</download-query-tools.version>
-    <registry-ws-client.version>2.25</registry-ws-client.version>
-    <occurrence-ws-client.version>0.25</occurrence-ws-client.version>
+    <registry-ws-client.version>2.26-SNAPSHOT</registry-ws-client.version>
+    <occurrence-ws-client.version>0.28-SNAPSHOT</occurrence-ws-client.version>
     <metrics-ws-client.version>0.19</metrics-ws-client.version>
     <drupal-mybatis.version>0.15</drupal-mybatis.version>
     <gbif-common.version>0.17</gbif-common.version>

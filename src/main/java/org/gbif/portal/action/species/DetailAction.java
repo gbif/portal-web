@@ -263,9 +263,9 @@ public class DetailAction extends UsageBaseAction {
    * Populates the habitats first using the boolean flags associated with the usage, and then appending any others.
    */
   private void populateHabitats() {
-    appendHabitat(usage.isTerrestrial(), "enum.habitat.terrestrial");
-    appendHabitat(usage.isMarine(), "enum.habitat.marine");
-    appendHabitat(usage.isFreshwater(), "enum.habitat.freshwater");
+    appendHabitat(usage.isTerrestrial(), "enum.habitat.TERRESTRIAL");
+    appendHabitat(usage.isMarine(), "enum.habitat.MARINE");
+    appendHabitat(usage.isFreshwater(), "enum.habitat.FRESHWATER");
     for (String h : usage.getHabitats()) {
       habitats.add(h);
     }

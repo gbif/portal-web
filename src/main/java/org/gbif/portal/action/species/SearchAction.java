@@ -90,7 +90,7 @@ public class SearchAction
     // replace extinct boolean values
     lookupFacetTitles(NameUsageSearchParameter.IS_EXTINCT, getExtinctTitle);
 
-    // replace marine boolean values
+    // replace habitat enum values
     lookupFacetTitles(NameUsageSearchParameter.HABITAT, getHabitatTitle);
 
     // replace threat status keys values
@@ -191,7 +191,7 @@ public class SearchAction
 
       @Override
       public String apply(String name) {
-        return getBooleanTitle("search.facet.MARINE", name);
+        return getEnumTitle("habitat", name);
       }
     };
 
@@ -216,7 +216,7 @@ public class SearchAction
       @Override
       public String apply(String name) {
         try {
-          NomenclaturalStatus status = (NomenclaturalStatus) VocabularyUtils.lookupEnum(name, NomenclaturalStatus.class);
+          NomenclaturalStatus status = VocabularyUtils.lookupEnum(name, NomenclaturalStatus.class);
           return status.getAbbreviatedLabel() != null ? status.getAbbreviatedLabel() :
             status.name().replace("_", " ").toLowerCase();
         } catch (IllegalArgumentException e) {
