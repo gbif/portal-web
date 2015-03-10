@@ -149,7 +149,7 @@
        </ul>
   </div>
   <div class="right">
-      <p>There are <a href="<@s.url value='/species/search?dataset_key=${id}&status=synonym'/>">${metrics.synonymsCount} synonyms</a> in this dataset.</p>
+      <p>There are <a href="<@s.url value='/species/search?dataset_key=${id}&status=SYNONYM&status=HOMOTYPIC_SYNONYM&status=HETEROTYPIC_SYNONYM'/>">${metrics.synonymsCount} synonyms</a> in this dataset.</p>
 
     <h3>UNIQUE NAMES</h3>
     <p>There are ${metrics.distinctNamesCount} unique names in this dataset.
