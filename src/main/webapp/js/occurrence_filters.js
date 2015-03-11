@@ -1742,6 +1742,9 @@ var OccurrenceWidgetManager = (function ($,_) {
             } else if (filterName == "INSTITUTION_CODE") {
               newWidget = new OccurrenceWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindInstitutionCodeAutosuggest});
+            } else if (filterName == "OCCURRENCE_ID") {
+              newWidget = new OccurrenceWidget();
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindOccurrenceIdAutosuggest});
             } else if (filterName == "GEOMETRY") {
               newWidget = new OccurrenceLocationWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindMap});
@@ -1751,7 +1754,8 @@ var OccurrenceWidgetManager = (function ($,_) {
             } else if (filterName == "MONTH") {
               newWidget = new OccurrenceMonthWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
-            } else if (filterName == "BASIS_OF_RECORD" || filterName == "TYPE_STATUS" || filterName == "MEDIA_TYPE" || filterName == "ISSUE") {
+            } else if (filterName == "BASIS_OF_RECORD" || filterName == "TYPE_STATUS" || filterName == "MEDIA_TYPE" || filterName == "ISSUE"
+                       || filterName == "ESTABLISHMENT_MEANS") {
               newWidget = new OccurrenceMultiSelectWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
             } else if (filterName == "COUNTRY" || filterName == "PUBLISHING_COUNTRY") {
@@ -1939,6 +1943,15 @@ var OccurrenceWidgetManager = (function ($,_) {
           $(el).termsAutosuggest(cfg.wsOccCollectionCodeSearch, "#content",SUGGEST_LIMIT, buildOnSelectHandler('COLLECTION_CODE',el));
         });
       },
+
+    /**
+     * Binds the catalog number  auto-suggest widget used by the CATALOG_NUMBER widget.
+     */
+     bindOccurrenceIdAutosuggest : function(){
+      $(':input.occurrence_id_autosuggest').each( function(idx,el){
+        $(el).termsAutosuggest(cfg.wsOccurrenceIdSearch, "#content",SUGGEST_LIMIT, buildOnSelectHandler('OCCURRENCE_ID',el));
+      });
+     },
 
       /**
        * Binds the catalog number  auto-suggest widget used by the BBOX widget.

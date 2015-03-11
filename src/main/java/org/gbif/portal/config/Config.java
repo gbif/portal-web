@@ -16,6 +16,8 @@ import static org.gbif.ws.paths.OccurrencePaths.RECORDED_BY_PATH;
 import static org.gbif.ws.paths.OccurrencePaths.INSTITUTION_CODE_PATH;
 import static org.gbif.ws.paths.OccurrencePaths.OCC_SEARCH_PATH;
 import static org.gbif.ws.paths.OccurrencePaths.RECORD_NUMBER_PATH;
+import static org.gbif.ws.paths.OccurrencePaths.OCCURRENCE_ID_PATH;
+
 
 /**
  * Simple configuration bean to pass the guice binded properties on to the rendering layer.
@@ -56,6 +58,7 @@ public class Config {
   private String wsMetrics;
   private String wsOccCollectionCodeSearch;
   private String wsOccInstitutionCodeSearch;
+  private String wsOccurrenceIdSearch;
   private String wsImageCache;
   private Integer maxOccDowloadSize;
   private int maxOccSearchOffset;
@@ -98,6 +101,7 @@ public class Config {
       cfg.wsOccCollectionCodeSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + COLLECTION_CODE_PATH;
       cfg.wsOccInstitutionCodeSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + INSTITUTION_CODE_PATH;
       cfg.wsOccRecordNumberSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + RECORD_NUMBER_PATH;
+      cfg.wsOccurrenceIdSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + OCCURRENCE_ID_PATH;;
     } catch (IOException e) {
       throw new ConfigurationException("application.properties cannot be read", e);
     }
@@ -224,6 +228,10 @@ public class Config {
    */
   public String getWsOccInstitutionCodeSearch() {
     return wsOccInstitutionCodeSearch;
+  }
+
+  public String getWsOccurrenceIdSearch() {
+    return wsOccurrenceIdSearch;
   }
 
   public String getWsOccSearch() {

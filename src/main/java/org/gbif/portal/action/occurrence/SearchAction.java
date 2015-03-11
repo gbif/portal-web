@@ -10,6 +10,7 @@ import org.gbif.api.service.occurrence.OccurrenceSearchService;
 import org.gbif.api.vocabulary.BasisOfRecord;
 import org.gbif.api.vocabulary.Continent;
 import org.gbif.api.vocabulary.Country;
+import org.gbif.api.vocabulary.EstablishmentMeans;
 import org.gbif.api.vocabulary.MediaType;
 import org.gbif.api.vocabulary.OccurrenceIssue;
 import org.gbif.api.vocabulary.TypeStatus;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
@@ -61,6 +63,8 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   private SearchSuggestions<String> institutionCodeSuggestions;
 
   private SearchSuggestions<String> collectionCodeSuggestions;
+
+  private SearchSuggestions<String> occurrenceIdSuggestions;
 
   private List<ParameterValidationError<OccurrenceSearchParameter>> validationErrors = Lists.newArrayList();
 
@@ -158,6 +162,13 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   }
 
   /**
+   * Returns the list of {@link org.gbif.api.vocabulary.EstablishmentMeans} literals.
+   */
+  public EstablishmentMeans[] getEstablishmentMeans() {
+    return EstablishmentMeans.values();
+  }
+
+  /**
    * Returns the list of {@link BasisOfRecord} literals.
    */
   public Continent[] getContinents() {
@@ -204,6 +215,10 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
     return recordNumberSuggestions;
   }
 
+  public SearchSuggestions<String> getOccurrenceIdSuggestions() {
+    return occurrenceIdSuggestions;
+  }
+
   /**
    * Returns the list of {@link Country} literals.
    */
@@ -230,7 +245,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Suggestions for dataset title search.
-   * 
+   *
    * @return the datasetsSuggestions
    */
   public SearchSuggestions<DatasetSuggestResult> getDatasetsSuggestions() {
@@ -257,8 +272,8 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
    */
   public String getFilterTitle(String filterKey, String filterValue) {
     if (!isSuggestion(filterValue)) {
-      return Objects.firstNonNull(filtersActionHelper.getFilterTitle(filterKey, filterValue),
-        Strings.nullToEmpty(filterValue));
+      return MoreObjects.firstNonNull(filtersActionHelper.getFilterTitle(filterKey, filterValue),
+                                      Strings.nullToEmpty(filterValue));
     }
     return Strings.nullToEmpty(filterValue);
   }
@@ -280,7 +295,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Suggestions for scientific name search.
-   * 
+   *
    * @return the nameUsagesSuggestions
    */
   public SearchSuggestions<NameUsageSuggestResult> getNameUsagesSuggestions() {
@@ -289,7 +304,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Gets the title(name) of a node.
-   * 
+   *
    * @param networkKey node key/UUID
    */
   public String getNetworkTitle(String networkKey) {
@@ -310,7 +325,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Gets the configuration of fields and information to display.
-   * 
+   *
    * @return the table
    */
   public OccurrenceTable getTable() {
@@ -385,6 +400,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
     institutionCodeSuggestions = new SearchSuggestions<String>();
     collectionCodeSuggestions = new SearchSuggestions<String>();
     recordNumberSuggestions = new SearchSuggestions<String>();
+    occurrenceIdSuggestions = new SearchSuggestions<String>();
   }
 
   /**
@@ -415,6 +431,9 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
       if (searchRequest.getParameters().containsKey(OccurrenceSearchParameter.RECORD_NUMBER)) {
         recordNumberSuggestions = filtersActionHelper.processRecordNumbersSuggestions(request);
       }
+      if (searchRequest.getParameters().containsKey(OccurrenceSearchParameter.OCCURRENCE_ID)) {
+        occurrenceIdSuggestions = filtersActionHelper.processOccurrenceIdSuggestions(request);
+      }
     }
   }
 
@@ -429,7 +448,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Retrieve value for Term in interpreted fields map. Currently expecting only DwcTerm.
-   * 
+   *
    * @param term Term
    * @return value for Term in fields map, or null if it doesn't exist
    */

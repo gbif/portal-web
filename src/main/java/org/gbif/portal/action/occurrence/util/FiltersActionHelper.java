@@ -134,6 +134,14 @@ public class FiltersActionHelper {
     }
   };
 
+  private final Function<String, List<String>> suggestOccurrenceIds = new Function<String, List<String>>() {
+
+    @Override
+    public List<String> apply(String input) {
+      return occurrenceSearchService.suggestOccurrenceIds(input, SUGGESTIONS_LIMIT);
+    }
+  };
+
   private final Function<String, List<String>> suggestCollectionCodes = new Function<String, List<String>>() {
 
     @Override
@@ -423,6 +431,14 @@ public class FiltersActionHelper {
    */
   public SearchSuggestions<String> processRecordNumbersSuggestions(HttpServletRequest request) {
     return processStringSuggestions(request, OccurrenceSearchParameter.RECORD_NUMBER, suggestRecordNumbers);
+  }
+
+  /**
+   * Searches for suggestion to all the OCCURRENCE_ID parameter values, if the input value has an exact match against
+   * any suggestion, no suggestions are returned for that parameter.
+   */
+  public SearchSuggestions<String> processOccurrenceIdSuggestions(HttpServletRequest request) {
+    return processStringSuggestions(request, OccurrenceSearchParameter.OCCURRENCE_ID, suggestOccurrenceIds);
   }
 
   /**

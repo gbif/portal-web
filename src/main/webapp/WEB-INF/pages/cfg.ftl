@@ -19,4 +19,5 @@ cfg.wsOccCollectorNameSearch = "${cfg.wsOccCollectorNameSearch!}";
 cfg.wsOccRecordNumberSearch = "${cfg.wsOccRecordNumberSearch!}";
 cfg.wsOccCollectionCodeSearch = "${cfg.wsOccCollectionCodeSearch!}";
 cfg.wsOccInstitutionCodeSearch = "${cfg.wsOccInstitutionCodeSearch!}";
+cfg.wsOccurrenceIdSearch = "${cfg.wsOccurrenceIdSearch!}";
 cfg.wsImageCache = "${cfg.wsImageCache!}";
