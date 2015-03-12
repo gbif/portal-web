@@ -11,7 +11,6 @@
  To show yellow tabs instead of default grey ones please assign:
   <#assign tabhl=true />
 -->
-Plantae › Marchantiophyta › Jungermanniopsida › Jungermanniales › Pseudolepicoleaceae › Blepharostoma › Blepharostoma trichophyllum
 
 <#assign showBox = usage.nub && !(tabhl!false) />
 <#assign titleLength = 36 />
