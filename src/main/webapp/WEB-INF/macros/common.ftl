@@ -314,14 +314,11 @@
 </article>
 </#macro>
 
-<#macro notice title id="">
-<article class="notice">
+<#macro notice title id="" sessionBound=false>
+<article <#if id?has_content>id="${id}"</#if> class="notice<#if sessionBound> sessionBound</#if>">
   <header></header>
-  <#if id?has_content>
-    <a name="${id}"></a>
-  </#if>
   <div class="content">
-    <img id="notice_icon" src="<@s.url value='/img/icons/notice_icon.png'/>" />
+    <img src="<@s.url value='/img/icons/notice_icon.png'/>" />
     <h3>${title!}</h3>
     <#nested>
   </div>
