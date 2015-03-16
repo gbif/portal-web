@@ -91,6 +91,16 @@ $.fn.occMetrics = function(){
   // Utility functions for parsing URL.
   // @see http://jsfiddle.net/v92Pv/22/
   // @see https://gist.github.com/kares/956897
+  // Add an URL parser to JQuery that returns an object
+  // This function is meant to be used with an URL like the window.location
+  // Use: $.parseParams('http://mysite.com/?var=string') or $.parseParams() to parse the window.location
+  // Simple variable:  ?var=abc                        returns {var: "abc"}
+  // Simple object:    ?var.length=2&var.scope=123     returns {var: {length: "2", scope: "123"}}
+  // Simple array:     ?var[]=0&var[]=9                returns {var: ["0", "9"]}
+  // Array with index: ?var[0]=0&var[1]=9              returns {var: ["0", "9"]}
+  // Nested objects:   ?my.var.is.here=5               returns {my: {var: {is: {here: "5"}}}}
+  // All together:     ?var=a&my.var[]=b&my.cookie=no  returns {var: "a", my: {var: ["b"], cookie: "no"}}
+  // You just cant have an object in an array, e.g. ?var[1].test=abc DOES NOT WORK
   var re = /([^&=]+)=?([^&]*)/g;
   var decode = function (str) {
     return decodeURIComponent(str.replace(/\+/g, ' '));
@@ -116,9 +126,9 @@ $.fn.occMetrics = function(){
         if (new_key !== '') {
           createElement(params[list[0]], new_key, value);
         } else console.warn('parseParams :: empty property in key "' + key + '"');
-      } else
+      }
       // if the key is an array
-      if (key.indexOf('[') !== -1) {
+      else if (key.indexOf('[') !== -1) {
         // extract the array name
         var list = key.split('[');
         key = list[0];
@@ -132,14 +142,15 @@ $.fn.occMetrics = function(){
           if (!params) params = {};
           if (!params[key] || !$.isArray(params[key])) params[key] = [];
           params[key].push(value);
-        } else
+        }
         // add the value at the index (must be an integer)
-        {
+        else {
           if (!params) params = {};
           if (!params[key] || !$.isArray(params[key])) params[key] = [];
           params[key][parseInt(index)] = value;
         }
-      } else
+      }
+      else
       // just normal key
       {
         if (!params) params = {};
@@ -177,6 +188,10 @@ $.fn.occMetrics = function(){
     return params;
   }
   
+  // Encode an object to an url string
+  // This function return the search part, begining with "?"
+  // Use: contructQuery({var: "test", len: 1}) returns ?var=test&len=1
+  // @see http://jsfiddle.net/cADUU/4/
   function constructQuery(object) {
 
     // recursive function to construct the result string
@@ -191,7 +206,8 @@ $.fn.occMetrics = function(){
           count++;
         }
         return url;
-      } else if (typeof element === 'object') {
+      }
+      else if (typeof element === 'object') {
         var count = 0,
           url = '';
         for (var name in element) {
@@ -202,7 +218,8 @@ $.fn.occMetrics = function(){
           }
         }
         return url;
-      } else {
+      }
+      else {
         return nest + '=' + element;
       }
     }
