@@ -229,12 +229,18 @@
   <div class="col">
     <h3>Taxonomic status</h3>
     <p>
-      <@s.text name="enum.taxstatus.${usage.taxonomicStatus!'UNKNOWN'}"/>
-
       <#if usage.synonym>
-        of <a href="<@s.url value='/species/${usage.acceptedKey?c}'/>">${usage.accepted!"???"}</a>
+        <@s.text name="enum.taxstatus.${usage.taxonomicStatus!'SYNONYM'}"/>
+          of <a href="<@s.url value='/species/${usage.acceptedKey?c}'/>">${usage.accepted!"???"}</a>
       <#elseif usage.rank??>
-        <@s.text name="enum.rank.${usage.rank}"/>
+        <#if (usage.taxonomicStatus!"UNKNOWN") == 'UNKNOWN'>
+          <@s.text name="enum.rank.${usage.rank}"/>
+          of unknown status
+        <#else>
+          <@s.text name="enum.taxstatus.${usage.taxonomicStatus}"/> <@s.text name="enum.rank.${usage.rank}"/>
+        </#if>
+      <#else>
+        <@s.text name="enum.taxstatus.${usage.taxonomicStatus!'UNKNOWN'}"/>
       </#if>
     </p>
 
