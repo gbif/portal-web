@@ -1,10 +1,11 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.occurrence.OccurrenceBaseAction" -->
 <#--
  THIS INCLUDE GENERATES THE INFOBAND AND TABS FOR AN OCCURRENCE PAGE
  to select a tab to be highlighted please assign on of the following to the freemarker variable "tab":
 
  For the usual page
  <#assign tab="info"/>
- <#assign tab="info-verbatim"/>
+ <#assign tab="verbatim"/>
  <#assign tab="activity"/>
  <#assign tab="stats"/>
 -->
@@ -34,14 +35,13 @@
 </content>
 
 <content tag="tabs">
-  <#if !tab??><#assign tab="" /></#if>
   <#assign hl="" />
-  <#if tab=="info-verbatim">
-    <#assign hl="highlighted" />
-  </#if>
   <ul class="${hl}">
-    <li<#if tab=="info" || tab=="info-verbatim"> class='selected ${hl}'</#if>>
+    <li<#if (tab!)=="info"> class='selected ${hl}'</#if>>
       <a href="<@s.url value='/occurrence/${id?c}'/>" title="Information"><span>Information</span></a>
+    </li>
+    <li<#if (tab!)=="verbatim"> class='selected ${hl!}'</#if>>
+        <a href="<@s.url value='/occurrence/${id?c}/verbatim'/>" title="Verbatim"><span>Verbatim</span></a>
     </li>
     <#-- Commented out http://dev.gbif.org/issues/browse/PF-55
     <li<#if tab=="activity"> class='selected ${hl}'</#if>>

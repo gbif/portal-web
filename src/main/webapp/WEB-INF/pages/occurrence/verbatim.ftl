@@ -7,16 +7,9 @@
 </head>
 <body class="stats">
 
-<#assign tab="info-verbatim"/>
+<#assign tab="verbatim"/>
 <#include "/WEB-INF/pages/occurrence/inc/infoband.ftl">
 
-
-
-<div class="back">
-  <div class="content">
-    <a href="<@s.url value='/occurrence/${id?c}'/>" title="Back to regular view">Back to regular view</a>
-  </div>
-</div>
 
 <@common.notice title="Occurrence verbatim data">
   <p>This listing shows the original information as GBIF extracted it from the source dataset,

@@ -196,4 +196,21 @@ $(function() {
       $(".contactName").next().slideToggle("fast");
   });
 
+  /**
+   * Unhides the session scoped notice boxes.
+   * It stores the notice articles id in a session bound storage to show each id only once.
+   */
+  if (typeof window.sessionStorage != undefined) {
+    $(".sessionBound").each(function(index) {
+      //sessionStorage.clear();
+      var storeKey = "notice-" + $(this).attr("id");
+      if (!(storeKey in sessionStorage)) {
+        $(this).fadeIn("slow");
+        sessionStorage.setItem(storeKey, true);
+      }
+    });
+  } else {
+    // no browser support for session storage, always show it!
+    $(".sessionBound").show();
+  }
 })

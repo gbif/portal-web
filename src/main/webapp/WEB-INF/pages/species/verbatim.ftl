@@ -7,17 +7,8 @@
 
 <body class="stats">
 
-<#assign tab="info"/>
-<#assign tabhl=true />
+<#assign tab="verbatim"/>
 <#include "/WEB-INF/pages/species/inc/infoband.ftl">
-
-
-
-<div class="back">
-  <div class="content">
-    <a href="<@s.url value='/species/${id?c}'/>" title="Back to regular view">Back to regular view</a>
-  </div>
-</div>
 
 <@common.notice title="Name Usage verbatim data">
   <p>This listing shows the original information as received by GBIF from the data publisher, without further
