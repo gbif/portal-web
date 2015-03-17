@@ -24,7 +24,7 @@ $.fn.occMetrics = function(){
   this.each(function() {
     var baseAddress = $(this).attr("data-address");
     //console.debug(baseAddress);
-    $(this).find('td.total div').each(function() {
+    $(this).find('td.totalgeo div').each(function() {
       _refresh(baseAddress, $(this), true);
     });
   });
@@ -33,34 +33,52 @@ $.fn.occMetrics = function(){
     var $target = $(target);
 
     // always add the datasetKey to the cube address
-    var address = "?" + baseAddress;
+    var query = "?" + baseAddress;
 
     if ($target.closest("tr").attr("data-kingdom") != null) {
-      address = address + "&taxonKey=" + $target.closest("tr").attr("data-kingdom");
-    }
-
-    if ($target.closest("td").attr("data-bor") != null) {
-      address = address + "&basisOfRecord=" + $target.closest("td").attr("data-bor");
+      query += "&taxonKey=" + $target.closest("tr").attr("data-kingdom");
     }
 
     if ($target.hasClass("geo")) {
-      address = address + "&isGeoreferenced=true";
+      query += "&isGeoreferenced=true";
     }
-    var ws = cfg.wsMetrics + 'occurrence/count' + address;
-    //console.debug(ws);
-    $.getJSON(ws + '&callback=?', function (data) {
-      $(target).html(data);
-      if (nest && data!=0) {
-        // load the rest of the row
-        $target.closest('tr').find('div').each(function() {
-          _refresh(baseAddress, $(this), false);
-        });
-      } else if (nest) {
-        // set the rest of the row to 0
-        $target.closest('tr').find('div').each(function() {
-          $(this).html("0");
+    var ws = cfg.wsMetrics + 'occurrence/count';
+
+    if ($target.closest("td").attr("data-bor") === "OBSERVATION") {
+      var observationTypes = ["OBSERVATION", "HUMAN_OBSERVATION", "MACHINE_OBSERVATION"];
+      for (var i in observationTypes) {
+        // Proxy query variable to avoid concatenating more basisOfRecord.
+        var queryMod = query + "&basisOfRecord=" + observationTypes[i];
+        $.getJSON(ws + queryMod + '&callback=?', function (data) {
+          incrementCount($target, data);
         });
       }
-    });
+    }
+    else {
+      if ($target.closest("td").attr("data-bor") != null) {
+        query += "&basisOfRecord=" + $target.closest("td").attr("data-bor");
+      }
+      $.getJSON(ws + query + '&callback=?', function (data) {
+        $(target).html(data);
+        if (nest && data != 0) {
+          // load the rest of the row
+          $target.closest('tr').find('div').each(function () {
+            _refresh(baseAddress, $(this), false);
+          });
+        }
+        else if (nest) {
+          // set the rest of the row to 0
+          $target.closest('tr').find('div').each(function () {
+            $(this).html("0");
+          });
+        }
+      });
+    }
+
+    function incrementCount(target, value) {
+      // It could be that the innerHTML value hasn't been set yet. If so, we assume zero.
+      if (target.html() === "-") target.html(0);
+      target.html(Number(target.html()) + Number(value));
+    }
   }
-}
+};

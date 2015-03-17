@@ -1,0 +1,12 @@
+INFO  [2015-03-16 16:35:22,165+0100] [main] org.gbif.mybatis.guice.MyBatisModule: Configuring MyBatis with no cache
+INFO  [2015-03-16 16:35:22,235+0100] [main] org.gbif.occurrence.query.TitleLookupModule: Create new TitleLookup using API http://api.gbif-uat.org/v1
+INFO  [2015-03-16 16:35:23,341+0100] [main] com.zaxxer.hikari.HikariDataSource: HikariCP pool HikariPool-0 is starting.
+INFO  [2015-03-16 16:35:36,310+0100] [qtp1895498486-30] org.gbif.portal.config.PortalListener: Configuring Guice with server name http://localhost:8080
+INFO  [2015-03-16 16:35:36,521+0100] [qtp1895498486-30] org.gbif.ws.security.GbifAppAuthService: Initialised appkey store with key gbif.portal
+INFO  [2015-03-16 16:35:36,526+0100] [qtp1895498486-30] org.gbif.registry.ws.client.DatasetWsClient$$EnhancerByGuice$$4343966e: Creating new DatasetWsClient$$EnhancerByGuice$$4343966e using webservices at http://api.gbif-uat.org/v1/dataset
+INFO  [2015-03-16 16:35:36,628+0100] [qtp1895498486-30] org.gbif.metrics.ws.client.CubeWsClient$$EnhancerByGuice$$61989ad: Creating new CubeWsClient$$EnhancerByGuice$$61989ad using webservices at http://api.gbif-uat.org/v1
+INFO  [2015-03-16 16:35:36,700+0100] [qtp1895498486-30] org.gbif.checklistbank.ws.client.DatasetMetricsWsClient$$EnhancerByGuice$$bacca040: Creating new DatasetMetricsWsClient$$EnhancerByGuice$$bacca040 using webservices at http://api.gbif-uat.org/v1/dataset
+INFO  [2015-03-16 16:35:36,700+0100] [qtp1895498486-30] org.gbif.registry.ws.client.OrganizationWsClient$$EnhancerByGuice$$6f28dd65: Creating new OrganizationWsClient$$EnhancerByGuice$$6f28dd65 using webservices at http://api.gbif-uat.org/v1/organization
+INFO  [2015-03-16 16:35:36,714+0100] [qtp1895498486-30] org.gbif.registry.ws.client.InstallationWsClient$$EnhancerByGuice$$ed45bb75: Creating new InstallationWsClient$$EnhancerByGuice$$ed45bb75 using webservices at http://api.gbif-uat.org/v1/installation
+INFO  [2015-03-16 16:35:38,282+0100] [qtp1895498486-30] org.gbif.portal.struts.freemarker.GbifFreemarkerManager: Init custom GBIF Freemarker Manager
+INFO  [2015-03-16 16:35:38,448+0100] [qtp1895498486-30] org.gbif.portal.struts.ConfigurableServletUrlRenderer: Configure struts tags to include the servlet context: false

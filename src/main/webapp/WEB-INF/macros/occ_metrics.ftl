@@ -23,7 +23,7 @@ with the help of metrics.js
 <th colspan="2" width="9%">Observation</th>
 <th colspan="2" width="9%">Fossil</th>
 <th colspan="2" width="9%">Living</th>
-<th colspan="2" width="9%" class='total'>Total</th>
+<th colspan="2" width="9%" class='total'>All (incl. "unknown")</th>
 </tr>
 <tr>
 <th width="10%"/>
