@@ -10,3 +10,6 @@ INFO  [2015-03-16 16:35:36,700+0100] [qtp1895498486-30] org.gbif.registry.ws.cli
 INFO  [2015-03-16 16:35:36,714+0100] [qtp1895498486-30] org.gbif.registry.ws.client.InstallationWsClient$$EnhancerByGuice$$ed45bb75: Creating new InstallationWsClient$$EnhancerByGuice$$ed45bb75 using webservices at http://api.gbif-uat.org/v1/installation
 INFO  [2015-03-16 16:35:38,282+0100] [qtp1895498486-30] org.gbif.portal.struts.freemarker.GbifFreemarkerManager: Init custom GBIF Freemarker Manager
 INFO  [2015-03-16 16:35:38,448+0100] [qtp1895498486-30] org.gbif.portal.struts.ConfigurableServletUrlRenderer: Configure struts tags to include the servlet context: false
+INFO  [2015-03-17 14:46:31,177+0100] [main] org.gbif.mybatis.guice.MyBatisModule: Configuring MyBatis with no cache
+INFO  [2015-03-17 14:46:31,236+0100] [main] org.gbif.occurrence.query.TitleLookupModule: Create new TitleLookup using API http://api.gbif.org/v1
+INFO  [2015-03-17 14:46:32,443+0100] [main] com.zaxxer.hikari.HikariDataSource: HikariCP pool HikariPool-0 is starting.

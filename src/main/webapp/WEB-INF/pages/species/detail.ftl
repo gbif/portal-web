@@ -374,7 +374,7 @@
   <#list usage.distributions as d>
     <#if d.locationId?has_content || d.country?has_content || d.locality?has_content >
       <#assign item >
-        <a href='<@s.url value='/species/${(d.sourceTaxonKey!usage.key)?c}'/>'>
+        <a href='<@s.url value='/species/${(d.sourceTaxonKey!usage.key)?c}#distribution'/>'>
         <@s.text name='enum.occurrencestatus.${d.status!"PRESENT"}'/>
         <#if d.establishmentMeans??> <@s.text name='enum.establishmentmeans.${d.establishmentMeans}'/></#if>
          in
