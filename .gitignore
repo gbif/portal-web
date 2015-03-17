@@ -6,6 +6,9 @@ target/
 # auto enerated css files
 src/main/webapp/css/*.css
 
+# logs
+logs/
+
 # Package Files #
 *.jar
 *.war
