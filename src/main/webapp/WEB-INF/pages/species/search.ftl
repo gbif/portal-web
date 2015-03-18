@@ -54,9 +54,11 @@
                 Common Name
               <#elseif u.synonym>
                 <#if u.rank??><@s.text name="enum.rank.${u.rank}"/> </#if>
-                <@s.text name="enum.taxstatus.SYNONYM"/>
+                <@s.text name="enum.taxstatus.${u.taxonomicStatus!'SYNONYM'}"/>
+              <#elseif !u.taxonomicStatus?? && !u.rank??>
+                <@s.text name="enum.taxstatus.UNKNOWN"/>
               <#else>
-                <@s.text name="enum.taxstatus.ACCEPTED"/>
+                <#if u.taxonomicStatus??><@s.text name="enum.taxstatus.${u.taxonomicStatus!'UNKNOWN'}"/></#if>
                 <#if u.rank??> <@s.text name="enum.rank.${u.rank}"/></#if>
               </#if>
               <#if showAccordingTo>

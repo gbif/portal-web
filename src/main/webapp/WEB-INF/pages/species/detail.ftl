@@ -167,26 +167,15 @@
 
 <#if !nub>
 <#-- Warn that this is not a nub page -->
-<@common.notice title="This is a particular view of ${usage.canonicalOrScientificName!}">
-  <p>This is the <em>${usage.scientificName}</em> view,
-    as seen by
+<@common.notice title="This is a particular view of ${usage.canonicalOrScientificName!}" id="checklistView" sessionBound=true>
+  <p>This is <em>${usage.scientificName}</em> as seen by
       <#if constituent??><a href="<@s.url value='/dataset/${constituent.key}'/>">${constituent.title}</a>, a constituent of the </#if>
       <a href="<@s.url value='/dataset/${usage.datasetKey}'/>">${(dataset.title)!"???"}</a> checklist.
       <#if usage.nubKey?exists>
-          Remember that you can also check the
-          <a href="<@s.url value='/species/${usage.nubKey?c}'/>">GBIF view on ${usage.canonicalOrScientificName!}</a>.
+          <br/>Remember that you can also check the
+          <a href="<@s.url value='/species/${usage.nubKey?c}'/>">GBIF view on ${usage.canonicalOrScientificName!}</a>
+          by selecting the GBIF Backbone tab above.
       </#if>
-  </p>
-
-  <p>
-    <#-- only show the link to a verbatim page for source usages -->
-    <#if usage.origin! == "SOURCE">
-        There may be more details available about this name usage in the
-        <a href="<@s.url value='/species/${id?c}/verbatim'/>">verbatim version</a> of the record.
-    <#else>
-      This record has been created during indexing and did not explicitly exist in the source data as such.
-      It was created as <@s.text name="enum.origin.${usage.origin}"/>.
-    </#if>
   </p>
 </@common.notice>
 </#if>
@@ -240,12 +229,18 @@
   <div class="col">
     <h3>Taxonomic status</h3>
     <p>
-      <@s.text name="enum.taxstatus.${usage.taxonomicStatus!'UNKNOWN'}"/>
-
       <#if usage.synonym>
-        of <a href="<@s.url value='/species/${usage.acceptedKey?c}'/>">${usage.accepted!"???"}</a>
+        <@s.text name="enum.taxstatus.${usage.taxonomicStatus!'SYNONYM'}"/>
+          of <a href="<@s.url value='/species/${usage.acceptedKey?c}'/>">${usage.accepted!"???"}</a>
       <#elseif usage.rank??>
-        <@s.text name="enum.rank.${usage.rank}"/>
+        <#if (usage.taxonomicStatus!"UNKNOWN") == 'UNKNOWN'>
+          <@s.text name="enum.rank.${usage.rank}"/>
+          of unknown status
+        <#else>
+          <@s.text name="enum.taxstatus.${usage.taxonomicStatus}"/> <@s.text name="enum.rank.${usage.rank}"/>
+        </#if>
+      <#else>
+        <@s.text name="enum.taxstatus.${usage.taxonomicStatus!'UNKNOWN'}"/>
       </#if>
     </p>
 
@@ -379,7 +374,7 @@
   <#list usage.distributions as d>
     <#if d.locationId?has_content || d.country?has_content || d.locality?has_content >
       <#assign item >
-        <a href='<@s.url value='/species/${(d.sourceTaxonKey!usage.key)?c}'/>'>
+        <a href='<@s.url value='/species/${(d.sourceTaxonKey!usage.key)?c}#distribution'/>'>
         <@s.text name='enum.occurrencestatus.${d.status!"PRESENT"}'/>
         <#if d.establishmentMeans??> <@s.text name='enum.establishmentmeans.${d.establishmentMeans}'/></#if>
          in
@@ -639,22 +634,33 @@
 <@common.citationArticle rights=usage.rights!dataset.rights! dataset=dataset publisher=publisher prefix=prefix />
 
 
+<@common.notice title="Source information">
+<p>
 <#if nub>
-  <@common.notice title="Source information">
-  <p>This backbone name usage exists because
-    <#if usage.origin == "SOURCE">
-      it was found in another checklist at the time the backbone was built.
-      <#if nubSourceExists>
-        <br/>View the <a class="source" data-baseurl="<@s.url value='/species/'/>" href="<@s.url value='/species/${usage.sourceTaxonKey}'/>">primary source name usage</a>.
-      <#else>
-        The primary source name usage <#if usage.sourceTaxonKey?has_content>(${usage.sourceTaxonKey})</#if> has since been removed from the portal.
-      </#if>
+  This backbone name usage exists because
+  <#if usage.origin == "SOURCE">
+    it was found in another checklist at the time the backbone was built.
+    <#if nubSourceExists>
+      <br/>View the <a class="source" data-baseurl="<@s.url value='/species/'/>" href="<@s.url value='/species/${usage.sourceTaxonKey}'/>">primary source name usage</a>.
     <#else>
-      <@s.text name="enum.origin.${usage.origin}"/>.
+      The primary source name usage <#if usage.sourceTaxonKey?has_content>(${usage.sourceTaxonKey})</#if> has since been removed from the portal.
     </#if>
-  </p>
-  </@common.notice>
+  <#else>
+    <@s.text name="enum.origin.${usage.origin}"/>.
+  </#if>
+<#else>
+  <#if usage.origin! == "SOURCE">
+      There may be more details available about this name usage in the
+      <a href="<@s.url value='/species/${id?c}/verbatim'/>">verbatim version</a> of the record.
+  <#else>
+      This record has been created during indexing and did not explicitly exist in the source data as such.
+      It was created as <@s.text name="enum.origin.${usage.origin}"/>.
+  </#if>
 </#if>
+</p>
+</@common.notice>
+
+
 
 <@common.notice title="Record history">
   <#if usage.lastInterpreted?has_content>

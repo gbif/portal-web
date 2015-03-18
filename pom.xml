@@ -5,12 +5,12 @@
   <parent>
     <groupId>org.gbif</groupId>
     <artifactId>motherpom</artifactId>
-    <version>16</version>
+    <version>20</version>
   </parent>
 
   <groupId>org.gbif</groupId>
   <artifactId>portal-web</artifactId>
-  <version>0.19-SNAPSHOT</version>
+  <version>0.20-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <name>GBIF Portal</name>
@@ -41,18 +41,19 @@
     <google.analytics />
     <occurrence.download.size.limit>-1</occurrence.download.size.limit>
     <occurrence.search.maxoffset>10000</occurrence.search.maxoffset>
+    <skipJetty>false</skipJetty>
 
     <!-- dependency versions -->
-    <dwc-api.version>1.11-SNAPSHOT</dwc-api.version>
-    <gbif-api.version>0.18-SNAPSHOT</gbif-api.version>
-    <checklistbank-ws-client.version>2.12-SNAPSHOT</checklistbank-ws-client.version>
-    <download-query-tools.version>1.1</download-query-tools.version>
-    <registry-ws-client.version>2.26-SNAPSHOT</registry-ws-client.version>
-    <occurrence-ws-client.version>0.28-SNAPSHOT</occurrence-ws-client.version>
+    <dwc-api.version>1.11</dwc-api.version>
+    <gbif-api.version>0.18</gbif-api.version>
+    <checklistbank-ws-client.version>2.12</checklistbank-ws-client.version>
+    <download-query-tools.version>1.2</download-query-tools.version>
+    <registry-ws-client.version>2.26</registry-ws-client.version>
+    <occurrence-ws-client.version>0.28</occurrence-ws-client.version>
     <metrics-ws-client.version>0.19</metrics-ws-client.version>
     <drupal-mybatis.version>0.15</drupal-mybatis.version>
     <gbif-common.version>0.17</gbif-common.version>
-    <gbif-common-ws.version>0.19-SNAPSHOT</gbif-common-ws.version>
+    <gbif-common-ws.version>0.19</gbif-common-ws.version>
 
     <freemarker.version>2.3.21</freemarker.version>
     <guice.version>3.0</guice.version>
@@ -107,6 +108,7 @@
                 <goal>run</goal>
               </goals>
               <configuration>
+                <skip>${skipJetty}</skip>
                 <scanIntervalSeconds>0</scanIntervalSeconds>
                 <daemon>true</daemon>
               </configuration>
@@ -124,6 +126,7 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
           <configuration>
+            <skip>${skipJetty}</skip>
             <systemProperties>
               <property>
                 <name>servername</name>
@@ -171,21 +174,6 @@
               </execution>
           </executions>
       </plugin>
-      <!-- Commented out jrebel-maven-plugin plugin, because it breaks release -->
-      <!--<plugin>-->
-        <!--<groupId>org.zeroturnaround</groupId>-->
-        <!--<artifactId>jrebel-maven-plugin</artifactId>-->
-        <!--<version>1.1.5</version>-->
-        <!--<executions>-->
-          <!--<execution>-->
-            <!--<id>generate-rebel-xml</id>-->
-            <!--<phase>process-resources</phase>-->
-            <!--<goals>-->
-              <!--<goal>generate</goal>-->
-            <!--</goals>-->
-          <!--</execution>-->
-        <!--</executions>-->
-      <!--</plugin>-->
     </plugins>
     <resources>
       <resource>
@@ -492,6 +480,17 @@
   </dependencies>
 
   <profiles>
+    <!--
+     Profile to activate during releases like this:
+     mvn -P uat,secrets-uat,release -Darguments="-DskipTests" release:prepare
+    -->
+    <profile>
+      <id>release</id>
+      <properties>
+        <skipJetty>true</skipJetty>
+      </properties>
+    </profile>
+
     <profile>
       <!--
         configured to use the api.gbif.org/v1 services and the live master drupal.

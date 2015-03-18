@@ -11,7 +11,6 @@
  To show yellow tabs instead of default grey ones please assign:
   <#assign tabhl=true />
 -->
-Plantae › Marchantiophyta › Jungermanniopsida › Jungermanniales › Pseudolepicoleaceae › Blepharostoma › Blepharostoma trichophyllum
 
 <#assign showBox = usage.nub && !(tabhl!false) />
 <#assign titleLength = 36 />
@@ -74,6 +73,18 @@ Plantae › Marchantiophyta › Jungermanniopsida › Jungermanniales › Pseudo
     <li<#if (tab!"")=="info"> class='selected ${hl!}'</#if>>
       <a href="<@s.url value='/species/${id?c}'/>" title="Information"><span>Information</span></a>
     </li>
+  <#if !nub>
+    <#if usage.origin! == "SOURCE">
+    <li<#if (tab!"")=="verbatim"> class='selected ${hl!}'</#if>>
+        <a href="<@s.url value='/species/${id?c}/verbatim'/>" title="Verbatim"><span>Verbatim</span></a>
+    </li>
+    </#if>
+    <#if usage.nubKey?exists>
+    <li>
+        <a href="<@s.url value='/species/${usage.nubKey?c}'/>" title="GBIF Backbone"><span>GBIF Backbone</span></a>
+    </li>
+    </#if>
+  </#if>
     <#--
     NOT IMPLEMENTED YET
     <li<#if (tab!"")=="activity"> class='selected ${hl!}'</#if>>
