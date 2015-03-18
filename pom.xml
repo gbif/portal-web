@@ -46,7 +46,7 @@
     <dwc-api.version>1.11-SNAPSHOT</dwc-api.version>
     <gbif-api.version>0.18-SNAPSHOT</gbif-api.version>
     <checklistbank-ws-client.version>2.12-SNAPSHOT</checklistbank-ws-client.version>
-    <download-query-tools.version>1.1</download-query-tools.version>
+    <download-query-tools.version>1.2-SNAPSHOT</download-query-tools.version>
     <registry-ws-client.version>2.26-SNAPSHOT</registry-ws-client.version>
     <occurrence-ws-client.version>0.28-SNAPSHOT</occurrence-ws-client.version>
     <metrics-ws-client.version>0.19</metrics-ws-client.version>
