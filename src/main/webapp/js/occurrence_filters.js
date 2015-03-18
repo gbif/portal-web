@@ -1598,7 +1598,7 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
           self.addFilter({value:$(this).attr("key"),key:null,submitted: false,paramName:self.getId()});
           $(this).addClass("selected");
           self.setShowAll(self.hasAllSelected());
-          if(!self.getShowAll()){
+          if(!self.isShowAll()){
         	self.removeFilter({value:'*'});
           } else {
         	self.clearFilters();
