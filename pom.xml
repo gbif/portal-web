@@ -41,6 +41,7 @@
     <google.analytics />
     <occurrence.download.size.limit>-1</occurrence.download.size.limit>
     <occurrence.search.maxoffset>10000</occurrence.search.maxoffset>
+    <skipJetty>false</skipJetty>
 
     <!-- dependency versions -->
     <dwc-api.version>1.11</dwc-api.version>
@@ -107,6 +108,7 @@
                 <goal>run</goal>
               </goals>
               <configuration>
+                <skip>${skipJetty}</skip>
                 <scanIntervalSeconds>0</scanIntervalSeconds>
                 <daemon>true</daemon>
               </configuration>
@@ -124,6 +126,7 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
           <configuration>
+            <skip>${skipJetty}</skip>
             <systemProperties>
               <property>
                 <name>servername</name>
@@ -171,21 +174,6 @@
               </execution>
           </executions>
       </plugin>
-      <!-- Commented out jrebel-maven-plugin plugin, because it breaks release -->
-      <!--<plugin>-->
-        <!--<groupId>org.zeroturnaround</groupId>-->
-        <!--<artifactId>jrebel-maven-plugin</artifactId>-->
-        <!--<version>1.1.5</version>-->
-        <!--<executions>-->
-          <!--<execution>-->
-            <!--<id>generate-rebel-xml</id>-->
-            <!--<phase>process-resources</phase>-->
-            <!--<goals>-->
-              <!--<goal>generate</goal>-->
-            <!--</goals>-->
-          <!--</execution>-->
-        <!--</executions>-->
-      <!--</plugin>-->
     </plugins>
     <resources>
       <resource>
@@ -492,6 +480,13 @@
   </dependencies>
 
   <profiles>
+    <profile>
+      <id>release</id>
+      <properties>
+        <skipJetty>true</skipJetty>
+      </properties>
+    </profile>
+
     <profile>
       <!--
         configured to use the api.gbif.org/v1 services and the live master drupal.
