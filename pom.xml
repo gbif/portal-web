@@ -480,6 +480,10 @@
   </dependencies>
 
   <profiles>
+    <!--
+     Profile to activate during releases like this:
+     mvn -P uat,secrets-uat,release -Darguments="-DskipTests" release:prepare
+    -->
     <profile>
       <id>release</id>
       <properties>
