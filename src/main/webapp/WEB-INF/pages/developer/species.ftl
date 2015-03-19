@@ -142,7 +142,7 @@
   "highertaxonKey": "Filters by any of the higher Linnean rank keys. Note this is within the respective checklist and not searching nub keys across all checklists.",
   "status": "Filters by the taxonomic status as given in our <a href='${api.apidocs}/vocabulary/TaxonomicStatus.html' target='_blank'>TaxonomicStatus enum</a>",
   "isExtinct": "Filters by extinction status (a boolean, e.g. isExtinct=true)",
-  "habitat": "Filters by the habitat, though currently only as boolean marine or not-marine (i.e. habitat=true means marine, false means not-marine)",
+  "habitat": "Filters by the habitat. Currently only 3 major biomes are accepted in our <a href='${api.apidocs}/vocabulary/Habitat.html' target='_blank'>Habitat enum</a>",
   "threat": "Not yet implemented, but will eventually allow for filtering by a threat status enum",
   "nameType": "Filters by the name type as given in our <a href='${api.apidocs}/vocabulary/NameType.html' target='_blank'>NameType enum</a>",
   "nomenclaturalStatus": "Not yet implemented, but will eventually allow for filtering by a nomenclatural status enum",

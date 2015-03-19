@@ -159,6 +159,8 @@
   "publishingCountry" : "The 2-letter country code (as per <a href='http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm' target='_blank'>ISO-3166-1</a>) of the owining organization's country.",
   "elevation": "Elevation (altitude) in meters above sea level. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
   "depth" : "Depth in meters relative to altitude. For example 10 meters below a lake surface with given altitude. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
+  "establishmentMeans": "EstablishmentMeans, as defined in our <a href='${api.apidocs}/vocabulary/EstablishmentMeans.html' target='_blank'>EstablishmentMeans enum</a>",
+  "occurrenceID" : "A single globally unique identifier for the occurrence record as provided by the publisher.",
   "institutionCode" : "An identifier of any form assigned by the source to identify the institution the record belongs to. Not guaranteed to be unique.",
   "collectionCode": "An identifier of any form assigned by the source to identify the physical collection or digital dataset uniquely within the context of an institution.",
   "catalogNumber": "An identifier of any form assigned by the source within a physical collection or digital dataset for the record which may not be unique, but should be fairly unique in combination with the institution and collection code.",
@@ -172,7 +174,7 @@
   "spatialIssues": "Includes/excludes occurrence records which contain spatial issues (as determined in our record interpretation), i.e. spatialIssues=true returns only those records with spatial issues while spatialIssues=false includes only records without spatial issues. The absence of this parameter returns any record with or without spatial issues.",
   "issue": "A specific interpretation issue as defined in our <a href='${api.apidocs}/vocabulary/OccurrenceIssue.html' target='_blank'>OccurrenceIssue enum</a>",
   "mediaType": "The kind of multimedia associated with an occurrence as defined in our <a href='${api.apidocs}/vocabulary/MediaType.html' target='_blank'>MediaType enum</a>",
- "typeStatus": "Nomenclatural type (type status, typified scientific name, publication) applied to the subject.",
+  "typeStatus": "Nomenclatural type (type status, typified scientific name, publication) applied to the subject.",
   "q" : "Simple search parameter. The value for this parameter can be a simple word or a phrase.",
   "limit": "The maximum number of results to return. This can't be greater than 300, any value greater is set to 300."
 } />
