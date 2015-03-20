@@ -13,6 +13,11 @@
 
 <#include "/WEB-INF/pages/developer/inc/tabs.ftl" />
 
+<#-- define some often occurring enumeration api defaults -->
+<#macro erow url resp respLink paging=false params=[]>
+  <@api.trow url="/enumeration/"+url httpMethod="GET" resp=resp respLink="enumeration/"+respLink paging=paging params=params authRequired=""><#nested /></@api.trow>
+</#macro>
+
 <body class="api">
 
 <@api.introArticle>
@@ -56,6 +61,7 @@
     <ul>
       <li><a href="#common">Common operations</a></li>
       <li><a href="#authentication">Authentication</a></li>
+      <li><a href="#enumerations">Enumerations</a></li>
       <li><a href="#roadmap">Roadmap to v2</a></li>
       <li><a href="http://lists.gbif.org/mailman/listinfo/api-users" target="_blank">GBIF API users mailing list</a></li>
     </ul>
@@ -112,6 +118,23 @@
         <code>$ curl -i --user yourUserName:<YOUR_PASSWORD> -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d @filter.json ${action.cfg.apiBaseUrl}/occurrence/download/request</code>
     </p>
 </div>
+</@common.article>
+
+
+<@common.article id="enumerations" title="Enumerations">
+    <div class="fullwidth">
+      <h3>Enumerations</h3>
+      <p>Many parts of the GBIF API make use of enumerations, i.e. controlled vocabularies for specific topics.
+        Often these are based on existing standards such as ISO or <a href="http://www.tdwg.org/standards/">TDWG</a>.
+        The enumerations are part of the <a href='${api.apidocs}/vocabulary/package-summary.html' target='_blank'>GBIF Java API</a>,
+        but the currently active version can also be dynamically accessed through our JSON webservices to support more dynamic clients.
+      </p>
+      <@api.apiTable>
+        <@erow url="basic" resp="Enumeration List" respLink="basic" >Lists all available enumerations</@erow>
+        <@erow url="basic/{ENUMERATION}" resp="Enumeration values" respLink="basic/TypeStatus" >Lists all available values for a given enumeration</@erow>
+        <@erow url="country" resp="Country List" respLink="country" >Lists all countries with their country code and title</@erow>
+      </@api.apiTable>
+    </div>
 </@common.article>
 
 
