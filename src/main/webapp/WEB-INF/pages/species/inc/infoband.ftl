@@ -44,10 +44,10 @@
   </h3>
 
 <#if showBox>
-  <div class="box">
+  <div class="<#if numOccurrences == 0>smallbox<#else>box</#if>">
     <div class="content">
       <#-- This margin is used when the species doesn't have occurrence and because that the background image has a fixed size-->
-      <ul <#if numOccurrences == 0> style='margin-top: 20px !important;'</#if>>
+      <ul>
         <li><h4>${numOccurrences}</h4>Occurrences</li>
         <#if usage.rank.isSpeciesOrBelow()>
           <li class="last"><h4>${usage.numDescendants}</h4>Infraspecies</li>
