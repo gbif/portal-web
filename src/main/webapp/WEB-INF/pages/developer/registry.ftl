@@ -90,6 +90,7 @@
     <@trowD url="/{UUID}/contact" method="POST" resp="ID" auth=true>Create and add a dataset contact</@trowD>
     <@trowD url="/{UUID}/contact/{ID}" method="DELETE" auth=true>Deletes a dataset contact with contact identifier {ID}</@trowD>
     <@trowD url="/{UUID}/contact/{ID}" method="PUT" auth=true>Updates a dataset contact with contact identifier {ID}</@trowD>
+    <@trowD url="/{UUID}/crawl" method="POST" auth=true>Schedules a new crawl of the dataset</@trowD>
     <@trowD url="/{UUID}/endpoint" method="GET" resp="Endpoint List" respLink="dataset/4fa7b334-ce0d-4e88-aaae-2e0c138d049e/endpoint">Lists the dataset endpoints</@trowD>
     <@trowD url="/{UUID}/endpoint" method="POST" resp="ID" auth=true>Creates a dataset endpoint</@trowD>
     <@trowD url="/{UUID}/endpoint/{ID}" method="DELETE" auth=true>Deletes a dataset endpoint with identifier {ID}</@trowD>
