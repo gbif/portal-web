@@ -12,41 +12,46 @@
 <body class="ipt">
 
 
-<@common.article id="about" title="Latest release – version 2.1, 16 April 2014" titleRight="Version history">
+<@common.article id="about" title="Latest release – version 2.2, 26 March 2015" titleRight="Version history">
     <div class="left">
         <p>
-            Identifier validation is a new feature in this version, making it possible to validate that each record within
-            a dataset has a unique identifier. Support for Microsoft Excel spreadsheets as data sources has also been added.
-            Furthermore thanks to the efforts of Dr. Yukiko Yamazaki from the
-            <a href="http://www.nig.ac.jp/"
-               title="National Institute of Genetics (NIG) in Japan"
-               target="_blank">National Institute of Genetics (NIG) in Japan</a>
-            the IPT is now available in Japanese, the IPT's 6th translation of the user interface.
+            This version is capable of automatically connecting with either <a href="https://www.datacite.org/" title="Link to DataCite" target="_blank">DataCite</a> or <a href="http://ezid.cdlib.org/" title="Link to EZID" target="_blank">EZID</a> to assign DOIs to datasets.
+            This new feature makes biodiversity data easier to access on the Web and facilitates tracking its re-use.
+            Since tracking datasets' re-use depends on <a href="https://www.datacite.org/services/cite-your-data.html" title="Link to DataCite Cite your data page" target="_blank">proper citation</a>, this version now enables a dataset's citation to be
+            automatically generated in a <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2Citation" title="Link to IPT citation format wiki page" target="_blank">standard format</a> which includes the DOI and dataset version number.
         </p>
         <p>
-        <h3><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.1.1/ipt-2.1.1.war" title="Link to download IPT v2.1.1" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_1_1');">Download</a></h3>
-        <h3><a href="http://gbif.blogspot.dk/2014/04/ipt-v21.html" title="Link to release announcement about IPT v2.1" target="_blank">Release Announcement</a></h3>
-        <h3><a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPTReleaseNotes21" title="IPT v2.1 Release notes" target="_blank">Release notes (upgrade instructions)</a></h3>
+        <h3><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.2/ipt-2.2.war" title="Link to download IPT v2.2" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_2');">Download</a></h3>
+        <h3><a href="http://gbif.blogspot.com/2015/03/ipt-v22.html" title="Link to release announcement about IPT v2.2" target="_blank">Release Announcement</a></h3>
+        <h3><a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPTReleaseNotes22" title="IPT v2.2 Release notes" target="_blank">Release notes (upgrade instructions)</a></h3>
         </p>
         <p>&nbsp;</p>
         <h2>Roadmap - what's next?</h2>
         <p>
-            Version 2.2 of the IPT will be released in November of 2014. The two most notable features added in this version
-            will be the ability to handle DOIs as stable identifiers for a dataset, and the ability to backup datasets in an
-            external repository.
+            Version 2.3 of the IPT will be released in May of 2015. This version will support publishing sample-based datasets incorporating all the changes now in the prototype at the <a href="http://eubon-ipt.gbif.org" title="Link to EU BON IPT" target="_blank">EU BON IPT</a>.
+            As part of these changes, the IPT will update its extensions and vocabularies to the latest verison of Darwin Core.
         </p>
         <p>
-            As of April 16th, 2014 there were
-            <a href="https://code.google.com/p/gbif-providertoolkit/issues/list?can=2&amp;q=Milestone%3DRelease2.2"
-               title="Link to issues scheduled to be included in IPT v2.2 release"
-               target="_blank">19 issues</a> scheduled to be included in this release.
+            As of March 26th, 2015 there were
+            <a href="https://code.google.com/p/gbif-providertoolkit/issues/list?can=2&amp;q=Milestone%3DRelease2.3"
+               title="Link to issues scheduled to be included in IPT v2.3 release"
+               target="_blank">12 issues</a> scheduled to be included in this release.
         </p>
     </div>
     <div class="right">
+        <h3><strong>2.2</strong> - March, 2015</h3>
+        <ul>
+            <li><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.2/ipt-2.2.war" title="Dowload IPT v2.2" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_2');">Download</a> / <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPTReleaseNotes22" title="IPT v2.2 Release Notes" target="_blank">Notes</a></li>
+            <li><a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2ManualNotes?tm=6" title="IPT User Manual" target="_blank">User Manual</a> <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2ManualNotes?wl=es" title="IPT User Manual Spanish" target="_blank">(es)</a></li>
+            <li><a href="http://gbif.blogspot.com/2015/03/ipt-v22.html" title="IPT v2.2 Release Announcement" target="_blank">Release Announcement</a></li>
+            <li>Addressed <a href="https://code.google.com/p/gbif-providertoolkit/issues/list?can=1&amp;q=milestone%3DRelease2.2" title="IPT v2.2 Issues List" target="_blank">74 issues</a>: 20 Defects, 26 Enhancements, 16 Won’t fix, 6 Duplicates, 2 Other, 1 Task, and 3 that were considered as Invalid
+            </li>
+            <li>Translated into 6 languages</li>
+        </ul>
         <h3><strong>2.1</strong> - April, 2014</h3>
         <ul>
-            <li><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.1.1/ipt-2.1.1.war" title="Dowload IPT v2.1.1" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_1_1');">Download</a> / <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPTReleaseNotes21" title="IPT v2.1 Release Notes" target="_blank">Notes</a></li>
-            <li><a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2ManualNotes?tm=6" title="IPT User Manual" target="_blank">User Manual</a> <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2ManualNotes?wl=es" title="IPT User Manual Spanish" target="_blank">(es)</a></li>
+            <li><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.1.1/ipt-2.1.1.war" title="Dowload IPT v2.1.1" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_1_1');"><strike>Download</strike></a> / <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPTReleaseNotes21" title="IPT v2.1 Release Notes" target="_blank">Notes</a></li>
+            <li><a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPTUserManualv21" title="IPT v2.1 User Manual" target="_blank">User Manual</a> <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPTUserManualv21?wl=es" title="IPT v2.1 User Manual Spanish" target="_blank">(es)</a></li>
             <li><a href="http://gbif.blogspot.dk/2014/04/ipt-v21.html" title="IPT v2.1 Release Announcement" target="_blank">Release Announcement</a></li>
             <li>Addressed <a href="http://code.google.com/p/gbif-providertoolkit/issues/list?can=1&amp;q=Milestone%3DRelease2.1" title="IPT v2.1 Issues List" target="_blank">85 issues</a>: 38 Defects, 11 Enhancements, 18 Won’t fix, 6 Duplicates, 1 Other, and 11 that were considered as Invalid
             </li>
@@ -55,7 +60,7 @@
         <h3><strong>2.0.5</strong> - May, 2013</h3>
         <ul>
             <li><a href="https://gbif-providertoolkit.googlecode.com/files/ipt-2.0.5-security-update-1.war" title="Dowload IPT v2.0.5" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_0_5');"><strike>Download</strike></a> / <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPTReleaseNotes205" title="IPT v2.0.5 Release Notes" target="_blank">Notes</a></li>
-            <li><a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPTUserManualv205" title="IPT v2.0.5 User Manual" target="_blank">User Manual</a> <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPTUserManualv205?wl=es" title="IPT User Manual Spanish" target="_blank">(es)</a></li>
+            <li><a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPTUserManualv205" title="IPT v2.0.5 User Manual" target="_blank">User Manual</a> <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPTUserManualv205?wl=es" title="IPT v2.0.5 User Manual Spanish" target="_blank">(es)</a></li>
             <li><a href="http://gbif.blogspot.dk/2013/05/ipt-v205-released-melhor-versao-ate-o.html" title="IPT v2.0.5 Release Announcement" target="_blank">Release Announcement</a></li>
             <li>Addressed <a href="http://code.google.com/p/gbif-providertoolkit/issues/list?can=1&amp;q=milestone%3DRelease2.0.5" title="IPT v2.0.5 Issues List" target="_blank">45 issues</a>: 15 Defects, 17 Enhancements, 2 Patches, 7 Won’t fix, 3 Duplicates, and 1 that was considered as Invalid
             </li>
