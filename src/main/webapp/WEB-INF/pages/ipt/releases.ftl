@@ -18,7 +18,7 @@
             This version is capable of automatically connecting with either <a href="https://www.datacite.org/" title="Link to DataCite" target="_blank">DataCite</a> or <a href="http://ezid.cdlib.org/" title="Link to EZID" target="_blank">EZID</a> to assign DOIs to datasets.
             This new feature makes biodiversity data easier to access on the Web and facilitates tracking its re-use.
             Since tracking datasets' re-use depends on <a href="https://www.datacite.org/services/cite-your-data.html" title="Link to DataCite Cite your data page" target="_blank">proper citation</a>, this version now enables a dataset's citation to be
-            automatically generated in a <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2Citation" title="Link to IPT citation format wiki page" target="_blank">standard format</a> which includes the DOI and dataset version number.
+            automatically generated in a <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2Citation" title="Link to IPT citation format wiki page" target="_blank">standard format</a> that includes the DOI and dataset version number.
         </p>
         <p>
         <h3><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.2/ipt-2.2.war" title="Link to download IPT v2.2" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_2');">Download</a></h3>
@@ -29,7 +29,7 @@
         <h2>Roadmap - what's next?</h2>
         <p>
             Version 2.3 of the IPT will be released in May of 2015. This version will support publishing sample-based datasets incorporating all the changes now in the prototype at the <a href="http://eubon-ipt.gbif.org" title="Link to EU BON IPT" target="_blank">EU BON IPT</a>.
-            As part of these changes, the IPT will update its extensions and vocabularies to the latest verison of Darwin Core.
+            As part of these changes, the IPT will update its extensions and vocabularies to the latest version of Darwin Core.
         </p>
         <p>
             As of March 26th, 2015 there were
