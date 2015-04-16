@@ -2,7 +2,7 @@ package org.gbif.portal.config;
 
 import org.gbif.ws.client.filter.HttpGbifAuthFilter;
 import org.gbif.ws.client.guice.GbifApplicationAuthModule;
-import org.gbif.ws.security.GbifAppAuthService;
+import org.gbif.ws.security.GbifAuthService;
 
 import java.util.Properties;
 
@@ -16,13 +16,9 @@ import com.sun.jersey.api.client.filter.ClientFilter;
 
 public class PrivatePortalModule extends PrivateModule{
   private final Properties properties;
-  private final String appKey;
-  private final String appSecret;
 
   public PrivatePortalModule(Properties properties) {
     this.properties = properties;
-    this.appKey = properties.getProperty(GbifApplicationAuthModule.PROPERTY_APP_KEY);
-    this.appSecret = properties.getProperty(GbifApplicationAuthModule.PROPERTY_APP_SECRET);
   }
 
   @Override
@@ -36,15 +32,17 @@ public class PrivatePortalModule extends PrivateModule{
 
   @Provides
   @Singleton
-  public GbifAppAuthService provideGbifAppAuthService() {
-    return new GbifAppAuthService(appKey, appSecret);
+  public GbifAuthService provideGbifAuthService() {
+    String appKey = properties.getProperty(GbifApplicationAuthModule.PROPERTY_APP_KEY);
+    String appSecret = properties.getProperty(GbifApplicationAuthModule.PROPERTY_APP_SECRET);
+    return GbifAuthService.singleKeyAuthService(appKey, appSecret);
   }
 
   @Provides
   @Singleton
   @Inject
-  public ClientFilter provideSessionAuthFilter(GbifAppAuthService authService, SessionAuthProvider sessionAuthProvider) {
-    return new HttpGbifAuthFilter(appKey, authService, sessionAuthProvider);
+  public ClientFilter provideSessionAuthFilter(GbifAuthService authService, SessionAuthProvider sessionAuthProvider) {
+    return new HttpGbifAuthFilter(authService, sessionAuthProvider);
   }
 
 }
