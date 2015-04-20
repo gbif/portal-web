@@ -21,7 +21,7 @@
             automatically generated in a <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2Citation" title="Link to IPT citation format wiki page" target="_blank">standard format</a> that includes the DOI and dataset version number.
         </p>
         <p>
-        <h3><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.2/ipt-2.2.war" title="Link to download IPT v2.2" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_2');">Download</a></h3>
+        <h3><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.2.1/ipt-2.2.1.war" title="Link to download IPT v2.2" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_2_1');">Download</a></h3>
         <h3><a href="http://gbif.blogspot.com/2015/03/ipt-v22.html" title="Link to release announcement about IPT v2.2" target="_blank">Release Announcement</a></h3>
         <h3><a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPTReleaseNotes22" title="IPT v2.2 Release notes" target="_blank">Release notes (upgrade instructions)</a></h3>
         </p>
@@ -41,7 +41,7 @@
     <div class="right">
         <h3><strong>2.2</strong> - March, 2015</h3>
         <ul>
-            <li><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.2/ipt-2.2.war" title="Dowload IPT v2.2" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_2');">Download</a> / <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPTReleaseNotes22" title="IPT v2.2 Release Notes" target="_blank">Notes</a></li>
+            <li><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.2.1/ipt-2.2.1.war" title="Dowload IPT v2.2" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_2_1');">Download</a> / <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPTReleaseNotes22" title="IPT v2.2 Release Notes" target="_blank">Notes</a></li>
             <li><a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2ManualNotes?tm=6" title="IPT User Manual" target="_blank">User Manual</a> <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2ManualNotes?wl=es" title="IPT User Manual Spanish" target="_blank">(es)</a></li>
             <li><a href="http://gbif.blogspot.com/2015/03/ipt-v22.html" title="IPT v2.2 Release Announcement" target="_blank">Release Announcement</a></li>
             <li>Addressed <a href="https://code.google.com/p/gbif-providertoolkit/issues/list?can=1&amp;q=milestone%3DRelease2.2" title="IPT v2.2 Issues List" target="_blank">74 issues</a>: 20 Defects, 26 Enhancements, 16 Won’t fix, 6 Duplicates, 2 Other, 1 Task, and 3 that were considered as Invalid
