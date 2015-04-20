@@ -272,11 +272,6 @@
   </@common.article>
 </#macro>
 
-
-<#macro enumParagraph enum>
-  <p><#if enum.interpreted?has_content>${enum.interpreted?string}<#else>${enum.verbatim!"&nbsp;"}</#if></p>
-</#macro>
-
 <#-- Creates a dt dd definition if the value has content, otherwise none -->
 <#macro definition title value>
  <#if value?has_content>

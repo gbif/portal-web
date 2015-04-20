@@ -100,14 +100,14 @@
     </#list>
   </#if>
 
-  <#if dataset.metadataLanguage?has_content>
+  <#if dataset.language?has_content>
     <h3>Language of Metadata</h3>
-    <p>${dataset.metadataLanguage}</p>
+    <p>${dataset.language}</p>
   </#if>
 
   <#if dataset.dataLanguage?has_content>
     <h3>Language of Data</h3>
-    <@common.enumParagraph dataset.dataLanguage />
+    <p>${dataset.dataLanguage}</p>
   </#if>
 
   <#if primaryContacts?has_content>
