@@ -189,8 +189,12 @@
 
     <action name="download" class="org.gbif.portal.action.occurrence.DownloadRequestAction">
       <interceptor-ref name="loginStack"/>
-      <result type="redirectAction">
+      <result name="success" type="redirectAction">
         <param name="actionName">download/${key}</param>
+        <param name="namespace">/occurrence</param>
+      </result>
+      <result name="forbidden" type="redirectAction">
+        <param name="actionName">download_forbidden</param>
         <param name="namespace">/occurrence</param>
       </result>
     </action>
@@ -198,6 +202,10 @@
     <action name="download/*" class="org.gbif.portal.action.occurrence.DownloadAction">
       <param name="key">{1}</param>
       <result>/WEB-INF/pages/occurrence/download.ftl</result>
+    </action>
+
+    <action name="download_forbidden" class="org.gbif.portal.action.occurrence.DownloadForbiddenAction">
+      <result>/WEB-INF/pages/occurrence/download_forbidden.ftl</result>
     </action>
 
     <action name="*/verbatim" class="org.gbif.portal.action.occurrence.DetailAction" method="verbatim">

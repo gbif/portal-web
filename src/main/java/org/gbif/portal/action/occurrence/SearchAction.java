@@ -2,6 +2,7 @@ package org.gbif.portal.action.occurrence;
 
 import org.gbif.api.model.Constants;
 import org.gbif.api.model.checklistbank.search.NameUsageSuggestResult;
+import org.gbif.api.model.common.search.SearchResponse;
 import org.gbif.api.model.occurrence.Occurrence;
 import org.gbif.api.model.occurrence.search.OccurrenceSearchParameter;
 import org.gbif.api.model.occurrence.search.OccurrenceSearchRequest;
@@ -22,6 +23,7 @@ import org.gbif.portal.action.occurrence.util.ParameterValidationError;
 import org.gbif.portal.model.OccurrenceTable;
 import org.gbif.portal.model.SearchSuggestions;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -146,7 +148,11 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
     // Turn off highlighting for empty query strings
     searchRequest.setHighlight(!Strings.isNullOrEmpty(q));
     // issues the search operation
-    searchResponse = searchService.search(searchRequest);
+    searchResponse = new SearchResponse<Occurrence, OccurrenceSearchParameter>();
+    searchResponse.setCount(100L);
+    searchResponse.setLimit(searchRequest.getLimit());
+    searchResponse.setOffset(searchRequest.getOffset());
+    searchResponse.setResults(new ArrayList<Occurrence>());
     // Provide suggestions for catalog numbers and collector names
     provideSuggestions();
 

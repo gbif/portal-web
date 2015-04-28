@@ -2,7 +2,19 @@
 // make sure we only use it on occurrence pages, otherwise move it to style.less
 // there are some very global selectors defined here that are likely to clash with others !!!
 
-#content article.ocurrence_results {
+.filter_input {
+  width: 260px;
+  padding: 8px;
+  margin: 0px 0 10px 0;
+
+  .border-radius(2px);
+  border: 1px solid #CCC;
+  box-shadow: inset 0px 2px 3px #E8E8E8;
+  outline: none;
+  font-size: 13px;
+}
+
+#content article.occurrence_results {
   z-index:1000;
   .content { padding: 0; }
 
@@ -267,15 +279,7 @@
       .close { position:absolute; top: 0px; right: 0px; }
 
       input[type="text"] {
-        width: 260px;
-        padding: 8px;
-        margin: 0px 0 10px 0;
-
-        .border-radius(2px);
-        border: 1px solid #CCC;
-        box-shadow: inset 0px 2px 3px #E8E8E8;
-        outline: none;
-        font-size: 13px;
+        .filter_input;
       }
 
       .configure_dates {

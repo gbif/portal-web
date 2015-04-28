@@ -1396,9 +1396,7 @@ var dialogPopover = (function() {
       displayed && hide();
     });
 
-    $popover.click(function(event) {
-      event.stopPropagation();
-    });
+
   }
 
   function show() {

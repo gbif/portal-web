@@ -7,6 +7,8 @@
 
     <content tag="extra_scripts">
     <link rel="stylesheet" href="<@s.url value='/js/vendor/datepicker/css/datepicker.css'/>"/>
+    <link rel="stylesheet" href="<@s.url value='/js/vendor/tagit/jquery.tagit.css'/>"/>
+    <link rel="stylesheet" href="<@s.url value='/js/vendor/tagit/tagit.ui-zendesk.css'/>"/>
 
 <!--    <link rel="stylesheet" href="<@s.url value='/css/combobox.css?v=2'/>"/>    -->
     <script src='<@s.url value='/js/vendor/jquery.url.js'/>' type='text/javascript'></script>
@@ -23,6 +25,8 @@
     <script type="text/javascript" src="<@s.url value='/js/vendor/datepicker/js/bootstrap-datepicker.js'/>"></script>
     <script type="text/javascript" src="<@s.url value='/js/vendor/inputmask/js/jquery.inputmask.js'/>"></script>
     <script type="text/javascript" src="<@s.url value='/js/vendor/inputmask/js/jquery.inputmask.date.extensions.js'/>"></script>
+    <script type="text/javascript" src="<@s.url value='/js/vendor/tagit/tag-it.min.js'/>"></script>
+
     <script>
       var filtersFromRequest = new Object();
       var countryList = [<#list countries as country><#if country.official>{label:"${country.title}",iso2Lettercode:"${country.iso2LetterCode}"}<#if country_has_next>,</#if></#if></#list>];
@@ -49,37 +53,53 @@
        $(document).ready(function() {
          var widgetManager = new OccurrenceWidgetManager("<@s.url value='/occurrence/search'/>?",filtersFromRequest,".dropdown-menu",true);
          $("#notifications a").click(function(e) {
-             e.preventDefault();
-             $(this).hide();
-             $("#emails").show();
+            e.preventDefault();
+            $(this).hide();
+            $("#emails").slideToggle(500);
          });
        <#if action.showDownload()>
-         $('a.download_button').click(function(event) {
-            widgetManager.submit({emails:$('#emails').val()}, "<@s.url value='/occurrence/download'/>?");
+         $('#downloadFormat').dropkick(
+           {
+             change: function (value, label) {
+               $.each($(".download_format_description"), function(i,item) {
+                 if(item.id == value + "_description"){
+                   $(item).show();
+                 } else {
+                   $(item).hide();
+                 }
+               });
+             }
+           }
+         );
+         $('a.download_button').bindDialogPopover($('#downloadpopup'));
+
+         $('a.download_submit_button').click(function(event) {
+            widgetManager.submit({emails:$('#emails').val(),downloadformat:$("#downloadFormat").val()}, "<@s.url value='/occurrence/download'/>?");
          });
+         $('#emails').tagit({
+           fieldName: "emails",
+           afterTagAdded: function(event, ui) {
+             //increasing the padding to extend the div size
+             if(!isValidEmail(ui.tagLabel)) {
+               $(ui.tag).find('.tagit-label').html('Invalid email adress');
+               setTimeout(function (){
+                 $('#emails').tagit('removeTagByLabel',ui.tagLabel);
+               }, 600);
+             } else {
+               $('.scrollpane').jScrollPane({ verticalDragMinHeight: 20});
+             }
+           },
+           afterTagRemoved: function(event,ui) {
+             $('.scrollpane').jScrollPane({ verticalDragMinHeight: 20});
+           }
+       });
+         function isValidEmail(emailText) {
+           var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+           return pattern.test(emailText);
+         };
        </#if>
       });
     </script>
-
-    <style type="text/css">
-        #notifications {
-            margin-top: 10px;
-            float: right;
-        }
-        #notifications a {
-            margin-right: 5px;
-        }
-        #emails{
-            display: none;
-            margin-top: 10px;
-            margin-right: 5px;
-        }
-        #notifications input {
-            width: 400px;
-            margin-left:  10px;
-        }
-    </style>
-
     </content>
   </head>
   <body class="search">
@@ -100,7 +120,7 @@
         </#if>
     </content>
 
-<article class="ocurrence_results">
+<article class="occurrence_results">
   <header></header>
 
   <div class="content" id="content">
@@ -337,19 +357,16 @@
    <div>
      <a href="#" class="candy_blue_button download_button"><span>Download</span></a>
    </div>
-   <div id="notifications">
-       <a href="#">Notify others of results?</a>
-       <div id="emails_div">
-           Enter additional email addresses to be notified, separated by ';'
-           <input type="text" id="emails" name="emails" title="emails"/>
-       </div>
-   </div>
  </@common.article>
  </#if>
 
+  <!-- Filter templates -->
   <#include "/WEB-INF/pages/occurrence/inc/filters.ftl">
 
-  <!-- /Filter templates -->
+  <!-- Download popup -->
+  <#include "/WEB-INF/pages/occurrence/inc/downloadpopup.ftl">
+
+
   <div class="infowindow" id="waitDialog">
     <div class="light_box">
       <div class="content" >

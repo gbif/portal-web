@@ -92,7 +92,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini{*padding-top:1px;*padding-
 .caret{display:inline-block;width:0;height:0;vertical-align:top;border-top:4px solid #000000;border-right:4px solid transparent;border-left:4px solid transparent;content:"";}
 .dropdown .caret{margin-top:8px;margin-left:2px;}
 
-.dropdown-menu{position:absolute;top:100%;left:0;z-index:1000;display:none;float:left;min-width:180px;padding:5px 0;margin:2px 0 0;list-style:none;background-color:#ffffff;border:1px solid #ccc;border:1px solid rgba(0, 0, 0, 0.2);*border-right-width:2px;*border-bottom-width:2px;-webkit-border-radius:6px;-moz-border-radius:6px;border-radius:6px;-webkit-box-shadow:0 5px 10px rgba(0, 0, 0, 0.2);-moz-box-shadow:0 5px 10px rgba(0, 0, 0, 0.2);box-shadow:0 5px 10px rgba(0, 0, 0, 0.2);-webkit-background-clip:padding-box;-moz-background-clip:padding;background-clip:padding-box;}.dropdown-menu.pull-right{right:0;left:auto;}
+.dropdown-menu{position:absolute;top:100%;left:0;z-index:10000;display:none;float:left;min-width:180px;padding:5px 0;margin:2px 0 0;list-style:none;background-color:#ffffff;border:1px solid #ccc;border:1px solid rgba(0, 0, 0, 0.2);*border-right-width:2px;*border-bottom-width:2px;-webkit-border-radius:6px;-moz-border-radius:6px;border-radius:6px;-webkit-box-shadow:0 5px 10px rgba(0, 0, 0, 0.2);-moz-box-shadow:0 5px 10px rgba(0, 0, 0, 0.2);box-shadow:0 5px 10px rgba(0, 0, 0, 0.2);-webkit-background-clip:padding-box;-moz-background-clip:padding;background-clip:padding-box;}.dropdown-menu.pull-right{right:0;left:auto;}
 .dropdown-menu .divider{*width:100%;height:1px;margin:9px 1px;*margin:-5px 0 5px;overflow:hidden;background-color:#e5e5e5;border-bottom:1px solid #ffffff;}
 .dropdown-menu a{display:block;padding:3px 20px;clear:both;font-weight:normal;line-height:20px;color:#333333;white-space:nowrap;}
 .dropdown-menu li>a:hover,.dropdown-menu li>a:focus,.dropdown-submenu:hover>a{
@@ -107,7 +107,7 @@ background:red;
   right:0; left: auto;
 }
 
-.open{*z-index:1000;}.open >.dropdown-menu{display:block;}
+.open{*z-index:10000;}.open >.dropdown-menu{display:block;}
 .pull-right>.dropdown-menu{right:0;left:auto;}
 .dropup .caret,.navbar-fixed-bottom .dropdown .caret{border-top:0;border-bottom:4px solid #000000;content:"\2191";}
 .dropup .dropdown-menu,.navbar-fixed-bottom .dropdown .dropdown-menu{top:auto;bottom:100%;margin-bottom:1px;}
@@ -118,7 +118,7 @@ background:red;
  *
  */
 
-#content article.ocurrence_results table.results tr.filter td {
+.dropkick_class {
 
 .dk_container {
   box-shadow: inset 0px 2px 3px #E8E8E8;
@@ -130,6 +130,7 @@ background:red;
   border-radius: 3px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
+  z-index: 9999;
 }
   .dk_container:focus {
     outline: 0;
@@ -161,6 +162,7 @@ background:red;
   -o-transition: border-color .5s;
   transition: border-color .5s;
   font-size:13px;
+  z-index: 10000;
 }
   .dk_toggle:hover {
     border-color: #8c8c8c;
@@ -184,7 +186,7 @@ background:red;
    * Help: Dropdown menu is covered by something
    * Try setting this value higher
    */
-  z-index: 10;
+  z-index: 10000;
 }
   .dk_open .dk_toggle {
     background-color: #fff;
@@ -234,7 +236,7 @@ background:red;
   text-shadow: #fff 0 1px 0;
   border-radius: 0 0 3px 3px;
   -moz-border-radius: 0 0 3px 3px;
-  -webkit-border-radius: 0 0 3px 3px;  
+  -webkit-border-radius: 0 0 3px 3px;
 }
 
 .dk_options {
@@ -314,4 +316,12 @@ background:red;
 }
 
 
+}
+
+#content article.occurrence_results table.results tr.filter td {
+  .dropkick_class;
+}
+
+#content div.downloadpopup{
+  .dropkick_class;
 }
