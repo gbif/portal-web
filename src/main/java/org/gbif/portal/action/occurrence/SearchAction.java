@@ -2,7 +2,6 @@ package org.gbif.portal.action.occurrence;
 
 import org.gbif.api.model.Constants;
 import org.gbif.api.model.checklistbank.search.NameUsageSuggestResult;
-import org.gbif.api.model.common.search.SearchResponse;
 import org.gbif.api.model.occurrence.Occurrence;
 import org.gbif.api.model.occurrence.search.OccurrenceSearchParameter;
 import org.gbif.api.model.occurrence.search.OccurrenceSearchRequest;
@@ -23,14 +22,12 @@ import org.gbif.portal.action.occurrence.util.ParameterValidationError;
 import org.gbif.portal.model.OccurrenceTable;
 import org.gbif.portal.model.SearchSuggestions;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
@@ -91,7 +88,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   @Inject
   public SearchAction(OccurrenceSearchService occurrenceSearchService, FiltersActionHelper filtersActionHelper) {
     super(occurrenceSearchService, OccurrenceSearchParameter.class, new OccurrenceSearchRequest(DEFAULT_PARAM_OFFSET,
-      DEFAULT_PARAM_LIMIT));
+                                                                                                DEFAULT_PARAM_LIMIT));
     this.filtersActionHelper = filtersActionHelper;
   }
 
@@ -113,7 +110,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
       addFieldError(
         OFFSET_FIELD,
         getText(MAXOFFSET_ERROR_KEY,
-          new String[] {Long.toString(getSearchRequest().getOffset()), getMaxAllowedOffset().toString()}));
+                new String[] {Long.toString(getSearchRequest().getOffset()), getMaxAllowedOffset().toString()}));
 
       return SUCCESS;
     }
@@ -148,11 +145,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
     // Turn off highlighting for empty query strings
     searchRequest.setHighlight(!Strings.isNullOrEmpty(q));
     // issues the search operation
-    searchResponse = new SearchResponse<Occurrence, OccurrenceSearchParameter>();
-    searchResponse.setCount(100L);
-    searchResponse.setLimit(searchRequest.getLimit());
-    searchResponse.setOffset(searchRequest.getOffset());
-    searchResponse.setResults(new ArrayList<Occurrence>());
+    searchResponse = searchService.search(searchRequest);
     // Provide suggestions for catalog numbers and collector names
     provideSuggestions();
 
@@ -374,8 +367,8 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
    */
   public boolean showDownload() {
     return searchResponse != null && searchResponse.getCount() > 0
-      && (getCfg().getMaxOccDowloadSize() < 0 || searchResponse.getCount() <= getCfg().getMaxOccDowloadSize())
-      && !hasErrors() && !hasSuggestions();
+           && (getCfg().getMaxOccDowloadSize() < 0 || searchResponse.getCount() <= getCfg().getMaxOccDowloadSize())
+           && !hasErrors() && !hasSuggestions();
   }
 
   @Override
@@ -414,7 +407,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
    */
   private boolean isSuggestion(String value) {
     return nameUsagesSuggestions.getSuggestions().containsKey(value)
-      || datasetsSuggestions.getSuggestions().containsKey(value);
+           || datasetsSuggestions.getSuggestions().containsKey(value);
   }
 
   /**
