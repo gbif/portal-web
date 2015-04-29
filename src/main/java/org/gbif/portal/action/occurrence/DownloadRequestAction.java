@@ -39,7 +39,7 @@ public class DownloadRequestAction extends BaseAction {
   // optional additional email notifications
   private Set<String> emails = Sets.newHashSet();
 
-  private DownloadFormat downloadFormat;
+  private DownloadFormat format;
 
   @Override
   public String execute() {
@@ -48,7 +48,7 @@ public class DownloadRequestAction extends BaseAction {
     LOG.info("Predicate build for passing to download [{}]", p);
     emails.add(getCurrentUser().getEmail());
     DownloadRequest download =
-      new DownloadRequest(p, getCurrentUser().getUserName(), emails, true, downloadFormat);
+      new DownloadRequest(p, getCurrentUser().getUserName(), emails, true, format);
     LOG.debug("Creating download with DownloadRequest [{}] from service [{}]", download, downloadRequestService);
     try {
       key = downloadRequestService.create(download);
@@ -87,15 +87,15 @@ public class DownloadRequestAction extends BaseAction {
   /**
    * Download requested format.
    */
-  public String getDownloadFormat() {
-    return downloadFormat.name();
+  public String getFormat() {
+    return format.name();
   }
 
   /**
    * Sets the download requested format.
    */
-  public void setDownloadFormat(String downloadFormat) {
-    this.downloadFormat = DownloadFormat.valueOf(downloadFormat);
+  public void setFormat(String format) {
+    this.format = DownloadFormat.valueOf(format);
   }
 
 }

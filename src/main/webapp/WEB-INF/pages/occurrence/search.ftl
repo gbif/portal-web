@@ -74,7 +74,7 @@
          $('a.download_button').bindDialogPopover($('#downloadpopup'));
 
          $('a.download_submit_button').click(function(event) {
-            widgetManager.submit({emails:$('#emails').val(),downloadformat:$("#downloadFormat").val()}, "<@s.url value='/occurrence/download'/>?");
+            widgetManager.submit({emails:$('#emails').val(),format:$("#downloadFormat").val()}, "<@s.url value='/occurrence/download'/>?");
          });
          $('#emails').tagit({
            fieldName: "emails",
