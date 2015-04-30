@@ -73,6 +73,10 @@
         <dd>${action.getHumanRedeableBytesSize(download.size)}</dd>
       </#if>
 
+      <dt>Format</dt>
+      <dd><${download.request.format}</dd>
+
+
       <dt>Status</dt>
       <#if download.isAvailable() && !action.dwcaExists()>
           <dd><@s.text name="enum.downloadstatus.unavailable" /></dd>
