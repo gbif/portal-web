@@ -74,7 +74,7 @@
       </#if>
 
       <dt>Format</dt>
-      <dd>${download.request.format}</dd>
+      <dd><@s.text name="enum.downloadformat.${download.request.format}" /></dd>
 
 
       <dt>Status</dt>
