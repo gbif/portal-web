@@ -16,7 +16,7 @@
   <% _.each( _.first(feed.nodes, 3), function(i){ %>
     <li id="<%= i.node.field_datasetkey %>">
       <a href="<@s.url value='/dataset/'/><%= i.node.field_datasetkey %>">
-        <img src="<%= i.node.field_image %>" width="271" height="171">
+        <img src="<%= i.node.field_image.src %>" alt="<%= i.node.field_image.alt %>" width="271" height="171">
       </a>
       <a class="title" href="<@s.url value='/dataset/'/><%= i.node.field_datasetkey %>"><%= i.node.title %></a>
       <p><%= i.node.body %></p>
