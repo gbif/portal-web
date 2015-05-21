@@ -1,3 +1,5 @@
+@downloadpopup_width:550px;
+
 #notifications {
   margin-top: 2px;
   float: left;
@@ -18,12 +20,27 @@
 
 #downloadpopup {
 
-  ul {
-    list-style: none;
+  .absolute-landscape-center(@downloadpopup_width);
+
+  width: @downloadpopup_width !important;
+
+  div.lheader {
+    background: url("../img/boxes/box_medium_top.png") no-repeat left top !important;
+    width: @downloadpopup_width !important;
   }
 
-  .dk_toggle {
-    width: 70px !important;
+  div.lfooter {
+    width: @downloadpopup_width !important;
+    background: url("../img/boxes/box_medium_bottom.png") no-repeat left bottom !important;
+
+    &.white {
+      width: @downloadpopup_width !important;
+      background: url("../img/boxes/box_medium_bottom.png") no-repeat left top !important;
+    }
+  }
+
+  ul {
+    list-style: none;
   }
 
   div.content h3 {
@@ -41,7 +58,7 @@
   z-index:100000;
 
   div.content {
-    height: 220px !important;
+    height: 320px !important;
     padding-left: 18px !important;
     padding-right: 18px !important;
     padding-bottom: 18px !important;
@@ -54,6 +71,8 @@
     div.scrollpane {
       overflow: auto;
       outline: none;
+      height: 100% !important;
+      width: @downloadpopup_width - 34 !important;
       .jspVerticalBar{right: 4px; }
       .jspCap { display: block; }
       .jspCapBottom { height: 0; width: 5px; }
@@ -63,13 +82,12 @@
 
     ul { margin: 0 0 10px 0; }
 
-    background: url("../img/boxes/box_min_bkg.png") repeat-y;
+    background: url("../img/boxes/box_medium_bkg.png") repeat-y !important;
   }
 }
 
 .download_format_description {
   color: #999 !important;
-  vertical-align: middle;
   margin-left: 4px !important;
   font-size: 11px;
 }

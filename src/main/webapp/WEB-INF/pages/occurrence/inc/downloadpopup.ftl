@@ -9,14 +9,25 @@
       <div class="downloadpopup_section">
         <h3>Download format</h3>
         <div>
-          <select id="downloadFormat" name="downloadFormat" class="dropkick_class">
-            <option value="DWCA">DwCA</option>
-            <option value="SIMPLE_CSV">CSV</option>
-          </select>
-          <div>
-            <p id="DWCA_description" class="download_format_description" style="display: block;">Darwin Core Archive file that is a zip of all indexed fields in both verbatim and interpreted, plus multimedia and metadata files.</p>
-            <p id="SIMPLE_CSV_description" class="download_format_description" style="display: none;">Zipped text file of the most common indexed terms, but note that it is delimited by tabs, not commas.</p>
-          </div>
+          <table>
+            <tr>
+              <td style="width: 150px;">
+                <input type="radio" name="downloadFormat" value="SIMPLE_CSV" checked/> Simple CSV
+              </td>
+              <td>
+                <div><p id="SIMPLE_CSV_description" class="download_format_description">The simple CSV format provides a tabular view of the data with the most commonly used columns. The table includes only the data after it has gone through interpretation and quality control. Tools such as Microsoft Excel can be used to read this format.</p></div>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 150px;">
+                <input type="radio" name="downloadFormat" value="DWCA"/> Darwin Core Archive
+              </td>
+              <td>
+                <div>
+              <p id="DWCA_description" class="download_format_description">The Darwin Core Archive format is a TDWG Standard and contains rich information. It is a zip file containing the original data as shared by the publisher, and the interpreted view after data has gone through quality control procedures. Additional files provide supplementary information such as images. This is a richer format than simple CSV but provides the most complete view of data.</p></div>
+              </td>
+            </tr>
+           </table>
         </div>
       </div>
       <div class="downloadpopup_section">

@@ -58,23 +58,10 @@
             $("#emails").slideToggle(500);
          });
        <#if action.showDownload()>
-         $('#downloadFormat').dropkick(
-           {
-             change: function (value, label) {
-               $.each($(".download_format_description"), function(i,item) {
-                 if(item.id == value + "_description"){
-                   $(item).show();
-                 } else {
-                   $(item).hide();
-                 }
-               });
-             }
-           }
-         );
          $('a.download_button').bindDialogPopover($('#downloadpopup'));
 
          $('a.download_submit_button').click(function(event) {
-            widgetManager.submit({emails:$('#emails').val(),format:$("#downloadFormat").val()}, "<@s.url value='/occurrence/download'/>?");
+            widgetManager.submit({emails:$('#emails').val(),format:$('input:radio[name=downloadFormat]:checked').val()}, "<@s.url value='/occurrence/download'/>?");
          });
          $('#emails').tagit({
            fieldName: "emails",
