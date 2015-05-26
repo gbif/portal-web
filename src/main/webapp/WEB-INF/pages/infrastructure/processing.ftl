@@ -191,11 +191,11 @@
       </ul><p>This is done by <a href="https://github.com/gbif/parsers/tree/master/src/main/java/org/gbif/common/parsers">case insensitive parsers</a> based on a manually maintained dictionary that maps verbatim values we spot to their respective enumeration value.&nbsp;Basic string cleaning and whitespace normalisation is done in any case.&nbsp;</p>
 
       <h3>Multimedia</h3>
-      <p>Please see <a href="http:gbif.blogspot.com/2014/05/multimedia-in-gbif.html">http:gbif.blogspot.com/2014/05/multimedia-in-gbif.html</a></p>
+      <p>Please see <a href="http://gbif.blogspot.com/2014/05/multimedia-in-gbif.html">http://gbif.blogspot.com/2014/05/multimedia-in-gbif.html</a></p>
   </div>
   <div class="right">
     <ul>
-      <li><a href="http:gbif.blogspot.com/2014/05/multimedia-in-gbif.html">Multimedia in GBIF</a></li>
+      <li><a href="http://gbif.blogspot.com/2014/05/multimedia-in-gbif.html">Multimedia in GBIF</a></li>
       <li><a href="http://gbif.github.io/gbif-api/apidocs/org/gbif/api/vocabulary/package-summary.html">GBIF enumerations</a></li>
     </ul>
   </div>
