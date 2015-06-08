@@ -13,6 +13,7 @@ import org.gbif.api.vocabulary.Country;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -45,7 +46,7 @@ public class PredicateFactoryTest {
   @Test
   public void testBuild() {
     PredicateFactory pf = new PredicateFactory();
-    Map<String, String[]> params = new HashMap<String, String[]>();
+    Map<String, String[]> params = new LinkedHashMap<String, String[]>();
     params.put("BASIS_OF_RECORD", new String[] {"PRESERVED_SPECIMEN"});
     Predicate p = pf.build(params);
 
@@ -97,7 +98,7 @@ public class PredicateFactoryTest {
   @Test
   public void testBuild2() {
     PredicateFactory pf = new PredicateFactory();
-    Map<String, String[]> params = new HashMap<String, String[]>();
+    Map<String, String[]> params = new LinkedHashMap<String, String[]>();
     params.put("BASIS_OF_RECORD", new String[] {"HUMAN_OBSERVATION"});
     params.put("COUNTRY", new String[] {"DE"});
     params.put("DATASET_KEY", new String[] {"7a22e1e4-f762-11e1-a439-00145eb45e9a", "78ff18a6-1c32-11e2-af65-00145eb45e9a", "856734ce-f762-11e1-a439-00145eb45e9a", "85685a84-f762-11e1-a439-00145eb45e9a"});
