@@ -28,7 +28,7 @@ public class DownloadRequestAction extends BaseAction {
 
   private static final long serialVersionUID = 3653614424275432914L;
   private static final Logger LOG = LoggerFactory.getLogger(DownloadRequestAction.class);
-  private static final Splitter EMAIL_SPLITTER = Splitter.on(';').trimResults().omitEmptyStrings();
+  private static final Splitter EMAIL_SPLITTER = Splitter.on(',').trimResults().omitEmptyStrings();
   private static final  String FORBIDDEN_DOWNLOAD = "forbidden";
   private final PredicateFactory predicateFactory = new PredicateFactory();
 

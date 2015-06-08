@@ -61,10 +61,11 @@
          $('a.download_button').bindDialogPopover($('#downloadpopup'));
 
          $('a.download_submit_button').click(function(event) {
-            widgetManager.submit({emails:$('#emails').val(),format:$('input:radio[name=downloadFormat]:checked').val()}, "<@s.url value='/occurrence/download'/>?");
+            widgetManager.submit({emails:$('#notify_others').val(),format:$('input:radio[name=downloadFormat]:checked').val()}, "<@s.url value='/occurrence/download'/>?");
          });
          $('#emails').tagit({
-           fieldName: "emails",
+           singleField: true,
+           singleFieldNode: $('#notify_others'),
            afterTagAdded: function(event, ui) {
              //increasing the padding to extend the div size
              if(!isValidEmail(ui.tagLabel)) {

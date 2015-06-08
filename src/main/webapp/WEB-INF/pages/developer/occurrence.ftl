@@ -103,7 +103,7 @@
 </p>
 
   <@api.apiTable params=false>
-    <@trowD url="/request" resp="Download key" method="POST" authRequired=true>Starts the process of creating a download file. See the <a href="#predicates">predicates</a> section to consult the requests accepted by this service.</@trowD>
+    <@trowD url="/request" resp="Download key" method="POST" authRequired=true>Starts the process of creating a download file. See the <a href="#predicates">predicates</a> section to consult the requests accepted by this service and the <a href="#download_limits">limits</a> section to refer for information of how this service is limited per user.</@trowD>
     <@trowD url="/request/{key}" resp="Download file" respLink="occurrence/download/request/0000251-150304104939900" method="GET" authRequired=false>Retrieves the download file if it is available.</@trowD>
     <@trowD url="/request/{key}" method="DELETE" authRequired=true>Cancels the download process.</@trowD>
     <@trowD url="" method="GET" resp="Download Page" authRequired=true paging=true>Lists all the downloads. This operation can be executed by the role ADMIN only.</@trowD>
@@ -407,6 +407,17 @@
 </tbody>
 </table>
 
+</div>
+</@common.article>
+
+<@common.article id="download_limits" title="Occurrence Download Limits">
+<div class="fullwidth">
+<p>Occurrence downloads is a very resource demanding service which needs to be monitored and limited according to the GBIF platform load.
+  In order to avoid that downloads requested by a single user utilize most of the resources two rules have been set:</p>
+<ul style="margin-left: 20px !important;">
+  <li>If the total number of downloads is less than <b style="font-weight: bold;">100</b> any given user can have no more than <b style="font-weight: bold;">3</b> downloads simultaneously.</li>
+  <li>If the total number of downloads is less than <b style="font-weight: bold;">1000</b> any given user can only have <b style="font-weight: bold;">1</b> download.</li>
+</ul>
 </div>
 </@common.article>
 </body>

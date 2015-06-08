@@ -37,6 +37,7 @@
           <div id="emails_div">
             Press 'Enter' to add an email addresses<br>
             <ul id="emails"></ul>
+            <input type="hidden" name="notify_others" id="notify_others"/>
           </div>
         </div>
       </div>
