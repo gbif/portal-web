@@ -72,14 +72,14 @@ public class SearchAction
    * If the text matches query text, and doesn't contain any highlighting, the missing highlighting is added. Comparison
    * between the text and query text is case insensitive, and uses the whole query text (no stemming). If the first
    * comparison fails, the query text is converted to its ASCII equivalent, and a second comparison performed.
-   * </br>
+   * <p></p>
    * If the title text already contains highlighting, no action is taken and the unchanged .
-   * </br>
+   * <p></p>
    * Please note: this extraordinary measure is needed for a the full text field named dataset_title_ngram.
    * Solr supports highlighting for fixed ngram fields only (a fixed ngram is field with
    * minGramSize = maxGramSize) which is not the case for this field. For this reason, sometimes there is highlighting,
    * but for times when it's missing, this method will add the missing highlighting.
-   * 
+   *
    * @param t dataset title
    * @param q search query text
    * @return dataset title updated with missing highlighting if necessary
@@ -106,7 +106,7 @@ public class SearchAction
   /**
    * Checks if the dataset search result match (highlighted text) only occurred in the full text field.
    * This method goes through all highlighted fields that may be highlighted:
-   * 
+   * {@code
    * <pre>
    * <arr name="hl.fl">
    *   <str>dataset_title</str>
@@ -117,13 +117,14 @@ public class SearchAction
    *   <str>description</str>
    * </arr>
    * </pre>
-   * 
+   * }
    * If there is no highlighted text in any of these fields, it can be inferred that the match must have occurred in
    * the full text field.
-   * </br>
+   * <p></p>
    * If the query text was null, there can be no matching anyways so the method just returns false.
-   * 
+   *
    * @param result DatasetSearchResult
+   * @param query query string
    * @return whether a match only occurred on the full text field or not
    */
   public static boolean isFullTextMatchOnly(DatasetSearchResult result, String query) {
@@ -146,15 +147,15 @@ public class SearchAction
   /**
    * Uses the solr.ASCIIFoldingFilter to convert a string to its ASCII equivalent. See solr documentation for full
    * details.
-   * </br>
+   * <p></p>
    * When doing the conversion, this method mirrors GBIF's registry-solr schema configuration for
-   * <fieldType name="text_auto_ngram">. For example, it uses the KeywordTokenizer that treats the entire string as a
+   * {@literal <fieldType name="text_auto_ngram">}. For example, it uses the KeywordTokenizer that treats the entire string as a
    * single token, regardless of its content. See the solr documentation for more details.
-   * </br>
+   * <p></p>
    * This method is needed when checking if the query string matches the dataset title. For example, if the query
    * string is "straße", it won't match the dataset title "Schulhof Gymnasium Hürth Bonnstrasse" unless "straße" gets
    * converted to its ASCII equivalent "strasse".
-   * 
+   *
    * @param q query string
    * @return query string converted to ASCII equivalent
    * @see org.gbif.portal.action.dataset.SearchAction#addMissingHighlighting(String, String)

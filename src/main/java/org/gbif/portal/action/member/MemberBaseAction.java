@@ -143,6 +143,8 @@ public class MemberBaseAction<T extends NetworkEntity & Taggable> extends org.gb
   /**
    * Utility method to access node infos using a small map cache.
    * Used in templates to show the publisher for datasets for example.
+   * @param key organization UUID
+   * @return an Organization instance
    */
   public Organization getOrganization(UUID key) {
     if (orgMap.containsKey(key)) {
@@ -173,6 +175,7 @@ public class MemberBaseAction<T extends NetworkEntity & Taggable> extends org.gb
 
   /**
    * Separate member's contacts into 2 lists: primary contacts, and others.
+   * @param contacts to be split
    */
   protected void separateContacts(List<Contact> ... contacts) {
     primaryContacts = Lists.newLinkedList();

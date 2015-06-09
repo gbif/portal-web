@@ -107,6 +107,8 @@ public class NodeAction extends MemberBaseAction<Node> {
 
   /**
    * Page through endorsed organizations main method used in struts.xml
+   * @return SUCCESS if run successfully
+   * @throws Exception in case of error
    */
   public String publishers() throws Exception {
     super.execute();
@@ -142,6 +144,7 @@ public class NodeAction extends MemberBaseAction<Node> {
 
   /**
    * Used in freemaker to just show the head of delegation.
+   * @return a Contact of type HEAD_OF_DELEGATION, null if not found
    */
   public Contact getHeadOfDelegation() {
     if (member != null && !member.getContacts().isEmpty()) {
@@ -156,6 +159,7 @@ public class NodeAction extends MemberBaseAction<Node> {
 
   /**
    * Used in freemaker to just show the node managers.
+   * @return a list of contacts of type NODE_MANAGER
    */
   public List<Contact> getNodeManagers() {
     return getContacts(ContactType.NODE_MANAGER);

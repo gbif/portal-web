@@ -137,6 +137,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
    * Utility method that executes the search.
    * Differs to the BaseSearchAction.execute() method in that this method doesn't execute the method
    * BaseSearchAction.readFilterParams().
+   * @return SUCCESS, throws an exception in case of error
    */
   public String executeSearch() {
     LOG.info("Search for [{}]", getQ());
@@ -154,35 +155,35 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   }
 
   /**
-   * Returns the list of {@link BasisOfRecord} literals.
+   * @eturn the list of {@link org.gbif.api.vocabulary.BasisOfRecord} literals.
    */
   public BasisOfRecord[] getBasisOfRecords() {
     return filtersActionHelper.getBasisOfRecords();
   }
 
   /**
-   * Returns the list of {@link org.gbif.api.vocabulary.EstablishmentMeans} literals.
+   * @return  the list of {@link org.gbif.api.vocabulary.EstablishmentMeans} literals.
    */
   public EstablishmentMeans[] getEstablishmentMeans() {
     return EstablishmentMeans.values();
   }
 
   /**
-   * Returns the list of {@link BasisOfRecord} literals.
+   * @return the list of {@link org.gbif.api.vocabulary.BasisOfRecord} literals.
    */
   public Continent[] getContinents() {
     return filtersActionHelper.getContinents();
   }
 
   /**
-   * Returns the list of {@link TypeStatus} literals applicable for specimens only.
+   * @return the list of {@link org.gbif.api.vocabulary.TypeStatus} literals applicable for specimens only.
    */
   public List<TypeStatus> getTypeStatuses() {
     return TypeStatus.specimenTypeStatusList();
   }
 
   /**
-   * Returns the list of {@link MediaType} literals.
+   * @return the list of {@link org.gbif.api.vocabulary.MediaType} literals.
    */
   public MediaType[] getMediaTypes() {
     return MediaType.values();
@@ -234,9 +235,9 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
 
   /**
-   * Gets the current year.
    * This value is used by occurrence filters to determine the maximum year that is allowed for the
    * OccurrenceSearchParamater.EVENT_DATE.
+   * @return the current year.
    */
   public int getCurrentYear() {
     return filtersActionHelper.getCurrentYear();
@@ -255,6 +256,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   /**
    * Gets the Dataset title, the key parameter is returned if either the Dataset doesn't exists or it
    * doesn't have a title.
+   * @param key dataset UUID
    */
   public String getDatasetTitle(String key) {
     return filtersActionHelper.getDatasetTitle(key);
@@ -268,6 +270,9 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Gets the readable value of filter parameter.
+   * @param filterKey filter key
+   * @param filterValue filter value
+   * @return filter title, if exists, filter value otherwise
    */
   public String getFilterTitle(String filterKey, String filterValue) {
     if (!isSuggestion(filterValue)) {
@@ -286,7 +291,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   }
 
   /**
-   * Return the maximum default offset.
+   * @return the maximum default offset.
    */
   public int getMaxOffset() {
     return getCfg().getMaxOccSearchOffset();
@@ -305,13 +310,14 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
    * Gets the title(name) of a node.
    *
    * @param networkKey node key/UUID
+   * @return network name
    */
   public String getNetworkTitle(String networkKey) {
     return filtersActionHelper.getNetworkTitle(networkKey);
   }
 
   /**
-   * Gets the NUB key value.
+   * @return  the NUB key value.
    */
   public String getNubTaxonomyKey() {
     return Constants.NUB_DATASET_KEY.toString();
@@ -336,7 +342,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   }
 
   /**
-   * Returns the enum name of the value parameter.
+   * @return the enum name of the value parameter.
    */
   public String getMediaTypeValue(String value) {
     return filtersActionHelper.getMediaTypeValue(value);
@@ -350,20 +356,22 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   /**
    * Validates if there are parameters with errors.
+   * @param parameter parameter to be validated
+   * @return true if the parameter has errors, false otherwise
    */
   public boolean hasParameterErrors(String parameter) {
     return (getFieldErrors().containsKey(parameter));
   }
 
   /**
-   * Checks if there are suggestions available.
+   * @return true if there are suggestions available, false otherwise
    */
   public boolean hasSuggestions() {
     return nameUsagesSuggestions.hasSuggestions() || datasetsSuggestions.hasSuggestions();
   }
 
   /**
-   * Validates if the download functionality should be shown.
+   * @return True if the download functionality should be shown, False otherwise
    */
   public boolean showDownload() {
     return searchResponse != null && searchResponse.getCount() > 0
@@ -382,7 +390,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   }
 
   /**
-   * Calculates the maximum offset allowed using the current limit parameter.
+   * @return the maximum offset allowed using the current limit parameter.
    */
   public Integer getMaxAllowedOffset() {
     return getCfg().getMaxOccSearchOffset() - getSearchRequest().getLimit();
@@ -403,7 +411,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   }
 
   /**
-   * Checks if the parameter is in any lists of suggestions.
+   * @return True if the parameter is in any lists of suggestions, False otherwise
    */
   private boolean isSuggestion(String value) {
     return nameUsagesSuggestions.getSuggestions().containsKey(value)
@@ -439,6 +447,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
   /**
    * Process the occurrence search parameters to validate if the values are correct.
    * The list of errors is store in the "errors" field.
+   * @return True if no errors are present, False otherwise
    */
   private boolean validateSearchParameters() {
     validationErrors = filtersActionHelper.validateSearchParameters(request, OCC_VALIDATION_DISCARDED);
@@ -449,6 +458,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
    * Retrieve value for Term in interpreted fields map. Currently expecting only DwcTerm.
    *
    * @param term Term
+   * @param occ occurrence record
    * @return value for Term in fields map, or null if it doesn't exist
    */
   public String termValue(String term, Occurrence occ) {

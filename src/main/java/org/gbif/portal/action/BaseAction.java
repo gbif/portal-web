@@ -75,6 +75,8 @@ public abstract class BaseAction extends ActionSupport
 
   /**
    * Wraps plain http(s), ftp links or DOIs in text with html anchors unless they already exist.
+   * @param text link to be wrapped
+   * @return the text parameter wrapped into a html anchor
    */
   public String linkText(String text) {
     if (!StringUtils.isBlank(text)) {
@@ -106,6 +108,7 @@ public abstract class BaseAction extends ActionSupport
 
   /**
    * Exposed to make configurations available to javascript.
+   * @return the portal configuration object
    */
   public Config getCfg() {
     return cfg;
@@ -139,6 +142,7 @@ public abstract class BaseAction extends ActionSupport
    * Returns the absolute url to the current page including the query string, but having the paging
    * parameters offset and limit removed.
    * Exposed for the paging macros to not have to deal with this complexity in freemarker.
+   * @return current page including the query string without paging parameters
    */
   public String getCurrentUrlWithoutPage() {
     return getCurrentUrl(true);
@@ -147,6 +151,7 @@ public abstract class BaseAction extends ActionSupport
   /**
    * Used by the drupal login destination parameter which expects a relative URL of the current page.
    * We need to remove any scheme, host or port information and also the root slash.
+   * @return relative URL to the current page
    */
   public String getCurrentDestinationParam() {
     String url = getCurrentUrl();
@@ -202,6 +207,7 @@ public abstract class BaseAction extends ActionSupport
    * Returns a map representing properties from the resource bundle but just those
    * properties whose keys match one or more of the given prefixes.
    *
+   * @param prefix prefixes to be searched
    * @return a map which the matched properties
    */
   public Map<String, String> getResourceBundleProperties(String... prefix) {
@@ -266,7 +272,8 @@ public abstract class BaseAction extends ActionSupport
 
   /**
    * A utility to provide the map resolution based on the provided record count.
-   * 
+   *
+   * @param recordCount number of records
    * @return the suggested resolution to use for the map.
    */
   public int getMapResolution(int recordCount) {

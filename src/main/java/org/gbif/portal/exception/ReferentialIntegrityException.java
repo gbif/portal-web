@@ -16,8 +16,8 @@ public class ReferentialIntegrityException extends RuntimeException {
   }
 
   /**
-   * @param primaryResourceClass
-   * @param primaryResourceKey
+   * @param primaryResourceClass resource class
+   * @param primaryResourceKey unique identifier of a resource
    * @param msg additional exception message
    */
   public ReferentialIntegrityException(Class primaryResourceClass, Object primaryResourceKey, String msg) {
@@ -27,8 +27,8 @@ public class ReferentialIntegrityException extends RuntimeException {
   }
 
   /**
-   * @param primaryResourceClass
-   * @param primaryResourceKey
+   * @param primaryResourceClass resource class
+   * @param primaryResourceKey unique identifier of a resource
    */
   public ReferentialIntegrityException(Class primaryResourceClass, Object primaryResourceKey) {
     super(buildMessage(primaryResourceClass, primaryResourceKey));

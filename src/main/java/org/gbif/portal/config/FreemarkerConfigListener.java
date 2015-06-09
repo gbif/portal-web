@@ -15,7 +15,7 @@ import freemarker.log.Logger;
 
 /**
  * Sets up freemarker to use SLF4J for Logging.
- * <p/>
+ * <p></p>
  * SLF4J should be the default for Freemarker 2.4 and up once its released.
  */
 public class FreemarkerConfigListener implements ServletContextListener {

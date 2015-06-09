@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An Interceptor that detects the GBIF drupal multi-params format, and redirects them.
- * Drupal emits in the format ?COUNTRY=DK&COUNTRY-2=GB whereas we expect COUNTRY=DK&COUNTRY=GB.
+ * Drupal emits in the format {@literal ?COUNTRY=DK&COUNTRY-2=GB} whereas we expect {@literal COUNTRY=DK&COUNTRY=GB}.
  */
 @SuppressWarnings("serial")
 public class DrupalParamsInterceptor extends AbstractInterceptor {

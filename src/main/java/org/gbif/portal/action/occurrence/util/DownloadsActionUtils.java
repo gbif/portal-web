@@ -43,7 +43,9 @@ public class DownloadsActionUtils {
   }
 
   /**
-   * Returns the human readable filter of an occurrence download.
+   * @param p predicate to be translated
+   * @param titleLookup tile lookup service
+   * @return the human readable filter of an occurrence download.
    */
   public static Map<OccurrenceSearchParameter, LinkedList<String>> getHumanFilter(Predicate p, TitleLookup titleLookup) {
     if (p != null) {
@@ -85,7 +87,7 @@ public class DownloadsActionUtils {
   }
 
   /**
-   * Checks whether an available download URL actually dwcaExists by trying a http head request.
+   * @return checks whether an available download URL actually dwcaExists by trying a http head request.
    */
   public static boolean dwcaExists(Download download){
     if (download == null || !download.isAvailable()) {

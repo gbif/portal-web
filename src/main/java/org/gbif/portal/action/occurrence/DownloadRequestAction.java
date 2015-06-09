@@ -64,14 +64,15 @@ public class DownloadRequestAction extends BaseAction {
 
 
   /**
-   * Download notification addresses.
+   * @return  the download notification addresses.
    */
   public Set<String> getEmails() {
     return emails;
   }
 
   /**
-   * Download key.
+   * @return the download key.
+   *
    */
   public String getKey() {
     return key;
@@ -79,13 +80,14 @@ public class DownloadRequestAction extends BaseAction {
 
   /**
    * Sets the email field, the parameter is split by ';'.
+   * @param emails emails separate by ';'
    */
   public void setEmails(String emails) {
     this.emails = Sets.newHashSet(EMAIL_SPLITTER.split(emails));
   }
 
   /**
-   * Download requested format.
+   * @return  the download requested format.
    */
   public String getFormat() {
     return format.name();
@@ -93,6 +95,7 @@ public class DownloadRequestAction extends BaseAction {
 
   /**
    * Sets the download requested format.
+   * @param format format to be set
    */
   public void setFormat(String format) {
     this.format = DownloadFormat.valueOf(format);

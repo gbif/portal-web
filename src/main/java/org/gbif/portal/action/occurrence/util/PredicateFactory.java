@@ -26,8 +26,8 @@ import com.google.common.collect.Range;
  * This parses the URL params which should be from something like the following
  * into a predicate suitable for launching a download service.
  * It understands multi valued parameters and interprets the range format *,100
- * TAXON_KEY=12&ELEVATION=1000,2000
- * (ELEVATION >= 1000 AND ELEVATION <= 1000)
+ * {@literal TAXON_KEY=12&ELEVATION=1000,2000
+ * (ELEVATION >= 1000 AND ELEVATION <= 1000)}
  */
 public class PredicateFactory {
 
@@ -37,7 +37,7 @@ public class PredicateFactory {
   /**
    * Builds a full predicate filter from the parameters.
    * In case no filters exist still return a predicate that matches anything.
-   * 
+   *
    * @return always some predicate
    */
   public Predicate build(Map<String, String[]> params) {

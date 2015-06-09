@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * Class that encapsulates the basic functionality of free text search and paginated navigation.
  * The class expects a {@link SearchRequest} at creation time and delegates the parsing of search parameters to the
  * concrete subclass that needs to implement {@link #readFilterParams}.
- * 
+ *
  * @param <T> the content type of the results
  * @param <P> the search parameter enum
  * @param <R> the request type
@@ -70,7 +70,7 @@ public abstract class BaseSearchAction<T, P extends Enum<?> & SearchParameter, R
    * Takes a highlighted text and trimmed it to show the first highlighted term.
    * The text is found using the HL_PRE and HL_POST tags.
    * Ensure that at least the whole term is shown or else MAX_LONG_HL_FIELD are displayed.
-   * 
+   *
    * @param text highlighted text to be trimmed.
    * @param maxLength maximum length of resulting string, ignoring the highlighting tags
    * @return a trimmed version of the highlighted text
@@ -99,9 +99,9 @@ public abstract class BaseSearchAction<T, P extends Enum<?> & SearchParameter, R
 
   /**
    * Used by UI to determine if a text is highlighted.
-   * 
-   * @param text
-   * @return
+   *
+   * @param text to be tested
+   * @return true if the text is highlighted, otherwise returns false
    */
   public static boolean isHighlightedText(String text) {
     return !Strings.isNullOrEmpty(text) && text.contains(HL_PRE);
@@ -110,8 +110,9 @@ public abstract class BaseSearchAction<T, P extends Enum<?> & SearchParameter, R
   /**
    * Takes a highlighted text and returns the given number of initial characters, not counting html tags
    * and making sure we always keep html tags intact and closed.
-   * 
+   *
    * @param highlightedText the highlighted text to be abbreviated
+   * @param max max number of chars to display
    * @return the beginning of the highlighted text up to a given number of characters
    */
   public static String limitHighlightedText(String highlightedText, int max) {
@@ -154,7 +155,7 @@ public abstract class BaseSearchAction<T, P extends Enum<?> & SearchParameter, R
 
   /**
    * Takes a highlighted text and removes all tags used for highlighting.
-   * 
+   *
    * @param highlightedText the highlighted text to be cleaned
    * @return a cleaned plain text version of the highlighted text
    */
@@ -192,7 +193,7 @@ public abstract class BaseSearchAction<T, P extends Enum<?> & SearchParameter, R
 
   /**
    * The input search pattern used to issue a search operation.
-   * 
+   *
    * @return the q, input search pattern defaulting to "" if none is provided
    */
   public String getQ() {
@@ -209,7 +210,7 @@ public abstract class BaseSearchAction<T, P extends Enum<?> & SearchParameter, R
   }
 
   /**
-   * @param name
+   * @param name parameter name/Enum name
    * @return the search enum or null if it cant be converted
    */
   public P getSearchParam(String name) {
@@ -226,7 +227,7 @@ public abstract class BaseSearchAction<T, P extends Enum<?> & SearchParameter, R
 
   /**
    * Response (containing the list of results) of the request issued.
-   * 
+   *
    * @return the searchResponse
    * @see PagingResponse
    */
@@ -237,8 +238,10 @@ public abstract class BaseSearchAction<T, P extends Enum<?> & SearchParameter, R
   /**
    * Checks if a parameter value is already selected in the current request filters.
    * Public method used by html templates.
-   * 
-   * @param param the facet name according to
+   *
+   * @param param parameter name
+   * @param  value parameter value
+   * @return true if the parameter/value is present, otherwise returns false
    */
   public boolean isInFilter(P param, String value) {
     if (param != null && searchRequest.getParameters().containsKey(param)) {
@@ -254,8 +257,10 @@ public abstract class BaseSearchAction<T, P extends Enum<?> & SearchParameter, R
   /**
    * Checks if a parameter value is already selected in the current request filters.
    * Public method used by html templates.
-   * 
+   *
    * @param paramName the name according to
+   * @param value  parameter value
+   * @return true if the parameter/value is present, otherwise returns false
    */
   public boolean isInFilter(String paramName, String value) {
     return isInFilter(getSearchParam(paramName), value);
@@ -304,6 +309,7 @@ public abstract class BaseSearchAction<T, P extends Enum<?> & SearchParameter, R
    *
    * @param param the filter parameter the value belongs to
    * @param value the value to translate or return as is
+   * @return returns the value parameter: default behaviour
    */
   protected String translateFilterValue(P param, String value) {
     // dont do anything by default

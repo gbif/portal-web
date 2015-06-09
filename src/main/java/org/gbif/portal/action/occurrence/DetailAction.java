@@ -64,6 +64,7 @@ public class DetailAction extends OccurrenceBaseAction {
 
   /**
    * Inspects the media to determine if the image gallery can show.
+   * @return true if the occurrence records has images, otherwise returns false
    */
   public boolean hasImages() {
     for (MediaObject m : occ.getMedia()) {
@@ -103,6 +104,7 @@ public class DetailAction extends OccurrenceBaseAction {
 
   /**
    * Exposed to allow easy access in freemarker.
+   * @return GBIF Nub Key
    */
   public UUID getNubDatasetKey() {
     return NUB_DATASET_KEY;

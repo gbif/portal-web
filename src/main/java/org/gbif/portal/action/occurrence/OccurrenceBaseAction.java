@@ -82,6 +82,9 @@ public class OccurrenceBaseAction extends BaseAction {
    * This method must ensure the values gets displayed exactly as they are persisted so that if there are errors
    * they can be detected via the occurrence page also.
    *
+   * @param year date year
+   * @param month month of the year
+   * @param day day of the month
    * @return date string
    */
   protected String constructPartialGatheringDate(Integer year, Integer month, Integer day) {
@@ -155,6 +158,11 @@ public class OccurrenceBaseAction extends BaseAction {
    * From a combination of interpreted and verbatim terms, construct an ordered geographic classification consisting
    * of the following terms in this order: continent > country > stateProvince > county > municipality.
    *
+   * @param continent continent name
+   * @param country country name
+   * @param stateProvince state or province name
+   * @param  county count name
+   * @param  municipality municipality name
    * @return ordered list representing geographic classification
    */
   protected List<String> constructGeographicClassification(@Nullable Continent continent, @Nullable Country country,

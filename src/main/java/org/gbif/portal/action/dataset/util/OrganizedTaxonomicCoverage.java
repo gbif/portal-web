@@ -29,6 +29,7 @@ public class OrganizedTaxonomicCoverage {
 
   /**
    * Set the rank.
+   * @param rank rank value to set
    */
   public void setRank(String rank) {
     this.rank = rank;
@@ -45,6 +46,7 @@ public class OrganizedTaxonomicCoverage {
 
   /**
    * Set the list of DisplayableTaxonomicCoverage.
+   * @param displayableNames to be set
    */
   public void setDisplayableNames(List<DisplayableTaxonomicCoverage> displayableNames) {
     this.displayableNames = displayableNames;

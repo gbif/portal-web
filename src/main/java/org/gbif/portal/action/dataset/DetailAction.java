@@ -125,6 +125,7 @@ public class DetailAction extends DatasetBaseAction {
 
   /**
    * Will not be null following execute() invocation.
+   * @return the constituents datasets
    */
   @Nullable
   public PagingResponse<Dataset> getConstituents() {
@@ -138,6 +139,7 @@ public class DetailAction extends DatasetBaseAction {
 
   /**
    * Exposed to allow easy access in freemarker.
+   * @return all available extensions
    */
   public List<Extension> getExtensions() {
     return EXTENSIONS;
@@ -145,6 +147,7 @@ public class DetailAction extends DatasetBaseAction {
 
   /**
    * Exposed to allow easy access in freemarker.
+   * @return all available kingdoms
    */
   public List<Kingdom> getKingdoms() {
     return KINGDOMS;
@@ -168,6 +171,7 @@ public class DetailAction extends DatasetBaseAction {
 
   /**
    * Exposed to allow easy access in freemarker.
+   * @return list of Ranks sorted by counts
    */
   public List<Rank> getSortedMetricRanks() {
     List<Rank> sortedRanks = Lists.newArrayList(metrics.getCountByRank().keySet());
@@ -227,6 +231,7 @@ public class DetailAction extends DatasetBaseAction {
 
   /**
    * Populates the data, metadata and other links from the unified endpoint list.
+   * @param endpoints list of endpoints/links
    */
   private void populateLinks(@NotNull List<Endpoint> endpoints) {
     Preconditions.checkNotNull(endpoints, "Enpoints cannot be null - expected empty list for no endpoints");

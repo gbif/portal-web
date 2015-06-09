@@ -62,7 +62,7 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
    * Default constructor for this class.
    *
    * @param searchService an instance of search service
-   * @param searchType the type of the {@link Enum} used for search parameters & facets
+   * @param searchType the type of the Enum used for search parameters & facets
    * @param request a new, default search request
    */
   protected BaseFacetedSearchAction(SearchService<T, P, R> searchService, Class<P> searchType, R request) {
@@ -130,9 +130,9 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
    * Holds the facet count information retrieved after each search operation.
    * For accessing this field the user interface should be able to referencing map data types.
    * An example of usage of this field could be:
-   * <#list facetCounts['RANK'] as count>
+   * {@literal <#list facetCounts['RANK'] as count>
    * <option value="${count.name}">${count.name}-(${count.count})</option>
-   * </#list>
+   * </#list>}
    * In the previous example the selected elements of a "select" element will be populated by using the list of
    * counts of the facet 'RANK'.
    *

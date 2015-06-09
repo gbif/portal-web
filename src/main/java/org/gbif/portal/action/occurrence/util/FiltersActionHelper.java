@@ -234,23 +234,23 @@ public class FiltersActionHelper {
   }
 
   /**
-   * Returns the list of {@link BasisOfRecord} literals.
+   * @return the list of {@link BasisOfRecord} literals.
    */
   public BasisOfRecord[] getBasisOfRecords() {
     return BasisOfRecord.values();
   }
 
   /**
-   * Returns the list of {@link Country} literals.
+   * @return the list of {@link Country} literals.
    */
   public Set<Country> getCountries() {
     return COUNTRIES;
   }
 
   /**
-   * Gets the title(name) of a country.
    *
    * @param isoCode iso 2/3 country code
+   * @return the title(name) of a country.
    */
   public String getCountryTitle(String isoCode) {
     Country country = Country.fromIsoCode(isoCode);
@@ -261,16 +261,16 @@ public class FiltersActionHelper {
   }
 
   /**
-   * Returns the list of {@link Continent} literals.
+   * @return the list of {@link org.gbif.api.vocabulary.Continent} literals.
    */
   public Continent[] getContinents() {
     return Continent.values();
   }
 
   /**
-   * Gets the current year.
    * This value is used by occurrence filters to determine the maximum year that is allowed for the
    * OccurrenceSearchParamater.EVENT_DATE.
+   * @return the current year
    */
   public int getCurrentYear() {
     return Calendar.getInstance().get(Calendar.YEAR);
@@ -279,6 +279,8 @@ public class FiltersActionHelper {
   /**
    * Gets the Dataset title, the key parameter is returned if either the Dataset doesn't exists or it
    * doesn't have a title.
+   * @param key  dataset UUID
+   * @return dataset title
    */
   public String getDatasetTitle(String key) {
     try {
@@ -293,7 +295,9 @@ public class FiltersActionHelper {
   }
 
   /**
-   * Gets the displayable value of filter parameter.
+   * @param filterKey filter key/name
+   * @param filterValue filter value
+   * @return the displayable value of filter parameter.
    */
   public String getFilterTitle(String filterKey, String filterValue) {
     String title = filterValue;
@@ -340,7 +344,7 @@ public class FiltersActionHelper {
   }
 
   /**
-   * Gets the enum name of the value string if it is a valid media type.
+   * @return the enum name of the value string if it is a valid media type.
    * Note: this has to be done because MediaType values are not in uppercase, i.e.: StillImage, MovingImage and Sound.
    */
   public String getMediaTypeValue(String value) {
@@ -352,7 +356,7 @@ public class FiltersActionHelper {
   }
 
   /**
-   * Gets the title for the georeferenced filter.
+   * @return the title for the georeferenced filter.
    */
   public String getGeoreferencedTitle(String value) {
     if (Boolean.parseBoolean(value)) {
@@ -363,9 +367,9 @@ public class FiltersActionHelper {
   }
 
   /**
-   * Gets the title(name) of a node.
-   *
    * @param networkKey node key/UUID
+   *
+   * @return the title(name) of a node.
    */
   public String getNetworkTitle(String networkKey) {
     try {
@@ -377,8 +381,9 @@ public class FiltersActionHelper {
   }
 
   /**
-   * Gets a scientific name associated to the taxon key parameter.
    * If a name usage doesn't exist for that taxon key, the same key is returned.
+   * @param taxonKey taxon key
+   * @return the scientific name associated to the taxon key parameter.
    */
   public String getScientificName(String taxonKey) {
     Integer taxonKeyInt = Ints.tryParse(taxonKey);
