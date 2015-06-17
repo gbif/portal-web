@@ -51,8 +51,8 @@
     <occurrence-ws-client.version>0.32-SNAPSHOT</occurrence-ws-client.version>
     <metrics-ws-client.version>0.23-SNAPSHOT</metrics-ws-client.version>
     <drupal-mybatis.version>0.16-SNAPSHOT</drupal-mybatis.version>
-    <gbif-common.version>0.17</gbif-common.version>
-    <gbif-common-ws.version>0.22</gbif-common-ws.version>
+    <gbif-common.version>0.18-SNAPSHOT</gbif-common.version>
+    <gbif-common-ws.version>0.23-SNAPSHOT</gbif-common-ws.version>
 
     <freemarker.version>2.3.21</freemarker.version>
     <guice.version>3.0</guice.version>
