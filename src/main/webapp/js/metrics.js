@@ -46,7 +46,7 @@ $.fn.occMetrics = function(){
 
     if ($target.closest("td").attr("data-bor") === "OBSERVATION") {
       var observationTypes = ["OBSERVATION", "HUMAN_OBSERVATION", "MACHINE_OBSERVATION"];
-      for (var i = 0; i < observationTypes; i++) {
+      for (var i = 0; i < observationTypes.length; i++) {
         // Proxy query variable to avoid concatenating more basisOfRecord.
         var queryMod = query + "&basisOfRecord=" + observationTypes[i];
         $.getJSON(ws + queryMod + '&callback=?', function (data) {
