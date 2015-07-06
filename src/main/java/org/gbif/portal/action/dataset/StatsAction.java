@@ -51,7 +51,8 @@ public class StatsAction extends DetailAction {
   public String execute() {
     super.execute();
 
-    if (DatasetType.OCCURRENCE == member.getType() || DatasetType.CHECKLIST == member.getType()) {
+    if (DatasetType.OCCURRENCE == member.getType() || DatasetType.CHECKLIST == member.getType()
+        || DatasetType.SAMPLING_EVENT == member.getType()) {
       populateOccMetrics();
       return SUCCESS;
     } else {
