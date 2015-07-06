@@ -18,7 +18,7 @@
   If they are truncated, the page flag is set to render the full keywords under the details.
   If there is a box for view occurrences / species, then the UL gets a new class attribute so the width can be controlled.
 -->
-<#if dataset.type! == "OCCURRENCE" || (dataset.type! == "CHECKLIST" && !parentDataset?has_content)>
+<#if dataset.type! == "OCCURRENCE" || dataset.type! == "SAMPLING_EVENT" || (dataset.type! == "CHECKLIST" && !parentDataset?has_content)>
   <#assign box=true />
   <#assign maxKeywordChars=140 />
   <#assign titleLength = 37 />
@@ -65,7 +65,7 @@
 <#if box==true>
     <div class="box">
       <div class="content">
-        <#if dataset.type! == "OCCURRENCE">
+        <#if dataset.type! == "OCCURRENCE" || dataset.type! == "SAMPLING_EVENT">
             <ul>
               <li class="single last"><h4>${numOccurrences!0}</h4>Occurrences</li>
             </ul>
