@@ -1,11 +1,13 @@
 package org.gbif.portal.selenium;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import static org.junit.Assert.assertTrue;
 
+@Ignore("often not working, refactor all selenium tests!")
 public class DatasetSeleniumIT extends SeleniumTestBase {
 
   /**

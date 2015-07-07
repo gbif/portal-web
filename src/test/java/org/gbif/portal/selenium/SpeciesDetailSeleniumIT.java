@@ -1,5 +1,6 @@
 package org.gbif.portal.selenium;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -9,6 +10,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Tests a single species page.
  */
+@Ignore("often not working, refactor all selenium tests!")
 public class SpeciesDetailSeleniumIT extends SeleniumTestBase {
 
   @Test
