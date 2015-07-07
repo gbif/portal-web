@@ -92,15 +92,15 @@
     <div class="right">
         <h3>Resources</h3>
         <ul>
-            <li><a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2ManualNotes?tm=6" title="IPT User Manual" target="_blank">User Manual</a> <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2ManualNotes?wl=es" title="IPT User Manual Spanish">(es)</a></li>
+            <li><a href="https://github.com/gbif/ipt/wiki/IPT2ManualNotes.wiki" title="IPT User Manual" target="_blank">User Manual</a> <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2ManualNotes?wl=es" title="IPT User Manual Spanish">(es)</a></li>
             <li><a href="http://lists.gbif.org/mailman/listinfo/ipt" title="IPT Mailing List" target="_blank">Mailing List</a></li>
-            <li><a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2ManualNotes?tm=6" title="IPT Wiki" target="_blank">Wiki</a></li>
-            <li><a href="https://code.google.com/p/gbif-providertoolkit/wiki/FAQ" title="IPT FAQ" target="_blank">FAQs</a></li>
+            <li><a href="https://github.com/gbif/ipt/wiki" title="IPT Wiki" target="_blank">Wiki</a></li>
+            <li><a href="https://github.com/gbif/ipt/wiki/FAQ.wiki" title="IPT FAQ" target="_blank">FAQs</a></li>
         </ul>
         <h3>Feedback</h3>
         <ul>
-            <li><a href="https://code.google.com/p/gbif-providertoolkit/issues/entry" title="IPT Report a bug" target="_blank">Report a Bug</a></li>
-            <li><a href="https://code.google.com/p/gbif-providertoolkit/issues/entry&amp;template=Feature request" title="IPT Request an enhancement" target="_blank">Request an Enhancement</a></li>
+            <li><a href="https://github.com/gbif/ipt/issues" title="IPT Report a bug" target="_blank">Report a Bug</a></li>
+            <li><a href="https://github.com/gbif/ipt/issues" title="IPT Request an enhancement" target="_blank">Request an Enhancement</a></li>
         </ul>
     </div>
 </@common.article>
@@ -164,9 +164,9 @@
 <@common.article id="contribute" title="How to contribute?" titleRight="Featured users">
     <div class="left">
         <h3>Translation</h3>
-        <p>Has the IPT user interface or documentation been translated into your native language yet? If not, we welcome new translations into any language. Instructions can be found <a href="https://code.google.com/p/gbif-providertoolkit/wiki/HowToTranslate" title="Instructions on translating the IPT User Interface" target="_blank">here</a>.</p>
+        <p>Has the IPT user interface or documentation been translated into your native language yet? If not, we welcome new translations into any language. Instructions can be found <a href="https://github.com/gbif/ipt/wiki/HowToTranslate.wiki" title="Instructions on translating the IPT User Interface" target="_blank">here</a>.</p>
         <h3>Code</h3>
-        <p>Is the IPT missing a key feature, or is the GBIF Secretariat too slow getting around to implementing an existing feature request or bug fix? Feel free to contribute a code patch yourself. To start, check out the latest version of the source code <a href="https://code.google.com/p/gbif-providertoolkit/source/checkout" title="Link to download IPT source code from SVN" target="_blank">here</a>.</p>
+        <p>Is the IPT missing a key feature, or is the GBIF Secretariat too slow getting around to implementing an existing feature request or bug fix? Feel free to contribute a code patch yourself. To start, check out the latest version of the source code <a href="https://github.com/gbif/ipt" title="Link to download IPT source code from GitHub" target="_blank">here</a>.</p>
         <h3>Documentation</h3>
         <p>Is there a mistake in the IPT documentation? Perhaps some topic in the IPT wiki is missing? If so, please contact the <@common.helpdesk/> with your ideas, and we will grant you author privileges to the IPT wiki.</p>
     </div>
