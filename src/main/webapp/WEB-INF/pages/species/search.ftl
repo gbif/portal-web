@@ -27,6 +27,15 @@
     </form>
   </content>
 
+<#if searchResponse?has_content && (searchResponse.offset+searchResponse.limit) gte maxOffset>
+  <@common.notice title="Limited paging">
+      <p>
+          Result paging is limited to ${maxOffset} records.
+          Please use more restrictive filters.
+      </p>
+  </@common.notice>
+</#if>
+
   <form action="<@s.url value='/species/search'/>" autocomplete="off" >
     <article class="results light_pane">
       <input type="hidden" name="q" value="${q!}"/>
@@ -97,11 +106,10 @@
           </div>
         </#list>
 
-          <div class="footer">
-          <@macro.pagination page=searchResponse url=currentUrlWithoutPage/>
+        <div class="footer">
+          <@macro.pagination page=searchResponse url=currentUrlWithoutPage maxOffset=maxOffset/>
           </div>
         </div>
-
 
         <div class="right">
 
