@@ -255,7 +255,7 @@ public class SearchAction
             }
         };
     }
-    
+
     /**
      * @return the maximum default offset.
      */

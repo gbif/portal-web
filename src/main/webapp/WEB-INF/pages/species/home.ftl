@@ -41,8 +41,10 @@
         <li><a href="<@s.url value='/species/search?q=&dataset_key=${nubDatasetKey}&highertaxon_key=49'/>" title="Lizards">Flowering Plants</a></li>
       </ul>
 
+    <#if nubSpecies gt 0>
       <div class="species-progress">
-        <#assign progress = (100*colSpecies) / nubSpecies>
+          <!-- this should always be the case when we have a real backbone -->
+          <#assign progress = (100*colSpecies) / nubSpecies>
         <ul>
           <li class="confirmed" style="width:${progress}%">
             ${colSpecies}
@@ -63,6 +65,7 @@
           </li>
         </ul>
       </div>
+    </#if>
     </div>
 
     <footer></footer>
