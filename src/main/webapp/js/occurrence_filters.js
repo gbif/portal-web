@@ -2044,14 +2044,16 @@ var OccurrenceWidgetManager = (function ($,_) {
        * Submits a GET request
        */
       submit : function(additionalParams, submitTargetUrl){
-        this.submit(additionalParams,submitTargetUrl,false);
+        this.submit(additionalParams,submitTargetUrl,false,false);
       },
       /**
        * Submits the request using the selected filters.
        */
-      submit : function(additionalParams, submitTargetUrl, isPost) {
+      submit : function(additionalParams, submitTargetUrl, isPost,newWindow) {
         submitTargetUrl = submitTargetUrl || targetUrl;
-        showWaitDialog();
+        if(!newWindow) {
+          showWaitDialog();
+        }
         var params = $.extend({},additionalParams);
 
         //Collect the filter values
@@ -2099,7 +2101,12 @@ var OccurrenceWidgetManager = (function ($,_) {
           $('body').append(objForm);
           $(objForm).submit();
         } else {
-          window.location = submitTargetUrl + $.param(params,true);
+          var windowUrl = submitTargetUrl + $.param(params, true);
+          if(newWindow) {
+            window.open(windowUrl,'_blank')
+          } else {
+            window.location = windowUrl;
+          }
         }
         return true;  // submit?
       },

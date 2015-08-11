@@ -63,6 +63,9 @@
          $('a.download_submit_button').click(function(event) {
             widgetManager.submit({emails:$('#notify_others').val(),format:$('input:radio[name=downloadFormat]:checked').val()}, "<@s.url value='/occurrence/download'/>?");
          });
+         $('a.occurrence_map_button').click(function(event) {
+           widgetManager.submit({}, "http://apps2.gbif-uat.org:9094/map/occurrence/?x=0&y=0&z=0&",false,true);
+         });
          $('#emails').tagit({
            singleField: true,
            singleFieldNode: $('#notify_others'),
@@ -95,6 +98,9 @@
         <div class="content">
         <h1>Search occurrences</h1>
         <h3>Use the filters to customize search results</h3>
+        <h3 style="font-size: small; float: left; vertical-align: bottom">
+          <a href="#" class="occurrence_map_button">[View results in a map]</a>
+        </h3>
         </div>
         <#if action.showDownload()>
         <div class="box">
