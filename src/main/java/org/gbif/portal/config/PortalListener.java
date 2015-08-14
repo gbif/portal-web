@@ -43,6 +43,7 @@ public class PortalListener extends GuiceServletContextListener {
     @Override
     protected void configureServlets() {
       // Struts2
+      bind(XSSFilter.class).in(Singleton.class);
       bind(StrutsPrepareFilter.class).in(Singleton.class);
       bind(FreemarkerPageFilter.class).in(Singleton.class);
       bind(StrutsExecuteFilter.class).in(Singleton.class);
