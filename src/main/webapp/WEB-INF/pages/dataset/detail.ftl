@@ -337,22 +337,21 @@
     </div>
   </@common.article>
 <#elseif dataset.geographicCoverages?has_content>
-  <article>
-    <header></header>
-    <div class="content">
-      <div class="header">
-        <div class="left"><h2>Geographic Coverage</h2></div>
-      </div>
+  <@common.article id="geographic_coverage" title="Geographic Coverage">
       <div class="fullwidth">
-        <div class="">
-          <#list dataset.geographicCoverages as geo>
-            <p>${action.linkText(geo.description!)}</p>
-          </#list>
-        </div>
+          <div class="">
+            <#list dataset.geographicCoverages as geo>
+                <p>${action.linkText(geo.description!)}</p>
+            </#list>
+          </div>
       </div>
-    </div>
-    <footer></footer>
-  </article>
+  </@common.article>
+<#elseif dataset.type != "OCCURRENCE" && numOccurrences! gt 0>
+  <@common.article id="occurrences" title="Occurrences">
+      <div class="fullwidth">
+          <p>There are <a href="<@s.url value='/occurrence/search?datasetKey=${id!}'/>" title="View occurrences">${numOccurrences} occurrences</a> included in this dataset.</p>
+      </div>
+  </@common.article>
 </#if>
 
 <@common.contactArticle primaryContacts=primaryContacts otherContacts=otherContacts />
