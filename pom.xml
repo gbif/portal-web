@@ -10,7 +10,7 @@
 
   <groupId>org.gbif</groupId>
   <artifactId>portal-web</artifactId>
-  <version>0.23-SNAPSHOT</version>
+  <version>0.24-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <name>GBIF Portal</name>
@@ -52,7 +52,7 @@
     <metrics-ws-client.version>0.23</metrics-ws-client.version>
     <drupal-mybatis.version>0.16</drupal-mybatis.version>
     <gbif-common.version>0.18</gbif-common.version>
-    <gbif-common-ws.version>0.23</gbif-common-ws.version>
+    <gbif-common-ws.version>0.25</gbif-common-ws.version>
 
     <freemarker.version>2.3.21</freemarker.version>
     <guice.version>3.0</guice.version>

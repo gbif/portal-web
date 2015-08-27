@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.dataset.DatasetBaseAction" -->
 <#import "/WEB-INF/macros/common.ftl" as common>
 <#--
  THIS INCLUDE GENERATES THE INFOBAND AND TABS FOR A DATASET PAGE
@@ -72,7 +73,11 @@
             <a href="<@s.url value='/occurrence/search?datasetKey=${id!}'/>" title="View occurrences" class="candy_blue_button"><span>View occurrences</span></a>
         <#elseif dataset.type! == "CHECKLIST">
             <ul>
+              <#if (numOccurrences!0) gt 0>
+                <li><h3>${numOccurrences}</h3>Occurrences</li>
+              <#else>
                 <li><h3>${(metrics.getCountByRank(speciesRank))!"?"}</h3>Species</li>
+              </#if>
                 <li class="last"><h3>${(metrics.usagesCount)!"?"}</h3>Taxa</li>
             </ul>
             <a href="<@s.url value='/species/search?dataset_key=${id!}'/>" title="View species" class="candy_blue_button"><span>View species</span></a>

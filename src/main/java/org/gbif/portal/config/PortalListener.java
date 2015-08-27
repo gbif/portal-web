@@ -8,6 +8,8 @@
  */
 package org.gbif.portal.config;
 
+import org.gbif.ws.server.filter.XSSFilter;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Provides;
@@ -41,11 +43,13 @@ public class PortalListener extends GuiceServletContextListener {
     @Override
     protected void configureServlets() {
       // Struts2
+      bind(XSSFilter.class).in(Singleton.class);
       bind(StrutsPrepareFilter.class).in(Singleton.class);
       bind(FreemarkerPageFilter.class).in(Singleton.class);
       bind(StrutsExecuteFilter.class).in(Singleton.class);
 
       // Struts2
+      filter("/*").through(XSSFilter.class);
       filter("/*").through(StrutsPrepareFilter.class);
       filter("/*").through(FreemarkerPageFilter.class);
       filter("/*").through(StrutsExecuteFilter.class);
