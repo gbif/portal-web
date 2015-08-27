@@ -99,7 +99,7 @@
         <h1>Search occurrences</h1>
         <h3>Use the filters to customize search results</h3>
         <h3 style="font-size: small; float: left; vertical-align: bottom">
-          <a href="#" class="occurrence_map_button" target="_blank">[View results in a map]</a>
+          <a href="#" class="occurrence_map_button">[View results in a map]</a>
         </h3>
         </div>
         <#if action.showDownload()>
