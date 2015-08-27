@@ -21,7 +21,7 @@
       attribution: "Mapbox, <a href='http://www.openstreetmap.org/copyright' target='_blank'>OpenStreetMap contributors</a>"
     }).addTo(map);
 
-    var baseURL = 'http://localhost:8089/map/occurrence/occurrence.png?&resolution=1&x={x}&y={y}&z={z}&palette=yellows_reds&' +  window.location.href.slice(window.location.href.indexOf('?') + 1);
+    var baseURL = 'http://apps2.gbif-uat.org:9094/map/occurrence/occurrence.png?&resolution=1&x={x}&y={y}&z={z}&palette=yellows_reds&' +  window.location.href.slice(window.location.href.indexOf('?') + 1);
 
     var gbif = L.tileLayer(baseURL, {
       maxZoom: 12,
