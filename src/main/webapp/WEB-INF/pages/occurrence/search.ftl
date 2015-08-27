@@ -64,7 +64,7 @@
             widgetManager.submit({emails:$('#notify_others').val(),format:$('input:radio[name=downloadFormat]:checked').val()}, "<@s.url value='/occurrence/download'/>?");
          });
          $('a.occurrence_map_button').click(function(event) {
-           widgetManager.submit({}, "http://apps2.gbif-uat.org:9094/map/occurrence/?x=0&y=0&z=0&",false,true);
+           widgetManager.submit({x:0,y:0,z:0}, "<@s.url value='/occurrence/heatmap'/>?",false,true);
          });
          $('#emails').tagit({
            singleField: true,
