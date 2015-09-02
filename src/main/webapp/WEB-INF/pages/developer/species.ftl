@@ -63,7 +63,8 @@
     <@trow url="/{int}/parents" resp="NameUsage List" params=["language"] respLink="species/5231190/parents">Lists all parent usages for a name usage</@trow>
     <@trow url="/{int}/children" resp="NameUsage Page" paging=true params=["language"] respLink="species/5231190/children">Lists all direct child usages for a name usage</@trow>
     <@trow url="/{int}/related" resp="NameUsage List" paging=false params=["language","datasetKey"] respLink="species/5231190/related">Lists all related name usages in other checklists</@trow>
-    <@trow url="/{int}/synonyms" resp="NameUsage Page" paging=true params=["language"] respLink="species/5231190/synonyms">Lists all synonyms for a name usage</@trow>
+    <@trow url="/{int}/synonyms" resp="NameUsage Page" paging=true params=["language"] respLink="species/2973063/synonyms">Lists all synonyms for a name usage</@trow>
+    <@trow url="/{int}/combinations" resp="NameUsage List" respLink="species/5231190/combinations">Lists all combinations that have this name usage as their basionym</@trow>
     <@trow url="/{int}/descriptions" resp="Description Page" paging=true respLink="species/5231190/descriptions">Lists all descriptions for a name usage</@trow>
     <@trow url="/{int}/distributions" resp="Distribution Page" paging=true respLink="species/5231190/distributions">Lists all distributions for a name usage</@trow>
     <@trow url="/{int}/media" resp="Media Page" paging=true respLink="species/5231190/media">Lists all media items for a name usage</@trow>
