@@ -210,7 +210,7 @@
       </ul>
     </#if>
 
-    <#if (usage.synonyms?size>0)>
+    <#if (usage.synonyms?has_content)>
       <h3>Synonyms</h3>
       <ul class="no_bottom">
         <#list usage.synonyms as syn>
@@ -222,6 +222,20 @@
           </#if>
         </#list>
       </ul>
+    </#if>
+
+    <#if (usage.combinations?has_content)>
+        <h3>Basionym of</h3>
+        <ul class="no_bottom">
+          <#list usage.combinations as comb>
+            <li><a href="<@s.url value='/species/${comb.key?c}'/>">${comb.scientificName}</a></li>
+            <#-- only show 5 combinations at max -->
+            <#if comb_has_next && comb_index==4>
+                <li class="more"><a href="<@s.url value='/species/${id?c}/combinations'/>">more</a></li>
+              <#break />
+            </#if>
+          </#list>
+        </ul>
     </#if>
 
   </div>
@@ -254,8 +268,8 @@
       <p>${usage.publishedIn}</p>
     </#if>
 
-    <#if basionym?has_content>
-      <h3>Original name</h3>
+    <#if basionym?has_content && basionym.key != id>
+      <h3>Basionym</h3>
       <p><a href="<@s.url value='/species/${basionym.key?c}'/>">${basionym.scientificName}</a></p>
     </#if>
 
