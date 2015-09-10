@@ -10,7 +10,7 @@
 
   <groupId>org.gbif</groupId>
   <artifactId>portal-web</artifactId>
-  <version>0.23</version>
+  <version>0.23.1-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <name>GBIF Portal</name>
