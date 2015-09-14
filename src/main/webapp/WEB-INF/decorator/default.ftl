@@ -80,10 +80,11 @@
       ${page.properties["page.logo_header"]}
     <#else>
       <div id="logo">
-        <a href="${cfg.drupal}/" class="logo"><img src="<@s.url value='/img/header/logo.png'/>" alt="GBIF"/></a>
-
-        <h1><a href="${cfg.drupal}/" title="GBIF.org">GBIF.org</a></h1>
-        <span>Free and open access to biodiversity data</span>
+        <a href="${cfg.drupal}/" class="logo">
+          <svg width="245" height="52">
+            <image xlink:href="<@s.url value='/img/header/GBIF-2015-full.svg'/>" src="<@s.url value='/img/header/GBIF-2015-full-ie8-fallback.png'/>" width="245" height="52" title="GBIF.org - Free and open access to biodiversity data" alt="Logo of GBIF" />
+          </svg>
+        </a>
       </div>
     </#if>
 
