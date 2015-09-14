@@ -312,35 +312,45 @@
     </div>
   </#if>
 
-  <h3>External links</h3>
-  <ul>
-    <#if usage.references??>
-      <li><a target="_blank" href="${usage.references}">Record details on publisher site</a></li>
-    </#if>
-  <#if usage.nubKey??>
-    <li><a target="_blank" href="http://eol.org/search/?q=${usage.canonicalOrScientificName}" title="Encyclopedia of Life">Encyclopedia of Life</a></li>
-  </#if>
-  <#if usage.canonicalName??>
-    <#-- hide CoL search for CoL usages -->
-    <#if usage.datasetKey != common.colKey>
-      <li><a target="_blank" href="http://www.catalogueoflife.org/col/search/all/key/${usage.canonicalName?replace(' ','+')}" title="Catalogue of Life">Catalogue of Life</a></li>
-    </#if>
-    <li><a target="_blank" href="http://www.biodiversitylibrary.org/name/${usage.canonicalName?replace(' ','_')}">Biodiversity Heritage Library</a></li>
-  </#if>
-  </ul>
+  <#if usage.nub>
+      <dl class="identifier">
+          <dt>GBIF ID</dt>
+          <dd><a href="#" title="GBIF ID ${id?c}">${id?c}</a></dd>
+        <#list usage.identifiers as i>
+            <dt>${i.type}</dt>
+            <dd><a href="${i.identifierLink!'#'}" title="${i.identifier}">${common.limit(i.identifier ,22)}</a></dd>
+        </#list>
+      </dl>
 
-    <dl class="identifier">
-      <dt>GBIF ID</dt>
-      <dd><a href="#" title="GBIF ID ${id?c}">${id?c}</a></dd>
-      <#if !nub && usage.taxonID??>
-        <dt>Taxon ID</dt>
-        <dd><a href="#" title="${usage.taxonID}">${usage.taxonID}</a></dd>
+      <h3>Search links</h3>
+      <ul>
+        <#if usage.canonicalName??>
+            <li><a target="_blank" href="http://eol.org/search/?q=${usage.canonicalOrScientificName}" title="Encyclopedia of Life">Encyclopedia of Life</a></li>
+            <li><a target="_blank" href="http://www.catalogueoflife.org/col/search/all/key/${usage.canonicalName?replace(' ','+')}" title="Catalogue of Life">Catalogue of Life</a></li>
+            <li><a target="_blank" href="http://www.biodiversitylibrary.org/name/${usage.canonicalName?replace(' ','_')}">Biodiversity Heritage Library</a></li>
+        </#if>
+      </ul>
+
+  <#else>
+    <#-- checklist view -->
+      <dl class="identifier">
+        <#if usage.taxonID??>
+            <dt>Taxon ID</dt>
+            <dd><a href="#" title="${usage.taxonID}">${usage.taxonID}</a></dd>
+        </#if>
+        <#list usage.identifiers as i>
+            <dt>${i.type}</dt>
+            <dd><a href="${i.identifierLink!'#'}" title="${i.identifier}">${common.limit(i.identifier ,22)}</a></dd>
+        </#list>
+      </dl>
+      <#if usage.references??>
+        <h3>Source</h3>
+        <ul>
+            <li><a target="_blank" href="${usage.references}">${dataset.alias!"Publisher record"}</a></li>
+        </ul>
       </#if>
-      <#list usage.identifiers as i>
-        <dt>${i.type}</dt>
-        <dd><a href="${i.identifierLink!'#'}" title="${i.identifier}">${common.limit(i.identifier ,22)}</a></dd>
-      </#list>
-    </dl>
+  </#if>
+
 </div>
 </@common.article>
 
