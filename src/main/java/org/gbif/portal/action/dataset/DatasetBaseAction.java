@@ -172,7 +172,7 @@ public class DatasetBaseAction extends MemberBaseAction<Dataset> {
           }
       }
     )));
-      
+
     parentDataset = member.getParentDatasetKey() != null ? datasetService.get(member.getParentDatasetKey()) : null;
 
     publisher = member.getPublishingOrganizationKey() != null ?
