@@ -4,6 +4,7 @@ import org.gbif.api.model.checklistbank.DatasetMetrics;
 import org.gbif.api.model.metrics.cube.OccurrenceCube;
 import org.gbif.api.model.metrics.cube.ReadBuilder;
 import org.gbif.api.model.registry.Dataset;
+import org.gbif.api.model.registry.Identifier;
 import org.gbif.api.model.registry.Installation;
 import org.gbif.api.model.registry.Organization;
 import org.gbif.api.model.registry.eml.TaxonomicCoverage;
@@ -13,6 +14,7 @@ import org.gbif.api.service.metrics.CubeService;
 import org.gbif.api.service.registry.DatasetService;
 import org.gbif.api.service.registry.InstallationService;
 import org.gbif.api.service.registry.OrganizationService;
+import org.gbif.api.vocabulary.IdentifierType;
 import org.gbif.api.vocabulary.Rank;
 import org.gbif.portal.action.dataset.util.DisplayableTaxonomicCoverage;
 import org.gbif.portal.action.dataset.util.OrganizedTaxonomicCoverage;
@@ -25,12 +27,13 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.UUID;
-
 import javax.annotation.Nullable;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.CharMatcher;
+import com.google.common.base.Predicate;
 import com.google.common.base.Strings;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -161,6 +164,15 @@ public class DatasetBaseAction extends MemberBaseAction<Dataset> {
       throw new NotFoundException("No dataset found with id " + id);
     }
 
+    // remove GBIF_PORTAL ids
+    member.setIdentifiers(Lists.newArrayList(Collections2.filter(member.getIdentifiers(), new Predicate<Identifier>() {
+          @Override
+          public boolean apply(@Nullable Identifier input) {
+              return IdentifierType.GBIF_PORTAL != input.getType();
+          }
+      }
+    )));
+      
     parentDataset = member.getParentDatasetKey() != null ? datasetService.get(member.getParentDatasetKey()) : null;
 
     publisher = member.getPublishingOrganizationKey() != null ?
