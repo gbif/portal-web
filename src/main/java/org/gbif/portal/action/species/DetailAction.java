@@ -41,6 +41,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -190,8 +191,15 @@ public class DetailAction extends UsageBaseAction {
       OccurrenceSearchRequest req = new OccurrenceSearchRequest();
       req.addParameter(OccurrenceSearchParameter.TYPE_STATUS, "*");
       req.addTaxonKeyFilter(usage.getKey());
-      req.setLimit(50);
-      typeSpecimen = occurrenceSearchService.search(req).getResults();
+      req.setLimit(100);
+      // remove specimen without type status - this should never happen, but can if the solr index is out of sync!!!
+      typeSpecimen = Lists.newArrayList(Collections2.filter(occurrenceSearchService.search(req).getResults(), new Predicate<Occurrence>() {
+          @Override
+          public boolean apply(@Nullable Occurrence occ) {
+              return occ != null && occ.getTypeStatus() != null;
+          }
+        }
+      ));
     }
   }
 
