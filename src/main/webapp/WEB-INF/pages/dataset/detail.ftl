@@ -17,7 +17,7 @@
         var bboxes = [
           <#list dataset.geographicCoverages as geo>
             <#if geo.boundingBox?has_content && (!geo.boundingBox.isGlobalCoverage())>
-              [${geo.boundingBox.minLatitude?c},${geo.boundingBox.maxLatitude?c},${geo.boundingBox.minLongitude?c},${geo.boundingBox.maxLongitude?c}]<#if geo_has_next>,</#if>
+              [${geo.boundingBox.minLatitude?c},${geo.boundingBox.maxLatitude?c},${geo.boundingBox.minLongitude?c},${geo.boundingBox.maxLongitude?c}],
             </#if>
           </#list>
         ];
