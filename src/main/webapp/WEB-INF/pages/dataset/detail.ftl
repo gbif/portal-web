@@ -17,16 +17,36 @@
         var bboxes = [
           <#list dataset.geographicCoverages as geo>
             <#if geo.boundingBox?has_content && (!geo.boundingBox.isGlobalCoverage())>
-              [${geo.boundingBox.minLatitude?c},${geo.boundingBox.maxLatitude?c},${geo.boundingBox.minLongitude?c},${geo.boundingBox.maxLongitude?c}],
+              [${geo.boundingBox.minLatitude?c},${geo.boundingBox.maxLatitude?c},${geo.boundingBox.minLongitude?c},${geo.boundingBox.maxLongitude?c}]<#if geo_has_next>,</#if>
             </#if>
           </#list>
         ];
 
+        function getGeoJsonFromBoxes(boxes){
+            var geojson = { "type": "FeatureCollection",
+                "features": [
+                ]
+            };
+            for (var i = 0; i < boxes.length; i++){
+                var b = boxes[i];
+                var feature = { "type": "Feature",
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [
+                            [ [b[2],b[0]], [b[3],b[0]], [b[3],b[1]], [b[2],b[1]], [b[2],b[0]] ]
+                        ]
+                    }
+                };
+                geojson.features.push(feature);
+            }
+            return geojson;
+        }
         // paint the bounding box once the iframe is loaded
         // This will only work when deployed in the same domain, but this is considered a good old hack for this isolated case
         var mapframe = document.getElementById('mapframe');
         mapframe.onload = function() {
-          mapframe.contentWindow.addBboxes(bboxes);
+            var cw = mapframe.contentWindow;
+            cw.postMessage({geojson: getGeoJsonFromBoxes(bboxes)}, "*");
         };
       </script>
     </#if>
