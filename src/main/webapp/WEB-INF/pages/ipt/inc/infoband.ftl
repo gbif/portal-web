@@ -5,9 +5,9 @@
     <div class="box">
         <div class="content">
             <ul>
-                <li class="single last"><h4>v2.2</h4>(Latest version)</li>
+                <li class="single last"><h4>v2.3</h4>(Latest version)</li>
             </ul>
-            <a href="<@s.url value='http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.2.1/ipt-2.2.1.war'/>" title="Download latest version of IPT" class="candy_blue_button" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_2_1');"><span>Download</span></a>
+            <a href="<@s.url value='http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.3.1/ipt-2.3.1.war'/>" title="Download latest version of IPT" class="candy_blue_button" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_3_1');"><span>Download</span></a>
         </div>
     </div>
 </content>

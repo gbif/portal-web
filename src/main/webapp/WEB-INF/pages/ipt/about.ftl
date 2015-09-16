@@ -71,7 +71,7 @@
 <@common.article id="about" title="About the IPT" titleRight="See also">
     <div class="left">
         <p>The Integrated Publishing Toolkit (IPT) is a free open source software tool written in Java that is used to publish and share biodiversity datasets through the GBIF network. Designed for interoperability, it enables the publishing of content in databases, Microsoft Excel spreadsheets, or text files using open standards namely the <a href="http://rs.tdwg.org/dwc/terms/" title="Darwin Core Terms" target="_blank">Darwin Core</a> and the <a href="http://knb.ecoinformatics.org/software/eml/" title="EML" target="_blank">Ecological Metadata Language</a>.You can also use a 'one-click' service to convert your metadata into a draft <a href="/publishingdata/datapapers" title="How to publish data papers">data paper manuscript</a> for submission to a peer-reviewed journal.</p>
-        <img id="datacite" typeof="foaf:Image" align="left" src="/img/ipt/datacite-logo-web.png" width="105" height="100" alt="DataCite logo 2015" title="DataCite logo 2015" /><p>The latest version released in March 2015 is capable of automatically connecting with either DataCite or EZID to assign DOIs to datasets. This new feature makes biodiversity data easier to access on the Web and facilitates tracking its re-use. You may read more about this and other new features introduced in version 2.2 <a href="http://gbif.blogspot.com/2015/03/ipt-v22.html" title="Version 2.2 blog post" target="_blank">here</a>.</p>
+        <img id="datacite" typeof="foaf:Image" align="left" src="/img/ipt/datacite-logo-web.png" width="105" height="100" alt="DataCite logo 2015" title="DataCite logo 2015" /><p>Since v2.2, the IPT has been capable of automatically connecting with either DataCite or EZID to assign DOIs to datasets. This new feature makes biodiversity data easier to access on the Web and facilitates tracking its re-use. You may read more about this and other new features introduced in version 2.2 <a href="http://gbif.blogspot.com/2015/03/ipt-v22.html" title="Version 2.2 blog post" target="_blank">here</a>.</p>
         <p>The core development of the IPT happens at the GBIF Secretariat, but the coding, documentation, and internationalization are a community effort and everyone is welcome to join in. New versions incorporate the feedback from the people who actually use the IPT. In this way, users can help get the features they want by becoming involved. The IPT really is a community-driven tool.</p>
         <p>You can see the work that has gone into each iterative version since v2.0.3 (released in November 2011) under the <a href="/ipt/releases" title="IPT Releases Tab">Releases</a> tab. You can check out the <a href="/ipt/stats" title="IPT Stats Tab">Stats</a> page to find out how many institutions around the world are using the IPT today.</p>
         <p>For a more in-depth description of the IPT, including why it was developed, you can read <a href="http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0102623" title="The GBIF Integrated Publishing Toolkit: Facilitating the Efficient Publishing of Biodiversity Data on the Internet">this</a> article published in PLOS ONE on August 6, 2014.</p>
@@ -135,12 +135,13 @@
                 </li>
                 <li class="iptfeature">
                     <div class="imgbox-tall">
-                        <img typeof="foaf:Image" src="/img/ipt/types.jpg" width="221" height="162" alt="Resource type selection on IPT Create New Resource Form" title="Resource type selection on IPT Create New Resource Form" />
+                        <img typeof="foaf:Image" src="/img/ipt/types2.png" width="174" height="162" alt="Resource type selection on IPT Create New Resource Form" title="Resource type selection on IPT Create New Resource Form" />
                     </div>
-                    <div class="title">Publication of three types of biodiversity data:</div>
+                    <div class="title">Publication of four types of biodiversity data:</div>
                     <p>I. Primary occurrence data (specimens, observations)</p>
                     <p>II. Species checklists and taxonomies</p>
-                    <p>III. General metadata about data sources</p>
+                    <p>III. Sample-based data (data about sampling events)</p>
+                    <p>IV. General metadata about data sources</p>
                 </li>
                 <li class="iptfeature">
                     <div class="imgbox-tall">

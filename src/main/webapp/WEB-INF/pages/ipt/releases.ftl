@@ -12,36 +12,39 @@
 <body class="ipt">
 
 
-<@common.article id="about" title="Latest release – version 2.2, 26 March 2015" titleRight="Version history">
+<@common.article id="about" title="Latest release – version 2.3, 10 September 2015" titleRight="Version history">
     <div class="left">
         <p>
-            This version is capable of automatically connecting with either <a href="https://www.datacite.org/" title="Link to DataCite" target="_blank">DataCite</a> or <a href="http://ezid.cdlib.org/" title="Link to EZID" target="_blank">EZID</a> to assign DOIs to datasets.
-            This new feature makes biodiversity data easier to access on the Web and facilitates tracking its re-use.
-            Since tracking datasets' re-use depends on <a href="https://www.datacite.org/services/cite-your-data.html" title="Link to DataCite Cite your data page" target="_blank">proper citation</a>, this version now enables a dataset's citation to be
-            automatically generated in a <a href="https://github.com/gbif/ipt/wiki/IPT2Citation.wiki" title="Link to IPT citation format wiki page" target="_blank">standard format</a> that includes the DOI and dataset version number.
+            This version is capable of publishing sample-based datasets, realising the new features that were in prototype at the <a href="http://eubon-ipt.gbif.org" title="Link to EU BON IPT" target="_blank">EU BON IPT</a>.
         </p>
         <p>
-        <h3><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.2.1/ipt-2.2.1.war" title="Link to download IPT v2.2" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_2_1');">Download</a></h3>
-        <h3><a href="http://gbif.blogspot.com/2015/03/ipt-v22.html" title="Link to release announcement about IPT v2.2" target="_blank">Release Announcement</a></h3>
-        <h3><a href="https://github.com/gbif/ipt/wiki/IPTReleaseNotes22.wiki" title="IPT v2.2 Release notes" target="_blank">Release notes (upgrade instructions)</a></h3>
+        <h3><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.3.1/ipt-2.3.1.war" title="Link to download IPT v2.3.1" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_3_1');">Download</a></h3>
+        <h3><a href="https://github.com/gbif/ipt/wiki/IPTReleaseNotes23.wiki" title="IPT v2.3 Release notes" target="_blank">Release notes (upgrade instructions)</a></h3>
         </p>
         <p>&nbsp;</p>
         <h2>Roadmap - what's next?</h2>
         <p>
-            Version 2.3 of the IPT will be released in August of 2015. This version will support publishing sample-based datasets incorporating all the changes now in the prototype at the <a href="http://eubon-ipt.gbif.org" title="Link to EU BON IPT" target="_blank">EU BON IPT</a>.
-            As part of these changes, the IPT will update its extensions and vocabularies to the latest version of Darwin Core.
+            No new major versions of the IPT have been planned at this time.
         </p>
         <p>
-            As of July 7th, 2015 there were
-            <a href="https://github.com/gbif/ipt/issues?q=label%3AMilestone-Release2.3"
-               title="Link to issues scheduled to be included in IPT v2.3 release"
-               target="_blank">28 issues</a> scheduled to be included in this release.
+            As of September 10th, 2015 there were
+            <a href="https://github.com/gbif/ipt/issues"
+               title="Link to IPT issues"
+               target="_blank">62 open issues</a>. Weigh in on existing issues with a +1, or submit a new feature request for functionality you would like to see implemented.
         </p>
     </div>
     <div class="right">
+        <h3><strong>2.3</strong> - September, 2015</h3>
+        <ul>
+            <li><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.3.1/ipt-2.3.1.war" title="Dowload IPT v2.3.1" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_3_1');">Download</a> / <a href="https://github.com/gbif/ipt/wiki/IPTReleaseNotes23.wiki" title="IPT v2.3 Release Notes" target="_blank">Notes</a></li>
+            <li><a href="https://github.com/gbif/ipt/wiki/IPT2ManualNotes.wiki" title="IPT User Manual" target="_blank">User Manual</a> <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2ManualNotes?wl=es" title="IPT User Manual Spanish" target="_blank">(es)</a></li>
+            <li>Addressed <a href="https://github.com/gbif/ipt/issues?q=is%3Aissue+label%3AMilestone-Release2.3" title="IPT v2.3 Issues List" target="_blank">38 issues</a>: 15 Defects, 15 Enhancements, 4 Won’t fix, and 4 that were considered as Tasks
+            </li>
+            <li>Translated into 6 languages</li>
+        </ul>
         <h3><strong>2.2</strong> - March, 2015</h3>
         <ul>
-            <li><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.2.1/ipt-2.2.1.war" title="Dowload IPT v2.2" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_2_1');">Download</a> / <a href="https://github.com/gbif/ipt/wiki/IPTReleaseNotes22.wiki" title="IPT v2.2 Release Notes" target="_blank">Notes</a></li>
+            <li><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.2.1/ipt-2.2.1.war" title="Dowload IPT v2.2" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_2_1');"><strike>Download</strike></a> / <a href="https://github.com/gbif/ipt/wiki/IPTReleaseNotes22.wiki" title="IPT v2.2 Release Notes" target="_blank">Notes</a></li>
             <li><a href="https://github.com/gbif/ipt/wiki/IPT2ManualNotes.wiki" title="IPT User Manual" target="_blank">User Manual</a> <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2ManualNotes?wl=es" title="IPT User Manual Spanish" target="_blank">(es)</a></li>
             <li><a href="http://gbif.blogspot.com/2015/03/ipt-v22.html" title="IPT v2.2 Release Announcement" target="_blank">Release Announcement</a></li>
             <li>Addressed <a href="https://github.com/gbif/ipt/issues?q=label%3AMilestone-Release2.2" title="IPT v2.2 Issues List" target="_blank">74 issues</a>: 20 Defects, 26 Enhancements, 16 Won’t fix, 6 Duplicates, 2 Other, 1 Task, and 3 that were considered as Invalid
