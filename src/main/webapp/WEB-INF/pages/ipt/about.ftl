@@ -112,7 +112,7 @@
             <ul>
                 <li class="iptfeature">
                     <div class="imgbox-short">
-                        <img typeof="foaf:Image" src="/img/ipt/logo-2015.png" width="72" height="72" alt="GBIF logo 2015" title="GBIF logo 2015" />
+                        <img typeof="foaf:Image" src="/img/ipt/GBIF-2015-dotorg-stacked.png" width="72" height="72" alt="GBIF logo 2015" title="GBIF logo 2015" />
                         <img typeof="foaf:Image" src="/img/ipt/datacite-logo-web.png" width="72" height="72" alt="DataCite logo 2015" title="DataCite logo 2015" />
                         <img typeof="foaf:Image" src="/img/ipt/ezid2.png" width="94" height="38" alt="EZID logo 2015" title="EZID logo 2015" />
                     </div>
