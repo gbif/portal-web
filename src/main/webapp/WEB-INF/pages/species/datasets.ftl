@@ -31,29 +31,30 @@
       <div class="fullwidth">
 
       <#list page.results as item>
-        <#assign ds = item.dataset/>
-        <#-- be defendive, we have checklists with occurrences: http://dev.gbif.org/issues/browse/POR-614 -->
-        <#if ds.type=="CHECKLIST" && item.usage??>
-          <#assign linkSpecies = true />
-          <#assign link = '/species/${item.usage.key?c}'/>
-        <#else>
-          <#assign linkSpecies = false />
-          <#assign link = '/occurrence/search?taxon_key=${usage.nubKey?c}&dataset_key=${ds.key}' />
-        </#if>
-
-        <div class="result">
-          <h2><strong><a title="${ds.title!}" href="<@s.url value='${link}'/>">${common.limit(ds.title!, 100)}</a></strong></h2>
-
-          <div class="footer">
-          <#if linkSpecies>
-            as <em>${item.usage.scientificName}</em>
+        <#-- be conservative and check if dataset actually exists. When registry is out of sync with clb we might see occasional nulls here! -->
+        <#if item.dataset??>
+          <#assign ds = item.dataset/>
+          <#-- be defensive, we have checklists with occurrences: http://dev.gbif.org/issues/browse/POR-614 -->
+          <#if ds.type=="CHECKLIST" && item.usage??>
+            <#assign linkSpecies = true />
+            <#assign link = '/species/${item.usage.key?c}'/>
           <#else>
-            <@s.text name="enum.datasettype.${ds.type!'UNKNOWN'}"/>
-            with ${item.numOccurrences} records of <em>${usage.canonicalOrScientificName!}</em>
+            <#assign linkSpecies = false />
+            <#assign link = '/occurrence/search?taxon_key=${usage.nubKey?c}&dataset_key=${ds.key}' />
           </#if>
-          </div>
 
-        </div>
+            <div class="result">
+                <h2><strong><a title="${ds.title!}" href="<@s.url value='${link}'/>">${common.limit(ds.title!, 100)}</a></strong></h2>
+                <div class="footer">
+                  <#if linkSpecies>
+                      as <em>${item.usage.scientificName}</em>
+                  <#else>
+                    <@s.text name="enum.datasettype.${ds.type!'UNKNOWN'}"/>
+                      with ${item.numOccurrences} records of <em>${usage.canonicalOrScientificName!}</em>
+                  </#if>
+                </div>
+            </div>
+        </#if>
       </#list>
 
       <div class="footer">
