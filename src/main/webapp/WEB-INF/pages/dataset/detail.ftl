@@ -9,7 +9,7 @@
       <script type="text/javascript" src="${cfg.tileServerBaseUrl!}/map-events.js"></script>
       <script type="text/javascript">
         new GBIFMapListener().subscribe(function(id, searchUrl) {
-          $("#geoOccurrenceSearch").attr("href", "<@s.url value='/occurrence/search'/>?" +  searchUrl.replace("DATASET", "DATASET_KEY"));
+          $("#geoOccurrenceSearch").attr("href", "<@s.url value='/occurrence/search'/>?" +  searchUrl);
         });
 
         // create an array of the bounding boxes from the geographic coverages
