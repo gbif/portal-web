@@ -1,0 +1,77 @@
+####################
+# ENUMERATIONS
+####################
+
+# CONTACT TYPE
+enum.contacttype.TECHNICAL_POINT_OF_CONTACT=Contacto técnical
+enum.contacttype.ADMINISTRATIVE_POINT_OF_CONTACT=Contacto administrativo
+enum.contacttype.POINT_OF_CONTACT=Punto de Contacto
+enum.contacttype.ORIGINATOR=Originador
+enum.contacttype.METADATA_AUTHOR=Proveedor de los Metadatos
+enum.contacttype.PRINCIPAL_INVESTIGATOR=Investigador Principal
+enum.contacttype.AUTHOR=Autor
+enum.contacttype.CONTENT_PROVIDER=Proveedor de Contenido
+enum.contacttype.CUSTODIAN_STEWARD=Custodio de los Datos
+enum.contacttype.DISTRIBUTOR=Distribuidor
+enum.contacttype.EDITOR=Editor
+enum.contacttype.OWNER=Propietario
+enum.contacttype.PROCESSOR=Procesador
+enum.contacttype.PUBLISHER=Publicador
+enum.contacttype.USER=Usuario
+enum.contacttype.PROGRAMMER=Programador
+
+# ENDPOINT TYPE
+enum.endpointtype.EML=EML
+enum.endpointtype.RSS=RSS
+enum.endpointtype.ATOM=ATOM
+enum.endpointtype.WFS=WFS
+enum.endpointtype.WMS=WMS
+enum.endpointtype.TCS_RDF=TCS RDF
+enum.endpointtype.TCS_XML=TCS XML
+enum.endpointtype.GWC=GWC
+enum.endpointtype.IPT=IPT
+enum.endpointtype.DWC_ARCHIVE=Archivo Darwin Core
+enum.endpointtype.DIGIR=DiGIR
+enum.endpointtype.DIGIR_MANIS=DiGIR
+enum.endpointtype.TAPIR=TAPIR
+enum.endpointtype.BIOCASE=BioCASE
+enum.endpointtype.DIGIR_TR=DiGIR
+enum.endpointtype.OAI_PMH=OAI PMH
+enum.endpointtype.DWC_ARCHIVE_CHECKLIST=Archivo Darwin Core
+enum.endpointtype.DWC_ARCHIVE_OCCURRENCE=Archivo Darwin Core
+
+# IDENTIFIER TYPE
+enum.identifiertype.URL=Pagnina web
+enum.identifiertype.LSID=LSID
+enum.identifiertype.SOURCE_ID=Source ID
+enum.identifiertype.HANDLER=Handler
+enum.identifiertype.DOI=DOI
+enum.identifiertype.UUID=UUID
+enum.identifiertype.FTP=FTP
+enum.identifiertype.URI=URI
+enum.identifiertype.UNKNOWN=Desconocido
+enum.identifiertype.GBIF_PORTAL_DATA_RESOURCE_ID=GBIF Portal Data Resource ID
+enum.identifiertype.GBIF_PORTAL_DATA_PROVIDER_ID=GBIF Portal Data Provider ID
+enum.identifiertype.GBIF_PORTAL_RESOURCE_ACCESS_POINT_ID=GBIF Portal Resource Access Point ID
+enum.identifiertype.GBIF_PORTAL_NODE_ID=GBIF Portal Node ID
+
+# DATASET TYPE
+enum.datasettype.OCCURRENCE=Occurrence dataset
+enum.datasettype.CHECKLIST=Checklist dataset
+enum.datasettype.METADATA=Recurso externo (solo metadatos)
+
+# SPECIMEN PRESERVATION METHOD (NOT TRANSLATED YET)
+enum.preservationmethodtype.NO_TREATMENT=No treatment
+enum.preservationmethodtype.ALCOHOL=Alcohol
+enum.preservationmethodtype.DEEP_FROZEN=Deep frozen
+enum.preservationmethodtype.DRIED=Dried
+enum.preservationmethodtype.DRIED_AND_PRESSED=Dried and pressed
+enum.preservationmethodtype.FORMALIN=Formalin
+enum.preservationmethodtype.REFRIGERATED=Refrigerated
+enum.preservationmethodtype.FREEZE_DRIED=Freeze dried
+enum.preservationmethodtype.GLYCERIN=Glycerin
+enum.preservationmethodtype.GUM_ARABIC=Gum arabic
+enum.preservationmethodtype.MICROSCOPIC_PREPARATION=Microscopic preparation
+enum.preservationmethodtype.MOUNTED=Mounted
+enum.preservationmethodtype.PINNED=Pinned
+enum.preservationmethodtype.OTHER=Other
