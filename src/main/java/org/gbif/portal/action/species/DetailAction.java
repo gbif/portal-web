@@ -221,7 +221,6 @@ public class DetailAction extends UsageBaseAction {
       occurrenceDatasetCounts = occurrenceDatasetService.occurrenceDatasetsForNubKey(usage.getNubKey());
     }
     usage.setSynonyms(nonNull(usageService.listSynonyms(id, getLocale(), page6).getResults()));
-    usage.setCombinations(usageService.listCombinations(id, getLocale()));
     usage.setVernacularNames(nonNull(vernacularNameService.listByUsage(id, page100).getResults()));
     usage.setDistributions(nonNull(distributionService.listByUsage(id, page10).getResults()));
     usage.setIdentifiers(nonNull(identifierService.listByUsage(id, page10).getResults()));
