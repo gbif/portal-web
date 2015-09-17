@@ -47,7 +47,7 @@
     <gbif-api.version>0.24</gbif-api.version>
     <checklistbank-ws-client.version>2.17</checklistbank-ws-client.version>
     <download-query-tools.version>1.4</download-query-tools.version>
-    <registry-ws-client.version>2.35-SNAPSHOT</registry-ws-client.version>
+    <registry-ws-client.version>2.35</registry-ws-client.version>
     <occurrence-ws-client.version>0.34</occurrence-ws-client.version>
     <metrics-ws-client.version>0.23</metrics-ws-client.version>
     <drupal-mybatis.version>0.17</drupal-mybatis.version>
