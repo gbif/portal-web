@@ -2,7 +2,6 @@
   <excludes>
     <pattern>/config-browser/*</pattern>
     <pattern>/cfg*</pattern>
-    <pattern>*/heatmap*</pattern>
   </excludes>
   <decorator name="default" page="default.ftl">
     <pattern>/*</pattern>
