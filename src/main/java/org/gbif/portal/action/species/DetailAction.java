@@ -211,7 +211,7 @@ public class DetailAction extends UsageBaseAction {
       basionym = usageService.get(usage.getBasionymKey(), getLocale());
     }
     if (usage.getNubKey() != null) {
-      List<NameUsage> relatedResponse = usageService.listRelated(usage.getNubKey(), getLocale());
+      List<NameUsage> relatedResponse = usageService.listRelated(usage.getNubKey(), getLocale(), page10).getResults();
       for (NameUsage u : relatedResponse) {
         // skip oneself
         if (!u.getKey().equals(usage.getKey())) {

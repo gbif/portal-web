@@ -6,8 +6,6 @@ import org.gbif.api.model.registry.Dataset;
 import org.gbif.api.service.occurrence.OccurrenceDatasetIndexService;
 import org.gbif.api.vocabulary.DatasetType;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.SortedMap;
 import java.util.UUID;
 
@@ -64,24 +62,18 @@ public class DatasetAction extends UsageBaseAction {
     page = new PagingResponse<DatasetResult>(offset, pageSize);
 
     if (type == null || type == DatasetType.CHECKLIST) {
-      List<NameUsage> relatedUsages = usageService.listRelated(usage.getNubKey(), getLocale());
-      // remove nub usage itself
-      Iterator<NameUsage> iter = relatedUsages.iterator();
-      while (iter.hasNext()) {
-        if (iter.next().getKey().equals(usage.getKey())) {
-          iter.remove();
+      PagingResponse<NameUsage> resp = usageService.listRelated(usage.getNubKey(), getLocale(), page);
+      page.setCount(resp.getCount());
+      for (NameUsage u : resp.getResults()) {
+        // remove nub usage itself
+        if (!u.getKey().equals(usage.getKey())) {
+            page.getResults().add(new DatasetResult(datasetService.get(u.getDatasetKey()), null, u));
         }
-      }
-
-      page.setCount((long) relatedUsages.size());
-      for (NameUsage u : sublist(relatedUsages, offset, offset + pageSize)) {
-        page.getResults().add(new DatasetResult(datasetService.get(u.getDatasetKey()), null, u));
       }
     }
 
     if ((type == null || type == DatasetType.OCCURRENCE) && usage.getNubKey() != null) {
-      SortedMap<UUID, Integer> occurrenceDatasetCounts =
-        occurrenceDatasetService.occurrenceDatasetsForNubKey(usage.getNubKey());
+      SortedMap<UUID, Integer> occurrenceDatasetCounts = occurrenceDatasetService.occurrenceDatasetsForNubKey(usage.getNubKey());
       page.setCount((long) occurrenceDatasetCounts.size());
       for (UUID uuid : sublist(Lists.newArrayList(occurrenceDatasetCounts.keySet()), offset, offset + pageSize)) {
         page.getResults().add(new DatasetResult(datasetService.get(uuid), occurrenceDatasetCounts.get(uuid), null));
