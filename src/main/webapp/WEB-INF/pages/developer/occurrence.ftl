@@ -203,7 +203,7 @@
   <td>equals</td>
   <td>equality comparison</td>
   <td>
-    <code>
+    <code class="block">
       {<br/>
       &nbsp;&nbsp;"creator":"userName",<br/>
       &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
@@ -221,7 +221,7 @@
   <td>and</td>
   <td>logical AND(conjuction)</td>
   <td>
-    <code>
+    <code class="block">
       {<br/>
       &nbsp;&nbsp;"creator":"userName",<br/>
       &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
@@ -240,7 +240,7 @@
   <td>or</td>
   <td>logical OR(disjunction)</td>
   <td>
-    <code>
+    <code class="block">
       {<br/>
       &nbsp;&nbsp;"creator":"userName",<br/>
       &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
@@ -259,7 +259,7 @@
   <td>lessThan</td>
   <td>is less than</td>
   <td>
-    <code>
+    <code class="block">
       {<br/>
       &nbsp;&nbsp;"creator":"userName",<br/>
       &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
@@ -277,7 +277,7 @@
   <td>lessThanOrEquals</td>
   <td>is less than or equals</td>
   <td>
-    <code>
+    <code class="block">
       {<br/>
       &nbsp;&nbsp;"creator":"userName",<br/>
       &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
@@ -295,7 +295,7 @@
   <td>greaterThan</td>
   <td>is greater than</td>
   <td>
-    <code>
+    <code class="block">
       {<br/>
       &nbsp;&nbsp;"creator":"userName",<br/>
       &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
@@ -313,7 +313,7 @@
   <td>greaterThanOrEquals</td>
   <td>is greater than or equals</td>
   <td>
-    <code>
+    <code class="block">
       {<br/>
       &nbsp;&nbsp;"creator":"userName",<br/>
       &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
@@ -331,7 +331,7 @@
   <td>in</td>
   <td>specify multiple values to be compared</td>
   <td>
-    <code>
+    <code class="block">
       {<br/>
       &nbsp;&nbsp;"creator":"userName",<br/>
       &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
@@ -349,7 +349,7 @@
   <td>within</td>
   <td>geospatial predicate that checks if the coordinates are inside a POLYGON</td>
   <td>
-    <code>
+    <code class="block">
       {<br/>
       &nbsp;&nbsp;"creator":"userName",<br/>
       &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
@@ -368,7 +368,7 @@
   <td>not</td>
   <td>logical negation</td>
   <td>
-    <code>
+    <code class="block">
       {<br/>
       &nbsp;&nbsp;"creator":"userName",<br/>
       &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>
@@ -390,7 +390,7 @@
   <td>like</td>
   <td>search for a pattern</td>
   <td>
-    <code>
+    <code class="block">
       {<br/>
       &nbsp;&nbsp;"creator":"userName",<br/>
       &nbsp;&nbsp;"notification_address": ["userName@gbif.org"],<br/>

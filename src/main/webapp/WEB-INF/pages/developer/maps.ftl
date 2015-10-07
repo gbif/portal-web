@@ -92,7 +92,7 @@
             making it trivial to visualize GBIF content on interactive maps, and overlay content from other sources.
           </p>
           <p>
-            <code>Developers familiar with tile mapping services should jump straight to the <a href="#preview">preview functionality</a></code>
+            <strong>Developers familiar with tile mapping services should jump straight to the <a href="#preview">preview functionality</a></strong>
           </p>
           <p>
             The following features are supported:
@@ -367,7 +367,7 @@
             URL encoded (in javascript, the encodeURIComponent() provides this).  Thus, the format of the ruleset is given as:
           </p>
           <p>
-            <code>
+            <code class="block">
               <strong>ruleset_expr:</strong></br/>
               &nbsp;&nbsp;<strong>rule_expr</strong>[|rule_expr ...]<br/><br/>
               <strong>rule_expr</strong></br/>
@@ -386,7 +386,7 @@
           </p>
           <p>The resultant ruleset (before encoding would be):</p>
           <p>
-            <code>
+            <code class="block">
               ,100,#FF000033|100,10000,#00FF0033|10000,,#0000FF33
             </code>
           </p>
