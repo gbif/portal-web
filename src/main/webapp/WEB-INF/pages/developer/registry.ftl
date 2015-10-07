@@ -39,6 +39,7 @@
         <li><a href="#nodes">Nodes</a></li>
         <li><a href="#networks">Networks</a></li>
         <li><a href="#parameters">Query Parameters</a></li>
+        <li><a href="#oai-pmh">OAI-PMH Service</a></li>
     </ul>
 </div>
 </@api.introArticle>
@@ -310,6 +311,41 @@
 
 <@api.paramArticle params=params apiName="Registry" addSearchParams=true />
 
+<@api.article id="oai-pmh" title="OAI-PMH">
+    <p>In addition to the RESTful JSON API, Datasets are exposed using OAI-PMH.  Two metadata formats can be retrieved: Ecological Metadata Language (EML) and OAI Dublin Core.  Datasets are grouped into <em>sets</em> according to type, country and installation.</p>
+
+    <p>The endpoint is at <strong><@api.url relativeUrl="oai-pmh/registry"/></strong></p>
+
+    <p>Example queries:</p>
+
+    <ul>
+        <li>
+            <p>Retrieve information about the OAI-PMH service: <a href="<@api.url relativeUrl="oai-pmh/registry?verb=Identify"/>"><@api.url relativeUrl="oai-pmh/registry?verb=Identify"/></a>.</p>
+        </li>
+
+        <li>
+            <p>Retrieve a list of available sets (dataset types, countries and serving installations): <a href="<@api.url relativeUrl="oai-pmh/registry?verb=ListSets"/>"><@api.url relativeUrl="oai-pmh/registry?verb=ListSets"/></a>.</p>
+            <p>Sets have names like <code>dataset_type:CHECKLIST</code> and <code>country:NL</code>.</p>
+        </li>
+
+        <li>
+            <p>Retrieve the identifiers for all datasets from a particular installation: <a href="<@api.url relativeUrl="oai-pmh/registry?verb=ListIdentifiers&set=installation:804b8dd0-07ac-4a30-bf92-3c1d862faf5e&metadataPrefix=eml"/>"><@api.url relativeUrl="oai-pmh/registry?verb=ListIdentifiers&set=installation:804b8dd0-07ac-4a30-bf92-3c1d862faf5e&metadataPrefix=eml"/></a>.</p>
+            <p>According to the OAI-PMH protocol, <code>metadataPrefix</code> must be set to either <code>oai_dc</code> or <code>eml</code>, even though both formats are supported for all datasets.</p>
+        </li>
+
+        <li>
+            <p>Retrieve the metadata for all datasets served by installations in a country: <a href="<@api.url relativeUrl="oai-pmh/registry?verb=ListRecords&set=country:NL&metadataPrefix=oai_dc"/>"><@api.url relativeUrl="oai-pmh/registry?verb=ListRecords&set=country:NL&metadataPrefix=oai_dc"/></a>.</p>
+            <p>Country codes are based on the <a href="https://www.iso.org/obp/ui/#search">ISO 3166-1</a> standard.</p>
+        </li>
+
+        <li>
+            <p>Some queries will return more than one page of results.  In this case, the XML will end with a resumption token element, for example:
+            <code class="block">&lt;resumptionToken cursor="1"&gt;MToxMDB8Mjpjb3VudHJ5Ok5MfDM6fDQ6fDU6b2FpX2Rj&lt;/resumptionToken&gt;</code>
+            The second page of results can be retrieved like this: <a href="<@api.url relativeUrl="oai-pmh/registry?verb=ListRecords&resumptionToken=MToxMDB8Mjpjb3VudHJ5Ok5MfDM6fDQ6fDU6b2FpX2Rj"/>"><@api.url relativeUrl="oai-pmh/registry?verb=ListRecords&resumptionToken=MToxMDB8Mjpjb3VudHJ5Ok5MfDM6fDQ6fDU6b2FpX2Rj"/></a>.</p>
+        </li>
+    </ul>
+    <p>Full details of the protocol can be found in the <a href="https://www.openarchives.org/OAI/openarchivesprotocol.html">The Open Archives Initiative Protocol for Metadata Harvesting</a>, in particular the <a href="https://www.openarchives.org/OAI/openarchivesprotocol.html#ProtocolMessages">section on Protocol Requests and Responses</a>.</p>
+</@api.article>
 
 </body>
 </html>
