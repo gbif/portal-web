@@ -124,9 +124,9 @@
 <@api.article id="datasetSearch" title="Dataset Search">
   <p>The dataset search API provides search services for datasets.</p>
   <@api.apiTable auth=false >
-    <@trowS url="/search" respLink="dataset/search?q=plant&publishingCountry=AR" paging=true params=["q","country","type","subtype","keyword","publishingOrg","hostingOrg","decade","publishingCountry","continent","hl","facet","facetMincount","facetMultiselect"]>Full text search across all datasets.
+    <@trowS url="/search" respLink="dataset/search?q=plant&amp;publishingCountry=AR" paging=true params=["q","country","type","subtype","keyword","publishingOrg","hostingOrg","decade","publishingCountry","continent","hl","facet","facetMincount","facetMultiselect"]>Full text search across all datasets.
         Results are ordered by relevance.</@trowS>
-    <@trowS url="/suggest" respLink="dataset/suggest?q=Amazon&type=OCCURRENCE" params=["q","country","type","subtype","keyword","publishingOrg","hostingOrg","decade","publishingCountry","continent"]>Search that returns up to 20 matching datasets.
+    <@trowS url="/suggest" respLink="dataset/suggest?q=Amazon&amp;type=OCCURRENCE" params=["q","country","type","subtype","keyword","publishingOrg","hostingOrg","decade","publishingCountry","continent"]>Search that returns up to 20 matching datasets.
         Results are ordered by relevance.</@trowS>
   </@api.apiTable>
 
@@ -302,7 +302,7 @@
   "keyword": "Filters datasets by a case insensitive plain text keyword. The search is done on the merged collection of tags, the dataset keywordCollections and temporalCoverages.",
   "publishingOrg": "Filters datasets by their publishing organization UUID key",
   "hostingOrg": "Filters datasets by their hosting organization UUID key",
-  "decade": "Filters datasets by their temporal coverage broken down to decades. Decades are given as a full year, e.g. 1880, 1960, 2000, etc, and will return datasets wholly contained in the decade as well as those that cover the entire decade or more. Facet by decade to get the break down, e.g. <a href='${action.cfg.apiBaseUrl}/dataset/search?facet=DECADE&limit=0' target='_blank'>/search?facet=DECADE&limit=0</a>",
+  "decade": "Filters datasets by their temporal coverage broken down to decades. Decades are given as a full year, e.g. 1880, 1960, 2000, etc, and will return datasets wholly contained in the decade as well as those that cover the entire decade or more. Facet by decade to get the break down, e.g. <a href='${action.cfg.apiBaseUrl}dataset/search?facet=DECADE&amp;limit=0' target='_blank'>/search?facet=DECADE&amp;limit=0</a>",
   "publishingCountry": "Filters datasets by their owining organization's country given as a ISO 639-1 (2 letter) country code",
   "continent": "Not yet implemented, but will eventually allow filtering datasets by their continent(s) as given in our <a href='${api.apidocs}/vocabulary/Continent.html' target='_blank'>Continent enum</a>.",
   "facet": "A list of facet names used to retrieve the 100 most frequent values for a field. Allowed facets are: type, keyword, publishingOrg, hostingOrg, decade, and publishingCountry. Additionally subtype and country are legal values but not yet implemented, so data will not yet be returned for them."

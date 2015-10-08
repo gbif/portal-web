@@ -115,7 +115,7 @@
         with any <a href="<@s.url value='/user/register'/>">GBIF user account</a> that you have created before.
     </p>
     <p>For example to issue a new download programmatically using curl with a <a href="<@s.url value='/developer/occurrence#predicates'/>">query filter as JSON</a> in a file called filter.json:
-        <code class="block">$ curl -i --user yourUserName:yourPassword -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d @filter.json ${action.cfg.apiBaseUrl}/occurrence/download/request</code>
+        <code class="block">$ curl -i --user yourUserName:yourPassword -H "Content-Type: application/json" -H "Accept: application/json" -X POST -d @filter.json ${action.cfg.apiBaseUrl}occurrence/download/request</code>
     </p>
 </div>
 </@common.article>
