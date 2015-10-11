@@ -126,7 +126,7 @@
 
 
 <#assign params = {
-  "q": "Simple search parameter. The value for this parameter can be a simple word or a phrase. Wildcards can be added to the simple word parameters only, e.g. q=*puma*",
+  "q": "Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported",
   "language": "default=en or use HTTP header for this",
   "datasetKey": "Filters by the checklist dataset key (a uuid)",
   "sourceId": "Filters by the source identifier",
