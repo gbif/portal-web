@@ -18,7 +18,7 @@
             This version is capable of publishing sample-based datasets, realising the new features that were in prototype at the <a href="http://eubon-ipt.gbif.org" title="Link to EU BON IPT" target="_blank">EU BON IPT</a>.
         </p>
         <p>
-        <h3><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.3.1/ipt-2.3.1.war" title="Link to download IPT v2.3.1" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_3_1');">Download</a></h3>
+        <h3><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.3.2/ipt-2.3.2.war" title="Link to download IPT v2.3.1" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_3_1');">Download</a></h3>
         <h3><a href="https://github.com/gbif/ipt/wiki/IPTReleaseNotes23.wiki" title="IPT v2.3 Release notes" target="_blank">Release notes (upgrade instructions)</a></h3>
         </p>
         <p>&nbsp;</p>
@@ -27,16 +27,16 @@
             No new major versions of the IPT have been planned at this time.
         </p>
         <p>
-            As of September 10th, 2015 there were
+            As of October 16, 2015 there were
             <a href="https://github.com/gbif/ipt/issues"
                title="Link to IPT issues"
-               target="_blank">62 open issues</a>. Weigh in on existing issues with a +1, or submit a new feature request for functionality you would like to see implemented.
+               target="_blank">69 open issues</a>. Weigh in on existing issues with a +1, or submit a new feature request for functionality you would like to see implemented.
         </p>
     </div>
     <div class="right">
         <h3><strong>2.3</strong> - September, 2015</h3>
         <ul>
-            <li><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.3.1/ipt-2.3.1.war" title="Dowload IPT v2.3.1" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_3_1');">Download</a> / <a href="https://github.com/gbif/ipt/wiki/IPTReleaseNotes23.wiki" title="IPT v2.3 Release Notes" target="_blank">Notes</a></li>
+            <li><a href="http://repository.gbif.org/content/groups/gbif/org/gbif/ipt/2.3.2/ipt-2.3.2.war" title="Dowload IPT v2.3.1" onClick="ga('send', 'event', 'IPT_war', 'Download', 'IPT_2_3_1');">Download</a> / <a href="https://github.com/gbif/ipt/wiki/IPTReleaseNotes23.wiki" title="IPT v2.3 Release Notes" target="_blank">Notes</a></li>
             <li><a href="https://github.com/gbif/ipt/wiki/IPT2ManualNotes.wiki" title="IPT User Manual" target="_blank">User Manual</a> <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2ManualNotes?wl=es" title="IPT User Manual Spanish" target="_blank">(es)</a></li>
             <li>Addressed <a href="https://github.com/gbif/ipt/issues?q=is%3Aissue+label%3AMilestone-Release2.3" title="IPT v2.3 Issues List" target="_blank">38 issues</a>: 15 Defects, 15 Enhancements, 4 Won’t fix, and 4 that were considered as Tasks
             </li>
