@@ -20,7 +20,7 @@
 <#macro drupalFeaturedDatasetJs target>
   $("${target}").hide();
   var tmplD = $("#tmpl-datasets-drupal").html();
-  $.getJSON( '${cfg.drupal}/featureddatasets/json?callback=?', function( resp ) {
+  $.getJSON( '${cfg.drupal}/dataset/json?callback=?', function( resp ) {
     if (!_.isEmpty(resp.nodes) ) {
       $("${target}").html( _.template(tmplD, {feed:resp}) );
       $("${target}").show();

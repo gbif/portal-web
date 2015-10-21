@@ -14,11 +14,11 @@
 <script type="text/html" id="tmpl-datasets-drupal">
   <ul>
   <% _.each( _.first(feed.nodes, 3), function(i){ %>
-    <li id="<%= i.node.field_datasetkey %>">
-      <a href="<@s.url value='/dataset/'/><%= i.node.field_datasetkey %>">
-        <img src="<%= i.node.field_image.src %>" alt="<%= i.node.field_image.alt %>" width="271" height="171">
+    <li id="<%= i.node.field_dataset_uuid %>">
+      <a href="<@s.url value='/dataset/'/><%= i.node.field_dataset_uuid %>">
+        <img src="<%= i.node.field_uni_images.src %>" alt="<%= i.node.field_uni_images.alt %>" width="271" height="171">
       </a>
-      <a class="title" href="<@s.url value='/dataset/'/><%= i.node.field_datasetkey %>"><%= i.node.title %></a>
+      <a class="title" href="<@s.url value='/dataset/'/><%= i.node.field_dataset_uuid %>"><%= i.node.title %></a>
       <p><%= i.node.body %></p>
     </li>
   <% }); %>
