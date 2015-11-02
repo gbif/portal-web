@@ -35,7 +35,6 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
-import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.core.KeywordTokenizer;
 import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilter;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
@@ -156,19 +155,17 @@ public class SearchAction
    * string is "straße", it won't match the dataset title "Schulhof Gymnasium Hürth Bonnstrasse" unless "straße" gets
    * converted to its ASCII equivalent "strasse".
    *
-   * @param q query string
+   * @param query string
    * @return query string converted to ASCII equivalent
    * @see org.gbif.portal.action.dataset.SearchAction#addMissingHighlighting(String, String)
    * @see org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilter
    * @see org.apache.lucene.analysis.core.KeywordTokenizer
    */
-  protected static String foldToAscii(String q) {
-    if (!Strings.isNullOrEmpty(q)) {
-      ASCIIFoldingFilter filter = null;
-      try {
-        StringReader reader = new StringReader(q);
-        TokenStream stream = new KeywordTokenizer(reader);
-        filter = new ASCIIFoldingFilter(stream);
+  protected static String foldToAscii(String query) {
+    if (!Strings.isNullOrEmpty(query)) {
+      try(KeywordTokenizer stream = new KeywordTokenizer();
+          ASCIIFoldingFilter filter = new ASCIIFoldingFilter(stream)) {
+        stream.setReader(new StringReader(query));
         CharTermAttribute termAtt = filter.addAttribute(CharTermAttribute.class);
         filter.reset();
         filter.incrementToken();
@@ -176,18 +173,9 @@ public class SearchAction
         return termAtt.toString();
       } catch (IOException e) {
         // swallow
-      } finally {
-        if (filter != null) {
-          try {
-            filter.end();
-            filter.close();
-          } catch (IOException e) {
-            // swallow
-          }
-        }
       }
     }
-    return q;
+    return query;
   }
 
   @Override
