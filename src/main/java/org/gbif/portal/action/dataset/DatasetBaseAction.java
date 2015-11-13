@@ -57,10 +57,8 @@ public class DatasetBaseAction extends MemberBaseAction<Dataset> {
   protected Dataset parentDataset;
 
   private List<OrganizedTaxonomicCoverages> organizedCoverages = Lists.newArrayList();
-  @Nullable
-  private Long numOccurrences;
-  @Nullable
-  private Long numGeoreferencedOccurrences;
+  private long numOccurrences;
+  private long numGeoreferencedOccurrences;
 
   @Inject
   protected DatasetMetricsService metricsService;
@@ -112,13 +110,11 @@ public class DatasetBaseAction extends MemberBaseAction<Dataset> {
     return metrics;
   }
 
-  @Nullable
-  public Long getNumGeoreferencedOccurrences() {
+  public long getNumGeoreferencedOccurrences() {
     return numGeoreferencedOccurrences;
   }
 
-  @Nullable
-  public Long getNumOccurrences() {
+  public long getNumOccurrences() {
     return numOccurrences;
   }
 
@@ -316,9 +312,7 @@ public class DatasetBaseAction extends MemberBaseAction<Dataset> {
     if (id != null) {
       try {
         numOccurrences = occurrenceCubeService.get(new ReadBuilder().at(OccurrenceCube.DATASET_KEY, id));
-        numGeoreferencedOccurrences =
-          occurrenceCubeService.get(new ReadBuilder().at(OccurrenceCube.DATASET_KEY, id).at(
-            OccurrenceCube.IS_GEOREFERENCED, true));
+        numGeoreferencedOccurrences = occurrenceCubeService.get(new ReadBuilder().at(OccurrenceCube.DATASET_KEY, id).at(OccurrenceCube.IS_GEOREFERENCED, true));
       } catch (Exception e) {
         LOG.error("Failed to load occurrence metrics for dataset {}", id, e);
       }

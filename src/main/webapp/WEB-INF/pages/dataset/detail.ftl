@@ -366,7 +366,7 @@
           </div>
       </div>
   </@common.article>
-<#elseif dataset.type != "OCCURRENCE" && numOccurrences! gt 0>
+<#elseif dataset.type != "OCCURRENCE" && numOccurrences gt 0>
   <@common.article id="occurrences" title="Occurrences">
       <div class="fullwidth">
           <p>There are <a href="<@s.url value='/occurrence/search?datasetKey=${id!}'/>" title="View occurrences">${numOccurrences} occurrences</a> included in this dataset.</p>
