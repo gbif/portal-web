@@ -108,7 +108,7 @@ public class DetailAction extends DatasetBaseAction {
 
     // the map article is rendered only if the cube has indicated georeferenced records, or if there are
     // coverages that are not global (they don't really warrant visualizing).
-    renderMaps = getNumGeoreferencedOccurrences() != null && getNumGeoreferencedOccurrences() > 0;
+    renderMaps = getNumGeoreferencedOccurrences() > 0;
     if (!renderMaps) {
       for (GeospatialCoverage gc : member.getGeographicCoverages()) {
         renderMaps = gc.getBoundingBox() != null && !gc.getBoundingBox().isGlobalCoverage();
