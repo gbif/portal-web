@@ -80,7 +80,7 @@
 </p>
 
   <@api.apiTable auth=false>
-    <@trowS url="" respLink="occurrence/search?taxonKey=1"  paging=true params=["datasetKey","year","month","eventDate","lastInterpreted","decimalLatitude","decimalLongitude","country","continent","publishingCountry","elevation","depth","institutionCode", "collectionCode", "catalogNumber","recordedBy","recordNumber","basisOfRecord","taxonKey","scientificName","hasCoordinate","geometry","hasGeospatialIssue", "issue", "mediaType"]>Full search across all occurrences.
+    <@trowS url="" respLink="occurrence/search?taxonKey=1"  paging=true params=["basisOfRecord","catalogNumber","collectionCode","continent","country","datasetKey","decimalLatitude","decimalLongitude","depth","elevation","eventDate","geometry","hasCoordinate","hasGeospatialIssue","institutionCode","issue","lastInterpreted","mediaType","month","occurrenceId","publishingCountry","recordedBy","recordNumber","scientificName","taxonKey","year"]>Full search across all occurrences.
     Results are ordered by relevance.</@trowS>
     <@trowS url="/catalogNumber" respLink="occurrence/search/catalogNumber?q=122&amp;limit=5" params=["q","limit"]>Search that returns matching catalog numbers.
     Results are ordered by relevance.</@trowS>
