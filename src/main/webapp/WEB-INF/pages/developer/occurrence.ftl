@@ -74,9 +74,9 @@
   In order to retrieve all results for a given search filter you need to issue individual requests for each page,
   which is limited to a maximum size of 300 records per page.
 
-  Note that for technical reasons we also have a hard limit for any query of 200.000 records.
-  You will get an error if the offset + limit exceeds 200.000.
-  To retrieve all records beyond 200.000 you should use our asynchronous <a href="#download">download service</a> instead.
+  Note that for technical reasons we also have a hard limit for any query of 200,000 records.
+  You will get an error if the offset + limit exceeds 200,000.
+  To retrieve all records beyond 200,000 you should use our asynchronous <a href="#download">download service</a> instead.
 </p>
 
   <@api.apiTable auth=false>
@@ -86,7 +86,11 @@
     Results are ordered by relevance.</@trowS>
     <@trowS url="/collectionCode" respLink="occurrence/search/collectionCode?q=12&amp;limit=5" params=["q","limit"]>Search that returns matching collection codes.
     Results are ordered by relevance.</@trowS>
+    <@trowS url="/occurrenceId" respLink="occurrence/search/occurrenceId?q=1234&amp;limit=5" params=["q","limit"]>Search that returns matching occurrence identifiers.
+    Results are ordered by relevance.</@trowS>
     <@trowS url="/recordedBy" respLink="occurrence/search/recordedBy?q=juan&amp;limit=5" params=["q","limit"]>Search that returns matching collector names.
+    Results are ordered by relevance.</@trowS>
+    <@trowS url="/recordNumber" respLink="occurrence/search/recordNumber?q=1&amp;limit=5" params=["q","limit"]>Search that returns matching record numbers.
     Results are ordered by relevance.</@trowS>
     <@trowS url="/institutionCode" respLink="occurrence/search/institutionCode?q=GB&amp;limit=5" params=["q","limit"]>Search that returns matching institution codes.
     Results are ordered by relevance.</@trowS>
