@@ -438,64 +438,63 @@
 </@common.article>
 </#if>
 
-<#-- METHODS -->
-<#if dataset.samplingDescription?has_content>
-<@common.article id="methods" title="Methodology">
-  <#assign sd=dataset.samplingDescription />
-<div class="left">
+<#-- METHODS and COLLECTIONS-->
+<#if dataset.samplingDescription?has_content || dataset.collections?has_content>
 
-  <#if sd.studyExtent?has_content>
-    <h3>Study extent</h3>
-    <p>${action.linkText(sd.studyExtent)}</p>
-  </#if>
-
-  <#if sd.sampling?has_content>
-    <h3>Sampling description</h3>
-    <p>${action.linkText(sd.sampling)}</p>
-  </#if>
-
-  <#if sd.qualityControl?has_content>
-    <h3>Quality control</h3>
-    <p>${action.linkText(sd.qualityControl)}</p>
-  </#if>
-
-  <#if sd.methodSteps?has_content>
-    <h3>Method Steps</h3>
-    <ol>
-      <#list sd.methodSteps as step>
-        <#if step?has_content>
-         <li>${action.linkText(step)}</li>
-        </#if>
-      </#list>
-    </ol>
-  </#if>
-</div>
-
-<div class="right">
+  <#-- Methods title always shows, but hide Collections title if no collections metadata exists -->
+  <#assign rightTitle="" />
   <#if dataset.collections?has_content>
+    <#assign rightTitle="Collections" />
+  </#if>
+
+  <@common.article id="methods" title="Methodology" titleRight=rightTitle>
+  <div class="left">
+    <#if dataset.samplingDescription?has_content>
+      <#assign sd=dataset.samplingDescription />
+      <#if sd.studyExtent?has_content>
+        <h3>Study extent</h3>
+        <p>${action.linkText(sd.studyExtent)}</p>
+      </#if>
+      <#if sd.sampling?has_content>
+        <h3>Sampling description</h3>
+        <p>${action.linkText(sd.sampling)}</p>
+      </#if>
+      <#if sd.qualityControl?has_content>
+        <h3>Quality control</h3>
+        <p>${action.linkText(sd.qualityControl)}</p>
+      </#if>
+      <#if sd.methodSteps?has_content>
+        <h3>Method Steps</h3>
+        <ol>
+          <#list sd.methodSteps as step>
+            <#if step?has_content>
+              <li>${action.linkText(step)}</li>
+            </#if>
+          </#list>
+        </ol>
+      </#if>
+    </#if>
+  </div>
+  <div class="right">
     <#list dataset.collections as col>
-      <#if col.collectionName?has_content>
+      <#if col.name?has_content>
         <h3>Collection name</h3>
-        <p>${action.linkText(col.collectionName)}</p>
+        <p>${action.linkText(col.name)}</p>
       </#if>
-
-      <#if col.collectionIdentifier?has_content>
+      <#if col.identifier?has_content>
         <h3>Collection Identifier</h3>
-        <p>${action.linkText(col.collectionIdentifier)}</p>
+        <p>${action.linkText(col.identifier)}</p>
       </#if>
-
-      <#if col.parentCollectionIdentifier?has_content>
+      <#if col.parentIdentifier?has_content>
         <h3>Parent Collection Identifier</h3>
-        <p>${action.linkText(col.parentCollectionIdentifier)}</p>
+        <p>${action.linkText(col.parentIdentifier)}</p>
       </#if>
-
       <#if col.specimenPreservationMethod?has_content>
         <h3>Specimen Preservation method</h3>
         <p><@s.text name="enum.preservationmethodtype.${col.specimenPreservationMethod}"/></a></p>
       </#if>
-
       <#if col.curatorialUnits?has_content >
-        <h3>Curational Units</h3>
+        <h3>Curatorial Units</h3>
         <ul>
           <#list col.curatorialUnits as unit>
             <#if unit.typeVerbatim?has_content && unit.lower!=0 && unit.upper!=0>
@@ -507,9 +506,8 @@
         </ul>
       </#if>
     </#list>
-  </#if>
-</div>
-</@common.article>
+  </div>
+  </@common.article>
 </#if>
 
 <#-- REFERENCES -->
