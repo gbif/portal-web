@@ -68,6 +68,18 @@ public class DetailAction extends DatasetBaseAction {
    */
   private static String countryTitleRegEx() {
     ImmutableList.Builder<String> b = ImmutableList.builder();
+
+    // variants for country title "The Democratic Republic of the Congo"
+    List<String> dRCVariants = ImmutableList
+      .of("Democratic Republic of the Congo", "Democratic Republic of Congo", "DR Congo", "DRC",
+        "République démocratique du Congo", "RDC");
+
+    // Fix for POR-2533 - makes sure "The Democratic Republic of the Congo" can still be matched to its variants
+    for (String variant : dRCVariants) {
+      b.add(variant);
+      COUNTRY_MAP.put(variant.toLowerCase(), Country.CONGO_DEMOCRATIC_REPUBLIC);
+    }
+
     for (Country c : Country.values()) {
       if (c==null || Strings.isNullOrEmpty(c.getTitle())) {
         continue;
