@@ -1,6 +1,6 @@
 <#-- @ftlvariable name="" type="org.gbif.portal.action.occurrence.DetailAction" -->
 <#import "/WEB-INF/macros/common.ftl" as common>
-<#assign showMap=occ.decimalLongitude?? && occ.decimalLatitude??/>
+<#assign showMap=occ.decimalLatitude?? && occ.decimalLongitude??/>
 <html>
 <head>
   <title>Occurrence Detail ${id?c}</title>
@@ -240,8 +240,8 @@
 
             <h3>Locality</h3>
             <p class="no_bottom">${locality!}<#if occ.country??><#if locality?has_content>, </#if><a href="<@s.url value='/country/${occ.country.iso2LetterCode}'/>">${occ.country.title}</a></#if></p>
-            <#if occ.decimalLongitude?has_content>
-              <p class="light_note">${occ.decimalLongitude?c}, ${occ.decimalLatitude?c} <#if occ.coordinateAccuracy??> ± ${occ.coordinateAccuracy!?string}</#if></p>
+            <#if occ.decimalLatitude?has_content>
+              <p class="light_note">${occ.decimalLatitude?c}${(occ.decimalLatitude >= 0)?then('N','S')}, ${occ.decimalLongitude?c}${(occ.decimalLongitude >= 0)?then('E','W')} <#if occ.coordinateAccuracy??> ± ${occ.coordinateAccuracy!?string}</#if></p>
             </#if>
 
           <@kv header="Water Body" value=occ.waterBody />
