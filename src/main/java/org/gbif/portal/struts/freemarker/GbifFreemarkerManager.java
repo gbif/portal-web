@@ -1,5 +1,6 @@
 package org.gbif.portal.struts.freemarker;
 
+import java.util.Locale;
 import javax.servlet.ServletContext;
 
 import freemarker.template.TemplateException;
@@ -19,6 +20,9 @@ public class GbifFreemarkerManager extends FreemarkerManager {
     config.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
     // adding date rendering methods
     config.setSharedVariable("niceDate", new NiceDateTemplateMethodModel());
+    // fixed locale, so we don't get dots as decimal separators or US "middle endian" dates.
+    // chose UK, as (from the constants available) that gives unambiguous short dates like "12-Jan-2016".
+    config.setLocale(Locale.UK);
   }
 
 }
