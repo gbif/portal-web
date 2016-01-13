@@ -27,7 +27,7 @@
   <#if ((x)?length <= max)>
     <#return x>
     <#else>
-      <#return x?substring(0, max)+"…" />
+      <#return x?substring(0, max-1)+"…" />
   </#if>
 </#function>
 
