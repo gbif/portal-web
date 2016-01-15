@@ -267,7 +267,7 @@
               <#if occ.country?has_content><div class="country">${occ.country.title!}</div></#if>
               <div class="coordinates">
                 <#if occ.decimalLatitude?has_content || occ.decimalLongitude?has_content>
-                  <#if occ.decimalLatitude?has_content>${occ.decimalLatitude!?string("0.00")}${(occ.decimalLatitude >= 0)?then('N','S')}<#else>-</#if>, <#if occ.decimalLongitude?has_content>${occ.decimalLongitude!?string("0.00")}${(occ.decimalLongitude >= 0)?then('E','W')}<#else>-</#if>
+                  <#if occ.decimalLatitude?has_content>${occ.decimalLatitude?abs?string("0.00")}${(occ.decimalLatitude >= 0)?then('N','S')}<#else>?</#if>, <#if occ.decimalLongitude?has_content>${occ.decimalLongitude?abs?string("0.00")}${(occ.decimalLongitude >= 0)?then('E','W')}<#else>?</#if>
                 <#else>
                   N/A
                 </#if>
