@@ -14,7 +14,7 @@
         <ul class="notes">
           <#list constituentsNub as c>
             <li>
-                <a title="${c.title}" href="<@s.url value='/dataset/${c.key}'/>">${common.limit(c.title, 100)}</a>
+                <a title='${c.title!"algorithm"}' ref="<@s.url value='/dataset/${c.key!common.nubKey}'/>">${common.limit(c.title!"algorithm", 100)}</a>
                 <span class="note">${c.count} primary name references.</span>
             </li>
           </#list>
