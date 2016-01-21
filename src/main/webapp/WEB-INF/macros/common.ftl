@@ -3,6 +3,7 @@
 <#-- The participant node managers committee is treated as a psuedo node in the registry -->
 <#assign participantNMCKey='7f48e0c8-5c96-49ec-b972-30748e339115' />
 <#assign colKey='7ddf754f-d193-4cc9-b351-99906754a03b' />
+<#assign nubKey='d7dddbf4-2cf0-4f39-9b2a-bb099caae36c' />
 <#assign uknbnOrganizationKey='07f617d0-c688-11d8-bf62-b8a03c50a862' />
 <#assign iptInstallationType='IPT_INSTALLATION' />
 <#assign digirInstallationType='DIGIR_INSTALLATION' />

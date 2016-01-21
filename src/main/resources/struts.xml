@@ -162,6 +162,7 @@
     <action name="*/constituents" class="org.gbif.portal.action.dataset.ConstituentsAction">
       <param name="id">{1}</param>
       <result>/WEB-INF/pages/dataset/constituents.ftl</result>
+      <result name="nub">/WEB-INF/pages/dataset/constituentsNub.ftl</result>
     </action>
 
     <action name="*/geographicCoverage" class="org.gbif.portal.action.dataset.DetailAction">

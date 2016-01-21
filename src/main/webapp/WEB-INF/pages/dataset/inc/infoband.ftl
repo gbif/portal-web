@@ -96,7 +96,7 @@
     <li<#if (tab!)=="info"> class='selected ${hl!}'</#if>>
       <a href="<@s.url value='/dataset/${id!}'/>" title="Information"><span>Information</span></a>
     </li>
-    <#if dataset.numConstituents gt 0>
+    <#if dataset.numConstituents gt 0 || id == common.nubKey>
       <li<#if (tab!)=="constituents"> class='selected ${hl!}'</#if>>
         <a href="<@s.url value='/dataset/${id!}/constituents'/>" title="Constituents"><span>Constituents</span></a>
       </li>

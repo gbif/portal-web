@@ -8,6 +8,8 @@
  */
 package org.gbif.portal.action.dataset;
 
+import org.gbif.api.model.Constants;
+import org.gbif.api.model.common.Count;
 import org.gbif.api.model.common.paging.PagingRequest;
 import org.gbif.api.model.common.paging.PagingResponse;
 import org.gbif.api.model.registry.Dataset;
@@ -16,6 +18,9 @@ import org.gbif.api.service.metrics.CubeService;
 import org.gbif.api.service.registry.DatasetService;
 import org.gbif.api.service.registry.OrganizationService;
 
+import java.util.List;
+import java.util.UUID;
+
 import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +28,11 @@ import org.slf4j.LoggerFactory;
 public class ConstituentsAction extends DatasetBaseAction {
 
   private static final Logger LOG = LoggerFactory.getLogger(ConstituentsAction.class);
+  private static final String NUB = "nub";
 
   private PagingResponse<Dataset> page;
   private long offset = 0;
+  private List<Count<UUID>> constituentsNub;
 
   @Inject
   public ConstituentsAction(DatasetService datasetService, CubeService occurrenceCubeService,
@@ -38,10 +45,20 @@ public class ConstituentsAction extends DatasetBaseAction {
     loadDetail();
 
     // load constituents
-    PagingRequest p = new PagingRequest(offset, 25);
-    page = datasetService.listConstituents(id, p);
+    if (id.equals(Constants.NUB_DATASET_KEY)) {
+      return executeNub();
 
-    return SUCCESS;
+    } else {
+      PagingRequest p = new PagingRequest(offset, 25);
+      page = datasetService.listConstituents(id, p);
+
+      return SUCCESS;
+    }
+  }
+
+  public String executeNub() {
+    constituentsNub = metricsService.constituents(Constants.NUB_DATASET_KEY);
+    return NUB;
   }
 
   public PagingResponse<Dataset> getPage() {
@@ -52,5 +69,9 @@ public class ConstituentsAction extends DatasetBaseAction {
     if (offset >= 0) {
       this.offset = offset;
     }
+  }
+
+  public List<Count<UUID>> getConstituentsNub() {
+    return constituentsNub;
   }
 }
