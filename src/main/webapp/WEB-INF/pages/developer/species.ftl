@@ -90,7 +90,7 @@
       Fuzzy matches scientific names against the GBIF Backbone Taxonomy with the optional classification provided.
       If a classification is provided and strict is not set to true, the default matching will also try to match against these if no direct match is found for the name parameter alone.
     </@trow>
-    <@trow url="/search" resp="NameUsage Page" respLink="species/search?q=Puma&rank=GENUS" paging=true params=["q","datasetKey","rank","highertaxonKey","status","isExtinct","habitat","threat","nameType","nomenclaturalStatus","hl","facet","facetMincount","facetMultiselect"]>
+    <@trow url="/search" resp="NameUsage Page" respLink="species/search?q=Puma&rank=GENUS" paging=true params=["q","datasetKey","rank","highertaxonKey","status","isExtinct","habitat","threat","nameType","nomenclaturalStatus","issue","hl","facet","facetMincount","facetMultiselect"]>
         Full text search of name usages covering the scientific and vernacular name, the species description, distribution and the entire classification
         across all name usages of all or some checklists. Results are ordered by relevance as this search usually returns a lot of results.</@trow>
     <@trow url="/suggest" resp="NameUsage Page" respLink="species/suggest?datasetKey=d7dddbf4-2cf0-4f39-9b2a-bb099caae36c&q=Puma%20con" paging=false params=["q","datasetKey","rank"]>
@@ -147,6 +147,7 @@
   "threat": "Not yet implemented, but will eventually allow for filtering by a threat status enum",
   "nameType": "Filters by the name type as given in our <a href='${api.apidocs}/vocabulary/NameType.html' target='_blank'>NameType enum</a>",
   "nomenclaturalStatus": "Not yet implemented, but will eventually allow for filtering by a nomenclatural status enum",
+  "issue": "A specific indexing issue as defined in our <a href='${api.apidocs}/vocabulary/NameUsageIssue.html' target='_blank'>NameUsageIssue enum</a>",
   "facet": "A list of facet names used to retrieve the 100 most frequent values for a field. Allowed facets are: datasetKey, higherTaxonKey, rank, status, isExtinct, habitat and nameType. Additionally threat and nomenclaturalStatus are legal values but not yet implemented, so data will not yet be returned for them."
 } />
 
