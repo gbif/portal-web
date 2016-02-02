@@ -1,5 +1,6 @@
 package org.gbif.portal.action.species;
 
+import org.gbif.api.exception.ServiceUnavailableException;
 import org.gbif.api.model.checklistbank.NameUsage;
 import org.gbif.api.model.checklistbank.NameUsageMediaObject;
 import org.gbif.api.model.checklistbank.Reference;
@@ -188,18 +189,22 @@ public class DetailAction extends UsageBaseAction {
    */
   private void loadTypeSpecimen() {
     if (usage.isNub() && usage.getRank() != null && usage.getRank().isSpeciesOrBelow()) {
-      OccurrenceSearchRequest req = new OccurrenceSearchRequest();
-      req.addParameter(OccurrenceSearchParameter.TYPE_STATUS, "*");
-      req.addTaxonKeyFilter(usage.getKey());
-      req.setLimit(100);
-      // remove specimen without type status - this should never happen, but can if the solr index is out of sync!!!
-      typeSpecimen = Lists.newArrayList(Collections2.filter(occurrenceSearchService.search(req).getResults(), new Predicate<Occurrence>() {
-          @Override
-          public boolean apply(@Nullable Occurrence occ) {
-              return occ != null && occ.getTypeStatus() != null;
-          }
-        }
-      ));
+      try {
+        OccurrenceSearchRequest req = new OccurrenceSearchRequest();
+        req.addParameter(OccurrenceSearchParameter.TYPE_STATUS, "*");
+        req.addTaxonKeyFilter(usage.getKey());
+        req.setLimit(100);
+        // remove specimen without type status - this should never happen, but can if the solr index is out of sync!!!
+        typeSpecimen = Lists.newArrayList(Collections2.filter(occurrenceSearchService.search(req).getResults(), new Predicate<Occurrence>() {
+                  @Override
+                  public boolean apply(@Nullable Occurrence occ) {
+                    return occ != null && occ.getTypeStatus() != null;
+                  }
+                }
+        ));
+      } catch (ServiceUnavailableException e) {
+        LOG.error("Unable to retrieve type specimens", e);
+      }
     }
   }
 
