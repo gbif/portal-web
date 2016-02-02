@@ -665,7 +665,8 @@
   <#if usage.origin == "SOURCE">
     included because it was found in another checklist at the time the backbone was built.
     <#if nubSourceExists>
-      <br/>View the <a class="source" data-baseurl="<@s.url value='/species/'/>" href="<@s.url value='/species/${usage.sourceTaxonKey?c}'/>">primary source name usage</a>.
+      <br/>View the <a class="source" data-baseurl="<@s.url value='/species/'/>" href="<@s.url value='/species/${usage.sourceTaxonKey?c}'/>">primary source usage</a>
+      <#if constituent??>in <a href="<@s.url value='/dataset/${constituent.key}'/>">${constituent.title}</a></#if>.
     <#else>
       The primary source name usage <#if usage.sourceTaxonKey?has_content>(${usage.sourceTaxonKey?c})</#if> has since been removed from the portal.
     </#if>
