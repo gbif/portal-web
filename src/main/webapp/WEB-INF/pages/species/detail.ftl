@@ -661,13 +661,13 @@
 <@common.notice title="Source information">
 <p>
 <#if nub>
-  This backbone name usage exists because
+  This backbone name usage is
   <#if usage.origin == "SOURCE">
-    it was found in another checklist at the time the backbone was built.
+    included because it was found in another checklist at the time the backbone was built.
     <#if nubSourceExists>
-      <br/>View the <a class="source" data-baseurl="<@s.url value='/species/'/>" href="<@s.url value='/species/${usage.sourceTaxonKey}'/>">primary source name usage</a>.
+      <br/>View the <a class="source" data-baseurl="<@s.url value='/species/'/>" href="<@s.url value='/species/${usage.sourceTaxonKey?c}'/>">primary source name usage</a>.
     <#else>
-      The primary source name usage <#if usage.sourceTaxonKey?has_content>(${usage.sourceTaxonKey})</#if> has since been removed from the portal.
+      The primary source name usage <#if usage.sourceTaxonKey?has_content>(${usage.sourceTaxonKey?c})</#if> has since been removed from the portal.
     </#if>
   <#else>
     <@s.text name="enum.origin.${usage.origin}"/>.
