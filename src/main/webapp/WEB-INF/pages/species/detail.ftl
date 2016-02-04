@@ -658,6 +658,17 @@
 <@common.citationArticle rights=usage.rights!dataset.rights! dataset=dataset publisher=publisher prefix=prefix />
 
 
+<#if usage.issues?has_content>
+  <@common.notice id="issues" title="Known issues">
+      <p>There are known issues with this name usage:</p>
+      <ul>
+        <#list occ.issues as issue>
+            <li><p><@s.text name="enum.usageissue.${issue.name()}"/></p></li>
+        </#list>
+      </ul>
+  </@common.notice>
+</#if>
+
 <@common.notice title="Source information">
 <p>
 <#if nub>
