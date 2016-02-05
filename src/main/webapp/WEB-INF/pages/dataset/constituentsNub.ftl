@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="" type="org.gbif.portal.action.dataset.ConstituentsAction" -->
 <#import "/WEB-INF/macros/common.ftl" as common>
 <html>
 <head>
@@ -12,10 +13,14 @@
     <div class="fullwidth">
         <p>The source datasets that contributed to the GBIF Backbone and the number of names that were used as primary references.</p>
         <ul class="notes">
-          <#list constituentsNub as c>
+          <#list constituentCounts?keys as key>
             <li>
-                <a title='${c.title!"algorithm"}' href="<@s.url value='/dataset/${c.key!common.nubKey}'/>">${common.limit(c.title!"algorithm", 100)}</a>
-                <span class="note">${c.count} primary name references.</span>
+                <#if key??>
+                    <a title='${constituentTitles[key]!"???"}' href="<@s.url value='/dataset/${key}'/>">${common.limit(constituentTitles[key]!"???", 100)}</a>
+                <#else>
+                    <a title='algorithm' href="<@s.url value='/dataset/${common.nubKey}'/>">algorithm</a>
+                </#if>
+                <span class="note">${constituentCounts[key]} primary name references.</span>
             </li>
           </#list>
         </ul>
