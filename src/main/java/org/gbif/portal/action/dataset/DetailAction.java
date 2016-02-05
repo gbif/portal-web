@@ -8,6 +8,15 @@
  */
 package org.gbif.portal.action.dataset;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.inject.Inject;
 import org.gbif.api.model.common.paging.PagingRequest;
 import org.gbif.api.model.common.paging.PagingResponse;
 import org.gbif.api.model.registry.Dataset;
@@ -18,29 +27,13 @@ import org.gbif.api.service.checklistbank.DatasetMetricsService;
 import org.gbif.api.service.metrics.CubeService;
 import org.gbif.api.service.registry.DatasetService;
 import org.gbif.api.service.registry.OrganizationService;
-import org.gbif.api.vocabulary.Country;
-import org.gbif.api.vocabulary.EndpointType;
-import org.gbif.api.vocabulary.Extension;
-import org.gbif.api.vocabulary.Kingdom;
-import org.gbif.api.vocabulary.Rank;
+import org.gbif.api.vocabulary.*;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
-
-import com.google.common.base.Joiner;
-import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.inject.Inject;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Populates the model objects for the dataset detail page.
@@ -67,27 +60,68 @@ public class DetailAction extends DatasetBaseAction {
    * Builds a regular expression from all the country names, to allow replacement as links.
    */
   private static String countryTitleRegEx() {
-    ImmutableList.Builder<String> b = ImmutableList.builder();
-
-    // variants for country title "The Democratic Republic of the Congo"
-    List<String> dRCVariants = ImmutableList
-      .of("Democratic Republic of the Congo", "Democratic Republic of Congo", "DR Congo", "DRC",
-        "République démocratique du Congo", "RDC");
+    ArrayList<String> b = new ArrayList<>();
 
     // Fix for POR-2533 - makes sure "The Democratic Republic of the Congo" can still be matched to its variants
-    for (String variant : dRCVariants) {
-      b.add(variant);
-      COUNTRY_MAP.put(variant.toLowerCase(), Country.CONGO_DEMOCRATIC_REPUBLIC);
+    // And similar PF-2340 for "Guinea-Bissau".
+    // Plus some alternatives for countries whose name is unlikely to be written in full
+    // (Though there's much room for improvement here, but it's not easy.)
+    Map<Country,List<String>> countryVariants = new HashMap<>();
+    countryVariants.put(Country.BOLIVIA, ImmutableList.of("Bolivia"));
+    countryVariants.put(Country.BOSNIA_HERZEGOVINA, ImmutableList.of("Bosnia", "Herzegovina"));
+    countryVariants.put(Country.BRUNEI_DARUSSALAM, ImmutableList.of("Brunei"));
+    countryVariants.put(Country.COCOS_ISLANDS, ImmutableList.of("Cocos Islands", "Keeling Islands"));
+    countryVariants.put(Country.CONGO_DEMOCRATIC_REPUBLIC, ImmutableList.of("Democratic Republic of the Congo", "Democratic Republic of Congo", "DR Congo", "DRC", "République démocratique du Congo", "RDC"));
+    countryVariants.put(Country.CONGO, ImmutableList.of("Republic of the Congo", "Republic of Congo", "Congo"));
+    countryVariants.put(Country.CÔTE_DIVOIRE, ImmutableList.of("Ivory Coast"));
+    countryVariants.put(Country.FALKLAND_ISLANDS, ImmutableList.of("Falkland Islands", "Malvinas"));
+    countryVariants.put(Country.IRAN, ImmutableList.of("Iran"));
+    countryVariants.put(Country.KOREA_NORTH, ImmutableList.of("North Korea"));
+    countryVariants.put(Country.KOREA_SOUTH, ImmutableList.of("South Korea", "Republic of Korea"));
+    countryVariants.put(Country.LAO, ImmutableList.of("Lao", "Laos"));
+    countryVariants.put(Country.MACEDONIA, ImmutableList.of("Macedonia"));
+    countryVariants.put(Country.MICRONESIA, ImmutableList.of("Micronesia"));
+    countryVariants.put(Country.MOLDOVA, ImmutableList.of("Moldova"));
+    countryVariants.put(Country.PALESTINIAN_TERRITORY, ImmutableList.of("Palestine", "Palestinian Territories"));
+    countryVariants.put(Country.RUSSIAN_FEDERATION, ImmutableList.of("Russia"));
+    countryVariants.put(Country.SAINT_HELENA_ASCENSION_TRISTAN_DA_CUNHA, ImmutableList.of("Saint Helena", "Ascension", "Tristan da Cunha"));
+    countryVariants.put(Country.SAINT_MARTIN_FRENCH, ImmutableList.of("Saint Martin"));
+    countryVariants.put(Country.SAO_TOME_PRINCIPE, ImmutableList.of("S. Tomé and Príncipe"));
+    countryVariants.put(Country.SINT_MAARTEN, ImmutableList.of("Sint Maarten"));
+    countryVariants.put(Country.SVALBARD_JAN_MAYEN, ImmutableList.of("Svalbard", "Jan Mayen"));
+    countryVariants.put(Country.TAIWAN, ImmutableList.of("Taiwan"));
+    countryVariants.put(Country.TANZANIA, ImmutableList.of("Tanzania"));
+    countryVariants.put(Country.TIMOR_LESTE, ImmutableList.of("East Timor"));
+    countryVariants.put(Country.UNITED_KINGDOM, ImmutableList.of("Great Britain", "UK", "U.K."));
+    countryVariants.put(Country.UNITED_STATES, ImmutableList.of("United States of America", "USA", "U.S.A."));
+    countryVariants.put(Country.VENEZUELA, ImmutableList.of("Venezuela"));
+    countryVariants.put(Country.VIRGIN_ISLANDS_BRITISH, ImmutableList.of("British Virgin Islands"));
+    countryVariants.put(Country.VIRGIN_ISLANDS, ImmutableList.of("US Virgin Islands", "U.S. Virgin Islands"));
+
+    for (Country c : countryVariants.keySet()) {
+      for (String variant : countryVariants.get(c)) {
+        b.add(variant);
+        COUNTRY_MAP.put(variant.toLowerCase(), c);
+      }
     }
 
     for (Country c : Country.values()) {
-      if (c==null || Strings.isNullOrEmpty(c.getTitle())) {
+      if (Strings.isNullOrEmpty(c.getTitle())) {
         continue;
       }
       b.add(c.getTitle());
       COUNTRY_MAP.put(c.getTitle().toLowerCase(), c);
     }
-    return "\\b(" + Joiner.on("|").join(b.build()) + ")\\b";
+
+    // Sort patterns (country names) by length, so "Guinea-Bissau" gets matched before "Guinea" (amongst others).
+    Collections.sort(b, new Comparator<String>() {
+      @Override
+      public int compare(String o1, String o2) {
+        return Integer.compare(Strings.nullToEmpty(o2).length(), Strings.nullToEmpty(o1).length());
+      }
+    });
+
+    return "\\b(" + Joiner.on("|").join(b) + ")\\b";
   }
 
   private final List<Endpoint> links = Lists.newArrayList();
@@ -208,37 +242,30 @@ public class DetailAction extends DatasetBaseAction {
 
     // main description
     if (!Strings.isNullOrEmpty(getDataset().getDescription())) {
-      Matcher m = COUNTRY_REG_EX.matcher(getDataset().getDescription());
-      StringBuffer sb = new StringBuffer();
-      while (m.find()) {
-        Country c = COUNTRY_MAP.get(m.group(1).toLowerCase());
-        String replacement;
-        if (c != null) {
-          replacement = "<a href='" + countryUrl + c.getIso2LetterCode() + "'>" + m.group(1) + "</a>";
-        } else {
-          replacement = m.group(1);
-        }
-        m.appendReplacement(sb, replacement);
-      }
-      m.appendTail(sb);
-      getDataset().setDescription(sb.toString());
+      getDataset().setDescription(makeCountryLinks(countryUrl, getDataset().getDescription()));
     }
 
     // spatial coverage
     for (GeospatialCoverage gc : getDataset().getGeographicCoverages()) {
       // There are not yet any links to the actual countries
       if (!Strings.isNullOrEmpty(gc.getDescription())) {
-        Matcher m = COUNTRY_REG_EX.matcher(gc.getDescription());
-        StringBuffer sb = new StringBuffer();
-        while (m.find()) {
-          Country c = COUNTRY_MAP.get(m.group(0).toLowerCase());
-          String replacement = "<a href='" + countryUrl + c.getIso2LetterCode() + "'>" + m.group(1) + "</a>";
-          m.appendReplacement(sb, replacement);
-        }
-        m.appendTail(sb);
-        gc.setDescription(sb.toString());
+        gc.setDescription(makeCountryLinks(countryUrl, gc.getDescription()));
       }
     }
+  }
+
+  @VisibleForTesting
+  protected static String makeCountryLinks(String countryUrl, String text) {
+
+    Matcher m = COUNTRY_REG_EX.matcher(text);
+    StringBuffer sb = new StringBuffer();
+    while (m.find()) {
+      Country c = COUNTRY_MAP.get(m.group().toLowerCase());
+      String replacement = "<a href='" + countryUrl + c.getIso2LetterCode() + "'>" + m.group() + "</a>";
+      m.appendReplacement(sb, replacement);
+    }
+    m.appendTail(sb);
+    return sb.toString();
   }
 
   /**
