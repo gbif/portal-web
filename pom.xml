@@ -53,10 +53,10 @@
     <findbugs-jsr305.version>3.0.1</findbugs-jsr305.version>
     <freemarker.version>2.3.23</freemarker.version>
     <gbif-api.version>0.34-SNAPSHOT</gbif-api.version>
-    <gbif-common-ws.version>0.27</gbif-common-ws.version>
+    <gbif-common-ws.version>0.28-SNAPSHOT</gbif-common-ws.version>
     <gbif-common.version>0.22</gbif-common.version>
     <guava.version>18.0</guava.version>
-    <guice.version>3.0</guice.version>
+    <guice.version>4.0</guice.version>
     <httpclient.version>4.3.6</httpclient.version>
     <javax-validation-api.version>1.1.0.Final</javax-validation-api.version>
     <jersey.version>1.18.3</jersey.version>
