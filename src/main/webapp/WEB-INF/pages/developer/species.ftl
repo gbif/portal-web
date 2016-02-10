@@ -127,7 +127,7 @@
 
 <#assign params = {
   "q": "Simple full text search parameter. The value for this parameter can be a simple word or a phrase. Wildcards are not supported",
-  "language": "default=en or use HTTP header for this",
+  "language": "Language for vernacular names.  Overrides HTTP Accept-Language header",
   "datasetKey": "Filters by the checklist dataset key (a uuid)",
   "sourceId": "Filters by the source identifier",
   "rank": "Filters by taxonomic rank as given in our <a href='${api.apidocs}/vocabulary/Rank.html' target='_blank'>Rank enum</a>",
