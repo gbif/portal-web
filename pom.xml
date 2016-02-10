@@ -54,7 +54,7 @@
     <freemarker.version>2.3.23</freemarker.version>
     <gbif-api.version>0.34-SNAPSHOT</gbif-api.version>
     <gbif-common-ws.version>0.28-SNAPSHOT</gbif-common-ws.version>
-    <gbif-common.version>0.22</gbif-common.version>
+    <gbif-common.version>0.23-SNAPSHOT</gbif-common.version>
     <guava.version>18.0</guava.version>
     <guice.version>4.0</guice.version>
     <httpclient.version>4.3.6</httpclient.version>

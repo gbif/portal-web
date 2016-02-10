@@ -662,7 +662,7 @@
   <@common.notice id="issues" title="Known issues">
       <p>There are known issues with this name usage:</p>
       <ul>
-        <#list occ.issues as issue>
+        <#list usage.issues as issue>
             <li><p><@s.text name="enum.usageissue.${issue.name()}"/></p></li>
         </#list>
       </ul>
