@@ -19,9 +19,11 @@
   <#assign titleLength = 48 />
 </#if>
 
+text-decoration: line-through;
+
 <content tag="infoband">
-  <h1<#if !showBox> class="fullwidth"</#if>>${common.limit(usage.scientificName, titleLength)}</h1>
-  <h3><#if usage.isExtinct()!false>Extinct ${(usage.rank!"Unranked")?lower_case}<#else>${(usage.rank!"Unranked")?capitalize}</#if>
+  <h1 class="<#if !showBox>fullwidth</#if><#if usage.deleted??> deleted</#if>">${common.limit(usage.scientificName, titleLength)}</h1>
+  <h3><#if usage.deleted??>Deleted </#if><#if usage.isExtinct()!false>Extinct ${(usage.rank!"Unranked")?lower_case}<#else>${(usage.rank!"Unranked")?capitalize}</#if>
     <#if usage.synonym> synonym</#if>
     in <a href="<@s.url value='/dataset/${usage.datasetKey}'/>">${(dataset.title)!"???"}</a>
   </h3>

@@ -180,6 +180,13 @@
 </@common.notice>
 </#if>
 
+<#-- Has this taxon been deleted? In other words, is the deleted timestamp not null? -->
+<#if usage.deleted?has_content>
+  <@common.notice title="Taxon has been removed">
+      <p>You are viewing details for {} which was removed on ${usage.deleted?date}.</p>
+  </@common.notice>
+</#if>
+
 <#if usage.issues?has_content>
   <@common.notice id="issues" title="Interpretation issues">
   <p>GBIF found issues interpreting the <a href="<@s.url value='/species/${id?c}/verbatim'/>">verbatim content</a> of this record:</p>
@@ -652,11 +659,12 @@
 </#if>
 
 <#-- LEGAL -->
-<#if constituent??>
-  <#assign prefix>${usage.scientificName}<#if usage.accordingTo?has_content> recognized by ${usage.accordingTo}</#if>, ${constituent.title} in </#assign>
+<#if !usage.deleted?has_content>
+  <#if constituent??>
+    <#assign prefix>${usage.scientificName}<#if usage.accordingTo?has_content> recognized by ${usage.accordingTo}</#if>, ${constituent.title} in </#assign>
+  </#if>
+  <@common.citationArticle rights=usage.rights!dataset.rights! dataset=dataset publisher=publisher prefix=prefix />
 </#if>
-<@common.citationArticle rights=usage.rights!dataset.rights! dataset=dataset publisher=publisher prefix=prefix />
-
 
 <#if usage.issues?has_content>
   <@common.notice id="issues" title="Known issues">
