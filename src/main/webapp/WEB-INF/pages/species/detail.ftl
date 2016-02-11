@@ -183,7 +183,7 @@
 <#-- Has this taxon been deleted? In other words, is the deleted timestamp not null? -->
 <#if usage.deleted?has_content>
   <@common.notice title="Taxon has been removed">
-      <p>You are viewing details for {} which was removed on ${usage.deleted?date}.</p>
+      <p>You are viewing details for ${usage.canonicalOrScientificName!} which was removed on ${usage.deleted?date}.</p>
   </@common.notice>
 </#if>
 
