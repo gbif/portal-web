@@ -660,7 +660,7 @@
 
 <#-- LEGAL -->
 <#if !usage.deleted?has_content>
-  <#if constituent??>
+  <#if !nub && constituent??>
     <#assign prefix>${usage.scientificName}<#if usage.accordingTo?has_content> recognized by ${usage.accordingTo}</#if>, ${constituent.title} in </#assign>
   </#if>
   <@common.citationArticle rights=usage.rights!dataset.rights! dataset=dataset publisher=publisher prefix=prefix />
