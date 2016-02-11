@@ -59,7 +59,7 @@
   <meta name="theme-color" content="#509e2f">
 
   <#-- CSS: implied media="all" -->
-  <link rel="stylesheet" href="<@s.url value='/css/style.css?v=2'/>"/>
+  <link rel="stylesheet" href="<@s.url value='/css/style.css?v=3'/>"/>
   <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css" type="text/css" media="all"/>
   <link rel="stylesheet" type="text/css" media="print" href="<@s.url value='/css/print.css'/>">
 
