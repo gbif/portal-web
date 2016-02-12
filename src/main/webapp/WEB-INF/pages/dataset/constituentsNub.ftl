@@ -15,12 +15,12 @@
         <ul class="notes">
           <#list constituentCounts?keys as key>
             <li>
-                <#if key??>
-                    <a title='${constituentTitles[key]!"???"}' href="<@s.url value='/dataset/${key}'/>">${common.limit(constituentTitles[key]!"???", 100)}</a>
-                <#else>
-                    <a title='algorithm' href="<@s.url value='/dataset/${common.nubKey}'/>">algorithm</a>
-                </#if>
-                <span class="note">${constituentCounts[key]} primary name references.</span>
+              <#if constituentTitles.get(key)?has_content>
+                <a title='${constituentTitles.get(key)}' href="<@s.url value='/dataset/${key}'/>">${common.limit(constituentTitles.get(key), 100)}</a>
+              <#else>
+                <a title='GBIF algorithm' href="<@s.url value='/dataset/${common.nubKey}'/>">GBIF algorithm</a>
+              </#if>
+              <span class="note">${constituentCounts.get(key)} primary name references.</span>
             </li>
           </#list>
         </ul>
