@@ -43,12 +43,12 @@
 
     <!-- dependency versions -->
     <bval.version>0.5</bval.version>
-    <checklistbank-ws-client.version>2.33-SNAPSHOT</checklistbank-ws-client.version>
+    <checklistbank-ws-client.version>2.33</checklistbank-ws-client.version>
     <commons-beanutils.version>1.9.2</commons-beanutils.version>
     <commons-io.version>2.4</commons-io.version>
     <commons-lang3.version>3.4</commons-lang3.version>
     <download-query-tools.version>1.10</download-query-tools.version>
-    <drupal-mybatis.version>0.18</drupal-mybatis.version>
+    <drupal-mybatis.version>0.19</drupal-mybatis.version>
     <dwc-api.version>1.13</dwc-api.version>
     <findbugs-jsr305.version>3.0.1</findbugs-jsr305.version>
     <freemarker.version>2.3.23</freemarker.version>
@@ -64,11 +64,11 @@
     <junit.version>4.12</junit.version>
     <lesscss-maven-plugin.version>1.3.3</lesscss-maven-plugin.version>
     <logback.version>1.1.3</logback.version>
-    <lucene.version>5.3.1</lucene.version>
-    <metrics-ws-client.version>0.23</metrics-ws-client.version>
+    <lucene.version>5.4.1</lucene.version>
+    <metrics-ws-client.version>0.24</metrics-ws-client.version>
     <mockito.version>1.9.5</mockito.version>
-    <occurrence-ws-client.version>0.36-SNAPSHOT</occurrence-ws-client.version>
-    <registry-ws-client.version>2.47-SNAPSHOT</registry-ws-client.version>
+    <occurrence-ws-client.version>0.36</occurrence-ws-client.version>
+    <registry-ws-client.version>2.47</registry-ws-client.version>
     <selenium.version>2.50.1</selenium.version>
     <servletapi.version>3.0.1</servletapi.version>
     <slf4j.version>1.7.13</slf4j.version>
