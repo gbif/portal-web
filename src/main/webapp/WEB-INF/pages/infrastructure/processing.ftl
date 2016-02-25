@@ -116,7 +116,7 @@
     <ol><li>dwc:decimalLatitude &amp; dwc:decimalLongitude</li>
       <li>dwc:verbatimLatitude &amp; dwc:verbatimLongitude</li>
       <li>dwc:verbatimCoordinates</li>
-    </ol><p>If a geodetic datum is given we then try to interpret the datum and, if different from WGS84, do a <a href="http://gbif.blogspot.com/TODO">reprojection into WGS84</a>. In addition if a literal country was indicated we verify that the coordinate falls within the given country. Frequently lat/lon values are swapped or have negated values which we can also often detect by looking at the expected country.</p>
+    </ol><p>If a geodetic datum is given we then try to interpret the datum and, if different from WGS84, do a <a href="http://gbif.blogspot.com/2016/02/reprojecting-coordinates-according-to.html">reprojection into WGS84</a>. In addition if a literal country was indicated we verify that the coordinate falls within the given country. Frequently lat/lon values are swapped or have negated values which we can also often detect by looking at the expected country.</p>
 
     <h3>Vertical position</h3>
     <p>For the vertical position of the occurrence Darwin Core provides a <a href="http://rs.tdwg.org/dwc/terms/index.htm#locationindex">wealth of terms</a>. Sadly it is often not clear how to use (min/max)elevationInMeters, (min/max)depthInMeters and (min/max)distanceAboveSurfaceInMeters in more complex cases. We decided to keep it simple and only use elevation and depth together with their accuracy terms to represent the vertical position. The absolute elevation is given as a decimal in meters and should point at the exact location of the occurrence. It is the coordinates vertical position in a 3-dimensional coordiante system. Depth is a relative value indicating the distance to the surface of the earth, whether that's terrestrial or water. We preferred the term depth over distanceAboveSurface as it is very common for sea observations and rarely used for above ground distances.</p>
@@ -126,7 +126,7 @@
   </div>
   <div class="right">
     <ul>
-      <li><a href="http://gbif.blogspot.com/TODO">Datum shift</a></li>
+      <li><a href="http://gbif.blogspot.com/2016/02/reprojecting-coordinates-according-to.html">Datum shift</a></li>
       <li><a href="http://www.iso.org/iso/home/standards/country_codes.htm">ISO countries</a></li>
     </ul>
   </div>
