@@ -43,7 +43,7 @@
 
     <!-- dependency versions -->
     <bval.version>0.5</bval.version>
-    <checklistbank-ws-client.version>2.33</checklistbank-ws-client.version>
+    <checklistbank-ws-client.version>2.36</checklistbank-ws-client.version>
     <commons-beanutils.version>1.9.2</commons-beanutils.version>
     <commons-io.version>2.4</commons-io.version>
     <commons-lang3.version>3.4</commons-lang3.version>
@@ -68,7 +68,7 @@
     <metrics-ws-client.version>0.24</metrics-ws-client.version>
     <mockito.version>1.9.5</mockito.version>
     <occurrence-ws-client.version>0.36</occurrence-ws-client.version>
-    <registry-ws-client.version>2.47</registry-ws-client.version>
+    <registry-ws-client.version>2.49</registry-ws-client.version>
     <selenium.version>2.50.1</selenium.version>
     <servletapi.version>3.0.1</servletapi.version>
     <slf4j.version>1.7.13</slf4j.version>
