@@ -260,7 +260,7 @@
 
     <h3>Default citation</h3>
     <p>${prefix!}<#if publisher??>${publisher.title}:</#if>
-      ${dataset.title}<#if dataset.pubDate?has_content>, ${dataset.pubDate?date?iso_utc}</#if>.
+      ${dataset.title}. <#if dataset.doi??><@doilink dataset.doi /></#if>
       <br/>Accessed via ${currentUrl} on ${.now?date?iso_utc}
     </p>
 
