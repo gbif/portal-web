@@ -2,7 +2,7 @@
 <#import "/WEB-INF/macros/common.ftl" as common>
 <html>
 <head>
-  <title>Verbatim Name Usage Data</title>
+  <title>${usage.scientificName} - Verbatim View</title>
 </head>
 
 <body class="stats">
