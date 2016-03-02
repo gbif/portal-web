@@ -10,7 +10,7 @@
 <content tag="infoband">
   <div class="content">
     <h1>Occurrence download</h1>
-    <h3><@common.doilink doi=download.doi /> ${niceDate(download.created)}</h3>
+    <h3><#if download.doi?has_content><@common.doilink doi=download.doi /> </#if>${niceDate(download.created)}</h3>
   </div>
   <#if action.dwcaExists()>
     <div class="box">
@@ -44,7 +44,7 @@
   <@common.notice title="Please note">
     <#if action.dwcaExists()>
       <p>The download result will be retained for as long as possible, but might be removed in the future.</p>
-      <p>The <@common.doilink doi=download.doi url="/occurrence/download/${download.key}"/> will always resolve to this page, even if the download is removed.</p>
+      <#if download.doi?has_content><p>The <@common.doilink doi=download.doi url="/occurrence/download/${download.key}"/> will always resolve to this page, even if the download is removed.</p></#if>
     <#else>
       <p>The download result for this search is no longer available.</p>
       <p>Please contact <@common.helpdesk/> to restore it.</p>
@@ -59,11 +59,13 @@
 <@common.article id="details" title="Download details" class="results">
   <div class="fullwidth">
     <dl>
-      <dt>Identifier</dt>
-      <dd><@common.doi download.doi /></dd>
+      <#if download.doi?has_content>
+        <dt>Identifier</dt>
+        <dd><@common.doi download.doi /></dd>
 
-      <dt>Cite as</dt>
-      <dd><@common.citeDownload download/></dd>
+        <dt>Cite as</dt>
+        <dd><@common.citeDownload download/></dd>
+      </#if>
 
       <dt>Query</dt>
       <dd><@records.dFilter download /></dd>
