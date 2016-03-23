@@ -3,6 +3,13 @@
 <html>
 <head>
   <title>Data Publisher - ${member.title}</title>
+  <script type="text/javascript">
+      $(function() {
+          occCountByPublisher("${node.key}").done(function( count ) {
+              $("#datasets .content .fullwidth").prepend("<p>" + count + " occurrence records published in total.</p>");
+          });
+      });
+  </script>
 </head>
 <body class="publisher">
 

@@ -282,3 +282,26 @@ function limitText(text, max) {
   }
   return newLabel;
 }
+
+/**
+ * Method to count all occurrences published by a given organization.
+ * A promise for the total count is returned.
+ */
+function occCountByPublisher(key) {
+    var count = 0;
+    var countUrl = cfg.wsMetrics+ "occurrence/count?datasetKey=";
+    var datasetUrl = cfg.wsReg+ "organization/" + key + "/publishedDataset?limit=9999&callback=?";
+    var defer = $.Deferred();
+    $.getJSON(datasetUrl, function (data){
+        var deferreds = [];
+        $.each(data.results, function(idx, ds) {
+            deferreds.push($.getJSON(countUrl+ds.key+"&callback=?", function (cnt){
+                count = count+cnt;
+            }));
+        });
+        $.when.apply($,deferreds).then(function() {
+            defer.resolve(count);
+        });
+    });
+    return defer.promise();
+}
