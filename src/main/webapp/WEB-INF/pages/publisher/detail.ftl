@@ -5,7 +5,7 @@
   <title>Data Publisher - ${member.title}</title>
   <script type="text/javascript">
       $(function() {
-          occCountByPublisher("${node.key}").done(function( count ) {
+          occCountByPublisher("${member.key}").done(function( count ) {
               $("#datasets .content .fullwidth").prepend("<p>" + count + " occurrence records published in total.</p>");
           });
       });
