@@ -94,6 +94,15 @@
     <content tag="infoband">
         <div class="content">
         <h1>Search occurrences</h1>
+        <form action="<@s.url value='/occurrence/search'/>" method="GET" id="formSearch" >
+          <input id="q" type="text" name="q" value="${q!}" autocomplete="off" placeholder="Search scientific name, common name, checklist description..."/>
+        <#list searchRequest.parameters.asMap()?keys as p>
+          <#list searchRequest.parameters.get(p) as val>
+            <input type="hidden" name="${p?lower_case}" value="${val!}"/>
+          </#list>
+        </#list>
+        </form>
+        <br/>
         <h3>Use the filters to customize search results</h3>
         </div>
         <#if action.showDownload()>

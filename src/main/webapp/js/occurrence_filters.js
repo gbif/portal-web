@@ -2082,6 +2082,9 @@ var OccurrenceWidgetManager = (function ($,_) {
 	          }
           }
         }
+        if($("#q").val()) {
+          params["q"] = $("#q").val();
+        }
         //redirects the window to the target
         if (isPost) {
           var formStr = '<form action="' + submitTargetUrl + '" method="post">';
