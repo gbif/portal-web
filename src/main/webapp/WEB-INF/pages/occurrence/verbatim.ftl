@@ -9,6 +9,7 @@
 
 <#assign tab="verbatim"/>
 <#include "/WEB-INF/pages/occurrence/inc/infoband.ftl">
+<#include "/WEB-INF/pages/occurrence/inc/annosys.ftl">
 
 
 <@common.notice title="Occurrence verbatim data">

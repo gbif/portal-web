@@ -59,6 +59,7 @@ public class Config {
   private String wsOccCollectionCodeSearch;
   private String wsOccInstitutionCodeSearch;
   private String wsOccurrenceIdSearch;
+  private String annosysUrl;
   private String wsImageCache;
   private Integer maxOccDowloadSize;
   private int maxOccSearchOffset;
@@ -102,6 +103,7 @@ public class Config {
       cfg.wsOccInstitutionCodeSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + INSTITUTION_CODE_PATH;
       cfg.wsOccRecordNumberSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + RECORD_NUMBER_PATH;
       cfg.wsOccurrenceIdSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + OCCURRENCE_ID_PATH;;
+      cfg.annosysUrl = getPropertyUrl(properties, "annosys.url", false);
     } catch (IOException e) {
       throw new ConfigurationException("application.properties cannot be read", e);
     }
@@ -266,4 +268,9 @@ public class Config {
   public int getMaxOccSearchOffset() {
     return maxOccSearchOffset;
   }
+
+  public String getAnnosysUrl() {
+    return annosysUrl;
+  }
+
 }

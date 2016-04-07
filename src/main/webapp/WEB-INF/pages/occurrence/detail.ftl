@@ -21,6 +21,9 @@
         }
       });
     </script>
+
+
+
     <style type="text/css">
         #content #images .scrollable {
           height: 350px;
@@ -33,6 +36,8 @@
         margin-bottom: 30px;
       }
     </style>
+
+
   </content>
 
   <#-- RDFa -->
@@ -48,6 +53,8 @@
 
 <#assign tab="info"/>
 <#include "/WEB-INF/pages/occurrence/inc/infoband.ftl">
+<#include "/WEB-INF/pages/occurrence/inc/annosys.ftl">
+
 
 <#if showMap>
   <#assign title=""/>
