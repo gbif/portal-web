@@ -13,7 +13,10 @@
         <div class="annosysModal__content">
             <img src="//annosys.bgbm.fu-berlin.de/sites/default/files/AnnoSys_update.png">
             <p>
-                Annosys is an annotation system that allows you to correct records. Tim fill this in.
+                Through this pilot integration, you can make use of the AnnoSys system developed by the <a href="http://www.bgbm.org/">Botanic Garden and Botanical Museum Berlin-Dahlem</a> to create annotations about this record.
+            </p>
+            <p>
+                Currently GBIF do not store, or harvest the annotations created and do not take responsibility for annotations created through it.
             </p>
             <div id="existingAnnotations" class="existingAnnotations">
                 <h3>

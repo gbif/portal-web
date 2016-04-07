@@ -1591,10 +1591,18 @@ div.notice {
   z-index: 10000011;
   text-align: left;
   display: none;
+  font-size: 15px;
+  line-height: 18px;
 }
 @media (max-height: 600px) {
   #annosysModal {
     top: 5%;
+  }
+}
+@media (max-width: 810px) {
+  #annosysModal {
+    right: auto;
+    left: 0;
   }
 }
 
@@ -1686,7 +1694,7 @@ div.notice {
 }
 
 #annosysModal .annosysModal__content p {
-  padding-bottom: 1.5em;
+  margin-bottom: 18px;
 }
 
 #annosysModal .existingAnnotations {
