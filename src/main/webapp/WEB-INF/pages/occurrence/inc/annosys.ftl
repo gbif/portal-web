@@ -33,7 +33,7 @@
     </div>
 
     <script>
-        $(window).load(function () {
+        $(document).ready(function () {
 
             //rewrite enums a la ZoologicalScientificName to Zoological Scientific Name
             function prettifyEnum(text) {
@@ -48,9 +48,12 @@
             $('#annosysModal .annosys__annotate').prop('href', '${cfg.annosysUrl}AnnoSys?recordURL=' + linkToGbifApiFromAnnosys);
             $('#annosysModal .annosys__annotate').on('click', function(event) {
                 if (typeof ga !== 'undefined') {
-                    ga('send', 'event', 'occurrence', 'annotate');
+                    ga('send', 'event', 'annotation', 'followed');
                 }
             });
+            if (typeof ga !== 'undefined') {
+                ga('send', 'event', 'annotation', 'seen');
+            }
 
             // for the given record load the annotations
             // the record must have an institutionCode, collectionCode and catalogNumber or else none will be found
