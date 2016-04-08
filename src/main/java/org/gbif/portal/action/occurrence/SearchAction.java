@@ -98,7 +98,6 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
    */
   @Override
   public String execute() {
-    this.getCurrentUrl()
     // read filter parameters in order to have them available even when the search wasn't executed.
     readFilterParams();
 
