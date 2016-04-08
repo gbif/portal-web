@@ -98,7 +98,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
    */
   @Override
   public String execute() {
-
+    this.getCurrentUrl()
     // read filter parameters in order to have them available even when the search wasn't executed.
     readFilterParams();
 
@@ -145,6 +145,8 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
     searchRequest.setQ(getQ());
     // Turn off highlighting for empty query strings
     searchRequest.setHighlight(!Strings.isNullOrEmpty(q));
+    //Enable spell check
+    searchRequest.setSpellcheck(true);
     // issues the search operation
     searchResponse = searchService.search(searchRequest);
     // Provide suggestions for catalog numbers and collector names
