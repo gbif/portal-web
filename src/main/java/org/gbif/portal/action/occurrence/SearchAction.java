@@ -45,6 +45,8 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   private static final long serialVersionUID = 4064512946598688405L;
 
+  private static final int DEFAULT_SPELLCHECK_COUNT = 4;
+
   private static final Logger LOG = LoggerFactory.getLogger(SearchAction.class);
 
   private final FiltersActionHelper filtersActionHelper;
@@ -145,7 +147,8 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
     // Turn off highlighting for empty query strings
     searchRequest.setHighlight(!Strings.isNullOrEmpty(q));
     //Enable spell check
-    searchRequest.setSpellcheck(true);
+    searchRequest.setSpellCheck(true);
+    searchRequest.setSpellCheckCount(DEFAULT_SPELLCHECK_COUNT);
     // issues the search operation
     searchResponse = searchService.search(searchRequest);
     // Provide suggestions for catalog numbers and collector names
