@@ -143,11 +143,11 @@
             <#if !action.hasSuggestions()><h2>${searchResponse.count} results</h2></#if>
             <#if searchResponse.spellCheckResponse?has_content && searchResponse.spellCheckResponse.suggestions?has_content>
               <div class="spell">
-                <span class="spell">Did you mean:</span>
+                <span class="spell">Did you mean: </span>
                 <#list searchResponse.spellCheckResponse.suggestions?values as suggestion>
                   <#if suggestion.alternatives?has_content>
                     <#list suggestion.alternatives as alternative>
-                      <a href="${currentUrl?replace('q=' + q,'q='+alternative)}" class="spell" style="font-size: small; display: inline">
+                      <a href="${currentUrl?replace('q=' + q?replace(' ','+'),'q=' + alternative?url)}" class="spell" style="font-size: small; display: inline">
                         <b>
                           <i>${alternative}</i>
                         </b>
