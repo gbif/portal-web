@@ -2,10 +2,10 @@
     <#assign institutionCode = action.termValue('institutionCode')! />
     <#assign collectionCode = action.termValue('collectionCode')! />
     <#assign catalogNumber =  action.termValue('catalogNumber')! />
-    <#assign occurrenceID =  action.termValue('occurrenceID')! />
-    <#assign publishingOrgKey =  action.termValue('publishingOrgKey')! />
+    <#assign publishingOrgKey = occ.publishingOrgKey! />
 
-<#if publisher.key=="57254bd0-8256-11d8-b7ed-b8a03c50a862">
+<#-- For now only show the annosys integration if it is published by BGBM aka the Botanic Garden and Botanical Museum Berlin-Dahlem -->
+<#if publishingOrgKey == "57254bd0-8256-11d8-b7ed-b8a03c50a862">
     <a id="annosysTrigger" href="#" class="annosys">AnnoSys <span class="annosysCount"></span></a>
     <div id="annosysBlanket" class="atlwdg-blanket annosysBlanket"></div>
     <div id="annosysModal" class="atlwdg-box-shadow annosysModal">
@@ -62,7 +62,6 @@
                 record.institutionCode = '${institutionCode}';
                 record.collectionCode = '${collectionCode}';
                 record.catalogNumber = '${catalogNumber}';
-                record.occurrenceID = '${occurrenceID}';
 
                 if (record.institutionCode && record.collectionCode && record.catalogNumber) {
 
