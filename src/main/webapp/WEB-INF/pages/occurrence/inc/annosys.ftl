@@ -9,7 +9,7 @@
     <a id="annosysTrigger" href="#" class="annosys">AnnoSys <span class="annosysCount"></span></a>
     <div id="annosysBlanket" class="atlwdg-blanket annosysBlanket"></div>
     <div id="annosysModal" class="atlwdg-box-shadow annosysModal">
-        <h2>Annosys</h2>
+        <h2>AnnoSys</h2>
         <div class="annosysModal__content">
             <img src="//annosys.bgbm.fu-berlin.de/sites/default/files/AnnoSys_update.png">
             <p>
