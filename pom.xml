@@ -43,18 +43,18 @@
 
     <!-- dependency versions -->
     <bval.version>0.5</bval.version>
-    <checklistbank-ws-client.version>2.36</checklistbank-ws-client.version>
+    <checklistbank-ws-client.version>2.39</checklistbank-ws-client.version>
     <commons-beanutils.version>1.9.2</commons-beanutils.version>
     <commons-io.version>2.4</commons-io.version>
     <commons-lang3.version>3.4</commons-lang3.version>
-    <download-query-tools.version>1.10</download-query-tools.version>
+    <download-query-tools.version>1.11</download-query-tools.version>
     <drupal-mybatis.version>0.19</drupal-mybatis.version>
     <dwc-api.version>1.13</dwc-api.version>
     <findbugs-jsr305.version>3.0.1</findbugs-jsr305.version>
     <freemarker.version>2.3.23</freemarker.version>
-    <gbif-api.version>0.38-SNAPSHOT</gbif-api.version>
-    <gbif-common-ws.version>0.32-SNAPSHOT</gbif-common-ws.version>
-    <gbif-common.version>0.23</gbif-common.version>
+    <gbif-api.version>0.38</gbif-api.version>
+    <gbif-common-ws.version>0.32</gbif-common-ws.version>
+    <gbif-common.version>0.26</gbif-common.version>
     <guava.version>18.0</guava.version>
     <guice.version>4.0</guice.version>
     <httpclient.version>4.3.6</httpclient.version>
@@ -67,8 +67,8 @@
     <lucene.version>5.4.1</lucene.version>
     <metrics-ws-client.version>0.24</metrics-ws-client.version>
     <mockito.version>1.9.5</mockito.version>
-    <occurrence-ws-client.version>0.40-SNAPSHOT</occurrence-ws-client.version>
-    <registry-ws-client.version>2.49</registry-ws-client.version>
+    <occurrence-ws-client.version>0.41</occurrence-ws-client.version>
+    <registry-ws-client.version>2.50</registry-ws-client.version>
     <selenium.version>2.50.1</selenium.version>
     <servletapi.version>3.0.1</servletapi.version>
     <slf4j.version>1.7.13</slf4j.version>
