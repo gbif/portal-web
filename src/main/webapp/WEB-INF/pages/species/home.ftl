@@ -28,7 +28,6 @@
       <ul class="species">
         <li><a href="<@s.url value='/species/search?q=&dataset_key=${nubDatasetKey}&highertaxon_key=359'/>" title="Mammals">Mammals</a></li>
         <li><a href="<@s.url value='/species/search?q=&dataset_key=${nubDatasetKey}&highertaxon_key=212'/>" title="Birds">Birds</a></li>
-        <li><a href="<@s.url value='/species/search?q=&dataset_key=${nubDatasetKey}&highertaxon_key=216'/>" title="Insects">Insects</a></li>
         <li><a href="<@s.url value='/species/search?q=&dataset_key=${nubDatasetKey}&highertaxon_key=358'/>" title="Reptiles">Reptiles</a></li>
         <#--
          see http://en.wikipedia.org/wiki/Fish#Taxonomy
@@ -36,9 +35,10 @@
           - Placodermi
         -->
         <li><a href="<@s.url value='/species/search?q=&dataset_key=${nubDatasetKey}&highertaxon_key=119&highertaxon_key=120&highertaxon_key=121&highertaxon_key=204&highertaxon_key=238&highertaxon_key=239&highertaxon_key=4853178&highertaxon_key=3238258&highertaxon_key=4836892&highertaxon_key=4815623'/>" title="Fishes">Fishes</a></li>
+        <li><a href="<@s.url value='/species/search?q=&dataset_key=${nubDatasetKey}&highertaxon_key=216'/>" title="Insects">Insects</a></li>
         <li><a href="<@s.url value='/species/search?q=&dataset_key=${nubDatasetKey}&highertaxon_key=797'/>" title="Butterflies">Butterflies</a></li>
-        <li><a href="<@s.url value='/species/search?q=&dataset_key=${nubDatasetKey}&highertaxon_key=5'/>" title="Lizards">Fungi</a></li>
-        <li><a href="<@s.url value='/species/search?q=&dataset_key=${nubDatasetKey}&highertaxon_key=49'/>" title="Lizards">Flowering Plants</a></li>
+        <li><a href="<@s.url value='/species/search?q=&dataset_key=${nubDatasetKey}&highertaxon_key=5'/>" title="Fungi">Fungi</a></li>
+        <li><a href="<@s.url value='/species/search?q=&dataset_key=${nubDatasetKey}&highertaxon_key=7707728'/>" title="Vascular Plants">Vascular Plants</a></li>
       </ul>
 
     <#if nubSpecies gt 0>
