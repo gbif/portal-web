@@ -141,14 +141,14 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
    * @return SUCCESS, throws an exception in case of error
    */
   public String executeSearch() {
-    LOG.info("Search for [{}]", getQ());
+    //LOG.info("Search for [{}]", getQ());
     // default query parameters
-    searchRequest.setQ(getQ());
+    //searchRequest.setQ(getQ());
     // Turn off highlighting for empty query strings
-    searchRequest.setHighlight(!Strings.isNullOrEmpty(q));
+    //searchRequest.setHighlight(!Strings.isNullOrEmpty(q));
     //Enable spell check
-    searchRequest.setSpellCheck(true);
-    searchRequest.setSpellCheckCount(DEFAULT_SPELLCHECK_COUNT);
+    //searchRequest.setSpellCheck(true);
+    //searchRequest.setSpellCheckCount(DEFAULT_SPELLCHECK_COUNT);
     // issues the search operation
     searchResponse = searchService.search(searchRequest);
     // Provide suggestions for catalog numbers and collector names
