@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>portal-web</artifactId>
-  <version>0.33</version>
+  <version>0.33.1-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <name>GBIF Portal</name>
@@ -20,7 +20,6 @@
     <connection>scm:git:git@github.com:gbif/portal-web.git</connection>
     <url>https://github.com/gbif/portal-web</url>
     <developerConnection>scm:git:git@github.com:gbif/portal-web.git</developerConnection>
-    <tag>portal-web-0.33</tag>
   </scm>
 
   <properties>
