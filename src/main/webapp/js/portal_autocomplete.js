@@ -29,7 +29,7 @@ $.fn.countryAutosuggest = function(countryList,appendToElement, onSelectEventHan
         matches.push({label:"No results found",iso2Lettercode:0});
       }
       response(matches);
-    },    
+    },
     create: function(event, ui) {
       //forcibly css classes are removed because of conflicts between existing styles and jquery ui styles
       $(".ui-autocomplete").removeClass("ui-widget-content ui-corner-all");
@@ -40,7 +40,7 @@ $.fn.countryAutosuggest = function(countryList,appendToElement, onSelectEventHan
       $(".ui-autocomplete").css("z-index",1000);
     },
     appendTo: appendToElement,
-    focus: function( event, ui ) {//on focus: sets the value of the input[text] element      
+    focus: function( event, ui ) {//on focus: sets the value of the input[text] element
       return false;
     },
     select: function( event, ui ) {//on select: sets the value of the input[text] element
@@ -62,13 +62,13 @@ $.fn.countryAutosuggest = function(countryList,appendToElement, onSelectEventHan
   };
   $(self).on('focus', function() {
     if ($(self).val()) {
-	  self.autocomplete('search');
+    self.autocomplete('search');
     }
   });
   $(self).on($.browser.opera ? "keypress" : "keydown", function(event){
-    if(OPEN_KEYS.indexOf(event.keyCode) != -1 && $(self).val()){		  
-	  self.autocomplete('search');		  
-	}
+    if(OPEN_KEYS.indexOf(event.keyCode) != -1 && $(self).val()){
+    self.autocomplete('search');
+  }
   });
 };
 
@@ -143,13 +143,13 @@ $.fn.datasetAutosuggest = function(wsSuggestUrl, limit, maxLength, appendToEleme
   };
   $(self).on('focus', function() {
     if ($(self).val()) {
-	  self.autocomplete('search');
+    self.autocomplete('search');
     }
   });
   $(self).on($.browser.opera ? "keypress" : "keydown", function(event){
-    if(OPEN_KEYS.indexOf(event.keyCode) != -1 && $(self).val()){		  
-	  self.autocomplete('search');		  
-	}
+    if(OPEN_KEYS.indexOf(event.keyCode) != -1 && $(self).val()){
+    self.autocomplete('search');
+  }
   });
 };
 
@@ -193,7 +193,7 @@ $.fn.speciesAutosuggest = function(wsServiceUrl,limit,chklstKeysElementsSelector
           return {
             label: item.canonicalName,
             value: item.canonicalName,
-            key: item.nubKey,
+            key: typeof(item.nubKey) != 'undefined' ? item.nubKey : item.key,
             rank: item.rank,
             higherClassificationMap: item.higherClassificationMap
           }
@@ -248,13 +248,13 @@ $.fn.speciesAutosuggest = function(wsServiceUrl,limit,chklstKeysElementsSelector
   };
   $(self).on('focus', function() {
     if ($(self).val()) {
-	  self.autocomplete('search');
+    self.autocomplete('search');
     }
   });
   $(self).on($.browser.opera ? "keypress" : "keydown", function(event){
-    if(OPEN_KEYS.indexOf(event.keyCode) != -1 && $(self).val()){		  
-	  self.autocomplete('search');		  
-	}
+    if(OPEN_KEYS.indexOf(event.keyCode) != -1 && $(self).val()){
+    self.autocomplete('search');
+  }
   });
 };
 
@@ -309,18 +309,19 @@ $.fn.termsAutosuggest = function(wsServiceUrl,appendToElement,limit,onSelectEven
   }).data( "autocomplete" )._renderItem = function( ul, item) {
     return $( "<li></li>" )
       .data( "item.autocomplete", item )
-      .append("<a class='name'>" + this.highlight(item.value,self.val()) + "</a>")      
+      .append("<a class='name'>" + this.highlight(item.value,self.val()) + "</a>")
       .appendTo( ul );
     //last line customizes the generated elements of the auto-complete widget by highlighting the results and adding new css class
   };
   $(self).on('focus', function() {
-	    if ($(self).val()) {
-		  self.autocomplete('search');
-	    }
-	  });
+      if ($(self).val()) {
+        self.autocomplete('search');
+      }
+
+    });
   $(self).on($.browser.opera ? "keypress" : "keydown", function(event){
-    if(OPEN_KEYS.indexOf(event.keyCode) != -1 && $(self).val()){		  
-	  self.autocomplete('search');		  
-	}
+    if(OPEN_KEYS.indexOf(event.keyCode) != -1 && $(self).val()){
+    self.autocomplete('search');
+  }
   });
 };
