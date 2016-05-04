@@ -264,10 +264,12 @@ function getDatasetDetail(key, func) {
 }
 
 /**
- * Builds up a image cache url
+ * Builds up a image cache URL
+ * If passed an image cache URL, just changes the size.
  */
 function imageCacheUrl(url, size) {
-  return cfg.wsImageCache + "?url=" + encodeURIComponent(url) + "&size=" + size;
+  if (url.indexOf(cfg.wsImageCache) > -1) return url.replace(/size=.$/, "size=" + size.toUpperCase());
+  return cfg.wsImageCache + "?url=" + url + "&size=" + size.toUpperCase();
 }
 
 

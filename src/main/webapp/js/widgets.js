@@ -77,7 +77,7 @@ $.fn.bindArticleSlideshow = function(slides) {
   function setupPhotos() {
     for (var i = 0; i <= num_of_photos - 1; i++) {
       var $photo = $("<li><img /></li>");
-      $photo.find("img").attr("src", slides[i].src);
+      $photo.find("img").attr("src", imageCacheUrl(slides[i].src, "M"));
       if (i == 0) $photo.addClass("selected");
       $photos.append($photo);
       $photo.attr("id", "photo_" + i);
@@ -174,7 +174,7 @@ function onSuccess(data) {
 
     n++;
 
-    $photos.append("<li><div class='spinner'/></div><img id='photo_"+n+"'src='" + result.image + "' /></li>");
+    $photos.append("<li><div class='spinner'/></div><img id='photo_"+n+"'src='" + imageCacheUrl(result.image, "M") + "' /></li>");
 
     var $img = $photos.find("#photo_" + n);
 
@@ -1694,7 +1694,7 @@ $.fn.imageGallery = function(imageProvider, postImageUpdate, defaultTitle) {
         title: defaultTitle
       });
       slideData.push(imgJson);
-      $photos.append("<li><div class='spinner'></div><a href='"+imgJson.identifier+"' class='fancybox' title='"+ (imgJson.title ? imgJson.title : '') +"'><img id='photo_"+n+"'src='" + imgJson.identifier + "' /></a></li>");
+      $photos.append("<li><div class='spinner'></div><a href='"+imgJson.identifier+"' class='fancybox' title='"+ (imgJson.title ? imgJson.title : '') +"'><img id='photo_"+n+"'src='" + imageCacheUrl(imgJson.identifier, 'M') + "' /></a></li>");
 
       var $img = $photos.find("#photo_" + n);
 
