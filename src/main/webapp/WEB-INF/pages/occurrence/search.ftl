@@ -6,6 +6,11 @@
     <title>Occurrence Search Results</title>
 
     <content tag="extra_scripts">
+      <script type="text/javascript" src="<@s.url value='/js/facets.js'/>"></script>
+      <script type="text/javascript">
+        //needed to avoid caching by Firefox's bfcache
+        window.onunload = function(){ };
+      </script>
     <link rel="stylesheet" href="<@s.url value='/js/vendor/datepicker/css/datepicker.css'/>"/>
     <link rel="stylesheet" href="<@s.url value='/js/vendor/tagit/jquery.tagit.css'/>"/>
     <link rel="stylesheet" href="<@s.url value='/js/vendor/tagit/tagit.ui-zendesk.css'/>"/>
@@ -137,7 +142,8 @@
     <#assign showLocation =  table.hasColumn('LOCATION')>
     <#assign showDate =  table.hasColumn('EVENT_DATE')>
     <#assign showBasisOfRecord =  table.hasColumn('BASIS_OF_RECORD')>
-    <table class="results">
+      <div>
+    <table class="results" style="float: left;">
       <#if !action.hasErrors()>
         <tr class="header">
 
@@ -348,7 +354,17 @@
         </#list>
       </#if>
     </table>
-    <div class="footer">
+  </div>
+    <div class="facets" style="padding-top: 20px; text-align:left; margin-right: 4px;vertical-align:top; float:right;display:inline-block; height: 100%;min-height:100%;">
+      <h3 style="font-size: 22px; text-transform: none; color: #999999; border-bottom: 1px solid #D8DCE1; padding: 0 0 27px 0;margin: 0 0 10px 0;">Refine your search</h3>
+      <div id="resetFacets" data-currentUrl="">
+          <input id="resetFacetsButton" value="reset" type="button"/>
+      </div>
+      <#assign seeAllFacets = []>
+      <#assign facets= ["BASIS_OF_RECORD","TYPE_STATUS","DATASET_KEY","COUNTRY","MONTH","YEAR"]>
+      <#include "/WEB-INF/inc/facets.ftl">
+    </div>
+    <div class="footer" style="float: left;text-align:center; margin: 0 20%;">
       <#if !action.hasSuggestions() && !action.hasErrors()>
         <@macro.pagination page=searchResponse url=currentUrlWithoutPage maxOffset=maxOffset/>
       </#if>

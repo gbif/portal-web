@@ -627,7 +627,7 @@ public class FiltersActionHelper {
   /**
    * Gets the name of the month int parameter.
    */
-  private String getMonthName(int month) {
+  public String getMonthName(int month) {
     return DateFormatSymbols.getInstance(getLocale()).getMonths()[month - 1];
   }
 

@@ -1,6 +1,7 @@
 // TODO: lessify this css and nest it all under some occurrence specific selector
 // make sure we only use it on occurrence pages, otherwise move it to style.less
 // there are some very global selectors defined here that are likely to clash with others !!!
+@fullWidth: 1160px;
 
 .filter_input {
   width: 260px;
@@ -16,7 +17,18 @@
 
 #content article.occurrence_results {
   z-index:100;
-  .content { padding: 0; }
+  width: @fullWidth;
+
+  footer {
+    background: url("../img/boxes/box_bottom_large.png") no-repeat left top;
+    width: @fullWidth;
+  }
+
+  header {
+    background: url("../img/boxes/box_top_large.png") no-repeat left top;
+    width: @fullWidth;
+  }
+  .content { padding: 0; background: url("../img/boxes/box_bkg_large.png") repeat-y;}
 
   .content  > .footer {
     padding: 24px 26px;
@@ -37,6 +49,115 @@
       font-size: 13px;
       text-align: center;
     }
+  }
+
+  div.facets {
+    width: 230px;
+
+    h3 {
+      font-size: 13px;
+    }
+    .no_border {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    div.last {
+      margin-bottom: 80px;
+    }
+    ul {
+      margin-left: 0;
+      li {
+        display: block;
+        margin-bottom: 4px;
+        list-style-position: outside;
+        margin-left: 10px;
+        clear: right;
+        a {
+          text-decoration: none;
+        }
+      }
+    }
+
+    /*Styles for facets: clears any existing background settings and font sizes*/
+    .facet {
+      div, ul li, span, p, a {
+        font-size: 12px !important;
+        margin-top: 4px !important;
+        margin-bottom: 4px !important;
+      }
+
+      ul li {
+        margin-bottom: 4px !important;
+        border-bottom: none !important;
+        padding: 0px;
+        background: none !important;
+        list-style: none;
+        width: 100%;
+        &.more {
+          margin-left: 1.3em;
+          margin-top: 8px !important;
+        }
+        * { vertical-align: middle}
+      }
+    }
+
+    /*Label for facets and filters*/
+    .flabel {
+      font-weight: bold !important;
+    }
+
+    // adjust the right article header to behave like the more links on the portal home page
+    &.seeall {
+      top: 5px ;
+      text-align: right;
+      font-size: 15px;
+      height: 23px;
+      display: block;
+      float: none;
+      margin: 0px;
+      order: 0;
+      padding: 0px;
+      position: absolute;
+      resize: none;
+      right: 27px;
+      text-align: right;
+      vertical-align: baseline;
+      width: 230px;
+    }
+
+    .refine {
+      clear: both;
+      overflow: hidden;
+      margin-bottom: 20px;
+      padding-bottom: 0px;
+      border-bottom: 1px solid #eee;
+
+      h4 {
+        margin-bottom: 6px;
+        font-size: 11px;
+        text-transform: uppercase;
+        color: @cGray3;
+        -moz-box-orient: horizontal;
+        vertical-align: baseline;
+        display: block;
+        width: auto;
+      }
+
+      a {
+        position: relative;
+        font-size: 15px;
+        text-decoration: underline;
+        text-decoration: none;
+
+        &:hover {
+          span {
+            background: url("../img/icons/tiny_arrow_black.png") no-repeat right bottom;
+          }
+        }
+      }
+    }
+
   }
 
   div.location_option {
@@ -377,7 +498,7 @@
     }
 
     tr.header {
-      td { height: 30px; padding: 0 20px 15px 20px; border-right: none; }
+      td { height: 30px; padding: 0 20px 15px 20px;}
       td h2 { padding: 0; margin: 0; }
 
       td.options, div.options {
@@ -479,7 +600,6 @@
       border-right:  1px solid #F0F0F0;
 
       &.country, &.kind, &.date { width: 116px - 40px; text-align: center; }
-      &.date { border-right: none; }
 
       a {
         display:block;

@@ -224,7 +224,7 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
    * If the response object contains facets, iterates over the facets for copying the count information into the
    * facetCounts (see {@link Facet.Count}) field.
    */
-  private void initializeFacetsForUI() {
+  protected void initializeFacetsForUI() {
     if (searchResponse!=null && searchResponse.getFacets() != null && !searchResponse.getFacets().isEmpty()) {
       // there are facets in the response
       for (Facet<P> facet : searchResponse.getFacets()) {
@@ -236,7 +236,7 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
     }
   }
 
-  private void initMinCounts() {
+  protected void initMinCounts() {
     if (searchResponse!=null && !searchRequest.getParameters().isEmpty()) {
       // calculate the minimum count for each facet
       for (Facet<P> facet : searchResponse.getFacets()) {
@@ -251,7 +251,7 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
     }
   }
 
-  private void initSelectedFacetCounts() {
+  protected void initSelectedFacetCounts() {
     if (!searchRequest.getParameters().isEmpty()) {
       // convert request filters into facets instances
       for (P facet : searchRequest.getParameters().keySet()) {

@@ -16,20 +16,27 @@ import org.gbif.api.vocabulary.OccurrenceIssue;
 import org.gbif.api.vocabulary.TypeStatus;
 import org.gbif.dwc.terms.DcTerm;
 import org.gbif.dwc.terms.DwcTerm;
-import org.gbif.portal.action.BaseSearchAction;
+import org.gbif.portal.action.BaseFacetedSearchAction;
 import org.gbif.portal.action.occurrence.util.FiltersActionHelper;
 import org.gbif.portal.action.occurrence.util.ParameterValidationError;
+import org.gbif.portal.model.FacetInstance;
 import org.gbif.portal.model.OccurrenceTable;
 import org.gbif.portal.model.SearchSuggestions;
 
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nullable;
+
+import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 import org.slf4j.Logger;
@@ -41,7 +48,9 @@ import static org.gbif.api.model.common.paging.PagingConstants.DEFAULT_PARAM_OFF
 /**
  * Search action class for occurrence search page.
  */
-public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchParameter, OccurrenceSearchRequest> {
+public class SearchAction extends
+  BaseFacetedSearchAction<Occurrence, OccurrenceSearchParameter, OccurrenceSearchRequest> {
+
 
   private static final long serialVersionUID = 4064512946598688405L;
 
@@ -67,6 +76,8 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   private SearchSuggestions<String> occurrenceIdSuggestions;
 
+  private Function<String,String> getFilterTitleFunction;
+
   private List<ParameterValidationError<OccurrenceSearchParameter>> validationErrors = Lists.newArrayList();
 
   // Message key in resource bundle
@@ -77,6 +88,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
   private static final Set<OccurrenceIssue> OCCURRENCE_ISSUES = EnumSet.allOf(OccurrenceIssue.class);
 
+  private static final EnumSet<OccurrenceSearchParameter> SUPPORTED_FACETS = EnumSet.of(OccurrenceSearchParameter.BASIS_OF_RECORD,OccurrenceSearchParameter.TYPE_STATUS,OccurrenceSearchParameter.DATASET_KEY,OccurrenceSearchParameter.COUNTRY,OccurrenceSearchParameter.MONTH,OccurrenceSearchParameter.YEAR);
 
   // List of parameters that should be excluded during the regular validation.
   // These parameters are excluded since they could contain String values that will be processed as suggestions.
@@ -88,7 +100,7 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
 
 
   @Inject
-  public SearchAction(OccurrenceSearchService occurrenceSearchService, FiltersActionHelper filtersActionHelper) {
+  public SearchAction(OccurrenceSearchService occurrenceSearchService, final FiltersActionHelper filtersActionHelper) {
     super(occurrenceSearchService, OccurrenceSearchParameter.class, new OccurrenceSearchRequest(DEFAULT_PARAM_OFFSET,
                                                                                                 DEFAULT_PARAM_LIMIT));
     this.filtersActionHelper = filtersActionHelper;
@@ -141,22 +153,61 @@ public class SearchAction extends BaseSearchAction<Occurrence, OccurrenceSearchP
    * @return SUCCESS, throws an exception in case of error
    */
   public String executeSearch() {
-    //LOG.info("Search for [{}]", getQ());
+    LOG.info("Search for [{}]", getQ());
     // default query parameters
-    //searchRequest.setQ(getQ());
+    searchRequest.setQ(getQ());
     // Turn off highlighting for empty query strings
-    //searchRequest.setHighlight(!Strings.isNullOrEmpty(q));
+    searchRequest.setHighlight(!Strings.isNullOrEmpty(q));
     //Enable spell check
-    //searchRequest.setSpellCheck(true);
-    //searchRequest.setSpellCheckCount(DEFAULT_SPELLCHECK_COUNT);
+    searchRequest.setSpellCheck(true);
+    searchRequest.setSpellCheckCount(DEFAULT_SPELLCHECK_COUNT);
+
+    searchRequest.setMultiSelectFacets(true);
+    // add all available facets to the request
+    for (OccurrenceSearchParameter facet : SUPPORTED_FACETS) {
+      searchRequest.addFacets(facet);
+    }
     // issues the search operation
     searchResponse = searchService.search(searchRequest);
     // Provide suggestions for catalog numbers and collector names
     provideSuggestions();
 
     LOG.debug("Search for [{}] returned {} results", getQ(), searchResponse.getCount());
+    // initializes the elements required by the UI
+    initializeFacetsForUI();
+    initSelectedFacetCounts();
+    initMinCounts();
+    lookupFacetTitles();
+
     return SUCCESS;
   }
+
+  /**
+   * Utility function that sets facet titles.
+   * The function uses a function parameter to accomplish this task.
+   * The getTitleFunction could provide the actual communication with the service later to provide the required title.
+   */
+  protected void lookupFacetTitles() {
+    // "cache"
+    Map<String, String> names = Maps.newHashMap();
+    // facet counts
+    for (Map.Entry<OccurrenceSearchParameter,List<FacetInstance>>  facetEntry : getFacetCounts().entrySet()) {
+      for (int idx = 0; idx < facetEntry.getValue().size(); idx++) {
+        FacetInstance c = facetEntry.getValue().get(idx);
+        if (names.containsKey(c.getName())) {
+          c.setTitle(names.get(c.getName()));
+        } else {
+          try {
+            c.setTitle(filtersActionHelper.getFilterTitle(facetEntry.getKey().name(),c.getName()));
+            names.put(c.getName(), c.getTitle());
+          } catch (Exception e) {
+            LOG.warn("Cannot lookup {} title for {}", new Object[] {facetEntry.getKey().name(), c.getName(), e});
+          }
+        }
+      }
+    }
+  }
+
 
   /**
    * @eturn the list of {@link org.gbif.api.vocabulary.BasisOfRecord} literals.

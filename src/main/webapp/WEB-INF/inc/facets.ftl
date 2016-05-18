@@ -18,7 +18,7 @@ This include requires 2 arrays to be set:
   <#assign displayedFacets = 0>
   <#assign seeAll = false>
 
-    <#if (facetCounts.get(facet)?has_content && (selectedFacetCounts.get(facet)?has_content || facetCounts.get(facet)?size > 1))>
+    <#if (facetCounts.get(facet)?has_content && (selectedFacetCounts.get(facet)?has_content || facetCounts.get(facet)?size > 0))>
      <div class="refine">
       <h4><@s.text name="search.facet.${facetName}" /></h4>
       <div class="facet">

@@ -2,7 +2,7 @@
   <!-- Filter templates -->
   <script type="text/template" id="template-month-filter">
     <tr class="filter">
-      <td colspan="4">
+      <td colspan="5">
         <a class="edit" style="display:none;"/>
         <div class="inner filter_view">
           <h4 class="title"><%= title %></h4>
@@ -86,7 +86,7 @@
 
   <script type="text/template" id="template-basis-of-record-filter">
     <tr class="filter">
-      <td colspan="4">
+      <td colspan="5">
         <a class="edit" style="display:none;"/>
         <div class="inner filter_view">
           <div class="filter">
@@ -115,7 +115,7 @@
 
   <script type="text/template" id="template-establishment-means-filter">
     <tr class="filter">
-      <td colspan="4">
+      <td colspan="5">
         <a class="edit" style="display:none;"/>
         <div class="inner filter_view">
           <div class="filter">
@@ -143,7 +143,7 @@
 
   <script type="text/template" id="template-continent-filter">
     <tr class="filter">
-      <td colspan="4">
+      <td colspan="5">
         <a class="edit" style="display:none;"/>
 
         <div class="inner filter_view">
@@ -173,7 +173,7 @@
 
    <script type="text/template" id="template-type-status-filter">
     <tr class="filter">
-      <td colspan="4">
+      <td colspan="5">
         <a class="edit" style="display:none;"/>
         <div class="inner filter_view">
           <div class="filter">
@@ -202,7 +202,7 @@
 
   <script type="text/template" id="template-media-type-filter">
     <tr class="filter">
-      <td colspan="4">
+      <td colspan="5">
         <a class="edit" style="display:none;"/>
         <div class="inner filter_view">
           <div class="filter">
@@ -231,7 +231,7 @@
 
   <script type="text/template" id="template-occurrence-issue-filter">
     <tr class="filter">
-      <td colspan="4">
+      <td colspan="5">
         <a class="edit" style="display:none;"/>
         <div class="inner filter_view">
           <div class="filter">
@@ -259,7 +259,7 @@
 
   <script type="text/template" id="template-add-filter">
     <tr class="filter">
-      <td colspan="4">
+      <td colspan="5">
         <a class="edit" style="display:none;"/>
         <div class="inner filter_view">
           <h4 class="title"><%= title %></h4>
@@ -294,7 +294,7 @@
 
    <script type="text/template" id="template-simple-filter">
     <tr class="filter">
-      <td colspan="4">
+      <td colspan="5">
         <a class="edit" style="display:none;"/>
         <div class="inner filter_view">
           <h4 class="title"><%= title %></h4>
@@ -324,7 +324,7 @@
 
   <script type="text/template" id="template-compare-filter">
     <tr class="filter">
-      <td colspan="4">
+      <td colspan="5">
         <a class="edit" style="display:none;"/>
         <div class="inner filter_view">
           <h4 class="title"><%= title %></h4>
@@ -373,7 +373,7 @@
 
   <script type="text/template" id="template-date-compare-filter">
     <tr class="filter">
-      <td colspan="4">
+      <td colspan="5">
         <a class="edit" style="display:none;"/>
         <div class="inner filter_view">
             <h4 class="title"><%= title %><img class="configure_dates" src="<@s.url value='/img/icons/cog_gray_small.png'/>"></h4>
@@ -668,7 +668,7 @@
 
   <script type="text/template" id="map-template-filter">
      <tr class="filter">
-      <td colspan="4">
+      <td colspan="5">
         <a class="edit" style="display:none;"/>
         <div class="inner filter_view">
           <h4 class="title">Location</h4>
