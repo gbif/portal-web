@@ -24,14 +24,11 @@ import org.gbif.portal.model.OccurrenceTable;
 import org.gbif.portal.model.SearchSuggestions;
 
 import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.annotation.Nullable;
 
-import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Strings;
@@ -58,6 +55,26 @@ public class SearchAction extends
 
   private static final Logger LOG = LoggerFactory.getLogger(SearchAction.class);
 
+  // Message key in resource bundle
+  private static final String MAXOFFSET_ERROR_KEY = "max.offset.error";
+
+  // Name of the offset field, used to display error messages related to the offset parameter
+  private static final String OFFSET_FIELD = "offset";
+
+  private static final String RIGHTS_TERM = "rights";
+
+  private static final Set<OccurrenceIssue> OCCURRENCE_ISSUES = EnumSet.allOf(OccurrenceIssue.class);
+
+  private static final EnumSet<OccurrenceSearchParameter> SUPPORTED_FACETS = EnumSet.of(OccurrenceSearchParameter.BASIS_OF_RECORD,OccurrenceSearchParameter.TYPE_STATUS,OccurrenceSearchParameter.DATASET_KEY,OccurrenceSearchParameter.COUNTRY,OccurrenceSearchParameter.MONTH,OccurrenceSearchParameter.YEAR);
+
+  // List of parameters that should be excluded during the regular validation.
+  // These parameters are excluded since they could contain String values that will be processed as suggestions.
+  private static final EnumSet<OccurrenceSearchParameter> OCC_VALIDATION_DISCARDED = EnumSet.of(
+    OccurrenceSearchParameter.TAXON_KEY,
+    OccurrenceSearchParameter.DATASET_KEY);
+
+  private static final Joiner COMMA_JOINER = Joiner.on(',').skipNulls();
+
   private final FiltersActionHelper filtersActionHelper;
 
   private SearchSuggestions<NameUsageSuggestResult> nameUsagesSuggestions;
@@ -76,31 +93,13 @@ public class SearchAction extends
 
   private SearchSuggestions<String> occurrenceIdSuggestions;
 
-  private Function<String,String> getFilterTitleFunction;
-
   private List<ParameterValidationError<OccurrenceSearchParameter>> validationErrors = Lists.newArrayList();
-
-  // Message key in resource bundle
-  private static final String MAXOFFSET_ERROR_KEY = "max.offset.error";
-
-  // Name of the offset field, used to display error messages related to the offset parameter
-  private static final String OFFSET_FIELD = "offset";
-
-  private static final Set<OccurrenceIssue> OCCURRENCE_ISSUES = EnumSet.allOf(OccurrenceIssue.class);
-
-  private static final EnumSet<OccurrenceSearchParameter> SUPPORTED_FACETS = EnumSet.of(OccurrenceSearchParameter.BASIS_OF_RECORD,OccurrenceSearchParameter.TYPE_STATUS,OccurrenceSearchParameter.DATASET_KEY,OccurrenceSearchParameter.COUNTRY,OccurrenceSearchParameter.MONTH,OccurrenceSearchParameter.YEAR);
-
-  // List of parameters that should be excluded during the regular validation.
-  // These parameters are excluded since they could contain String values that will be processed as suggestions.
-  private static final EnumSet<OccurrenceSearchParameter> OCC_VALIDATION_DISCARDED = EnumSet.of(
-    OccurrenceSearchParameter.TAXON_KEY,
-    OccurrenceSearchParameter.DATASET_KEY);
 
   private OccurrenceTable table;
 
 
   @Inject
-  public SearchAction(OccurrenceSearchService occurrenceSearchService, final FiltersActionHelper filtersActionHelper) {
+  public SearchAction(OccurrenceSearchService occurrenceSearchService, FiltersActionHelper filtersActionHelper) {
     super(occurrenceSearchService, OccurrenceSearchParameter.class, new OccurrenceSearchRequest(DEFAULT_PARAM_OFFSET,
                                                                                                 DEFAULT_PARAM_LIMIT));
     this.filtersActionHelper = filtersActionHelper;
@@ -379,7 +378,6 @@ public class SearchAction extends
   }
 
   public String getParameterErrors(String parameter) {
-    Joiner COMMA_JOINER = Joiner.on(',').skipNulls();
     return COMMA_JOINER.join(getFieldErrors().get(parameter));
   }
 
@@ -415,7 +413,7 @@ public class SearchAction extends
    * @return true if the parameter has errors, false otherwise
    */
   public boolean hasParameterErrors(String parameter) {
-    return (getFieldErrors().containsKey(parameter));
+    return getFieldErrors().containsKey(parameter);
   }
 
   /**
@@ -438,7 +436,8 @@ public class SearchAction extends
   protected String translateFilterValue(OccurrenceSearchParameter param, String value) {
     if (param == OccurrenceSearchParameter.GEOMETRY) {
       return String.format(FiltersActionHelper.POLYGON_PATTERN, value);
-    } else if (Enum.class.isAssignableFrom(param.type())) {
+    }
+    if (Enum.class.isAssignableFrom(param.type())) {
       return value.toUpperCase();
     }
     return value;
@@ -518,12 +517,12 @@ public class SearchAction extends
    */
   public String termValue(String term, Occurrence occ) {
     // special case for Dc.rights
-    if (term.equals("rights")) {
+    if (RIGHTS_TERM.equals(term)) {
       return occ.getVerbatimField(DcTerm.rights);
     }
-    DwcTerm t = DwcTerm.valueOf(term);
-    if (t != null && occ != null && occ.getVerbatimFields() != null) {
-      return occ.getVerbatimField(t);
+    DwcTerm dwcTerm = DwcTerm.valueOf(term);
+    if (dwcTerm != null && occ != null && occ.getVerbatimFields() != null) {
+      return occ.getVerbatimField(dwcTerm);
     }
     return null;
   }
