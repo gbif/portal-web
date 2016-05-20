@@ -153,7 +153,7 @@
                 <#list searchResponse.spellCheckResponse.suggestions?values as suggestion>
                   <#if suggestion.alternatives?has_content>
                     <#list suggestion.alternatives as alternative>
-                      <a href="${currentUrl?replace('q=' + q?replace(' ','+'),'q=' + alternative?url)}" class="spell" style="font-size: small; display: inline">
+                      <a href="<@s.url value='/occurrence/search'/>${'?' + action.replaceQParam(alternative)}" class="spell" style="font-size: small; display: inline">
                         <b>
                           <i>${alternative}</i>
                         </b>

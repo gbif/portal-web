@@ -27,7 +27,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
@@ -45,9 +46,8 @@ import static org.gbif.api.model.common.paging.PagingConstants.DEFAULT_PARAM_OFF
 /**
  * Search action class for occurrence search page.
  */
-public class SearchAction extends
-  BaseFacetedSearchAction<Occurrence, OccurrenceSearchParameter, OccurrenceSearchRequest> {
-
+public class SearchAction
+  extends BaseFacetedSearchAction<Occurrence, OccurrenceSearchParameter, OccurrenceSearchRequest> {
 
   private static final long serialVersionUID = 4064512946598688405L;
 
@@ -63,15 +63,26 @@ public class SearchAction extends
 
   private static final String RIGHTS_TERM = "rights";
 
+  //Use to perform replacements of q parameter
+  private static final String Q_REPLACEMENT = "q=";
+
+  private static final Pattern WHITESPACE_PAT = Pattern.compile(" ", Pattern.LITERAL);
+  private static final String URL_WHITESPACE = Matcher.quoteReplacement("\\+");
+
   private static final Set<OccurrenceIssue> OCCURRENCE_ISSUES = EnumSet.allOf(OccurrenceIssue.class);
 
-  private static final EnumSet<OccurrenceSearchParameter> SUPPORTED_FACETS = EnumSet.of(OccurrenceSearchParameter.BASIS_OF_RECORD,OccurrenceSearchParameter.TYPE_STATUS,OccurrenceSearchParameter.DATASET_KEY,OccurrenceSearchParameter.COUNTRY,OccurrenceSearchParameter.MONTH,OccurrenceSearchParameter.YEAR);
+  private static final EnumSet<OccurrenceSearchParameter> SUPPORTED_FACETS =
+    EnumSet.of(OccurrenceSearchParameter.BASIS_OF_RECORD,
+               OccurrenceSearchParameter.TYPE_STATUS,
+               OccurrenceSearchParameter.DATASET_KEY,
+               OccurrenceSearchParameter.COUNTRY,
+               OccurrenceSearchParameter.MONTH,
+               OccurrenceSearchParameter.YEAR);
 
   // List of parameters that should be excluded during the regular validation.
   // These parameters are excluded since they could contain String values that will be processed as suggestions.
-  private static final EnumSet<OccurrenceSearchParameter> OCC_VALIDATION_DISCARDED = EnumSet.of(
-    OccurrenceSearchParameter.TAXON_KEY,
-    OccurrenceSearchParameter.DATASET_KEY);
+  private static final EnumSet<OccurrenceSearchParameter> OCC_VALIDATION_DISCARDED =
+    EnumSet.of(OccurrenceSearchParameter.TAXON_KEY, OccurrenceSearchParameter.DATASET_KEY);
 
   private static final Joiner COMMA_JOINER = Joiner.on(',').skipNulls();
 
@@ -97,11 +108,14 @@ public class SearchAction extends
 
   private OccurrenceTable table;
 
+  //Use to replace the q parameter by spell check suggestions
+  private Matcher qReplacePattern;
 
   @Inject
   public SearchAction(OccurrenceSearchService occurrenceSearchService, FiltersActionHelper filtersActionHelper) {
-    super(occurrenceSearchService, OccurrenceSearchParameter.class, new OccurrenceSearchRequest(DEFAULT_PARAM_OFFSET,
-                                                                                                DEFAULT_PARAM_LIMIT));
+    super(occurrenceSearchService,
+          OccurrenceSearchParameter.class,
+          new OccurrenceSearchRequest(DEFAULT_PARAM_OFFSET, DEFAULT_PARAM_LIMIT));
     this.filtersActionHelper = filtersActionHelper;
   }
 
@@ -119,10 +133,10 @@ public class SearchAction extends
     initSuggestions();
 
     if (getSearchRequest().getOffset() > getMaxAllowedOffset()) {
-      addFieldError(
-        OFFSET_FIELD,
-        getText(MAXOFFSET_ERROR_KEY,
-                new String[] {Long.toString(getSearchRequest().getOffset()), getMaxAllowedOffset().toString()}));
+      addFieldError(OFFSET_FIELD,
+                    getText(MAXOFFSET_ERROR_KEY,
+                            new String[] {Long.toString(getSearchRequest().getOffset()),
+                              getMaxAllowedOffset().toString()}));
 
       return SUCCESS;
     }
@@ -149,6 +163,7 @@ public class SearchAction extends
    * Utility method that executes the search.
    * Differs to the BaseSearchAction.execute() method in that this method doesn't execute the method
    * BaseSearchAction.readFilterParams().
+   *
    * @return SUCCESS, throws an exception in case of error
    */
   public String executeSearch() {
@@ -190,14 +205,14 @@ public class SearchAction extends
     // "cache"
     Map<String, String> names = Maps.newHashMap();
     // facet counts
-    for (Map.Entry<OccurrenceSearchParameter,List<FacetInstance>>  facetEntry : getFacetCounts().entrySet()) {
+    for (Map.Entry<OccurrenceSearchParameter, List<FacetInstance>> facetEntry : getFacetCounts().entrySet()) {
       for (int idx = 0; idx < facetEntry.getValue().size(); idx++) {
         FacetInstance c = facetEntry.getValue().get(idx);
         if (names.containsKey(c.getName())) {
           c.setTitle(names.get(c.getName()));
         } else {
           try {
-            c.setTitle(filtersActionHelper.getFilterTitle(facetEntry.getKey().name(),c.getName()));
+            c.setTitle(filtersActionHelper.getFilterTitle(facetEntry.getKey().name(), c.getName()));
             names.put(c.getName(), c.getTitle());
           } catch (Exception e) {
             LOG.warn("Cannot lookup {} title for {}", new Object[] {facetEntry.getKey().name(), c.getName(), e});
@@ -207,7 +222,6 @@ public class SearchAction extends
     }
   }
 
-
   /**
    * @eturn the list of {@link org.gbif.api.vocabulary.BasisOfRecord} literals.
    */
@@ -216,7 +230,7 @@ public class SearchAction extends
   }
 
   /**
-   * @return  the list of {@link org.gbif.api.vocabulary.EstablishmentMeans} literals.
+   * @return the list of {@link org.gbif.api.vocabulary.EstablishmentMeans} literals.
    */
   public EstablishmentMeans[] getEstablishmentMeans() {
     return EstablishmentMeans.values();
@@ -264,7 +278,6 @@ public class SearchAction extends
     return collectorSuggestions;
   }
 
-
   public SearchSuggestions<String> getRecordNumberSuggestions() {
     return recordNumberSuggestions;
   }
@@ -287,10 +300,10 @@ public class SearchAction extends
     return OCCURRENCE_ISSUES;
   }
 
-
   /**
    * This value is used by occurrence filters to determine the maximum year that is allowed for the
    * OccurrenceSearchParamater.EVENT_DATE.
+   *
    * @return the current year.
    */
   public int getCurrentYear() {
@@ -306,10 +319,10 @@ public class SearchAction extends
     return datasetsSuggestions;
   }
 
-
   /**
    * Gets the Dataset title, the key parameter is returned if either the Dataset doesn't exists or it
    * doesn't have a title.
+   *
    * @param key dataset UUID
    */
   public String getDatasetTitle(String key) {
@@ -321,11 +334,12 @@ public class SearchAction extends
     return searchRequest.getParameters();
   }
 
-
   /**
    * Gets the readable value of filter parameter.
-   * @param filterKey filter key
+   *
+   * @param filterKey   filter key
    * @param filterValue filter value
+   *
    * @return filter title, if exists, filter value otherwise
    */
   public String getFilterTitle(String filterKey, String filterValue) {
@@ -335,7 +349,6 @@ public class SearchAction extends
     }
     return Strings.nullToEmpty(filterValue);
   }
-
 
   /**
    * @return the institutionCodeSuggestions
@@ -364,6 +377,7 @@ public class SearchAction extends
    * Gets the title(name) of a node.
    *
    * @param networkKey node key/UUID
+   *
    * @return network name
    */
   public String getNetworkTitle(String networkKey) {
@@ -371,7 +385,7 @@ public class SearchAction extends
   }
 
   /**
-   * @return  the NUB key value.
+   * @return the NUB key value.
    */
   public String getNubTaxonomyKey() {
     return Constants.NUB_DATASET_KEY.toString();
@@ -406,10 +420,11 @@ public class SearchAction extends
     return super.hasErrors() || !validationErrors.isEmpty();
   }
 
-
   /**
    * Validates if there are parameters with errors.
+   *
    * @param parameter parameter to be validated
+   *
    * @return true if the parameter has errors, false otherwise
    */
   public boolean hasParameterErrors(String parameter) {
@@ -427,9 +442,13 @@ public class SearchAction extends
    * @return True if the download functionality should be shown, False otherwise
    */
   public boolean showDownload() {
-    return searchResponse != null && searchResponse.getCount() > 0
-           && (getCfg().getMaxOccDowloadSize() < 0 || searchResponse.getCount() <= getCfg().getMaxOccDowloadSize())
-           && !hasErrors() && !hasSuggestions();
+    return searchResponse != null
+           && searchResponse.getCount() > 0
+           && (getCfg().getMaxOccDowloadSize() < 0
+               || searchResponse.getCount()
+                  <= getCfg().getMaxOccDowloadSize())
+           && !hasErrors()
+           && !hasSuggestions();
   }
 
   @Override
@@ -468,8 +487,8 @@ public class SearchAction extends
    * @return True if the parameter is in any lists of suggestions, False otherwise
    */
   private boolean isSuggestion(String value) {
-    return nameUsagesSuggestions.getSuggestions().containsKey(value)
-           || datasetsSuggestions.getSuggestions().containsKey(value);
+    return nameUsagesSuggestions.getSuggestions().containsKey(value) || datasetsSuggestions.getSuggestions()
+      .containsKey(value);
   }
 
   /**
@@ -501,6 +520,7 @@ public class SearchAction extends
   /**
    * Process the occurrence search parameters to validate if the values are correct.
    * The list of errors is store in the "errors" field.
+   *
    * @return True if no errors are present, False otherwise
    */
   private boolean validateSearchParameters() {
@@ -512,7 +532,8 @@ public class SearchAction extends
    * Retrieve value for Term in interpreted fields map. Currently expecting only DwcTerm.
    *
    * @param term Term
-   * @param occ occurrence record
+   * @param occ  occurrence record
+   *
    * @return value for Term in fields map, or null if it doesn't exist
    */
   public String termValue(String term, Occurrence occ) {
@@ -526,4 +547,15 @@ public class SearchAction extends
     }
     return null;
   }
+
+  public String replaceQParam(String value) {
+    return qReplacePattern.replaceAll(Matcher.quoteReplacement(Q_REPLACEMENT + value));
+  }
+
+  public void setQ(String q){
+    super.setQ(q);
+    qReplacePattern = Pattern.compile(Q_REPLACEMENT + WHITESPACE_PAT.matcher(q).replaceAll(URL_WHITESPACE))
+                      .matcher(getServletRequest().getQueryString());
+  }
+
 }
