@@ -14,6 +14,10 @@
     <link rel="stylesheet" href="<@s.url value='/js/vendor/datepicker/css/datepicker.css'/>"/>
     <link rel="stylesheet" href="<@s.url value='/js/vendor/tagit/jquery.tagit.css'/>"/>
     <link rel="stylesheet" href="<@s.url value='/js/vendor/tagit/tagit.ui-zendesk.css'/>"/>
+    <#if !cfg.occurrenceFacetsEnabled>
+      <link rel="stylesheet" href="<@s.url value='/css/occ_nofacets.css?v=3'/>"/>
+    </#if>
+
 
 <!--    <link rel="stylesheet" href="<@s.url value='/css/combobox.css?v=2'/>"/>    -->
     <script src='<@s.url value='/js/vendor/jquery.url.js'/>' type='text/javascript'></script>
@@ -353,20 +357,22 @@
       </#if>
     </table>
   </div>
-    <div class="facets" style="padding-top: 20px; text-align:left; margin-right: 4px;vertical-align:top; float:right;display:inline-block; height: 100%;min-height:100%;">
-      <h3 style="font-size: 22px; text-transform: none; color: #999999; border-bottom: 1px solid #D8DCE1; padding: 0 0 27px 0;margin: 0 0 10px 0;">Refine your search</h3>
-      <div id="resetFacets" data-currentUrl="">
-          <input id="resetFacetsButton" value="reset" type="button"/>
-      </div>
-      <#assign seeAllFacets = []>
-      <#assign facets= ["BASIS_OF_RECORD","TYPE_STATUS","DATASET_KEY","COUNTRY","MONTH","YEAR"]>
-      <#include "/WEB-INF/inc/facets.ftl">
+  <#if cfg.occurrenceFacetsEnabled>
+  <div class="facets" style="padding-top: 20px; text-align:left; margin-right: 4px;vertical-align:top; float:right;display:inline-block; height: 100%;min-height:100%;">
+    <h3 style="font-size: 22px; text-transform: none; color: #999999; border-bottom: 1px solid #D8DCE1; padding: 0 0 27px 0;margin: 0 0 10px 0;">Refine your search</h3>
+    <div id="resetFacets" data-currentUrl="">
+        <input id="resetFacetsButton" value="reset" type="button"/>
     </div>
-    <div class="footer" style="float: left;text-align:center; margin: 0 20%;">
-      <#if !action.hasSuggestions() && !action.hasErrors()>
-        <@macro.pagination page=searchResponse url=currentUrlWithoutPage maxOffset=maxOffset/>
-      </#if>
-    </div>
+    <#assign seeAllFacets = []>
+    <#assign facets= ["BASIS_OF_RECORD","TYPE_STATUS","DATASET_KEY","COUNTRY","MONTH","YEAR"]>
+    <#include "/WEB-INF/inc/facets.ftl">
+  </div>
+  </#if>
+  <div class="footer" style="float: left;text-align:center; margin: 0 20%;">
+    <#if !action.hasSuggestions() && !action.hasErrors()>
+      <@macro.pagination page=searchResponse url=currentUrlWithoutPage maxOffset=maxOffset/>
+    </#if>
+  </div>
   </div>
   <footer></footer>
 </article>

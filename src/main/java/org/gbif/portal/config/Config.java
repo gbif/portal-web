@@ -64,6 +64,9 @@ public class Config {
   private Integer maxOccDowloadSize;
   private int maxOccSearchOffset;
 
+  //Used to enable/disable faceted search in the occurrence search page
+  private boolean occurrenceFacetsEnabled;
+
 
   /**
    * To safeguard against configuration issues, this ensures that trailing slashes exist where required.
@@ -84,6 +87,7 @@ public class Config {
       cfg.maxOccDowloadSize = Integer.parseInt(properties.getProperty("occurrence.download.size.limit"));
       cfg.maxOccSearchOffset = Integer.parseInt(properties.getProperty("occurrence.search.maxoffset"));
       cfg.includeContext = Boolean.parseBoolean(properties.getProperty("struts.url.includeContext"));
+      cfg.occurrenceFacetsEnabled = Boolean.parseBoolean(properties.getProperty("occurrence.facets.enable"));
       // API URLs
       cfg.apiBaseUrl = getPropertyUrl(properties, API_BASEURL_PROPERTY, true);
       cfg.wsClb = cfg.apiBaseUrl;
@@ -273,4 +277,10 @@ public class Config {
     return annosysUrl;
   }
 
+  /**
+   * Flag to enable/disable faceted search in the occurrence search page.
+   */
+  public boolean isOccurrenceFacetsEnabled() {
+    return occurrenceFacetsEnabled;
+  }
 }

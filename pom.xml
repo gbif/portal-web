@@ -39,6 +39,7 @@
     <google.analytics />
     <occurrence.download.size.limit>-1</occurrence.download.size.limit>
     <occurrence.search.maxoffset>10000</occurrence.search.maxoffset>
+    <occurrence.facets.enable>true</occurrence.facets.enable>
     <skipJetty>false</skipJetty>
 
     <!-- dependency versions -->
@@ -161,6 +162,7 @@
                 <include>leaflet.ie.less</include>
                 <include>leaflet.less</include>
                 <include>uniform.less</include>
+                <include>occ_nofacets.less</include>
               </includes>
           </configuration>
           <executions>

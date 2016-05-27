@@ -177,9 +177,12 @@ public class SearchAction
     searchRequest.setSpellCheckCount(DEFAULT_SPELLCHECK_COUNT);
 
     searchRequest.setMultiSelectFacets(true);
-    // add all available facets to the request
-    for (OccurrenceSearchParameter facet : SUPPORTED_FACETS) {
-      searchRequest.addFacets(facet);
+
+    if (getCfg().isOccurrenceFacetsEnabled()) {
+      // add all available facets to the request
+      for (OccurrenceSearchParameter facet : SUPPORTED_FACETS) {
+        searchRequest.addFacets(facet);
+      }
     }
     // issues the search operation
     searchResponse = searchService.search(searchRequest);
@@ -187,11 +190,14 @@ public class SearchAction
     provideSuggestions();
 
     LOG.debug("Search for [{}] returned {} results", getQ(), searchResponse.getCount());
-    // initializes the elements required by the UI
-    initializeFacetsForUI();
-    initSelectedFacetCounts();
-    initMinCounts();
-    lookupFacetTitles();
+
+    if (getCfg().isOccurrenceFacetsEnabled()) {
+      // initializes the elements required by the UI
+      initializeFacetsForUI();
+      initSelectedFacetCounts();
+      initMinCounts();
+      lookupFacetTitles();
+    }
 
     return SUCCESS;
   }
