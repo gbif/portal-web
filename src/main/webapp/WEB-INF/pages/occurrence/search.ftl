@@ -363,7 +363,7 @@
     <div id="resetFacets" data-currentUrl="">
         <input id="resetFacetsButton" value="reset" type="button"/>
     </div>
-    <#assign seeAllFacets = ["DATASET_KEY","COUNTRY","MONTH","YEAR"]>
+    <#assign seeAllFacets = ["DATASET_KEY","COUNTRY","YEAR"]>
     <#assign facets= ["BASIS_OF_RECORD","TYPE_STATUS","DATASET_KEY","COUNTRY","MONTH","YEAR"]>
     <#include "/WEB-INF/inc/facets.ftl">
   </div>

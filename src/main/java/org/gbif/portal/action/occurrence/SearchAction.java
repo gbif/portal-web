@@ -176,14 +176,12 @@ public class SearchAction
     searchRequest.setSpellCheck(true);
     searchRequest.setSpellCheckCount(DEFAULT_SPELLCHECK_COUNT);
 
-    searchRequest.setMultiSelectFacets(true);
+    searchRequest.setMultiSelectFacets(false);
 
     if (getCfg().isOccurrenceFacetsEnabled()) {
       // add all available facets to the request
       for (OccurrenceSearchParameter facet : SUPPORTED_FACETS) {
-        if (!searchRequest.getParameters().containsKey(facet)) {
-          searchRequest.addFacets(facet);
-        }
+        searchRequest.addFacets(facet);
       }
     }
     // issues the search operation
@@ -231,7 +229,7 @@ public class SearchAction
   }
 
   /**
-   * @eturn the list of {@link org.gbif.api.vocabulary.BasisOfRecord} literals.
+   * @return the list of {@link org.gbif.api.vocabulary.BasisOfRecord} literals.
    */
   public BasisOfRecord[] getBasisOfRecords() {
     return filtersActionHelper.getBasisOfRecords();
