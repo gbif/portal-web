@@ -181,7 +181,9 @@ public class SearchAction
     if (getCfg().isOccurrenceFacetsEnabled()) {
       // add all available facets to the request
       for (OccurrenceSearchParameter facet : SUPPORTED_FACETS) {
-        searchRequest.addFacets(facet);
+        if (!searchRequest.getParameters().containsKey(facet)) {
+          searchRequest.addFacets(facet);
+        }
       }
     }
     // issues the search operation
@@ -218,7 +220,7 @@ public class SearchAction
           c.setTitle(names.get(c.getName()));
         } else {
           try {
-            c.setTitle(filtersActionHelper.getFilterTitle(facetEntry.getKey().name(), c.getName()));
+            c.setTitle(filtersActionHelper.getFacetFilterTitle(facetEntry.getKey().name(), c.getName()));
             names.put(c.getName(), c.getTitle());
           } catch (Exception e) {
             LOG.warn("Cannot lookup {} title for {}", new Object[] {facetEntry.getKey().name(), c.getName(), e});

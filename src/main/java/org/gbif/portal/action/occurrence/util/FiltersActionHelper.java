@@ -295,11 +295,25 @@ public class FiltersActionHelper {
   }
 
   /**
+   * Lookups for titles/names for filters.
+   */
+  public String getFilterTitle(String filterKey, String filterValue) {
+    return getFilterTitle(filterKey,filterValue,false);
+  }
+
+  /**
+   * Lookups titles and names for facets values.
+   */
+  public String getFacetFilterTitle(String filterKey, String filterValue) {
+    return getFilterTitle(filterKey,filterValue,true);
+  }
+
+  /**
    * @param filterKey filter key/name
    * @param filterValue filter value
    * @return the displayable value of filter parameter.
    */
-  public String getFilterTitle(String filterKey, String filterValue) {
+  private String getFilterTitle(String filterKey, String filterValue, boolean forFacets) {
     String title = filterValue;
     OccurrenceSearchParameter parameter =
       (OccurrenceSearchParameter) VocabularyUtils.lookupEnum(filterKey, OccurrenceSearchParameter.class);
@@ -326,14 +340,14 @@ public class FiltersActionHelper {
       } else if (parameter == OccurrenceSearchParameter.CONTINENT) {
         return LocalizedTextUtil.findDefaultText(CONTINENT_KEY + filterValue, getLocale());
       } else if (parameter == OccurrenceSearchParameter.DEPTH || parameter == OccurrenceSearchParameter.ELEVATION) {
-        return getRangeTitle(filterValue, METER);
+        return forFacets ? filterValue : getRangeTitle(filterValue, METER);
       } else if (parameter == OccurrenceSearchParameter.EVENT_DATE
         || parameter == OccurrenceSearchParameter.LAST_INTERPRETED) {
-        return getDateRangeTitle(filterValue);
+        return forFacets ? filterValue : getDateRangeTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.YEAR) {
-        return getTemporalRangeTitle(filterValue);
+        return forFacets ? filterValue : getTemporalRangeTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.MONTH) {
-        return getMonthRangeTitle(filterValue);
+        return forFacets ? filterValue : getMonthRangeTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.HAS_GEOSPATIAL_ISSUE) {
         return getSpatialIssuesTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.ISSUE) {
