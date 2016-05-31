@@ -358,7 +358,7 @@
     </table>
   </div>
   <#if cfg.occurrenceFacetsEnabled>
-  <div class="facets" style="padding-top: 20px; text-align:left; margin-right: 4px;vertical-align:top; float:right;display:inline-block; height: 100%;min-height:100%;">
+  <div class="facets" style="padding-top: 20px; text-align:left; margin-right: 4px;vertical-align:top; float:right;display:inline-block; height: 100%;min-height:100%;padding-left: 10px;box-sizing: border-box;">
     <h3 style="font-size: 22px; text-transform: none; color: #999999; border-bottom: 1px solid #D8DCE1; padding: 0 0 27px 0;margin: 0 0 10px 0;">Refine your search</h3>
     <div id="resetFacets" data-currentUrl="">
         <input id="resetFacetsButton" value="reset" type="button"/>
