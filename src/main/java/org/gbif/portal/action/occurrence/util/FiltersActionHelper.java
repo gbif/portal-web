@@ -347,7 +347,7 @@ public class FiltersActionHelper {
       } else if (parameter == OccurrenceSearchParameter.YEAR) {
         return forFacets ? filterValue : getTemporalRangeTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.MONTH) {
-        return forFacets ? filterValue : getMonthRangeTitle(filterValue);
+        return getMonthRangeTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.HAS_GEOSPATIAL_ISSUE) {
         return getSpatialIssuesTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.ISSUE) {
