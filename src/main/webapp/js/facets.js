@@ -112,7 +112,7 @@ $(function () {
     // now iterate each pair
     for (var i = 0; i < pairs.length; i++) {
       var params = pairs[i].split('=');
-      if (params[0] != "limit" && params[0] != "offset") {
+      if (params[0].indexOf("limit") > -1 && params[0].indexOf("offset") > -1) {
         values.push(pairs[i]);
       }
     }
