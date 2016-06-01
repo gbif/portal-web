@@ -66,7 +66,7 @@ Pagination macro for rendering NEXT & PREVIOUS buttons, whenever applicable
   <#assign firstNum = common.max(2, currPage - numNumbered +1) />
 
 <ul class="numbered-pagination">
-  <@pageLinkFacet title="<" url=getFacetPageUrl(url, 0,facet,showbox) current=(currPage=1) />
+  <@pageLinkFacet title="1" url=getFacetPageUrl(url, 0,facet,showbox) current=(currPage=1) />
   <#if currPage gt 1>
     <#if currPage-numNumbered gt 1>
       <li class="facetPageLink">...</li>
@@ -144,7 +144,7 @@ Pagination macro for rendering numbered page links as well as [FIRST PAGE] and [
 </#macro>
 
 <#macro pageLinkFacet title url current=false>
-<li class="facetPageLink"><a style="padding: 3px 3px !important; font-size: 10px !important;" <#if current>class="current"</#if> href="${url}">${title?string}</a></li>
+<li class="facetPageLink"><a style="padding: 3px 3px !important; font-size: 10px !important;text-align: left !important;" <#if current>class="current"</#if> href="${url}">${title?string}</a></li>
 </#macro>
 
 

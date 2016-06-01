@@ -40,10 +40,10 @@ This include requires 2 arrays to be set:
             <@facetBox facetName=facetName count=count selected=false />
           </#if>
         </#list>
+        <#if pageableFacets?seq_contains(facetName)>
+          <#assign isPageableFacet=true>
+        </#if>
         <#if seeAll>
-          <#if pageableFacets?seq_contains(facetName)>
-            <#assign isPageableFacet=true>
-          </#if>
           <li class="more seeAllFacet">
             <a class="seeAllLink more" href="#">more</a>
             <div class="infowindow dialogPopover">
@@ -65,8 +65,8 @@ This include requires 2 arrays to be set:
                </div>
              </div>
           </li>
-          <#if isPageableFacet><@macro.facetpagination facet=facetName url=action.getFacetPageCurrentUrl(facetName) showbox=false/></#if>
         </#if>
+        <#if isPageableFacet><@macro.facetpagination facet=facetName url=action.getFacetPageCurrentUrl(facetName) showbox=false/></#if>
         </ul>
       </div>
      </div>
