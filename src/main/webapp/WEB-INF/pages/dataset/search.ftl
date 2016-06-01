@@ -115,6 +115,7 @@
         </div>
 
       <#assign seeAllFacets = ["PUBLISHING_ORG", "HOSTING_ORG", "KEYWORD", "PUBLISHING_COUNTRY", "COUNTRY", "DECADE"]>
+      <#assign pageableFacets = []>
       <#assign facets= ["TYPE", "SUBTYPE", "KEYWORD", "PUBLISHING_ORG", "HOSTING_ORG", "PUBLISHING_COUNTRY", "COUNTRY", "DECADE"]>
       <#include "/WEB-INF/inc/facets.ftl">
 

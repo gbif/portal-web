@@ -17,6 +17,7 @@ This include requires 2 arrays to be set:
   <#assign minCnt = "&lt;" + (facetMinimumCount.get(facet)!0) />
   <#assign displayedFacets = 0>
   <#assign seeAll = false>
+  <#assign isPageableFacet = false>
 
     <#if (facetCounts.get(facet)?has_content && (selectedFacetCounts.get(facet)?has_content || facetCounts.get(facet)?size > 0))>
      <div class="refine">
@@ -40,6 +41,9 @@ This include requires 2 arrays to be set:
           </#if>
         </#list>
         <#if seeAll>
+          <#if pageableFacets?seq_contains(facetName)>
+            <#assign isPageableFacet=true>
+          </#if>
           <li class="more seeAllFacet">
             <a class="seeAllLink more" href="#">more</a>
             <div class="infowindow dialogPopover">
@@ -57,9 +61,11 @@ This include requires 2 arrays to be set:
                  </div>
 
                </div>
-               <div class="lfooter"></div>
+               <div class="lfooter"><#if isPageableFacet><@macro.facetpagination facet=facetName url=action.getFacetPageCurrentUrl(facetName)/></#if>
+               </div>
              </div>
           </li>
+          <#if isPageableFacet><@macro.facetpagination facet=facetName url=action.getFacetPageCurrentUrl(facetName) showbox=false/></#if>
         </#if>
         </ul>
       </div>

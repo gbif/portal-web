@@ -8,22 +8,28 @@
  */
 package org.gbif.portal.action;
 
+import org.gbif.api.model.common.paging.Pageable;
+import org.gbif.api.model.common.paging.PagingRequest;
 import org.gbif.api.model.common.search.Facet;
 import org.gbif.api.model.common.search.FacetedSearchRequest;
 import org.gbif.api.model.common.search.SearchParameter;
 import org.gbif.api.service.common.SearchService;
+import org.gbif.api.util.VocabularyUtils;
 import org.gbif.portal.model.FacetInstance;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +64,8 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
    */
   private static final int MAX_FACETS = 5;
 
+  protected static final int DEFAULT_FACET_LIMIT = 10;
+
   /**
    * Default constructor for this class.
    *
@@ -78,6 +86,10 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
     // add all available facets to the request
     for (P fEnum : searchType.getEnumConstants()) {
       searchRequest.addFacets(fEnum);
+      String facetOffset = request.getParameter(fEnum.name() + ".offset");
+      if (facetOffset != null) {
+        searchRequest.addFacetPage(fEnum,Integer.parseInt(facetOffset),DEFAULT_FACET_LIMIT);
+      }
     }
     // execute search
     final String result = super.execute();
@@ -126,6 +138,41 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
     return currentUrl.toString();
   }
 
+  public String getFacetPageCurrentUrl(String facetName) {
+    StringBuffer currentUrl = request.getRequestURL();
+    Set<String> paramsSet = Sets.newHashSet("facetbox",facetName + ".offset", facetName.toLowerCase() + ".limit");
+    if (request.getQueryString() != null) {
+      boolean first = true;
+      for (String p : querySplitter.split(request.getQueryString())) {
+        Iterator<String> kvIter = paramSplitter.split(p).iterator();
+        // lowercase to handle URL hacking gracefully (http://dev.gbif.org/issues/browse/POR-522)
+        String key = kvIter.next();
+        if(!paramsSet.contains(key)) {
+          if (first) {
+            currentUrl.append("?");
+          } else {
+            currentUrl.append("&");
+          }
+          if (kvIter.hasNext()) { // parameter could have no value
+            String val = kvIter.next();
+            // potentially translate facet values
+            P facet = getSearchParam(key);
+            if (facet != null) {
+              val = translateFilterValue(facet, val);
+            }
+            currentUrl.append(key);
+            currentUrl.append("=");
+            currentUrl.append(val);
+          } else {
+            currentUrl.append(key);
+          }
+          first = false;
+        }
+      }
+    }
+    return currentUrl.toString();
+  }
+
   /**
    * Holds the facet count information retrieved after each search operation.
    * For accessing this field the user interface should be able to referencing map data types.
@@ -162,6 +209,14 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
 
   public Map<UUID, String> getTitles() {
     return titles;
+  }
+
+  public Pageable getFacetPage(String facet) {
+    Optional<P> facetParam = VocabularyUtils.lookup(facet, searchType);
+    if(facetParam.isPresent() && getSearchRequest().getFacetPage(facetParam.get()) != null) {
+      return getSearchRequest().getFacetPage(facetParam.get());
+    }
+    return new PagingRequest(0,DEFAULT_FACET_LIMIT);
   }
 
   protected String getEnumTitle(String resourceEntry, String value) {

@@ -182,6 +182,10 @@ public class SearchAction
       // add all available facets to the request
       for (OccurrenceSearchParameter facet : SUPPORTED_FACETS) {
         searchRequest.addFacets(facet);
+        String facetOffset = request.getParameter(facet.name() + ".offset");
+        if (facetOffset != null) {
+          searchRequest.addFacetPage(facet,Integer.parseInt(facetOffset),DEFAULT_FACET_LIMIT);
+        }
       }
     }
     // issues the search operation

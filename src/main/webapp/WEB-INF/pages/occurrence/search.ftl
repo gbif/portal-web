@@ -37,6 +37,7 @@
     <script type="text/javascript" src="<@s.url value='/js/vendor/tagit/tag-it.min.js'/>"></script>
 
     <script>
+
       var filtersFromRequest = new Object();
       var countryList = [<#list countries as country><#if country.official>{label:"${country.title}",iso2Lettercode:"${country.iso2LetterCode}"}<#if country_has_next>,</#if></#if></#list>];
       function addFilters(filtersFromRequest,filterKey,filterValue,filterLabel) {
@@ -364,6 +365,7 @@
         <input id="resetFacetsButton" value="reset" type="button"/>
     </div>
     <#assign seeAllFacets = ["DATASET_KEY","COUNTRY","YEAR"]>
+    <#assign pageableFacets = ["DATASET_KEY","COUNTRY","YEAR"]>
     <#assign facets= ["BASIS_OF_RECORD","TYPE_STATUS","DATASET_KEY","COUNTRY","MONTH","YEAR"]>
     <#include "/WEB-INF/inc/facets.ftl">
   </div>
