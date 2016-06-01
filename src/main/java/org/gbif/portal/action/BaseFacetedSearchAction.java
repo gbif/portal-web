@@ -139,7 +139,7 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
   }
 
   public String getFacetPageCurrentUrl(String facetName) {
-    StringBuilder currentUrl =  new StringBuilder(request.getRequestURI());
+    StringBuilder currentUrl =  new StringBuilder(request.getRequestURI().substring(request.getContextPath().length()));
     Set<String> paramsSet = Sets.newHashSet("facetbox",facetName + ".offset", facetName.toLowerCase() + ".limit");
     if (request.getQueryString() != null) {
       boolean first = true;
