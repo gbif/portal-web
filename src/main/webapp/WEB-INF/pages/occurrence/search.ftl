@@ -231,6 +231,7 @@
                     <li><a tabindex="-1" href="#" data-placeholder="Type an elevation..." data-filter="ELEVATION" title="Elevation" data-template-filter="template-compare-filter" data-template-summary="template-filter" data-input-classes="value auto_add" class="filter-control">Elevation</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a depth..." data-filter="DEPTH" title="Depth" data-template-filter="template-compare-filter" data-template-summary="template-filter" data-input-classes="value auto_add" class="filter-control">Depth</a></li>
                     <li><a tabindex="-1" href="#" data-placeholder="Type a issue..." data-filter="ISSUE" title="Issues" data-template-filter="template-occurrence-issue-filter" data-template-summary="template-filter" class="filter-control">Issues</a></li>
+                    <li><a tabindex="-1" href="#" data-placeholder="Select a data repatriation filter..." data-filter="REPATRIATED" title="Repatriated data?" data-template-filter="template-boolean-filter" data-template-summary="template-filter" class="filter-control" data-input-classes=" ">Data repatriation</a></li>
                   </ul>
                   <input type="hidden" id="nubTaxonomyKey" value="${nubTaxonomyKey}"/>
                 </div>
@@ -366,7 +367,7 @@
     </div>
     <#assign seeAllFacets = []>
     <#assign pageableFacets = ["DATASET_KEY","COUNTRY","YEAR"]>
-    <#assign facets= ["BASIS_OF_RECORD","TYPE_STATUS","DATASET_KEY","COUNTRY","MONTH","YEAR"]>
+    <#assign facets= ["BASIS_OF_RECORD","TYPE_STATUS","DATASET_KEY","COUNTRY","MONTH","YEAR","REPATRIATED"]>
     <#include "/WEB-INF/inc/facets.ftl">
   </div>
   </#if>

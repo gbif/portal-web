@@ -322,6 +322,43 @@
     </tr>
   </script>
 
+
+  <script type="text/template" id="template-boolean-filter">
+    <tr class="filter">
+      <td colspan="5">
+        <a class="edit" style="display:none;"/>
+        <div class="inner filter_view">
+          <h4 class="title"><%= title %></h4>
+          <div class="filter">
+            <table>
+              <tr>
+                <td>
+                  <h5>Yes</h5>
+                </td>
+                <td>
+                  <input type="checkbox" name="<%=paramName%>" class="<%= inputClasses %> select_yes" placeholder="<%= placeholder %>"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h5>No</h5>
+                </td>
+                <td>
+                  <input type="checkbox" name="<%=paramName%>" class="<%= inputClasses %> select_no" placeholder="<%= placeholder %>"/>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="center">
+            <a class="button candy_blue_button apply" title="<%= title %>" data-action="add-new-filter" data-filter="<%= paramName %>" apply-function="applyOccurrenceFilters"><span>Apply</span></a>
+          </div>
+          <a class="close"></a>
+        </div>
+        <div class="summary_view"></div>
+      </td>
+    </tr>
+  </script>
+
   <script type="text/template" id="template-compare-filter">
     <tr class="filter">
       <td colspan="5">

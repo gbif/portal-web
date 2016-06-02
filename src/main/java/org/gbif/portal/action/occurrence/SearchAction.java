@@ -77,7 +77,8 @@ public class SearchAction
                OccurrenceSearchParameter.DATASET_KEY,
                OccurrenceSearchParameter.COUNTRY,
                OccurrenceSearchParameter.MONTH,
-               OccurrenceSearchParameter.YEAR);
+               OccurrenceSearchParameter.YEAR,
+               OccurrenceSearchParameter.REPATRIATED);
 
   // List of parameters that should be excluded during the regular validation.
   // These parameters are excluded since they could contain String values that will be processed as suggestions.
@@ -113,8 +114,7 @@ public class SearchAction
 
   @Inject
   public SearchAction(OccurrenceSearchService occurrenceSearchService, FiltersActionHelper filtersActionHelper) {
-    super(occurrenceSearchService,
-          OccurrenceSearchParameter.class,
+    super(occurrenceSearchService, OccurrenceSearchParameter.class,
           new OccurrenceSearchRequest(DEFAULT_PARAM_OFFSET, DEFAULT_PARAM_LIMIT));
     this.filtersActionHelper = filtersActionHelper;
   }
@@ -150,7 +150,7 @@ public class SearchAction
     // replace known name usages
     filtersActionHelper.processNameUsageReplacements(searchRequest, nameUsagesSuggestions);
     // replace known datasets
-    filtersActionHelper.processDatasetReplacements(searchRequest, datasetsSuggestions);
+    FiltersActionHelper.processDatasetReplacements(searchRequest, datasetsSuggestions);
 
     // Search is executed only if there aren't suggestions that need to be notified to the user
     if (!hasSuggestions() && validateSearchParameters()) {
@@ -236,7 +236,7 @@ public class SearchAction
    * @return the list of {@link org.gbif.api.vocabulary.BasisOfRecord} literals.
    */
   public BasisOfRecord[] getBasisOfRecords() {
-    return filtersActionHelper.getBasisOfRecords();
+    return FiltersActionHelper.getBasisOfRecords();
   }
 
   /**
@@ -250,7 +250,7 @@ public class SearchAction
    * @return the list of {@link org.gbif.api.vocabulary.BasisOfRecord} literals.
    */
   public Continent[] getContinents() {
-    return filtersActionHelper.getContinents();
+    return FiltersActionHelper.getContinents();
   }
 
   /**
@@ -300,7 +300,7 @@ public class SearchAction
    * Returns the list of {@link Country} literals.
    */
   public Set<Country> getCountries() {
-    return filtersActionHelper.getCountries();
+    return FiltersActionHelper.getCountries();
   }
 
   /**
@@ -317,7 +317,7 @@ public class SearchAction
    * @return the current year.
    */
   public int getCurrentYear() {
-    return filtersActionHelper.getCurrentYear();
+    return FiltersActionHelper.getCurrentYear();
   }
 
   /**
@@ -422,7 +422,7 @@ public class SearchAction
    * @return the enum name of the value parameter.
    */
   public String getMediaTypeValue(String value) {
-    return filtersActionHelper.getMediaTypeValue(value);
+    return FiltersActionHelper.getMediaTypeValue(value);
   }
 
   @Override
@@ -534,7 +534,7 @@ public class SearchAction
    * @return True if no errors are present, False otherwise
    */
   private boolean validateSearchParameters() {
-    validationErrors = filtersActionHelper.validateSearchParameters(request, OCC_VALIDATION_DISCARDED);
+    validationErrors = FiltersActionHelper.validateSearchParameters(request, OCC_VALIDATION_DISCARDED);
     return validationErrors.isEmpty();
   }
 
@@ -546,7 +546,7 @@ public class SearchAction
    *
    * @return value for Term in fields map, or null if it doesn't exist
    */
-  public String termValue(String term, Occurrence occ) {
+  public static String termValue(String term, Occurrence occ) {
     // special case for Dc.rights
     if (RIGHTS_TERM.equals(term)) {
       return occ.getVerbatimField(DcTerm.rights);

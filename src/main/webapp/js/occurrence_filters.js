@@ -1623,6 +1623,61 @@ var OccurrenceMultiSelectWidget = (function ($,_,OccurrenceWidget) {
   };
   return InnerOccurrenceMultiSelectWidget;
 })(jQuery,_,OccurrenceWidget);
+
+
+
+var OccurrenceCheckboxesWidget = (function ($, _, OccurrenceWidget) {
+  var InnerOccurrenceCheckboxesWidget = function () {};
+  //Inherits everything from OccurrenceWidget
+  InnerOccurrenceCheckboxesWidget.prototype = $.extend(true,{}, new OccurrenceWidget());
+
+  /**
+   * Re-defines the showFilters function, iterates over the selection list to get the selected values and then show them as filters.
+   */
+  InnerOccurrenceCheckboxesWidget.prototype.showFilters = function() {
+    var self = this;
+    for(var i=0; i < self.filters.length; i++) {
+      if(self.filters[i].value == "true") {
+        this.filterElement.find("input.select_yes:checkbox").each( function() {
+          $(this).attr("checked","checked");
+        });
+      }
+      if(self.filters[i].value == "false") {
+        this.filterElement.find("input.select_no:checkbox").each( function() {
+          $(this).attr("checked","checked");
+        });
+      }
+    }
+    self.filterElement.find(".apply").show();
+  };
+
+  /**
+   * Executes addtional bindings: binds click event of each element.
+   */
+  InnerOccurrenceCheckboxesWidget.prototype.executeAdditionalBindings = function() {
+    this.bindingsExecutor.call();
+    if(this.filterElement != null) {
+      var self = this;
+      self.filterElement.find("input.select_yes:checkbox").click( function() {
+        self.removeFilter({value:"true"});
+        if($(this).attr("checked") !== undefined) {
+          self.addFilter({value:"true",key:null,submitted: false,paramName:self.getId()});
+          self.filterElement.find(".apply").show();
+        }
+      });
+      self.filterElement.find("input.select_no:checkbox").click( function() {
+        self.removeFilter({value:"false"});
+        if($(this).attr("checked") !== undefined) {
+          self.addFilter({value:"false",key:null,submitted: false,paramName:self.getId()});
+          self.filterElement.find(".apply").show();
+        }
+      });
+    }
+  };
+
+  return InnerOccurrenceCheckboxesWidget;
+})(jQuery,_,OccurrenceWidget);
+
 /**
  * Object that controls the creation and default behavior of OccurrenceWidget and OccurrenceFilterWidget instances.
  * Manage how each filter widget should be bound to a occurrence widget instance, additionally controls what occurrence parameter is mapped to an specific widget.
@@ -1771,6 +1826,9 @@ var OccurrenceWidgetManager = (function ($,_) {
                 newWidget.setUnit("m");
             } else if (filterName == "YEAR") {
               newWidget = new OccurrenceComparatorWidget();
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
+            } else if (filterName == "REPATRIATED") {
+              newWidget = new OccurrenceCheckboxesWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
             } else { //By default creates a simple OccurrenceWidget with an empty binding function
               newWidget = new OccurrenceWidget();

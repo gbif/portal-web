@@ -40,6 +40,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletRequest;
@@ -77,6 +79,11 @@ public class FiltersActionHelper {
   private final NetworkService networkService;
   private static final int SUGGESTIONS_LIMIT = 10;
 
+  private static final Pattern AMP_PATTERN = Pattern.compile("&");
+  private static final Pattern START_POLYGON = Pattern.compile("POLYGON((",Pattern.LITERAL);
+  private static final Pattern END_POLYGON = Pattern.compile("))",Pattern.LITERAL);
+  private static final String QUOTES_REP = Matcher.quoteReplacement("");
+
   // Coordinate format
   private static final String BBOX_FMT = "FROM %s,%s TO %s,%s";
 
@@ -95,6 +102,10 @@ public class FiltersActionHelper {
   public static final String BETWEEN_FMT = "Between %s and %s";
 
   public static final String IS_FMT = "Is %s";
+
+  public static final String YES = "Yes";
+
+  public static final String NO = "No";
 
   // Utility function to get key value of a NameUsage
   private static final Function<NameUsageSuggestResult, String> NU_RESULT_KEY_GETTER =
@@ -236,14 +247,14 @@ public class FiltersActionHelper {
   /**
    * @return the list of {@link BasisOfRecord} literals.
    */
-  public BasisOfRecord[] getBasisOfRecords() {
+  public static BasisOfRecord[] getBasisOfRecords() {
     return BasisOfRecord.values();
   }
 
   /**
    * @return the list of {@link Country} literals.
    */
-  public Set<Country> getCountries() {
+  public static Set<Country> getCountries() {
     return COUNTRIES;
   }
 
@@ -252,7 +263,7 @@ public class FiltersActionHelper {
    * @param isoCode iso 2/3 country code
    * @return the title(name) of a country.
    */
-  public String getCountryTitle(String isoCode) {
+  public static String getCountryTitle(String isoCode) {
     Country country = Country.fromIsoCode(isoCode);
     if (country != null) {
       return country.getTitle();
@@ -263,7 +274,7 @@ public class FiltersActionHelper {
   /**
    * @return the list of {@link org.gbif.api.vocabulary.Continent} literals.
    */
-  public Continent[] getContinents() {
+  public static Continent[] getContinents() {
     return Continent.values();
   }
 
@@ -272,7 +283,7 @@ public class FiltersActionHelper {
    * OccurrenceSearchParamater.EVENT_DATE.
    * @return the current year
    */
-  public int getCurrentYear() {
+  public static int getCurrentYear() {
     return Calendar.getInstance().get(Calendar.YEAR);
   }
 
@@ -291,7 +302,7 @@ public class FiltersActionHelper {
     } catch (IllegalArgumentException e) {
       // no uuid
     }
-    return key.toString();
+    return key;
   }
 
   /**
@@ -314,7 +325,6 @@ public class FiltersActionHelper {
    * @return the displayable value of filter parameter.
    */
   private String getFilterTitle(String filterKey, String filterValue, boolean forFacets) {
-    String title = filterValue;
     OccurrenceSearchParameter parameter =
       (OccurrenceSearchParameter) VocabularyUtils.lookupEnum(filterKey, OccurrenceSearchParameter.class);
     if (parameter != null) {
@@ -335,14 +345,14 @@ public class FiltersActionHelper {
       } else if (parameter == OccurrenceSearchParameter.HAS_COORDINATE) {
         return getGeoreferencedTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.COUNTRY
-        || parameter == OccurrenceSearchParameter.PUBLISHING_COUNTRY) {
+                 || parameter == OccurrenceSearchParameter.PUBLISHING_COUNTRY) {
         return StringEscapeUtils.escapeEcmaScript(getCountryTitle(filterValue));
       } else if (parameter == OccurrenceSearchParameter.CONTINENT) {
         return LocalizedTextUtil.findDefaultText(CONTINENT_KEY + filterValue, getLocale());
       } else if (parameter == OccurrenceSearchParameter.DEPTH || parameter == OccurrenceSearchParameter.ELEVATION) {
         return forFacets ? filterValue : getRangeTitle(filterValue, METER);
       } else if (parameter == OccurrenceSearchParameter.EVENT_DATE
-        || parameter == OccurrenceSearchParameter.LAST_INTERPRETED) {
+                 || parameter == OccurrenceSearchParameter.LAST_INTERPRETED) {
         return forFacets ? filterValue : getDateRangeTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.YEAR) {
         return forFacets ? filterValue : getTemporalRangeTitle(filterValue);
@@ -352,19 +362,21 @@ public class FiltersActionHelper {
         return getSpatialIssuesTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.ISSUE) {
         return LocalizedTextUtil.findDefaultText(OCCURRENCE_ISSUE_KEY + filterValue, getLocale());
+      } else if (parameter == OccurrenceSearchParameter.REPATRIATED) {
+        return getRepatriatedTitle(filterValue);
       }
     }
-    return title;
+    return filterValue;
   }
 
   /**
    * @return the enum name of the value string if it is a valid media type.
    * Note: this has to be done because MediaType values are not in uppercase, i.e.: StillImage, MovingImage and Sound.
    */
-  public String getMediaTypeValue(String value) {
+  public static String getMediaTypeValue(String value) {
     if (!WILDCARD.equals(value)) {
       final Enum<?> mediaType = VocabularyUtils.lookupEnum(value, MediaType.class);
-      return (mediaType == null ? value : mediaType.name());
+      return mediaType == null ? value : mediaType.name();
     }
     return value;
   }
@@ -372,11 +384,22 @@ public class FiltersActionHelper {
   /**
    * @return the title for the georeferenced filter.
    */
-  public String getGeoreferencedTitle(String value) {
+  public static String getGeoreferencedTitle(String value) {
     if (Boolean.parseBoolean(value)) {
       return GEOREFERENCING_LEGEND;
     } else {
       return "Non " + GEOREFERENCING_LEGEND;
+    }
+  }
+
+  /**
+   * @return the title for the repatriated  filter.
+   */
+  public static String getRepatriatedTitle(String value) {
+    if (Boolean.parseBoolean(value)) {
+      return YES;
+    } else {
+      return NO;
     }
   }
 
@@ -410,7 +433,7 @@ public class FiltersActionHelper {
     return taxonKey;
   }
 
-  public String getSpatialIssuesTitle(String value) {
+  public static String getSpatialIssuesTitle(String value) {
     if (Boolean.parseBoolean(value)) {
       return SPATIAL_ISSUES_LEGEND;
     } else {
@@ -463,7 +486,7 @@ public class FiltersActionHelper {
   /**
    * Replace the DATASET_KEY parameters that have a scientific name that could be interpreted directly.
    */
-  public void processDatasetReplacements(SearchRequest<OccurrenceSearchParameter> searchRequest,
+  public static void processDatasetReplacements(SearchRequest<OccurrenceSearchParameter> searchRequest,
     SearchSuggestions<DatasetSuggestResult> suggestions) {
     processReplacements(searchRequest, suggestions, OccurrenceSearchParameter.DATASET_KEY, DS_RESULT_KEY_GETTER);
 
@@ -556,21 +579,21 @@ public class FiltersActionHelper {
    * Checks if the search parameter contains correct values.
    * The occurrence parameter in the EnumSey discarded are not validated.
    */
-  public List<ParameterValidationError<OccurrenceSearchParameter>> validateSearchParameters(HttpServletRequest request,
+  public static List<ParameterValidationError<OccurrenceSearchParameter>> validateSearchParameters(HttpServletRequest request,
     EnumSet<OccurrenceSearchParameter> discardedParams) {
     List<ParameterValidationError<OccurrenceSearchParameter>> errors = Lists.newArrayList();
-    for (Enumeration<String> params = request.getParameterNames(); params.hasMoreElements();) {
+    Enumeration<String> params = request.getParameterNames();
+    while (params.hasMoreElements()) {
       String param = params.nextElement();
-      Optional<OccurrenceSearchParameter> occParam = null;
       try {
-        occParam = Enums.getIfPresent(OccurrenceSearchParameter.class, param.toUpperCase());
+        Optional<OccurrenceSearchParameter> occParam = Enums.getIfPresent(OccurrenceSearchParameter.class, param.toUpperCase());
         if (occParam.isPresent()) {
           for (String value : request.getParameterValues(param)) {
             try {
               if (!discardedParams.contains(occParam.get())) {
                 // discarded parameters are not validated those could be an integer or a string
                 if (occParam.get() == OccurrenceSearchParameter.GEOMETRY) {
-                  final String polygonValue = String.format(POLYGON_PATTERN, value);
+                  String polygonValue = String.format(POLYGON_PATTERN, value);
                   SearchTypeValidator.validate(occParam.get(), polygonValue);
                 } else {
                   SearchTypeValidator.validate(occParam.get(), value);
@@ -593,8 +616,8 @@ public class FiltersActionHelper {
   /**
    * Returns the displayable label/value of a range filter.
    */
-  private String getDateRangeTitle(String value) {
-    final String[] rangeValue = value.split(",");
+  private static String getDateRangeTitle(String value) {
+    String[] rangeValue = value.split(",");
     if (rangeValue.length == 2) {
       if (rangeValue[0].equals(QUERY_WILDCARD)) {
         return String.format(TO_FMT, rangeValue[1]);
@@ -611,7 +634,7 @@ public class FiltersActionHelper {
   /**
    * Returns the displayable label/value of geometry filter.
    */
-  private String getGeometryTitle(String value) {
+  private static String getGeometryTitle(String value) {
     String[] coordinates = value.split(",");
     if (isRectangle(value)) {
       final String[] southMost = coordinates[1].split(" ");
@@ -650,7 +673,7 @@ public class FiltersActionHelper {
    * Returns the displayable label/value of a range filter.
    */
   private String getMonthRangeTitle(String value) {
-    final String[] rangeValue = value.split(",");
+    String[] rangeValue = value.split(",");
     if (rangeValue.length == 2) {
       if (rangeValue[0].equals(QUERY_WILDCARD)) {
         return String.format(TO_FMT, getMonthName(Integer.parseInt(rangeValue[1])));
@@ -669,7 +692,7 @@ public class FiltersActionHelper {
   /**
    * Returns the displayable label/value of a range filter.
    */
-  private String getRangeTitle(String value, String unit) {
+  private static String getRangeTitle(String value, String unit) {
     final String[] rangeValue = value.split(",");
     if (rangeValue.length == 2) {
       if (rangeValue[0].equals(QUERY_WILDCARD)) {
@@ -687,8 +710,8 @@ public class FiltersActionHelper {
   /**
    * Returns the displayable label/value of a range filter.
    */
-  private String getTemporalRangeTitle(String value) {
-    final String[] rangeValue = value.split(",");
+  private static String getTemporalRangeTitle(String value) {
+    String[] rangeValue = value.split(",");
     if (rangeValue.length == 2) {
       if (rangeValue[0].equals(QUERY_WILDCARD)) {
         return String.format(TO_FMT, rangeValue[1]);
@@ -705,8 +728,10 @@ public class FiltersActionHelper {
   /**
    * Validates if the list of coordinates forms a rectangle.
    */
-  private boolean isRectangle(String value) {
-    final String[] values = value.replace("POLYGON((", "").replace("))", "").split(",");
+  private static boolean isRectangle(String value) {
+
+    String[] values =  END_POLYGON.matcher(START_POLYGON.matcher(value).replaceAll(QUOTES_REP)).replaceAll(QUOTES_REP)
+      .split(",");
     if (values.length == 5) {
       String[] point1 = values[0].split(" ");
       String[] point2 = values[1].split(" ");
@@ -726,7 +751,7 @@ public class FiltersActionHelper {
   /**
    * Utility method to perform replacement of parameters in the searchRequest from the suggestions.replacement field.
    */
-  private <T> void processReplacements(
+  private static <T> void processReplacements(
     SearchRequest<OccurrenceSearchParameter> searchRequest,
     SearchSuggestions<T> suggestions, OccurrenceSearchParameter occParameter, Function<T, String> identifierGetter) {
     if (suggestions.hasReplacements()) {
@@ -746,7 +771,7 @@ public class FiltersActionHelper {
    * Searches for suggestion to all the RECORDED_BY parameters, if the input value has an exact match against any
    * suggestion, no suggestions are returned for that parameter.
    */
-  private SearchSuggestions<String> processStringSuggestions(HttpServletRequest request,
+  private static SearchSuggestions<String> processStringSuggestions(HttpServletRequest request,
     OccurrenceSearchParameter occParameter, Function<String, List<String>> suggestionsFunction) {
     String[] values = request.getParameterValues(occParameter.name());
     SearchSuggestions<String> searchSuggestions = new SearchSuggestions<String>();
@@ -767,10 +792,10 @@ public class FiltersActionHelper {
   /**
    * Remove the parameter/value pair from the query string.
    */
-  private String removeParamFromURL(HttpServletRequest request, String param, String value) {
+  private static String removeParamFromURL(HttpServletRequest request, String param, String value) {
     String queryString = request.getQueryString().replaceAll("(&?)" + param + '=' + value, "");
     if (queryString.startsWith("&")) {
-      queryString = queryString.replaceFirst("&", "");
+      queryString = AMP_PATTERN.matcher(queryString).replaceFirst("");
     }
     return Strings.isNullOrEmpty(queryString) ? request.getRequestURI() : request.getRequestURI() + '?'
       + queryString;
@@ -779,7 +804,7 @@ public class FiltersActionHelper {
   /**
    * Converts a list of NameUsageMatch into a list of NameUsageSearchResult.
    */
-  private List<NameUsageSuggestResult> toNameUsageResult(List<NameUsageMatch> nameUsageMatches) {
+  private static List<NameUsageSuggestResult> toNameUsageResult(List<NameUsageMatch> nameUsageMatches) {
     List<NameUsageSuggestResult> suggestions = Lists.newArrayList();
     for (NameUsageMatch matchAlt : nameUsageMatches) {
       suggestions.add(toNameUsageResult(matchAlt));
@@ -790,7 +815,7 @@ public class FiltersActionHelper {
   /**
    * Converts a NameUsageMatch into a NameUsageSearchResult.
    */
-  private NameUsageSuggestResult toNameUsageResult(NameUsageMatch nameUsageMatch) {
+  private static NameUsageSuggestResult toNameUsageResult(NameUsageMatch nameUsageMatch) {
     NameUsageSuggestResult nameUsageSuggestResult = null;
 
     try {
@@ -812,7 +837,7 @@ public class FiltersActionHelper {
   /**
    * Try to parse a UUID, if an exception is caught null is returned.
    */
-  private UUID tryParseUUID(String value) {
+  private static UUID tryParseUUID(String value) {
     try {
       return UUID.fromString(value);
     } catch (Exception e) {
