@@ -77,8 +77,7 @@ public class SearchAction
                OccurrenceSearchParameter.DATASET_KEY,
                OccurrenceSearchParameter.COUNTRY,
                OccurrenceSearchParameter.MONTH,
-               OccurrenceSearchParameter.YEAR,
-               OccurrenceSearchParameter.REPATRIATED);
+               OccurrenceSearchParameter.YEAR);
 
   // List of parameters that should be excluded during the regular validation.
   // These parameters are excluded since they could contain String values that will be processed as suggestions.
