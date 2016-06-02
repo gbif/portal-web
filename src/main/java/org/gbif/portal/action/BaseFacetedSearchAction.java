@@ -138,6 +138,9 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
     return currentUrl.toString();
   }
 
+  /**
+   * Utility method used to build urls that support paging through facets.
+   */
   public String getFacetPageCurrentUrl(String facetName) {
     StringBuilder currentUrl =  new StringBuilder(request.getRequestURI().substring(request.getContextPath().length()));
     Set<String> paramsSet = Sets.newHashSet("facetbox",facetName + ".offset", facetName.toLowerCase() + ".limit");
@@ -171,6 +174,36 @@ public abstract class BaseFacetedSearchAction<T, P extends Enum<?> & SearchParam
       }
     }
     return currentUrl.toString();
+  }
+
+  /**
+   * Shows and hides facets paging navigation.
+   * This method shows the paging only for non-multiselect facets and when the facet it's not used as a filter and
+   * the list of counts is less than the default facet page size.
+   */
+  public boolean showFacetPaging(P facet) {
+    return !getSearchRequest().isMultiSelectFacets() && !getSearchRequest().getParameters().containsKey(facet)
+           && ( isFacetPagingInRequest(facet)|| isFacetCountsEqualsLimit(facet));
+  }
+
+  /**
+   * Checks if the list of counts of a facet it's greater than or equals to the default facet page size.
+   */
+  private boolean isFacetCountsEqualsLimit(P parameter) {
+    for(Facet<P> facet : getSearchResponse().getFacets()){
+      if(facet.getField().equals(parameter)) {
+        return  facet.getCounts().size() >= DEFAULT_FACET_LIMIT;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Validates if the facet parameter it's used in a paging request.
+   * This method it's use to  show/hide navigation thru facets in the UI.
+   */
+  public boolean isFacetPagingInRequest(P facetParameter) {
+    return getServletRequest().getParameterMap().containsKey(facetParameter + ".offset");
   }
 
   /**

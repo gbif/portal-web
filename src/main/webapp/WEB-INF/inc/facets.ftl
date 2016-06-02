@@ -19,7 +19,7 @@ This include requires 2 arrays to be set:
   <#assign seeAll = false>
   <#assign isPageableFacet = false>
 
-    <#if (facetCounts.get(facet)?has_content && (selectedFacetCounts.get(facet)?has_content || facetCounts.get(facet)?size > 0))>
+    <#if action.isFacetPagingInRequest(facet) || (facetCounts.get(facet)?has_content && (selectedFacetCounts.get(facet)?has_content || facetCounts.get(facet)?size > 0))>
      <div class="refine">
       <h4><@s.text name="search.facet.${facetName}" /></h4>
       <div class="facet">
@@ -30,20 +30,20 @@ This include requires 2 arrays to be set:
             <@facetBox facetName=facetName count=count selected=true />
           </#list>
         </#if>
-        <#list facetCounts.get(facet) as count>
-          <#if seeAllFacets?seq_contains(facetName) && (displayedFacets > MaxFacets)>
-            <#assign seeAll=true>
-            <#break>
-          </#if>
-          <#if !(action.isInFilter(facet,count.name))>
-            <#assign displayedFacets = displayedFacets + 1>
-            <@facetBox facetName=facetName count=count selected=false />
-          </#if>
-        </#list>
-        <#if pageableFacets?seq_contains(facetName)>
-          <#assign isPageableFacet=true>
+        <#if facetCounts?has_content>
+          <#list facetCounts.get(facet) as count>
+            <#if seeAllFacets?seq_contains(facetName) && (displayedFacets > MaxFacets)>
+              <#assign seeAll=true>
+              <#break>
+            </#if>
+            <#if !(action.isInFilter(facet,count.name))>
+              <#assign displayedFacets = displayedFacets + 1>
+              <@facetBox facetName=facetName count=count selected=false />
+            </#if>
+          </#list>
         </#if>
-        <#if seeAll>
+        <#assign isPageableFacet=pageableFacets?seq_contains(facetName) && action.showFacetPaging(facet)>
+        <#if seeAll && facetCounts?has_content>
           <li class="more seeAllFacet">
             <a class="seeAllLink more" href="#">more</a>
             <div class="infowindow dialogPopover">
