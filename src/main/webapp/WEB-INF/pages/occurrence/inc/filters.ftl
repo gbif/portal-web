@@ -330,40 +330,32 @@
         <div class="inner filter_view">
           <h4 class="title"><%= title %></h4>
           <div class="filter">
-            <table>
+            <table width="60%;" style="margin: 0 auto;text-align: justify;">
               <tr>
                 <td>
-                  <h5>Yes</h5>
+                  <input type="radio" name="<%=paramName%>" class="<%= inputClasses %> select_yes" placeholder="<%= placeholder %>"/> Yes
                 </td>
-                <td>
-                  <input type="radio" name="<%=paramName%>" class="<%= inputClasses %> select_yes" placeholder="<%= placeholder %>"/>
+                <td rowspan="3" width="80%" style="text-align:justify;">
+                  <p style="font-size: 12px;color: #999;">Data is said to be <em>repatriated</em> when it is published by an institution in one country but relates to biodiversity occurring in another country</p>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <h5>No</h5>
-                </td>
-                <td>
-                  <input type="radio" name="<%=paramName%>" class="<%= inputClasses %> select_no" placeholder="<%= placeholder %>"/>
+                  <input type="radio" name="<%=paramName%>" class="<%= inputClasses %> select_no" placeholder="<%= placeholder %>"/> No
                 </td>
               </tr>
               <tr>
                 <td>
-                  <h5>All</h5>
-                </td>
-                <td>
-                  <input type="radio" name="<%=paramName%>" class="<%= inputClasses %> select_all" placeholder="<%= placeholder %>"/>
+                  <input type="radio" name="<%=paramName%>" class="<%= inputClasses %> select_all" placeholder="<%= placeholder %>"/> All
                 </td>
               </tr>
+
             </table>
           </div>
           <div class="center">
             <a class="button candy_blue_button apply" title="<%= title %>" data-action="add-new-filter" data-filter="<%= paramName %>" apply-function="applyOccurrenceFilters"><span>Apply</span></a>
           </div>
           <br>
-          <div style="font-size: 12px;">
-            <h5>Data is said to be <em>repatriated</em> when it is published by an institution in one country but relates to biodiversity occurring in another country</h5>
-          </div>
           <a class="close"></a>
         </div>
         <div class="summary_view"></div>
