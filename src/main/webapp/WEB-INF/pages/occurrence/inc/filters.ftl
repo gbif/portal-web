@@ -336,7 +336,7 @@
                   <h5>Yes</h5>
                 </td>
                 <td>
-                  <input type="checkbox" name="<%=paramName%>" class="<%= inputClasses %> select_yes" placeholder="<%= placeholder %>"/>
+                  <input type="radio" name="<%=paramName%>" class="<%= inputClasses %> select_yes" placeholder="<%= placeholder %>"/>
                 </td>
               </tr>
               <tr>
@@ -344,13 +344,25 @@
                   <h5>No</h5>
                 </td>
                 <td>
-                  <input type="checkbox" name="<%=paramName%>" class="<%= inputClasses %> select_no" placeholder="<%= placeholder %>"/>
+                  <input type="radio" name="<%=paramName%>" class="<%= inputClasses %> select_no" placeholder="<%= placeholder %>"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <h5>All</h5>
+                </td>
+                <td>
+                  <input type="radio" name="<%=paramName%>" class="<%= inputClasses %> select_all" placeholder="<%= placeholder %>"/>
                 </td>
               </tr>
             </table>
           </div>
           <div class="center">
             <a class="button candy_blue_button apply" title="<%= title %>" data-action="add-new-filter" data-filter="<%= paramName %>" apply-function="applyOccurrenceFilters"><span>Apply</span></a>
+          </div>
+          <br>
+          <div style="font-size: 12px;">
+            <h5>Data is said to be <em>repatriated</em> when it is published by an institution in one country but relates to biodiversity occurring in another country</h5>
           </div>
           <a class="close"></a>
         </div>

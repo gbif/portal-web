@@ -1636,16 +1636,25 @@ var OccurrenceCheckboxesWidget = (function ($, _, OccurrenceWidget) {
    */
   InnerOccurrenceCheckboxesWidget.prototype.showFilters = function() {
     var self = this;
-    for(var i=0; i < self.filters.length; i++) {
-      if(self.filters[i].value == "true") {
-        this.filterElement.find("input.select_yes:checkbox").each( function() {
-          $(this).attr("checked","checked");
-        });
-      }
-      if(self.filters[i].value == "false") {
-        this.filterElement.find("input.select_no:checkbox").each( function() {
-          $(this).attr("checked","checked");
-        });
+    if (self.filters.length == 0) {
+      this.filterElement.find("input.select_all:radio").each(function () {
+        $(this).attr("checked", "checked");
+        $(this).focus();
+      });
+    } else {
+      for (var i = 0; i < self.filters.length; i++) {
+        if (self.filters[i].value == "true") {
+          this.filterElement.find("input.select_yes:radio").each(function () {
+            $(this).attr("checked", "checked");
+            $(this).focus();
+          });
+        }
+        if (self.filters[i].value == "false") {
+          this.filterElement.find("input.select_no:radio").each(function () {
+            $(this).attr("checked", "checked");
+            $(this).focus();
+          });
+        }
       }
     }
     self.filterElement.find(".apply").show();
@@ -1658,17 +1667,23 @@ var OccurrenceCheckboxesWidget = (function ($, _, OccurrenceWidget) {
     this.bindingsExecutor.call();
     if(this.filterElement != null) {
       var self = this;
-      self.filterElement.find("input.select_yes:checkbox").click( function() {
-        self.removeFilter({value:"true"});
+      self.filterElement.find("input.select_yes:radio").click( function() {
+        self.filters = new Array();
         if($(this).attr("checked") !== undefined) {
           self.addFilter({value:"true",key:null,submitted: false,paramName:self.getId()});
           self.filterElement.find(".apply").show();
         }
       });
-      self.filterElement.find("input.select_no:checkbox").click( function() {
-        self.removeFilter({value:"false"});
+      self.filterElement.find("input.select_no:radio").click( function() {
+        self.filters = new Array();
         if($(this).attr("checked") !== undefined) {
           self.addFilter({value:"false",key:null,submitted: false,paramName:self.getId()});
+          self.filterElement.find(".apply").show();
+        }
+      });
+      self.filterElement.find("input.select_all:radio").click( function() {
+        if($(this).attr("checked") !== undefined) {
+          self.filters = new Array();
           self.filterElement.find(".apply").show();
         }
       });
