@@ -6,6 +6,7 @@
   <title>Species Search Results for ${q!}</title>
 
   <content tag="extra_scripts">
+    <script src='<@s.url value='/js/vendor/jquery.url.js'/>' type='text/javascript'></script>
     <script type="text/javascript" src="<@s.url value='/js/facets.js'/>"></script>
     <script type="text/javascript">
       //needed to avoid caching by Firefox's bfcache
