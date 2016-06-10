@@ -79,8 +79,12 @@
   To retrieve all records beyond 200,000 you should use our asynchronous <a href="#download">download service</a> instead.
 </p>
 
+<p>
+  <em>Please be aware that the following parameters are in a experimental phase and its definition could change in the future: q, facet, facetOffset, facetLimit, facetMincount and  facetMultiselect</em>
+</p>
+
   <@api.apiTable auth=false>
-    <@trowS url="" respLink="occurrence/search?taxonKey=1"  paging=true params=["basisOfRecord","catalogNumber","collectionCode","continent","country","datasetKey","decimalLatitude","decimalLongitude","depth","elevation","eventDate","geometry","hasCoordinate","hasGeospatialIssue","institutionCode","issue","lastInterpreted","mediaType","month","occurrenceId","publishingCountry","recordedBy","recordNumber","scientificName","taxonKey","year"]>Full search across all occurrences.
+    <@trowS url="" respLink="occurrence/search?taxonKey=1"  paging=true params=["q","basisOfRecord","catalogNumber","collectionCode","continent","country","datasetKey","decimalLatitude","decimalLongitude","depth","elevation","eventDate","geometry","hasCoordinate","hasGeospatialIssue","institutionCode","issue","lastInterpreted","mediaType","month","occurrenceId","publishingCountry","recordedBy","recordNumber","scientificName","taxonKey","kingdomKey","phylumKey","classKey","orderKey","familyKey","genusKey","subGenusKey","speciesKey","year","establishmentMeans","repatriated","facet","facetMincount","facetMultiselect", "facet paging"]>Full search across all occurrences.
     Results are ordered by relevance.</@trowS>
     <@trowS url="/catalogNumber" respLink="occurrence/search/catalogNumber?q=122&amp;limit=5" params=["q","limit"]>Search that returns matching catalog numbers.
     Results are ordered by relevance.</@trowS>
@@ -179,8 +183,21 @@
   "issue": "A specific interpretation issue as defined in our <a href='${api.apidocs}/vocabulary/OccurrenceIssue.html' target='_blank'>OccurrenceIssue enum</a>",
   "mediaType": "The kind of multimedia associated with an occurrence as defined in our <a href='${api.apidocs}/vocabulary/MediaType.html' target='_blank'>MediaType enum</a>",
   "typeStatus": "Nomenclatural type (type status, typified scientific name, publication) applied to the subject.",
+  "kingdomKey": "Kingdom classification key.",
+  "phylumKey": "Phylum classification key.",
+  "classKey": "Class classification key.",
+  "orderKey": "Order classification key.",
+  "familyKey": "Family classification key.",
+  "genusKey": "Genus classification key.",
+  "subgenusKey": "Subgenus classification key.",
+  "speciesKey": "Species classification key.",
+  "repatriated": "Searches for records whose publishing country is different to the country where the record was recorded in.",
   "q" : "Simple search parameter. The value for this parameter can be a simple word or a phrase.",
-  "limit": "The maximum number of results to return. This can't be greater than 300, any value greater is set to 300."
+  "limit": "The maximum number of results to return. This can't be greater than 300, any value greater is set to 300.",
+  "facet": "A list of facet names used to retrieve the most frequent values for a field. Facets are allowed for all the parameters except for: last interpreted date, event date and geometry",
+  "facetMincount": "Used in combination with the facet parameter. Set facetMincount={#} to exclude facets with a count less than {#}, e.g. <a href='${action.cfg.apiBaseUrl}occurrence/search?facet=basisOfRecord&amp;limit=0&amp;facetMincount=10000' target='_blank'>/search?facet=basisOfRecord&amp;limit=0&amp;facetMincount=10000000</a> only basisOfRecord having counts less than 10000000.",
+  "facetMultiselect": "Used in combination with the facet parameter. Set facetMultiselect=true to still return counts for values that are not currently filtered, e.g. <a href='${action.cfg.apiBaseUrl}occurrence/search?facet=basisOfRecord&amp;limit=0&amp;basisOfRecord=OBSERVATION&amp;facetMultiselect=true' target='_blank'>/search?facet=basisOfRecord&amp;limit=0&amp;basisOfRecord=OBSERVATION&amp;facetMultiselect=true</a> still shows all type  even though type is being filtered by basisOfRecord=OBSERVATION",
+  "facet paging": "All facets parameters allow paging requests using the parameters <em>facetOffset</em> and <em>facetLimit</em> as this example <a href='${action.cfg.apiBaseUrl}occurrence/search?facet=datasetKey&amp;datasetKey.facetLimit=5&amp;datasetKey.facetOffset=10&amp;limit=0' target='_blank'>/search?facet=datasetKey&amp;datasetKey.facetLimit=5&amp;datasetKey.facetOffset=10&amp;limit=0</a>"
 } />
 
 
