@@ -44,7 +44,7 @@
 
     <!-- dependency versions -->
     <bval.version>0.5</bval.version>
-    <checklistbank-ws-client.version>2.4</checklistbank-ws-client.version>
+    <checklistbank-ws-client.version>2.39.3</checklistbank-ws-client.version>
     <commons-beanutils.version>1.9.2</commons-beanutils.version>
     <commons-io.version>2.4</commons-io.version>
     <commons-lang3.version>3.4</commons-lang3.version>
