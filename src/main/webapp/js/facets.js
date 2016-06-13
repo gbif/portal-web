@@ -26,7 +26,7 @@ $(function () {
 
   $('#resetFacetsButton').click(function (event) {
     $('.facet input:checkbox').each(function () {
-      this.checked = false
+      this.checked = false;
     });
     $('#formSearch input:hidden').remove();
     $('#resetFacets input.defaultFacet').appendTo($('#formSearch'));
@@ -112,7 +112,7 @@ $(function () {
     // now iterate each pair
     for (var i = 0; i < pairs.length; i++) {
       var params = pairs[i].split('=');
-      if (params[0].indexOf("limit") > -1 && params[0].indexOf("offset") > -1) {
+      if (params[0].indexOf("limit") == -1 && params[0].indexOf("offset") == -1) {
         values.push(pairs[i]);
       }
     }
