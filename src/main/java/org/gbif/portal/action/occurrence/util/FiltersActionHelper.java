@@ -331,7 +331,7 @@ public class FiltersActionHelper {
       if (WILDCARD.equals(filterValue)) {
         return ALL;
       } else if (parameter == OccurrenceSearchParameter.TAXON_KEY) {
-        return getScientificName(filterValue);
+        return forFacets ?  getScientificName(filterValue) : StringEscapeUtils.escapeEcmaScript(getScientificName(filterValue));
       } else if (parameter == OccurrenceSearchParameter.BASIS_OF_RECORD) {
         return LocalizedTextUtil.findDefaultText(BASIS_OF_RECORD_KEY + filterValue, getLocale());
       } else if (parameter == OccurrenceSearchParameter.TYPE_STATUS) {
@@ -339,14 +339,14 @@ public class FiltersActionHelper {
       } else if (parameter == OccurrenceSearchParameter.MEDIA_TYPE) {
         return LocalizedTextUtil.findDefaultText(MEDIA_TYPE_KEY + getMediaTypeValue(filterValue), getLocale());
       } else if (parameter == OccurrenceSearchParameter.DATASET_KEY) {
-        return getDatasetTitle(filterValue);
+        return forFacets ? getDatasetTitle(filterValue) : StringEscapeUtils.escapeEcmaScript(getDatasetTitle(filterValue));
       } else if (parameter == OccurrenceSearchParameter.GEOMETRY) {
         return getGeometryTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.HAS_COORDINATE) {
         return getGeoreferencedTitle(filterValue);
       } else if (parameter == OccurrenceSearchParameter.COUNTRY
                  || parameter == OccurrenceSearchParameter.PUBLISHING_COUNTRY) {
-        return getCountryTitle(filterValue);
+        return forFacets ? getCountryTitle(filterValue) : StringEscapeUtils.escapeEcmaScript(getCountryTitle(filterValue));
       } else if (parameter == OccurrenceSearchParameter.CONTINENT) {
         return LocalizedTextUtil.findDefaultText(CONTINENT_KEY + filterValue, getLocale());
       } else if (parameter == OccurrenceSearchParameter.DEPTH || parameter == OccurrenceSearchParameter.ELEVATION) {
