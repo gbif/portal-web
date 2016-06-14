@@ -33,6 +33,7 @@ This project requires a Maven with the following settings defined in the propert
         <httpTimeout>60000</httpTimeout>
         <maxHttpConnections>100</maxHttpConnections>
         <maxHttpConnectionsPerRoute>100</maxHttpConnectionsPerRoute>
+        <annosys.url>https://annosys.bgbm.fu-berlin.de/AnnoSysTest/</annosys.url> 
         <registry.ws.url>http://api.gbif-dev.org/v1/</registry.ws.url>
         <checklistbank.ws.url>http://api.gbif-dev.org/v1/</checklistbank.ws.url>
         <checklistbank.match.ws.url>http://api.gbif-dev.org/v1/species/match/</checklistbank.match.ws.url>
