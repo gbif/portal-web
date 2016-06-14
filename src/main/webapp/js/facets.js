@@ -106,14 +106,16 @@ $(function () {
   }
 
   function currentQueryParams() {
-    // get the pairs of params fist
-    var pairs = unescape(location.search.substring(1)).split('&');
     var values = [];
-    // now iterate each pair
-    for (var i = 0; i < pairs.length; i++) {
-      var params = pairs[i].split('=');
-      if (params[0].indexOf("limit") == -1 && params[0].indexOf("offset") == -1) {
-        values.push(pairs[i]);
+    if (location.search.length > 0) {
+      // get the pairs of params fist
+      var pairs = unescape(location.search.substring(1)).split('&');
+      // now iterate each pair
+      for (var i = 0; i < pairs.length; i++) {
+        var params = pairs[i].split('=');
+        if (params[0].indexOf("limit") == -1 && params[0].indexOf("offset") == -1) {
+          values.push(params[0].toLowerCase() + "=" + params[1]);
+        }
       }
     }
     return values;
