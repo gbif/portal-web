@@ -64,7 +64,7 @@
   <#assign titleRight=""/>
 </#if>
 
-<#macro citationArticle bibliographicCitation dataset publisher rights accessRights rightsHolder prefix="">
+<#macro citationArticle bibliographicCitation dataset publisher rights accessRights rightsHolder license prefix="">
   <@common.article id="legal" title="Citation and licensing" class="mono_line">
   <div class="fullwidth">
 
@@ -91,6 +91,11 @@
         </p>
     </#if>
 
+    <#if license?has_content>
+      <h3>License</h3>
+      <p><#if license?starts_with("http")><a href="${license}">${license}</a><#else>${license}</#if></p>
+    </#if>
+
     <#if rights?has_content>
         <h3>Rights</h3>
         <p>${rights}</p>
@@ -101,10 +106,10 @@
         <p>${accessRights}</p>
     </#if>
 
-      <#if rightsHolder?has_content>
-          <h3>Rights holder</h3>
-          <p>${rightsHolder}</p>
-      </#if>
+    <#if rightsHolder?has_content>
+      <h3>Rights holder</h3>
+      <p>${rightsHolder}</p>
+    </#if>
 
   </div>
   </@common.article>
@@ -138,6 +143,14 @@
   <#if value?has_content>
     <h3>${header}</h3>
     <p><#if value?starts_with("http")><a href="${value}">${value}</a><#else>${value}</#if>${unit!}<#if plusMinus?has_content>&nbsp;±&nbsp;${plusMinus}${unit!}</#if></p>
+  </#if>
+</#macro>
+
+<#-- Show key-value pair with space between them, under header title. Both the key and value must provided. -->
+<#macro kvPair header value="" unit="">
+  <#if value?has_content && unit?has_content>
+      <h3>${header}</h3>
+      <p>${value}&nbsp;${unit!}</p>
   </#if>
 </#macro>
 
@@ -179,6 +192,9 @@
 <#assign higherGeographyID = action.termValue('higherGeographyID')! />
 <#assign locationID = action.termValue('locationID')! />
 <#assign locationAccordingTo = action.termValue('locationAccordingTo')! />
+<#-- New DwC terms: interpreted or unaltered verbatim value, or null if it doesn't exist -->
+<#assign organismQuantity = action.termValue('organismQuantity')! />
+<#assign organismQuantityType = action.termValue('organismQuantityType')! />
 
 <#-- Location block consists of max 25 terms/fields. At least 1 has to be present for block to appear -->
 <#if locality?has_content || island?has_content || islandGroup?has_content || footprintWKT?has_content ||
@@ -188,7 +204,8 @@
   higherGeographyID?has_content || locationID?has_content || locationAccordingTo?has_content ||
   occ.decimalLatitude?has_content || occ.decimalLongitude?has_content || occ.country?has_content ||
   occ.waterBody?has_content || occ.elevation?has_content || occ.elevationAccuracy?has_content ||
-  occ.depth?has_content || occ.depthAccuracy?has_content || geographicClassification?has_content >
+  occ.depth?has_content || occ.depthAccuracy?has_content || geographicClassification?has_content ||
+  organismQuantity?has_content || organismQuantityType?has_content>
 
   <#macro georeferenced>
     <#if georeferencedDate?has_content || georeferencedBy?has_content || georeferenceProtocol?has_content || georeferenceSources?has_content || georeferenceVerificationStatus?has_content>
@@ -248,7 +265,7 @@
             <h3>Locality</h3>
             <p class="no_bottom">${locality!}<#if occ.country??><#if locality?has_content>, </#if><a href="<@s.url value='/country/${occ.country.iso2LetterCode}'/>">${occ.country.title}</a></#if></p>
             <#if occ.decimalLatitude?has_content || occ.decimalLongitude?has_content>
-              <p class="light_note"><#if occ.decimalLatitude?has_content>${occ.decimalLatitude?abs?c}${(occ.decimalLatitude >= 0)?then('N','S')}<#else>?</#if>, <#if occ.decimalLongitude?has_content>${occ.decimalLongitude?abs?c}${(occ.decimalLongitude >= 0)?then('E','W')}<#else>?</#if> <#if occ.coordinateAccuracy??> ± ${occ.coordinateAccuracy!?string}</#if></p>
+              <p class="light_note"><#if occ.decimalLatitude?has_content>${occ.decimalLatitude?abs?c}${(occ.decimalLatitude >= 0)?then('N','S')}<#else>?</#if>, <#if occ.decimalLongitude?has_content>${occ.decimalLongitude?abs?c}${(occ.decimalLongitude >= 0)?then('E','W')}<#else>?</#if> <#if occ.coordinateUncertaintyInMeters??> ± ${occ.coordinateUncertaintyInMeters!?string} m</#if></p>
             </#if>
 
           <@kv header="Water Body" value=occ.waterBody />
@@ -395,6 +412,16 @@ identifiedBy?has_content>
 <#assign eventID = action.termValue('eventID')! />
 <#assign fieldNumber = action.termValue('fieldNumber')! />
 <#assign eventDate = occ.eventDate! />
+<#-- New DwC terms -->
+<#assign sampleSizeValue = action.termValue('sampleSizeValue')! />
+<#assign sampleSizeUnit = action.termValue('sampleSizeUnit')! />
+<#assign parentEventID = action.termValue('parentEventID')! />
+<#assign associatedOrganisms = action.termValue('associatedOrganisms')! />
+<#assign organismRemarks = action.termValue('organismRemarks')! />
+<#assign organismID = action.termValue('organismID')! />
+<#assign organismName = action.termValue('organismName')! />
+<#assign organismScope = action.termValue('organismRemarks')! />
+
 
 <#-- Occurrence block consists of various terms/fields. At least 1 has to be present for block to appear -->
 <#if occ.lifeStage?has_content || occ.sex?has_content || occ.establishmentMeans?has_content ||
@@ -403,7 +430,9 @@ occurrenceRemarks?has_content || eventRemarks?has_content || associatedOccurrenc
 partialGatheringDate?has_content || associatedSequences?has_content || associatedReferences?has_content ||
 associatedTaxa?has_content || samplingProtocol?has_content || samplingEffort?has_content || fieldNotes?has_content ||
 reproductiveCondition?has_content || behavior?has_content || occurrenceStatus?has_content || recordNumber?has_content ||
-eventID?has_content || fieldNumber?has_content>
+eventID?has_content || fieldNumber?has_content || sampleSizeValue?has_content || sampleSizeUnit?has_content ||
+parentEventID?has_content || associatedOrganisms?has_content || organismRemarks?has_content || organismID?has_content ||
+organismName?has_content || organismScope?has_content>
   <@common.article id="occurrence" title="Occurrence details">
   <div class="left">
 
@@ -422,39 +451,39 @@ eventID?has_content || fieldNumber?has_content>
         </#if>
 
         <@kv header="Associated Occurrences" value=associatedOccurrences />
+        <@kv header="Associated Organisms" value=associatedOrganisms />
         <@kv header="Associated Sequences" value=associatedSequences />
         <@kv header="Associated References" value=associatedReferences />
         <@kv header="Associated Taxa" value=associatedTaxa />
         <@kv header="Sampling Protocol" value=samplingProtocol />
+        <@kvPair header="Sample Size" value=sampleSizeValue unit=sampleSizeUnit />
         <@kv header="Sampling Effort" value=samplingEffort />
         <@kv header="Field Notes" value=fieldNotes />
 
-        <#-- Combine occurrence remarks and event remarks under the same heading Remarks -->
-        <#if occurrenceRemarks?has_content || eventRemarks?has_content>
-            <h3>Remarks</h3>
-          <#if occurrenceRemarks?has_content && eventRemarks?has_content>
-              <p>${occurrenceRemarks}</p>
-              <p>${eventRemarks}</p>
-          <#elseif occurrenceRemarks?has_content>
-              <p>${occurrenceRemarks}</p>
-          <#else>
-              <p>${eventRemarks}</p>
-          </#if>
+        <#-- Display occurrence remarks, event remarks, and organism remarks separately -->
+        <#if occurrenceRemarks?has_content || eventRemarks?has_content || organismRemarks?has_content>
+          <@kv header="Event Remarks" value=eventRemarks />
+          <@kv header="Occurrence Remarks" value=occurrenceRemarks />
+          <@kv header="Organism Remarks" value=organismRemarks />
         </#if>
-
   </div>
 
   <div class="right">
+    <@kv header="Event ID" value=eventID />
+    <@kv header="Parent Event ID" value=parentEventID />
+    <@kv header="Occurrence Status" value=occurrenceStatus />
+    <@kv header="Individual Count" value=occ.individualCount />
+    <@kvPair header="Organism Quantity" value=organismQuantity unit=organismQuantityType />
+    <@kv header="Organism ID" value=organismID />
+    <@kv header="Organism Name" value=organismName />
+    <@kv header="Organism Scope" value=organismScope />
+    <@kv header="Record Number" value=recordNumber />
+    <@kv header="Field Number" value=fieldNumber />
     <@kv header="Life Stage" value=occ.lifeStage!?string?lower_case?cap_first />
     <@kv header="Sex" value=occ.sex!?string?lower_case?cap_first />
     <@kv header="Establishment Means" value=occ.establishmentMeans!?string?lower_case?cap_first />
     <@kv header="Reproductive Condition" value=reproductiveCondition />
-    <@kv header="Individual Count" value=occ.individualCount />
     <@kv header="Behavior" value=behavior />
-    <@kv header="Occurrence Status" value=occurrenceStatus />
-    <@kv header="Record Number" value=recordNumber />
-    <@kv header="Event ID" value=eventID />
-    <@kv header="Field Number" value=fieldNumber />
   </div>
 
   </@common.article>
@@ -806,7 +835,11 @@ member?has_content || geologicalContextID?has_content || lithostratigraphicTerms
 <#assign bibliographicCitation = action.termValue('bibliographicCitation')!"" />
 <#assign accessRights = action.termValue('accessRights')!"" />
 <#assign rightsHolder = action.termValue('rightsHolder')!"" />
-<@citationArticle bibliographicCitation=bibliographicCitation rights=rights accessRights=accessRights rightsHolder=rightsHolder dataset=dataset publisher=publisher />
+<#-- New DwC terms -->
+<#assign license = action.termValue('license')!"" />
+
+<@citationArticle bibliographicCitation=bibliographicCitation rights=rights accessRights=accessRights rightsHolder=rightsHolder dataset=dataset publisher=publisher license=license/>
+
 
 <@common.notice title="Record history">
   <#if occ.lastInterpreted?has_content>
