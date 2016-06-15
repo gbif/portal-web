@@ -119,7 +119,7 @@
         <div class="box">
           <div class="content">
             <ul>
-              <li class="single last"><h4>${searchResponse.count!0}</h4>Occurrences</li>
+              <li class="single last"><h4>${searchResponse.count}</h4>Occurrences</li>
             </ul>
             <a href="#" class="candy_blue_button download_button"><span>Download</span></a>
           </div>
@@ -151,8 +151,8 @@
         <tr class="header">
 
           <td class="summary" colspan="${table.summaryColspan}">
-            <#if !action.hasSuggestions()><h2>${searchResponse.count} results</h2></#if>
-            <#if searchResponse.spellCheckResponse?has_content && searchResponse.spellCheckResponse.suggestions?has_content>
+            <#if !action.hasSuggestions()><h2>${searchResponse.count!0} results</h2></#if>
+            <#if searchResponse?has_content && searchResponse.spellCheckResponse?has_content && searchResponse.spellCheckResponse.suggestions?has_content>
               <div class="spell">
                 <span class="spell">Did you mean: </span>
                 <#list searchResponse.spellCheckResponse.suggestions?values as suggestion>
@@ -359,7 +359,7 @@
       </#if>
     </table>
   </div>
-  <#if cfg.occurrenceFacetsEnabled>
+  <#if cfg.occurrenceFacetsEnabled && searchResponse?has_content && !action.hasSuggestions() && !action.hasErrors()>
   <div class="facets" style="padding-top: 20px; text-align:left; margin-right: 4px;vertical-align:top; float:right;display:inline-block; height: 100%;min-height:100%;padding-left: 10px;box-sizing: border-box;">
     <h3 style="font-size: 22px; text-transform: none; color: #999999; border-bottom: 1px solid #D8DCE1; padding: 0 0 27px 0;margin: 0 0 10px 0;">Refine your search</h3>
     <div id="resetFacets" data-currentUrl="">

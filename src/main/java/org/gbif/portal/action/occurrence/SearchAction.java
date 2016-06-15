@@ -452,7 +452,7 @@ public class SearchAction
    */
   public boolean showDownload() {
     return searchResponse != null
-           && searchResponse.getCount() > 0
+           && (searchResponse.getCount() != null && searchResponse.getCount() > 0)
            && (getCfg().getMaxOccDowloadSize() < 0
                || searchResponse.getCount()
                   <= getCfg().getMaxOccDowloadSize())
@@ -504,7 +504,7 @@ public class SearchAction
    * Provides post-search suggestions. The suggestions are provided only if the count of results id 0.
    */
   private void provideSuggestions() {
-    if (searchResponse.getCount() == 0) {
+    if (searchResponse.getCount() == null || searchResponse.getCount() == 0) {
       if (searchRequest.getParameters().containsKey(OccurrenceSearchParameter.RECORDED_BY)) {
         collectorSuggestions = filtersActionHelper.processCollectorSuggestions(request);
       }
