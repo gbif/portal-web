@@ -38,6 +38,7 @@
     <notDevMode>false</notDevMode>
     <google.analytics />
     <occurrence.download.size.limit>-1</occurrence.download.size.limit>
+    <occurrence.download.fulltext.size.limit>10</occurrence.download.fulltext.size.limit>
     <occurrence.search.maxoffset>10000</occurrence.search.maxoffset>
     <occurrence.facets.enable>true</occurrence.facets.enable>
     <skipJetty>false</skipJetty>

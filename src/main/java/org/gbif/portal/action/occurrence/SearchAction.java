@@ -460,6 +460,10 @@ public class SearchAction
            && !hasSuggestions();
   }
 
+  public boolean isValidFullTextDownload() {
+    return  !Strings.isNullOrEmpty(getQ()) && searchResponse.getCount() <= getCfg().getMaxOccFullTextDowloadSize();
+  }
+
   @Override
   protected String translateFilterValue(OccurrenceSearchParameter param, String value) {
     if (param == OccurrenceSearchParameter.GEOMETRY) {

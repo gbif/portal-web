@@ -121,7 +121,12 @@
             <ul>
               <li class="single last"><h4>${searchResponse.count}</h4>Occurrences</li>
             </ul>
-            <a href="#" class="candy_blue_button download_button"><span>Download</span></a>
+            <#if !validFullTextDownload>
+              <div><em>Downloads using free text search</em></div>
+              <div><em>supported on less than ${cfg.maxOccFullTextDowloadSize} results</em></div>
+            <#else>
+              <a href="#" class="candy_blue_button download_button"><span>Download</span></a>
+            </#if>
           </div>
         </div>
         </#if>
@@ -390,7 +395,7 @@
 </@common.notice>
 </#if>
 
- <#if action.showDownload()>
+ <#if action.showDownload() && validFullTextDownload>
  <@common.article class="download_ocurrences" title="Download ${searchResponse.count} occurrences from your search">
    <div>
      <a href="#" class="candy_blue_button download_button"><span>Download</span></a>
