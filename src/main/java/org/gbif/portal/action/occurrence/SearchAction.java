@@ -461,7 +461,7 @@ public class SearchAction
   }
 
   public boolean isValidFullTextDownload() {
-    return  Strings.isNullOrEmpty(getQ()) && searchResponse.getCount() <= getCfg().getMaxOccFullTextDowloadSize();
+    return  Strings.isNullOrEmpty(getQ()) || (!Strings.isNullOrEmpty(getQ()) && searchResponse.getCount() <= getCfg().getMaxOccFullTextDowloadSize());
   }
 
   @Override
