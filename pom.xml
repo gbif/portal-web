@@ -48,7 +48,7 @@
     <commons-beanutils.version>1.9.2</commons-beanutils.version>
     <commons-io.version>2.4</commons-io.version>
     <commons-lang3.version>3.4</commons-lang3.version>
-    <download-query-tools.version>1.11</download-query-tools.version>
+    <download-query-tools.version>1.12</download-query-tools.version>
     <drupal-mybatis.version>0.19</drupal-mybatis.version>
     <dwc-api.version>1.16</dwc-api.version>
     <findbugs-jsr305.version>3.0.1</findbugs-jsr305.version>
