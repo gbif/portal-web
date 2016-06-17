@@ -62,8 +62,6 @@ public class Config {
   private String annosysUrl;
   private String wsImageCache;
   private Integer maxOccDowloadSize;
-
-  private Integer maxOccFullTextDowloadSize;
   private int maxOccSearchOffset;
 
   //Used to enable/disable faceted search in the occurrence search page
@@ -87,7 +85,6 @@ public class Config {
       cfg.drupal = getPropertyUrl(properties, "drupal.url", false);
       cfg.drupalCookieName = properties.getProperty("drupal.cookiename");
       cfg.maxOccDowloadSize = Integer.parseInt(properties.getProperty("occurrence.download.size.limit"));
-      cfg.maxOccFullTextDowloadSize = Integer.parseInt(properties.getProperty("occurrence.download.fulltext.size.limit"));
       cfg.maxOccSearchOffset = Integer.parseInt(properties.getProperty("occurrence.search.maxoffset"));
       cfg.includeContext = Boolean.parseBoolean(properties.getProperty("struts.url.includeContext"));
       cfg.occurrenceFacetsEnabled = Boolean.parseBoolean(properties.getProperty("occurrence.facets.enable"));
@@ -287,7 +284,4 @@ public class Config {
     return occurrenceFacetsEnabled;
   }
 
-  public Integer getMaxOccFullTextDowloadSize() {
-    return maxOccFullTextDowloadSize;
-  }
 }

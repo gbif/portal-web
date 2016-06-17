@@ -460,8 +460,8 @@ public class SearchAction
            && !hasSuggestions();
   }
 
-  public boolean isValidFullTextDownload() {
-    return  Strings.isNullOrEmpty(getQ()) || (!Strings.isNullOrEmpty(getQ()) && searchResponse.getCount() <= getCfg().getMaxOccFullTextDowloadSize());
+  public boolean isFullTextSearch() {
+    return  !Strings.isNullOrEmpty(getQ());
   }
 
   @Override
