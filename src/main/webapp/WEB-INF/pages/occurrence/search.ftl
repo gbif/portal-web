@@ -122,8 +122,7 @@
               <li class="single last"><h4>${searchResponse.count}</h4>Occurrences</li>
             </ul>
             <#if fullTextSearch>
-              <div><em>Downloads using free text</em></div>
-              <div><em>search are not supported</em></div>
+              <div style="max-width: 150px;text-align: center;"><em>Downloads using free text search are not supported</em></div>
             <#else>
               <a href="#" class="candy_blue_button download_button"><span>Download</span></a>
             </#if>
