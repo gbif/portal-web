@@ -88,6 +88,8 @@ public class SearchAction
 
   private final FiltersActionHelper filtersActionHelper;
 
+  private String display = "table";
+
   private SearchSuggestions<NameUsageSuggestResult> nameUsagesSuggestions;
 
   private SearchSuggestions<DatasetSuggestResult> datasetsSuggestions;
@@ -571,4 +573,11 @@ public class SearchAction
                       .matcher(getServletRequest().getQueryString());
   }
 
+  public String getDisplay() {
+    return display;
+  }
+
+  public void setDisplay(String display) {
+    this.display = display;
+  }
 }

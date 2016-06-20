@@ -303,6 +303,7 @@
 
 
         <#if !action.hasSuggestions() && searchResponse.count gt 0>
+         <#if display! == "map">
           <tr class="results-map mapView hidden" style="display: none">
             <td colspan="5">
               <div id="map" style="width: 100%; height: 550px; clear: both; margin: 0 auto; overflow: hidden">
@@ -310,7 +311,7 @@
               </div>
             </td>
           </tr>
-
+         <#else>
           <tr class="results-header tableView">
             <td></td>
             <#if showLocation>
@@ -409,6 +410,7 @@
           </#if>
          </tr>
          </#list>
+         </#if>
         </#if>
       <#else>
         <tr class="header">

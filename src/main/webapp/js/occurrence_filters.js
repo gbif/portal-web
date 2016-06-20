@@ -2088,7 +2088,11 @@ var OccurrenceWidgetManager = (function ($,_) {
         }
         //if this.submitOnApply the elements are not submitted
         if (submitOnApply) {
-          return this.submit({});
+          if($.url().param('display') !== undefined) {
+            return this.submit({display:$.url().param('display')});
+          } else {
+            return this.submit({});
+          }
         }
       },
 
