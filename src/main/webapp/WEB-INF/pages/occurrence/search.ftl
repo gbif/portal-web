@@ -73,15 +73,54 @@
          $('a.download_submit_button').click(function(event) {
             widgetManager.submit({emails:$('#notify_others').val(),format:$('input:radio[name=downloadFormat]:checked').val()}, "<@s.url value='/occurrence/download'/>?");
          });
-         $('a.occurrence_map_button').click(function(event) {
-           var queryParams = location.search;
-           if(queryParams.indexOf('?') > -1) {
-             queryParams = queryParams + "&";
-           } else {
-             queryParams = "?";
+
+
+         function getURLParameter(name) {
+            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || ['', ''])[1].replace(/\+/g, '%20')) || null;
+         }
+         function updateMap() {
+           //UPDATE MAP
+           var mapURL = '${cfg.tileServerBaseUrl!}/heatmap.html?&resolution=1&palette=yellows_reds&' +
+           window.location.href.slice(window.location.href.indexOf('?') + 1);
+           var mapframe = $('#mapframe');
+           mapframe.attr('src', mapURL);
+         };
+         function showMap() {
+           $('.mapView').show();
+           $('.tableView').hide();
+           //update map
+           updateMap();
+         }
+         function showTable() {
+           $('.mapView').hide();
+           $('.tableView').show();
+         }
+         function getQueryParams() {
+           var queryParameters = {}, queryString = location.search.substring(1),
+           re = /([^&=]+)=([^&]*)/g, m;
+           // Creates a map with the query string parameters
+           while (m = re.exec(queryString)) {
+             queryParameters[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
            }
-           window.open("<@s.url value='/occurrence/heatmap'/>" + queryParams  + "x=0&y=0&z=0",'_blank');
+           return queryParameters;
+         }
+
+         if (getURLParameter('display')=='map') {
+           //show map
+           showMap();
+         }
+         $('.occurrence_table_button').click(function(event){
+           //showTable();
+           location.href=location.href.replace(/&?display=([^&]$|[^&]*)/i, "");
          });
+         $('a.occurrence_map_button').click(function(event) {
+           //showMap();
+           var queryParameters = getQueryParams();
+           queryParameters['display'] = 'map';
+           location.search = $.param(queryParameters);
+         });
+
+
          $('#emails').tagit({
            singleField: true,
            singleFieldNode: $('#notify_others'),
@@ -164,7 +203,14 @@
         <tr class="header">
 
           <td class="summary" colspan="${table.summaryColspan}">
-            <#if !action.hasSuggestions()><h2>${searchResponse.count!0} results <a href="#" class="occurrence_map_button" style="font-size: 12px;">[View results in a map]</a></h2>
+            <#if !action.hasSuggestions()>
+              <h2>${searchResponse.count!0} results
+                <a href="#" class="occurrence_map_button tableView" style="font-size: 12px;">[View results as map]</a>
+                <a href="#" class="occurrence_table_button mapView" style="display:none; font-size: 12px;">[View results as table]</a>
+              </h2>
+              <p class="mapView" style="display: none">
+                The map view is currently experimental.
+              </p>
             </#if>
             <#if searchResponse?has_content && searchResponse.spellCheckResponse?has_content && searchResponse.spellCheckResponse.suggestions?has_content>
               <div class="spell">
@@ -184,7 +230,7 @@
             </#if>
           <div class="options">
             <ul>
-              <li>
+              <li class="tableView">
                 <a href="#" class="configure" id="configure_link" data-toggle="dropdown"><i></i> Configure</a>
                 <div class="dropdown-menu configure filters" id="configure_widget">
                 <div class="tip"></div>
@@ -254,8 +300,18 @@
         </div>
         </td>
       </tr>
+
+
         <#if !action.hasSuggestions() && searchResponse.count gt 0>
-          <tr class="results-header">
+          <tr class="results-map mapView hidden" style="display: none">
+            <td colspan="5">
+              <div id="map" style="width: 100%; height: 550px; clear: both; margin: 0 auto; overflow: hidden">
+                <iframe id="mapframe" name="mapframe" src="http://api.gbif-dev.org/v1/map/heatmap.html?&resolution=1&x={x}&y={y}&z={z}&palette=yellows_reds&x=0&y=0&z=0" allowfullscreen height="100%" width="100%" frameborder="0" scrolling="no"/></iframe>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="results-header tableView">
             <td></td>
             <#if showLocation>
             <td><h4>Location</h4></td>
@@ -268,7 +324,7 @@
             </#if>
           </tr>
           <#list searchResponse.results as occ>
-           <tr class="result">
+           <tr class="result tableView">
             <td>
              <a href="<@s.url value='/occurrence/${occ.key?c}'/>">
               <div class="header">
@@ -385,7 +441,7 @@
     <#include "/WEB-INF/inc/facets.ftl">
   </div>
   </#if>
-  <div class="footer" style="float: left;text-align:center; margin: 0 20%;">
+  <div class="footer tableView" style="float: left;text-align:center; margin: 0 20%;">
     <#if !action.hasSuggestions() && !action.hasErrors()>
       <@macro.pagination page=searchResponse url=currentUrlWithoutPage maxOffset=maxOffset/>
     </#if>
