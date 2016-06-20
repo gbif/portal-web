@@ -73,6 +73,15 @@
          $('a.download_submit_button').click(function(event) {
             widgetManager.submit({emails:$('#notify_others').val(),format:$('input:radio[name=downloadFormat]:checked').val()}, "<@s.url value='/occurrence/download'/>?");
          });
+         $('a.occurrence_map_button').click(function(event) {
+           var queryParams = location.search;
+           if(queryParams.indexOf('?') > -1) {
+             queryParams = queryParams + "&";
+           } else {
+             queryParams = "?";
+           }
+           window.open("<@s.url value='/occurrence/heatmap'/>" + queryParams  + "x=0&y=0&z=0",'_blank');
+         });
          $('#emails').tagit({
            singleField: true,
            singleFieldNode: $('#notify_others'),
@@ -155,7 +164,8 @@
         <tr class="header">
 
           <td class="summary" colspan="${table.summaryColspan}">
-            <#if !action.hasSuggestions()><h2>${searchResponse.count!0} results</h2></#if>
+            <#if !action.hasSuggestions()><h2>${searchResponse.count!0} results <a href="#" class="occurrence_map_button" style="font-size: 12px;">[View results in a map]</a></h2>
+            </#if>
             <#if searchResponse?has_content && searchResponse.spellCheckResponse?has_content && searchResponse.spellCheckResponse.suggestions?has_content>
               <div class="spell">
                 <span class="spell">Did you mean: </span>

@@ -188,6 +188,10 @@
       <result>/WEB-INF/pages/occurrence/search.ftl</result>
     </action>
 
+    <action name="heatmap" class="org.gbif.portal.action.occurrence.HeatmapAction">
+      <result>/WEB-INF/pages/occurrence/heatmap.ftl</result>
+    </action>
+
     <action name="download" class="org.gbif.portal.action.occurrence.DownloadRequestAction">
       <interceptor-ref name="loginStack"/>
       <result name="success" type="redirectAction">
