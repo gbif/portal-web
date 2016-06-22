@@ -68,7 +68,7 @@
     <lucene.version>5.4.1</lucene.version>
     <metrics-ws-client.version>0.25</metrics-ws-client.version>
     <mockito.version>1.9.5</mockito.version>
-    <occurrence-ws-client.version>0.42</occurrence-ws-client.version>
+    <occurrence-ws-client.version>0.46</occurrence-ws-client.version>
     <registry-ws-client.version>2.51</registry-ws-client.version>
     <selenium.version>2.50.1</selenium.version>
     <servletapi.version>3.0.1</servletapi.version>
