@@ -56,7 +56,7 @@
 
           <#if dataset.publishingOrganizationKey?has_content>
             <p>
-              <#if recordCounts.get(dataset.key)??>
+              <#if recordCounts.get(dataset.key)?has_content>
                 ${recordCounts.get(dataset.key)} records published by
               <#else>
                 Published by

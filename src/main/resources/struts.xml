@@ -247,6 +247,11 @@
       <result>/WEB-INF/pages/species/synonyms.ftl</result>
     </action>
 
+    <action name="*/combinations" class="org.gbif.portal.action.species.CombinationsAction">
+      <param name="id">{1}</param>
+      <result>/WEB-INF/pages/species/combinations.ftl</result>
+    </action>
+
     <action name="*/classification" class="org.gbif.portal.action.species.ClassificationAction">
       <param name="id">{1}</param>
       <result>/WEB-INF/pages/species/classification.ftl</result>
