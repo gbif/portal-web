@@ -22,7 +22,7 @@
 
       <div class="header">
         <div class="left">
-          <h2>${page.count!} Combinations of "${usage.canonicalOrScientificName!}"</h2>
+          <h2>${usages?size} Combinations of "${usage.canonicalOrScientificName!}"</h2>
         </div>
       </div>
 
