@@ -84,7 +84,7 @@
 </p>
 
   <@api.apiTable auth=false>
-    <@trowS url="" respLink="occurrence/search?taxonKey=1"  paging=true params=["q","basisOfRecord","catalogNumber","collectionCode","continent","country","datasetKey","decimalLatitude","decimalLongitude","depth","elevation","eventDate","geometry","hasCoordinate","hasGeospatialIssue","institutionCode","issue","lastInterpreted","mediaType","month","occurrenceId","publishingCountry","recordedBy","recordNumber","scientificName","taxonKey","kingdomKey","phylumKey","classKey","orderKey","familyKey","genusKey","subGenusKey","speciesKey","year","establishmentMeans","repatriated","facet","facetMincount","facetMultiselect", "facet paging"]>Full search across all occurrences.
+    <@trowS url="" respLink="occurrence/search?taxonKey=1"  paging=true params=["q","basisOfRecord","catalogNumber","collectionCode","continent","country","datasetKey","decimalLatitude","decimalLongitude","depth","elevation","eventDate","geometry","hasCoordinate","hasGeospatialIssue","institutionCode","issue","lastInterpreted","mediaType","month","occurrenceId","publishingCountry","recordedBy","recordNumber","scientificName","taxonKey","kingdomKey","phylumKey","classKey","orderKey","familyKey","genusKey","subGenusKey","speciesKey","year","establishmentMeans","repatriated","typeStatus","facet","facetMincount","facetMultiselect", "facet paging"]>Full search across all occurrences.
     Results are ordered by relevance.</@trowS>
     <@trowS url="/catalogNumber" respLink="occurrence/search/catalogNumber?q=122&amp;limit=5" params=["q","limit"]>Search that returns matching catalog numbers.
     Results are ordered by relevance.</@trowS>
