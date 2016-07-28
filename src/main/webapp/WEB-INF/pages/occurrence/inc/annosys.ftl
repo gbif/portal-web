@@ -1,11 +1,10 @@
-<#-- Annosys modal and button but only if it is from the publisher http://www.bgbm.org -->
-    <#assign institutionCode = action.termValue('institutionCode')! />
-    <#assign collectionCode = action.termValue('collectionCode')! />
-    <#assign catalogNumber =  action.termValue('catalogNumber')! />
-    <#assign publishingOrgKey = occ.publishingOrgKey! />
+<#-- Annosys modal and button only if it a PreservedSpecimen -->
+<#assign institutionCode = action.termValue('institutionCode')! />
+<#assign collectionCode = action.termValue('collectionCode')! />
+<#assign catalogNumber =  action.termValue('catalogNumber')! />
 
-<#-- For now only show the annosys integration if it is published by BGBM aka the Botanic Garden and Botanical Museum Berlin-Dahlem -->
-<#if publishingOrgKey == "57254bd0-8256-11d8-b7ed-b8a03c50a862">
+<#-- Only show the annosys integration if it is a PreservedSpecimen -->
+<#if occ.basisOfRecord! == "PRESERVED_SPECIMEN">
     <a id="annosysTrigger" href="#" class="annosys">AnnoSys <span class="annosysCount"></span></a>
     <div id="annosysBlanket" class="atlwdg-blanket annosysBlanket"></div>
     <div id="annosysModal" class="atlwdg-box-shadow annosysModal">
