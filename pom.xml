@@ -52,7 +52,7 @@
     <drupal-mybatis.version>0.19</drupal-mybatis.version>
     <dwc-api.version>1.16</dwc-api.version>
     <findbugs-jsr305.version>3.0.1</findbugs-jsr305.version>
-    <freemarker.version>2.3.23</freemarker.version>
+    <freemarker.version>2.3.25-incubating</freemarker.version>
     <gbif-api.version>0.40</gbif-api.version>
     <gbif-common-ws.version>0.33</gbif-common-ws.version>
     <gbif-common.version>0.28</gbif-common.version>
@@ -73,7 +73,7 @@
     <selenium.version>2.50.1</selenium.version>
     <servletapi.version>3.0.1</servletapi.version>
     <slf4j.version>1.7.13</slf4j.version>
-    <struts.version>2.3.24.1</struts.version>
+    <struts.version>2.3.30</struts.version>
     <xerces.version>2.9.1</xerces.version>
   </properties>
 
