@@ -29,6 +29,10 @@
             };
             for (var i = 0; i < boxes.length; i++){
                 var b = boxes[i];
+                // If east < west then we are wrapping the date line.
+                if (b[3] < b[2]) {
+                    b[3] += 360;
+                }
                 var feature = { "type": "Feature",
                     "geometry": {
                         "type": "Polygon",
