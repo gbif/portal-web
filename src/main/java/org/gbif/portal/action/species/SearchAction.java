@@ -35,232 +35,235 @@ import static org.gbif.api.model.Constants.NUB_DATASET_KEY;
  * The action for all species search operations.
  */
 public class SearchAction
-        extends BaseFacetedSearchAction<NameUsageSearchResult, NameUsageSearchParameter, NameUsageSearchRequest> {
-    private static final Logger LOG = LoggerFactory.getLogger(SearchAction.class);
+    extends BaseFacetedSearchAction<NameUsageSearchResult, NameUsageSearchParameter, NameUsageSearchRequest> {
+  private static final Logger LOG = LoggerFactory.getLogger(SearchAction.class);
 
-    private static final long serialVersionUID = -3736915206911951300L;
+  private static final long serialVersionUID = -3736915206911951300L;
 
-    // injected
-    private final NameUsageService usageService;
-    private final DatasetService datasetService;
+  // injected
+  private final NameUsageService usageService;
+  private final DatasetService datasetService;
 
-    private Function<String, String> getDatasetTitle;
-    private Function<String, String> getHigherTaxaTitle;
-    private Function<String, String> getExtinctTitle;
-    private Function<String, String> getHabitatTitle;
-    private Function<String, String> getTaxStatusTitle;
-    private Function<String, String> getNomStatusTitle;
-    private Function<String, String> getRankTitle;
-    private Function<String, String> getThreatStatusTitle;
-    private Function<String, String> getNameTypeTitle;
-    private Function<String, String> getIssueTitle;
+  private Function<String, String> getDatasetTitle;
+  private Function<String, String> getHigherTaxaTitle;
+  private Function<String, String> getExtinctTitle;
+  private Function<String, String> getHabitatTitle;
+  private Function<String, String> getTaxStatusTitle;
+  private Function<String, String> getNomStatusTitle;
+  private Function<String, String> getRankTitle;
+  private Function<String, String> getThreatStatusTitle;
+  private Function<String, String> getNameTypeTitle;
+  private Function<String, String> getIssueTitle;
 
-    @Inject
-    public SearchAction(NameUsageSearchService nameUsageSearchService, NameUsageService usageService,
-                        DatasetService datasetService) {
-        super(nameUsageSearchService, NameUsageSearchParameter.class, new NameUsageSearchRequest());
-        this.usageService = usageService;
-        this.datasetService = datasetService;
-        initGetTitleFunctions();
+  @Inject
+  public SearchAction(NameUsageSearchService nameUsageSearchService, NameUsageService usageService,
+                      DatasetService datasetService) {
+    super(nameUsageSearchService, NameUsageSearchParameter.class, new NameUsageSearchRequest());
+    this.usageService = usageService;
+    this.datasetService = datasetService;
+    initGetTitleFunctions();
+  }
+
+
+  @Override
+  public String execute() {
+    if (getSearchRequest().getOffset() > getMaxOffset()) {
+      LOG.warn("Search offset {} too high, use maximum offset {} instead", searchRequest.getOffset(), getMaxOffset());
+      searchRequest.setOffset(getMaxOffset());
     }
 
+    super.execute();
 
-    @Override
-    public String execute() {
-        if (getSearchRequest().getOffset() > getMaxOffset()) {
-            LOG.warn("Search offset {} too high, use maximum offset {} instead", searchRequest.getOffset(), getMaxOffset());
-            searchRequest.setOffset(getMaxOffset());
+    // remove all common names not matching the query or all of them in case we have a highlighted canonical name
+    for (NameUsageSearchResult u : searchResponse.getResults()) {
+      filterVernacularMatches(u.getVernacularNames(), isHighlightedText(u.getCanonicalName()));
+    }
+
+    // replace higher taxon ids in facets with real names
+    lookupFacetTitles(NameUsageSearchParameter.HIGHERTAXON_KEY, getHigherTaxaTitle);
+
+    // replace checklist key with labels
+    lookupFacetTitles(NameUsageSearchParameter.DATASET_KEY, getDatasetTitle);
+
+    // replace checklist key with labels for constituents
+    lookupFacetTitles(NameUsageSearchParameter.CONSTITUENT_KEY, getDatasetTitle);
+
+    // replace taxonomic status keys with labels
+    lookupFacetTitles(NameUsageSearchParameter.STATUS, getTaxStatusTitle);
+
+    // replace taxonomic status keys with labels
+    lookupFacetTitles(NameUsageSearchParameter.NOMENCLATURAL_STATUS, getNomStatusTitle);
+
+    // replace rank keys with labels
+    lookupFacetTitles(NameUsageSearchParameter.RANK, getRankTitle);
+
+    // replace extinct boolean values
+    lookupFacetTitles(NameUsageSearchParameter.IS_EXTINCT, getExtinctTitle);
+
+    // replace habitat enum values
+    lookupFacetTitles(NameUsageSearchParameter.HABITAT, getHabitatTitle);
+
+    // replace threat status keys values
+    lookupFacetTitles(NameUsageSearchParameter.THREAT, getThreatStatusTitle);
+
+    // replace name type key values
+    lookupFacetTitles(NameUsageSearchParameter.NAME_TYPE, getNameTypeTitle);
+
+    // replace issue key values
+    lookupFacetTitles(NameUsageSearchParameter.ISSUE, getIssueTitle);
+
+    return SUCCESS;
+  }
+
+  /**
+   * Exposed to allow easy access in freemarker.
+   */
+  public UUID getNubDatasetKey() {
+    return NUB_DATASET_KEY;
+  }
+
+  /**
+   * @return true if the checklist facet filter contains a single checklist only.
+   */
+  public boolean getShowAccordingTo() {
+    return !searchRequest.getParameters().containsKey(NameUsageSearchParameter.DATASET_KEY)
+        || searchRequest.getParameters().get(NameUsageSearchParameter.DATASET_KEY).size() != 1;
+  }
+
+  /**
+   * Removes all vernacular names from the given list which are not highlighted, ie matching the query.
+   */
+  private void filterVernacularMatches(List<VernacularName> vernacularNames, boolean removeAll) {
+    Iterator<VernacularName> iter = vernacularNames.iterator();
+    while (iter.hasNext()) {
+      VernacularName vn = iter.next();
+      if (removeAll || vn.getVernacularName() == null || !isHighlightedText(vn.getVernacularName())) {
+        iter.remove();
+      }
+    }
+  }
+
+  private String getBooleanTitle(String resourceEntry, String value) {
+    if (Strings.isNullOrEmpty(value)) {
+      return null;
+    }
+    if ("true".equalsIgnoreCase(value)) {
+      return getText(resourceEntry).toLowerCase();
+    }
+    return getText("not") + " " + getText(resourceEntry).toLowerCase();
+  }
+
+
+  /**
+   * Initializes the getTitle* functions: getDatasetTitle and getHigherTaxaTitle.
+   * Because we need the non static resource bundle lookup method getText() these methods
+   * unfortuantely cant be static ones and are created here instead for every action.
+   */
+  private void initGetTitleFunctions() {
+    // the function makes use of the shared and ftl exposed base searhc action title map cache
+    getDatasetTitle = new Function<String, String>() {
+
+      @Override
+      public String apply(String name) {
+        if (Strings.emptyToNull(name) == null) {
+          return null;
         }
-
-        super.execute();
-
-        // remove all common names not matching the query or all of them in case we have a highlighted canonical name
-        for (NameUsageSearchResult u : searchResponse.getResults()) {
-            filterVernacularMatches(u.getVernacularNames(), isHighlightedText(u.getCanonicalName()));
+        final UUID dsKey = UUID.fromString(name);
+        if (!titles.containsKey(dsKey)) {
+          titles.put(dsKey, datasetService.get(dsKey).getTitle());
         }
+        return titles.get(dsKey);
+      }
+    };
 
-        // replace higher taxon ids in facets with real names
-        lookupFacetTitles(NameUsageSearchParameter.HIGHERTAXON_KEY, getHigherTaxaTitle);
+    getHigherTaxaTitle = new Function<String, String>() {
 
-        // replace checklist key with labels
-        lookupFacetTitles(NameUsageSearchParameter.DATASET_KEY, getDatasetTitle);
-
-        // replace taxonomic status keys with labels
-        lookupFacetTitles(NameUsageSearchParameter.STATUS, getTaxStatusTitle);
-
-        // replace taxonomic status keys with labels
-        lookupFacetTitles(NameUsageSearchParameter.NOMENCLATURAL_STATUS, getNomStatusTitle);
-
-        // replace rank keys with labels
-        lookupFacetTitles(NameUsageSearchParameter.RANK, getRankTitle);
-
-        // replace extinct boolean values
-        lookupFacetTitles(NameUsageSearchParameter.IS_EXTINCT, getExtinctTitle);
-
-        // replace habitat enum values
-        lookupFacetTitles(NameUsageSearchParameter.HABITAT, getHabitatTitle);
-
-        // replace threat status keys values
-        lookupFacetTitles(NameUsageSearchParameter.THREAT, getThreatStatusTitle);
-
-        // replace name type key values
-        lookupFacetTitles(NameUsageSearchParameter.NAME_TYPE, getNameTypeTitle);
-
-        // replace issue key values
-        lookupFacetTitles(NameUsageSearchParameter.ISSUE, getIssueTitle);
-
-        return SUCCESS;
-    }
-
-    /**
-     * Exposed to allow easy access in freemarker.
-     */
-    public UUID getNubDatasetKey() {
-        return NUB_DATASET_KEY;
-    }
-
-    /**
-     * @return true if the checklist facet filter contains a single checklist only.
-     */
-    public boolean getShowAccordingTo() {
-        return !searchRequest.getParameters().containsKey(NameUsageSearchParameter.DATASET_KEY)
-                || searchRequest.getParameters().get(NameUsageSearchParameter.DATASET_KEY).size() != 1;
-    }
-
-    /**
-     * Removes all vernacular names from the given list which are not highlighted, ie matching the query.
-     */
-    private void filterVernacularMatches(List<VernacularName> vernacularNames, boolean removeAll) {
-        Iterator<VernacularName> iter = vernacularNames.iterator();
-        while (iter.hasNext()) {
-            VernacularName vn = iter.next();
-            if (removeAll || vn.getVernacularName() == null || !isHighlightedText(vn.getVernacularName())) {
-                iter.remove();
-            }
+      @Override
+      public String apply(String name) {
+        if (Strings.emptyToNull(name) == null) {
+          return null;
         }
-    }
+        return usageService.get(Integer.valueOf(name), null).getCanonicalOrScientificName();
+      }
+    };
 
-    private String getBooleanTitle(String resourceEntry, String value) {
-        if (Strings.isNullOrEmpty(value)) {
-            return null;
+    getExtinctTitle = new Function<String, String>() {
+
+      @Override
+      public String apply(String name) {
+        return getBooleanTitle("search.facet.IS_EXTINCT", name);
+      }
+    };
+
+    getHabitatTitle = new Function<String, String>() {
+
+      @Override
+      public String apply(String name) {
+        return getEnumTitle("habitat", name);
+      }
+    };
+
+    getRankTitle = new Function<String, String>() {
+
+      @Override
+      public String apply(String name) {
+        return getEnumTitle("rank", name);
+      }
+    };
+
+    getTaxStatusTitle = new Function<String, String>() {
+
+      @Override
+      public String apply(String name) {
+        return getEnumTitle("taxstatus", name);
+      }
+    };
+
+    getNomStatusTitle = new Function<String, String>() {
+
+      @Override
+      public String apply(String name) {
+        try {
+          NomenclaturalStatus status = VocabularyUtils.lookupEnum(name, NomenclaturalStatus.class);
+          return status.getAbbreviatedLabel() != null ? status.getAbbreviatedLabel() :
+              status.name().replace("_", " ").toLowerCase();
+        } catch (IllegalArgumentException e) {
+          // ignore
         }
-        if ("true".equalsIgnoreCase(value)) {
-            return getText(resourceEntry).toLowerCase();
-        }
-        return getText("not") + " " + getText(resourceEntry).toLowerCase();
-    }
+        return name;
+      }
+    };
 
+    getThreatStatusTitle = new Function<String, String>() {
 
-    /**
-     * Initializes the getTitle* functions: getDatasetTitle and getHigherTaxaTitle.
-     * Because we need the non static resource bundle lookup method getText() these methods
-     * unfortuantely cant be static ones and are created here instead for every action.
-     */
-    private void initGetTitleFunctions() {
-        // the function makes use of the shared and ftl exposed base searhc action title map cache
-        getDatasetTitle = new Function<String, String>() {
+      @Override
+      public String apply(String name) {
+        return getEnumTitle("threatstatus", name);
+      }
+    };
 
-            @Override
-            public String apply(String name) {
-                if (Strings.emptyToNull(name) == null) {
-                    return null;
-                }
-                final UUID dsKey = UUID.fromString(name);
-                if (!titles.containsKey(dsKey)) {
-                    titles.put(dsKey, datasetService.get(dsKey).getTitle());
-                }
-                return titles.get(dsKey);
-            }
-        };
+    getNameTypeTitle = new Function<String, String>() {
 
-        getHigherTaxaTitle = new Function<String, String>() {
+      @Override
+      public String apply(String name) {
+        return getEnumTitle("nametype", name);
+      }
+    };
 
-            @Override
-            public String apply(String name) {
-                if (Strings.emptyToNull(name) == null) {
-                    return null;
-                }
-                return usageService.get(Integer.valueOf(name), null).getCanonicalOrScientificName();
-            }
-        };
+    getIssueTitle = new Function<String, String>() {
 
-        getExtinctTitle = new Function<String, String>() {
+      @Override
+      public String apply(String name) {
+        return getEnumTitle("usageissue", name);
+      }
+    };
+  }
 
-            @Override
-            public String apply(String name) {
-                return getBooleanTitle("search.facet.IS_EXTINCT", name);
-            }
-        };
-
-        getHabitatTitle = new Function<String, String>() {
-
-            @Override
-            public String apply(String name) {
-                return getEnumTitle("habitat", name);
-            }
-        };
-
-        getRankTitle = new Function<String, String>() {
-
-            @Override
-            public String apply(String name) {
-                return getEnumTitle("rank", name);
-            }
-        };
-
-        getTaxStatusTitle = new Function<String, String>() {
-
-            @Override
-            public String apply(String name) {
-                return getEnumTitle("taxstatus", name);
-            }
-        };
-
-        getNomStatusTitle = new Function<String, String>() {
-
-            @Override
-            public String apply(String name) {
-                try {
-                    NomenclaturalStatus status = VocabularyUtils.lookupEnum(name, NomenclaturalStatus.class);
-                    return status.getAbbreviatedLabel() != null ? status.getAbbreviatedLabel() :
-                            status.name().replace("_", " ").toLowerCase();
-                } catch (IllegalArgumentException e) {
-                    // ignore
-                }
-                return name;
-            }
-        };
-
-        getThreatStatusTitle = new Function<String, String>() {
-
-            @Override
-            public String apply(String name) {
-                return getEnumTitle("threatstatus", name);
-            }
-        };
-
-        getNameTypeTitle = new Function<String, String>() {
-
-            @Override
-            public String apply(String name) {
-                return getEnumTitle("nametype", name);
-            }
-        };
-
-        getIssueTitle = new Function<String, String>() {
-
-            @Override
-            public String apply(String name) {
-                return getEnumTitle("usageissue", name);
-            }
-        };
-    }
-
-    /**
-     * @return the maximum default offset.
-     */
-    public int getMaxOffset() {
-        return getCfg().getMaxOccSearchOffset();
-    }
+  /**
+   * @return the maximum default offset.
+   */
+  public int getMaxOffset() {
+    return getCfg().getMaxOccSearchOffset();
+  }
 
 }
