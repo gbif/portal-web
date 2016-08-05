@@ -16,9 +16,9 @@
           <#list constituentCounts?keys as key>
             <li>
               <#if constituentTitles.get(key)?has_content>
-                <a title='${constituentTitles.get(key)}' href="<@s.url value='/dataset/${key}'/>">${common.limit(constituentTitles.get(key), 100)}</a>
+                <a title='${constituentTitles.get(key)}' href="<@s.url value='/species/search?datasetKey=${dataset.key}&constituentKey=${key}'/>">${common.limit(constituentTitles.get(key), 100)}</a>
               <#else>
-                <a title='GBIF algorithm' href="<@s.url value='/dataset/${common.nubKey}'/>">GBIF algorithm</a>
+                <a title='GBIF algorithm' href="<@s.url value='/species/search?datasetKey=${dataset.key}&constituentKey=${dataset.key}'/>">GBIF algorithm</a>
               </#if>
               <span class="note">${constituentCounts.get(key)} primary name references.</span>
             </li>
