@@ -245,8 +245,29 @@
 </p>
 </#macro>
 
+<#macro licenseIcon license>
+<span class="cc-icons">
+  <img src="<@s.url value='/img/cc-icons/cc.png'/>" />
+  <#if license == 'CC0_1_0'>
+    <img src="<@s.url value='/img/cc-icons/zero.png'/>" />
+  <#elseif license == 'PDM'>
+    <img src="<@s.url value='/img/cc-icons/pd.png'/>" />
+  <#elseif license == 'CC_BY_4_0'>
+    <img src="<@s.url value='/img/cc-icons/by.png'/>" />
+  <#elseif license == 'CC_BY_NC_4_0'>
+    <img src="<@s.url value='/img/cc-icons/by.png'/>" />
+    <img src="<@s.url value='/img/cc-icons/nc.png'/>" />
+  </#if>
+</span>
+</#macro>
+
+<#macro license license>
+${dataset.license.licenseTitle}
+<a rel="license" href="${dataset.license.licenseUrl}" title="${dataset.license.licenseTitle}"><@licenseIcon license /></a>
+</#macro>
+
 <#macro citationArticle rights dataset publisher prefix="">
-  <@common.article id="legal" title="Citation and licensing" class="mono_line">
+  <@article id="legal" title="Citation and licensing" class="mono_line">
   <div class="fullwidth">
     <#if dataset.citation?? && !dataset.citation.text!?ends_with(dataset.title)>
       <p>The content  of the "Dataset citation provided by the publisher" depends on the metadata supplied by the publisher.
@@ -264,13 +285,16 @@
       <br/>Accessed via ${currentUrl} on ${.now?date?iso_utc}
     </p>
 
-    <#if rights?has_content>
+    <#if dataset.license?has_content && dataset.license != "UNSPECIFIED" && dataset.license != "UNSUPPORTED">
+      <h3>License</h3>
+      <p><@license license=dataset.license /></p>
+    <#elseif rights?has_content>
       <h3>Rights</h3>
       <p>${rights}</p>
     </#if>
 
   </div>
-  </@common.article>
+  </@article>
 </#macro>
 
 <#-- Creates a dt dd definition if the value has content, otherwise none -->

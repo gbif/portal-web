@@ -41,7 +41,7 @@ public class PortalModuleIT {
    */
   @Test
   public void testChecklistBankWsClientModuleInstalled() {
-    DatasetMetricsService cms = injector.getInstance(org.gbif.api.service.checklistbank.DatasetMetricsService.class);
+    DatasetMetricsService cms = injector.getInstance(DatasetMetricsService.class);
     DatasetMetrics metrics = cms.get(UUID.randomUUID());
     assertNull(metrics);
   }
