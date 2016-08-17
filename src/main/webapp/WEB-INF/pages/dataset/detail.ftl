@@ -96,7 +96,7 @@
 
   <#if dataset.description?has_content>
     <h3>Description</h3>
-    <p>${action.linkText(dataset.description)}</p>
+    <div class="paratext">${action.linkText(dataset.description)}</div>
   </#if>
 <#-- purpose doesn't exist yet -->
   <#if dataset.purpose?has_content>
