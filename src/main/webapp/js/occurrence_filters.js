@@ -1824,8 +1824,9 @@ var OccurrenceWidgetManager = (function ($,_) {
             } else if (filterName == "MONTH") {
               newWidget = new OccurrenceMonthWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
-            } else if (filterName == "BASIS_OF_RECORD" || filterName == "TYPE_STATUS" || filterName == "MEDIA_TYPE" || filterName == "ISSUE"
-                       || filterName == "ESTABLISHMENT_MEANS") {
+            } else if (filterName == "BASIS_OF_RECORD" || filterName == "TYPE_STATUS" || filterName == "MEDIA_TYPE"
+                       || filterName == "ISSUE" || filterName == "ESTABLISHMENT_MEANS" || filterName == "PROTOCOL"
+                       || filterName == "LICENSE") {
               newWidget = new OccurrenceMultiSelectWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
             } else if (filterName == "COUNTRY" || filterName == "PUBLISHING_COUNTRY") {
@@ -1845,6 +1846,18 @@ var OccurrenceWidgetManager = (function ($,_) {
             } else if (filterName == "REPATRIATED") {
               newWidget = new OccurrenceCheckboxesWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
+            } else if (filterName == "ORGANISM_ID") {
+              newWidget = new OccurrenceWidget();
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindOrganismIdAutosuggest});
+            } else if (filterName == "LOCALITY") {
+              newWidget = new OccurrenceWidget();
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindLocalityAutosuggest});
+            } else if (filterName == "WATER_BODY") {
+              newWidget = new OccurrenceWidget();
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindWaterBodyAutosuggest});
+            } else if (filterName == "STATE_PROVINCE") {
+              newWidget = new OccurrenceWidget();
+              newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: self.bindStateProvinceAutosuggest});
             } else { //By default creates a simple OccurrenceWidget with an empty binding function
               newWidget = new OccurrenceWidget();
               newWidget.init({widgetContainer: widgetContainer,manager: self,bindingsExecutor: function(){}});
@@ -2000,7 +2013,7 @@ var OccurrenceWidgetManager = (function ($,_) {
       },
 
       /**
-       * Binds the catalog number  auto-suggest widget used by the INSTITUTION_CODE widget.
+       * Binds the institution code auto-suggest widget used by the INSTITUTION_CODE widget.
        */
       bindInstitutionCodeAutosuggest : function(){
         $(':input.institution_code_autosuggest').each( function(idx,el){
@@ -2009,7 +2022,7 @@ var OccurrenceWidgetManager = (function ($,_) {
       },
 
       /**
-       * Binds the catalog number  auto-suggest widget used by the CATALOG_NUMBER widget.
+       * Binds the collection code auto-suggest widget used by the COLLECTION_CODE widget.
        */
       bindCollectionCodeAutosuggest : function(){
         $(':input.collection_code_autosuggest').each( function(idx,el){
@@ -2018,7 +2031,7 @@ var OccurrenceWidgetManager = (function ($,_) {
       },
 
     /**
-     * Binds the catalog number  auto-suggest widget used by the CATALOG_NUMBER widget.
+     * Binds the occurrence id  auto-suggest widget used by the OCCURRENCE_ID widget.
      */
      bindOccurrenceIdAutosuggest : function(){
       $(':input.occurrence_id_autosuggest').each( function(idx,el){
@@ -2026,7 +2039,43 @@ var OccurrenceWidgetManager = (function ($,_) {
       });
      },
 
-      /**
+    /**
+     * Binds the occurrence id  auto-suggest widget used by the ORGANISM_ID widget.
+     */
+    bindOrganismIdAutosuggest : function(){
+      $(':input.organism_id_autosuggest').each( function(idx,el){
+        $(el).termsAutosuggest(cfg.wsOrganismIdSearch, "#content",SUGGEST_LIMIT, buildOnSelectHandler('ORGANISM_ID',el));
+      });
+    },
+
+    /**
+     * Binds the state-province  auto-suggest widget used by the STATE_PROVINCE widget.
+     */
+    bindStateProvinceAutosuggest : function(){
+      $(':input.state_province_autosuggest').each( function(idx,el){
+        $(el).termsAutosuggest(cfg.wsStateProvinceSearch, "#content",SUGGEST_LIMIT, buildOnSelectHandler('STATE_PROVINCE',el));
+      });
+    },
+
+    /**
+     * Binds the locality auto-suggest widget used by the LOCALITY widget.
+     */
+    bindLocalityAutosuggest : function(){
+      $(':input.locality_autosuggest').each( function(idx,el){
+        $(el).termsAutosuggest(cfg.wsLocalitySearch, "#content",SUGGEST_LIMIT, buildOnSelectHandler('LOCALITY',el));
+      });
+    },
+
+    /**
+     * Binds the locality auto-suggest widget used by the WATER_BODY widget.
+     */
+    bindWaterBodyAutosuggest : function(){
+      $(':input.water_body_autosuggest').each( function(idx,el){
+        $(el).termsAutosuggest(cfg.wsWaterBodySearch, "#content",SUGGEST_LIMIT, buildOnSelectHandler('WATER_BODY',el));
+      });
+    },
+
+    /**
        * Binds the catalog number  auto-suggest widget used by the BBOX widget.
        */
       bindMap : function() {
@@ -2136,27 +2185,27 @@ var OccurrenceWidgetManager = (function ($,_) {
           if(widgets[wi].isShowAll()){
         	  params[widgets[wi].getId()] = '*';
           } else {
-	          var widgetFilters = widgets[wi].getFilters();
-	          for (var fi=0; fi < widgetFilters.length; fi++) {
-	            var filter = widgetFilters[fi];
-	            var paramName = filter.paramName;
-	            if (undefined == paramName){
-	              paramName = widgets[wi].getId();
-	            }
-	            if (params[paramName] == null) {
-	              params[paramName] = new Array();
-	            }
-	            if (filter.key != null) {
-	              //key field could be a string or a number, but is sent as a string
-	              if($.type(filter.key) == 'string' && filter.key.length > 0){
-	                params[paramName].push(filter.key);
-	              } else if ($.type(filter.key) == 'number'){
-	                params[paramName].push(filter.key.toString());
-	              }
-	            } else {
-	              params[paramName].push(filter.value);
-	            }
-	          }
+            var widgetFilters = widgets[wi].getFilters();
+            for (var fi=0; fi < widgetFilters.length; fi++) {
+              var filter = widgetFilters[fi];
+              var paramName = filter.paramName;
+              if (undefined == paramName){
+                paramName = widgets[wi].getId();
+              }
+              if (params[paramName] == null) {
+                params[paramName] = new Array();
+              }
+              if (filter.key != null) {
+                //key field could be a string or a number, but is sent as a string
+                if($.type(filter.key) == 'string' && filter.key.length > 0){
+                  params[paramName].push(filter.key);
+                } else if ($.type(filter.key) == 'number'){
+                  params[paramName].push(filter.key.toString());
+                }
+              } else {
+                params[paramName].push(filter.value);
+              }
+            }
           }
         }
         if($("#q").val()) {

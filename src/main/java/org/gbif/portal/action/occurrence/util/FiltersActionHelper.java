@@ -178,6 +178,40 @@ public class FiltersActionHelper {
     }
   };
 
+
+  private final Function<String, List<String>> suggestLocalities = new Function<String, List<String>>() {
+
+    @Override
+    public List<String> apply(String input) {
+      return occurrenceSearchService.suggestLocalities(input, SUGGESTIONS_LIMIT);
+    }
+  };
+
+
+  private final Function<String, List<String>> suggestOrganismIds = new Function<String, List<String>>() {
+
+    @Override
+    public List<String> apply(String input) {
+      return occurrenceSearchService.suggestOrganismIds(input, SUGGESTIONS_LIMIT);
+    }
+  };
+
+  private final Function<String, List<String>> suggestStateProvinces = new Function<String, List<String>>() {
+
+    @Override
+    public List<String> apply(String input) {
+      return occurrenceSearchService.suggestStateProvinces(input, SUGGESTIONS_LIMIT);
+    }
+  };
+
+  private final Function<String, List<String>> suggestWaterBodies = new Function<String, List<String>>() {
+
+    @Override
+    public List<String> apply(String input) {
+      return occurrenceSearchService.suggestWaterBodies(input, SUGGESTIONS_LIMIT);
+    }
+  };
+
   private static final String GEOREFERENCING_LEGEND = "Georeferenced records only";
 
   private static final String SPATIAL_ISSUES_LEGEND = "With known coordinate issues";
@@ -229,6 +263,17 @@ public class FiltersActionHelper {
    * Constant that contains the prefix of a key to get a OccurrenceIssue label from the resource bundle file.
    */
   private static final String OCCURRENCE_ISSUE_KEY = "enum.occurrenceissue.";
+
+  /**
+   * Constant that contains the prefix of a key to get a EndpointType label from the resource bundle file.
+   */
+  private static final String ENDPOINT_TYPE_KEY = "enum.endpointtype.";
+
+
+  /**
+   * Constant that contains the prefix of a key to get a License label from the resource bundle file.
+   */
+  private static final String LICENSE_KEY = "enum.license.";
 
   @Inject
   public FiltersActionHelper(DatasetService datasetService, NameUsageService nameUsageService,
@@ -364,6 +409,10 @@ public class FiltersActionHelper {
         return LocalizedTextUtil.findDefaultText(OCCURRENCE_ISSUE_KEY + filterValue, getLocale());
       } else if (parameter == OccurrenceSearchParameter.REPATRIATED) {
         return getRepatriatedTitle(filterValue);
+      } else if (parameter == OccurrenceSearchParameter.PROTOCOL) {
+        return LocalizedTextUtil.findDefaultText(ENDPOINT_TYPE_KEY + filterValue, getLocale());
+      } else if (parameter == OccurrenceSearchParameter.LICENSE) {
+        return LocalizedTextUtil.findDefaultText(LICENSE_KEY + filterValue, getLocale());
       }
     }
     return filterValue;
@@ -481,6 +530,40 @@ public class FiltersActionHelper {
    */
   public SearchSuggestions<String> processOccurrenceIdSuggestions(HttpServletRequest request) {
     return processStringSuggestions(request, OccurrenceSearchParameter.OCCURRENCE_ID, suggestOccurrenceIds);
+  }
+
+  /**
+   * Searches for suggestion to all the LOCALITY parameter values, if the input value has an exact match against
+   * any suggestion, no suggestions are returned for that parameter.
+   */
+  public SearchSuggestions<String> processLocalitySuggestions(HttpServletRequest request) {
+    return processStringSuggestions(request, OccurrenceSearchParameter.LOCALITY, suggestLocalities);
+  }
+
+  /**
+   * Searches for suggestion to all the ORGANISM_ID parameter values, if the input value has an exact match against
+   * any suggestion, no suggestions are returned for that parameter.
+   */
+  public SearchSuggestions<String> processOrganismIdSuggestions(HttpServletRequest request) {
+    return processStringSuggestions(request, OccurrenceSearchParameter.ORGANISM_ID, suggestOrganismIds);
+  }
+
+
+  /**
+   * Searches for suggestion to all the STATE_PROVINCE parameter values, if the input value has an exact match against
+   * any suggestion, no suggestions are returned for that parameter.
+   */
+  public SearchSuggestions<String> processStateProvinceSuggestions(HttpServletRequest request) {
+    return processStringSuggestions(request, OccurrenceSearchParameter.STATE_PROVINCE, suggestOrganismIds);
+  }
+
+
+  /**
+   * Searches for suggestion to all the WATER_BODY parameter values, if the input value has an exact match against
+   * any suggestion, no suggestions are returned for that parameter.
+   */
+  public SearchSuggestions<String> processWaterBodySuggestions(HttpServletRequest request) {
+    return processStringSuggestions(request, OccurrenceSearchParameter.WATER_BODY, suggestOrganismIds);
   }
 
   /**

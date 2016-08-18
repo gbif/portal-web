@@ -17,6 +17,10 @@ import static org.gbif.ws.paths.OccurrencePaths.INSTITUTION_CODE_PATH;
 import static org.gbif.ws.paths.OccurrencePaths.OCC_SEARCH_PATH;
 import static org.gbif.ws.paths.OccurrencePaths.RECORD_NUMBER_PATH;
 import static org.gbif.ws.paths.OccurrencePaths.OCCURRENCE_ID_PATH;
+import static org.gbif.ws.paths.OccurrencePaths.ORGANISM_ID_PATH;
+import static org.gbif.ws.paths.OccurrencePaths.STATE_PROVINCE_PATH;
+import static org.gbif.ws.paths.OccurrencePaths.LOCALITY_PATH;
+import static org.gbif.ws.paths.OccurrencePaths.WATER_BODY_PATH;
 
 
 /**
@@ -59,6 +63,10 @@ public class Config {
   private String wsOccCollectionCodeSearch;
   private String wsOccInstitutionCodeSearch;
   private String wsOccurrenceIdSearch;
+  private String wsOrganismIdSearch;
+  private String wsLocalitySearch;
+  private String wsStateProvinceSearch;
+  private String wsWaterBodySearch;
   private String annosysUrl;
   private String wsImageCache;
   private Integer maxOccDowloadSize;
@@ -106,7 +114,12 @@ public class Config {
       cfg.wsOccCollectionCodeSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + COLLECTION_CODE_PATH;
       cfg.wsOccInstitutionCodeSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + INSTITUTION_CODE_PATH;
       cfg.wsOccRecordNumberSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + RECORD_NUMBER_PATH;
-      cfg.wsOccurrenceIdSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + OCCURRENCE_ID_PATH;;
+      cfg.wsOccurrenceIdSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + OCCURRENCE_ID_PATH;
+
+      cfg.wsOrganismIdSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + ORGANISM_ID_PATH;
+      cfg.wsLocalitySearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + LOCALITY_PATH;
+      cfg.wsStateProvinceSearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + STATE_PROVINCE_PATH;
+      cfg.wsWaterBodySearch = cfg.wsOcc + OCC_SEARCH_PATH + '/' + WATER_BODY_PATH;
       cfg.annosysUrl = getPropertyUrl(properties, "annosys.url", false);
     } catch (IOException e) {
       throw new ConfigurationException("application.properties cannot be read", e);
@@ -217,10 +230,6 @@ public class Config {
     return wsOccRecordNumberSearch;
   }
 
-
-  /**
-   * @return the wsOccCollectionCodeSearch
-   */
   public String getWsOccCollectionCodeSearch() {
     return wsOccCollectionCodeSearch;
   }
@@ -229,15 +238,28 @@ public class Config {
     return wsOccCollectorNameSearch;
   }
 
-  /**
-   * @return the wsOccInstitutionCodeSearch
-   */
   public String getWsOccInstitutionCodeSearch() {
     return wsOccInstitutionCodeSearch;
   }
 
   public String getWsOccurrenceIdSearch() {
     return wsOccurrenceIdSearch;
+  }
+
+  public String getWsOrganismIdSearch() {
+    return wsOrganismIdSearch;
+  }
+
+  public String getWsLocalitySearch() {
+    return wsLocalitySearch;
+  }
+
+  public String getWsStateProvinceSearch() {
+    return wsStateProvinceSearch;
+  }
+
+  public String getWsWaterBodySearch() {
+    return wsWaterBodySearch;
   }
 
   public String getWsOccSearch() {

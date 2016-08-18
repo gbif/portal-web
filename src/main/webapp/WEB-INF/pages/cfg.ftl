@@ -22,3 +22,7 @@ cfg.wsOccInstitutionCodeSearch = "${cfg.wsOccInstitutionCodeSearch!}";
 cfg.wsOccurrenceIdSearch = "${cfg.wsOccurrenceIdSearch!}";
 cfg.wsImageCache = "${cfg.wsImageCache!}";
 cfg.annosysUrl = "${cfg.annosysUrl!}";
+cfg.wsOrganismIdSearch = "${cfg.wsOrganismIdSearch!}";
+cfg.wsLocalitySearch = "${cfg.wsLocalitySearch!}";
+cfg.wsStateProvinceSearch = "${cfg.wsStateProvinceSearch!}";
+cfg.wsWaterBodySearch = "${cfg.wsWaterBodySearch!}";

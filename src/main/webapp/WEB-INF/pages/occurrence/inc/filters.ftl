@@ -141,6 +141,64 @@
     </tr>
   </script>
 
+
+  <script type="text/template" id="template-protocol-filter">
+    <tr class="filter">
+      <td colspan="5">
+        <a class="edit" style="display:none;"/>
+        <div class="inner filter_view">
+          <div class="filter">
+            <h4 class="title"><%= title %> </h4>
+            <ul class="multi-select">
+            <#list protocols as protocol>
+              <li key="${protocol}"><a>${action.getFilterTitle('protocol',protocol)}</a></li>
+            </#list>
+            </ul>
+            <div class="select-controls">
+              <a class="select-control select-all-<%= paramName %>">[Select all]</a>&nbsp;&nbsp;<a class="select-control clear-all-<%= paramName %>">[Clear all]</a>
+            </div>
+          </div>
+          <div class="center">
+            <a class="button candy_blue_button apply" title="<%= title %>" data-action="add-new-filter" data-filter="<%= paramName %>" apply-function="applyOccurrenceFilters"><span>Apply</span></a>
+          </div>
+          <a class="close"></a>
+        </div>
+        <div class="summary_view">
+
+        </div>
+      </td>
+    </tr>
+  </script>
+
+
+  <script type="text/template" id="template-license-filter">
+    <tr class="filter">
+      <td colspan="5">
+        <a class="edit" style="display:none;"/>
+        <div class="inner filter_view">
+          <div class="filter">
+            <h4 class="title"><%= title %> </h4>
+            <ul class="multi-select">
+            <#list licenses as license>
+              <li key="${license}"><a>${action.getFilterTitle('license',license)}</a></li>
+            </#list>
+            </ul>
+            <div class="select-controls">
+              <a class="select-control select-all-<%= paramName %>">[Select all]</a>&nbsp;&nbsp;<a class="select-control clear-all-<%= paramName %>">[Clear all]</a>
+            </div>
+          </div>
+          <div class="center">
+            <a class="button candy_blue_button apply" title="<%= title %>" data-action="add-new-filter" data-filter="<%= paramName %>" apply-function="applyOccurrenceFilters"><span>Apply</span></a>
+          </div>
+          <a class="close"></a>
+        </div>
+        <div class="summary_view">
+
+        </div>
+      </td>
+    </tr>
+  </script>
+
   <script type="text/template" id="template-continent-filter">
     <tr class="filter">
       <td colspan="5">
@@ -646,6 +704,72 @@
         <div class="warningBox"> <span class="warningCounter">!</span>The occurrenceID  <strong>"${name}"</strong> didn't match any existing record. You can select one from the list below to try improving your search results.</div>
         <#list suggestions as suggestion>
           <input id="searchResult${suggestion}" type="radio" value="${suggestion}" name="OCCURRENCE_ID" class="suggestion" data-suggestion="${name}"/>
+          <label for="searchResult${suggestion}">${suggestion}</label>
+          </br>
+        </#list>
+      </#if>
+    </div>
+    </#list>
+  </script>
+
+  <script type="text/template" id="ORGANISM_ID-suggestions-template">
+    <#list organismIdSuggestions.suggestions?keys as name>
+    <div class="suggestionBox" data-suggestion="${name}">
+      <#assign suggestions = organismIdSuggestions.suggestions[name]>
+      <#if suggestions?has_content>
+        <div class="warningBox"> <span class="warningCounter">!</span>The organismID  <strong>"${name}"</strong> didn't match any existing record. You can select one from the list below to try improving your search results.</div>
+        <#list suggestions as suggestion>
+          <input id="searchResult${suggestion}" type="radio" value="${suggestion}" name="ORGANISM_ID" class="suggestion" data-suggestion="${name}"/>
+          <label for="searchResult${suggestion}">${suggestion}</label>
+          </br>
+        </#list>
+      </#if>
+    </div>
+    </#list>
+  </script>
+
+
+  <script type="text/template" id="LOCALITY-suggestions-template">
+    <#list localitySuggestions.suggestions?keys as name>
+    <div class="suggestionBox" data-suggestion="${name}">
+      <#assign suggestions = localitySuggestions.suggestions[name]>
+      <#if suggestions?has_content>
+        <div class="warningBox"> <span class="warningCounter">!</span>The organismID  <strong>"${name}"</strong> didn't match any existing record. You can select one from the list below to try improving your search results.</div>
+        <#list suggestions as suggestion>
+          <input id="searchResult${suggestion}" type="radio" value="${suggestion}" name="LOCALITY" class="suggestion" data-suggestion="${name}"/>
+          <label for="searchResult${suggestion}">${suggestion}</label>
+          </br>
+        </#list>
+      </#if>
+    </div>
+    </#list>
+  </script>
+
+
+  <script type="text/template" id="STATE_PROVINCE-suggestions-template">
+    <#list stateProvinceSuggestions.suggestions?keys as name>
+    <div class="suggestionBox" data-suggestion="${name}">
+      <#assign suggestions = stateProvinceSuggestions.suggestions[name]>
+      <#if suggestions?has_content>
+        <div class="warningBox"> <span class="warningCounter">!</span>The state/province  <strong>"${name}"</strong> didn't match any existing record. You can select one from the list below to try improving your search results.</div>
+        <#list suggestions as suggestion>
+          <input id="searchResult${suggestion}" type="radio" value="${suggestion}" name="STATE_PROVINCE" class="suggestion" data-suggestion="${name}"/>
+          <label for="searchResult${suggestion}">${suggestion}</label>
+          </br>
+        </#list>
+      </#if>
+    </div>
+    </#list>
+  </script>
+
+  <script type="text/template" id="WATER_BODY-suggestions-template">
+    <#list waterBodySuggestions.suggestions?keys as name>
+    <div class="suggestionBox" data-suggestion="${name}">
+      <#assign suggestions = waterBodySuggestions.suggestions[name]>
+      <#if suggestions?has_content>
+        <div class="warningBox"> <span class="warningCounter">!</span>The water body  <strong>"${name}"</strong> didn't match any existing record. You can select one from the list below to try improving your search results.</div>
+        <#list suggestions as suggestion>
+          <input id="searchResult${suggestion}" type="radio" value="${suggestion}" name="WATER_BODY" class="suggestion" data-suggestion="${name}"/>
           <label for="searchResult${suggestion}">${suggestion}</label>
           </br>
         </#list>

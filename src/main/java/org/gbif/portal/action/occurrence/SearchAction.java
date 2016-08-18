@@ -10,7 +10,9 @@ import org.gbif.api.service.occurrence.OccurrenceSearchService;
 import org.gbif.api.vocabulary.BasisOfRecord;
 import org.gbif.api.vocabulary.Continent;
 import org.gbif.api.vocabulary.Country;
+import org.gbif.api.vocabulary.EndpointType;
 import org.gbif.api.vocabulary.EstablishmentMeans;
+import org.gbif.api.vocabulary.License;
 import org.gbif.api.vocabulary.MediaType;
 import org.gbif.api.vocabulary.OccurrenceIssue;
 import org.gbif.api.vocabulary.TypeStatus;
@@ -105,6 +107,14 @@ public class SearchAction
   private SearchSuggestions<String> collectionCodeSuggestions;
 
   private SearchSuggestions<String> occurrenceIdSuggestions;
+
+  private SearchSuggestions<String> organismIdSuggestions;
+
+  private SearchSuggestions<String> stateProvinceSuggestions;
+
+  private SearchSuggestions<String> localitySuggestions;
+
+  private SearchSuggestions<String> waterBodySuggestions;
 
   private List<ParameterValidationError<OccurrenceSearchParameter>> validationErrors = Lists.newArrayList();
 
@@ -268,6 +278,22 @@ public class SearchAction
     return MediaType.values();
   }
 
+
+  /**
+   * @return the list of {@link EndpointType} literals.
+   */
+  public EndpointType[] getProtocols() {
+    return EndpointType.values();
+  }
+
+
+  /**
+   * @return the list of {@link License} literals.
+   */
+  public License[] getLicenses() {
+    return License.values();
+  }
+
   /**
    * @return the catalogNumberSuggestions
    */
@@ -295,6 +321,22 @@ public class SearchAction
 
   public SearchSuggestions<String> getOccurrenceIdSuggestions() {
     return occurrenceIdSuggestions;
+  }
+
+  public SearchSuggestions<String> getOrganismIdSuggestions() {
+    return organismIdSuggestions;
+  }
+
+  public SearchSuggestions<String> getStateProvinceSuggestions() {
+    return stateProvinceSuggestions;
+  }
+
+  public SearchSuggestions<String> getLocalitySuggestions() {
+    return localitySuggestions;
+  }
+
+  public SearchSuggestions<String> getWaterBodySuggestions() {
+    return waterBodySuggestions;
   }
 
   /**
@@ -496,6 +538,10 @@ public class SearchAction
     collectionCodeSuggestions = new SearchSuggestions<String>();
     recordNumberSuggestions = new SearchSuggestions<String>();
     occurrenceIdSuggestions = new SearchSuggestions<String>();
+    organismIdSuggestions = new SearchSuggestions<String>();
+    localitySuggestions = new SearchSuggestions<String>();
+    waterBodySuggestions = new SearchSuggestions<String>();
+    stateProvinceSuggestions = new SearchSuggestions<String>();
   }
 
   /**
@@ -518,16 +564,29 @@ public class SearchAction
         catalogNumberSuggestions = filtersActionHelper.processCatalogNumberSuggestions(request);
       }
       if (searchRequest.getParameters().containsKey(OccurrenceSearchParameter.COLLECTION_CODE)) {
-        collectionCodeSuggestions = filtersActionHelper.processCatalogNumberSuggestions(request);
+        collectionCodeSuggestions = filtersActionHelper.processCollectionCodeSuggestions(request);
       }
       if (searchRequest.getParameters().containsKey(OccurrenceSearchParameter.INSTITUTION_CODE)) {
-        institutionCodeSuggestions = filtersActionHelper.processCatalogNumberSuggestions(request);
+        institutionCodeSuggestions = filtersActionHelper.processInstitutionCodeSuggestions(request);
       }
       if (searchRequest.getParameters().containsKey(OccurrenceSearchParameter.RECORD_NUMBER)) {
         recordNumberSuggestions = filtersActionHelper.processRecordNumbersSuggestions(request);
       }
       if (searchRequest.getParameters().containsKey(OccurrenceSearchParameter.OCCURRENCE_ID)) {
         occurrenceIdSuggestions = filtersActionHelper.processOccurrenceIdSuggestions(request);
+      }
+      ///
+      if (searchRequest.getParameters().containsKey(OccurrenceSearchParameter.ORGANISM_ID)) {
+        organismIdSuggestions = filtersActionHelper.processOrganismIdSuggestions(request);
+      }
+      if (searchRequest.getParameters().containsKey(OccurrenceSearchParameter.STATE_PROVINCE)) {
+        stateProvinceSuggestions = filtersActionHelper.processStateProvinceSuggestions(request);
+      }
+      if (searchRequest.getParameters().containsKey(OccurrenceSearchParameter.LOCALITY)) {
+        localitySuggestions = filtersActionHelper.processLocalitySuggestions(request);
+      }
+      if (searchRequest.getParameters().containsKey(OccurrenceSearchParameter.WATER_BODY)) {
+        waterBodySuggestions = filtersActionHelper.processWaterBodySuggestions(request);
       }
     }
   }
