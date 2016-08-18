@@ -50,6 +50,7 @@ public class SearchAction
   private Function<String, String> getOrgTitle;
   private Function<String, String> getDatasetTypeTitle;
   private Function<String, String> getCountryTitle;
+  private Function<String, String> getLicenseTitle;
   private final CubeService occurrenceCube;
   private final DatasetMetricsService checklistMetricsService;
   private static final Joiner TOKEN_JOINER = Joiner.on(' ').skipNulls();
@@ -187,6 +188,7 @@ public class SearchAction
     lookupFacetTitles(DatasetSearchParameter.PUBLISHING_ORG, getOrgTitle);
     lookupFacetTitles(DatasetSearchParameter.TYPE, getDatasetTypeTitle);
     lookupFacetTitles(DatasetSearchParameter.PUBLISHING_COUNTRY, getCountryTitle);
+    lookupFacetTitles(DatasetSearchParameter.LICENSE, getLicenseTitle);
 
     // populate counts
     for (DatasetSearchResult dsr : getSearchResponse().getResults()) {
@@ -234,6 +236,14 @@ public class SearchAction
       @Override
       public String apply(String name) {
         return getEnumTitle("datasettype", name);
+      }
+    };
+
+    getLicenseTitle = new Function<String, String>() {
+
+      @Override
+      public String apply(String name) {
+        return getEnumTitle("license", name);
       }
     };
 
