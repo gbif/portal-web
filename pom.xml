@@ -53,8 +53,8 @@
     <dwc-api.version>1.16</dwc-api.version>
     <findbugs-jsr305.version>3.0.1</findbugs-jsr305.version>
     <freemarker.version>2.3.25-incubating</freemarker.version>
-    <gbif-api.version>0.42-SNAPSHOT</gbif-api.version>
-    <gbif-common-ws.version>0.34-SNAPSHOT</gbif-common-ws.version>
+    <gbif-api.version>0.42</gbif-api.version>
+    <gbif-common-ws.version>0.34</gbif-common-ws.version>
     <gbif-common.version>0.28</gbif-common.version>
     <guava.version>18.0</guava.version>
     <guice.version>4.0</guice.version>
@@ -69,7 +69,7 @@
     <metrics-ws-client.version>0.26</metrics-ws-client.version>
     <mockito.version>1.9.5</mockito.version>
     <occurrence-ws-client.version>0.51</occurrence-ws-client.version>
-    <registry-ws-client.version>2.54-SNAPSHOT</registry-ws-client.version>
+    <registry-ws-client.version>2.54</registry-ws-client.version>
     <selenium.version>2.50.1</selenium.version>
     <servletapi.version>3.0.1</servletapi.version>
     <slf4j.version>1.7.21</slf4j.version>
