@@ -84,7 +84,7 @@
 </p>
 
   <@api.apiTable auth=false>
-    <@trowS url="" respLink="occurrence/search?taxonKey=1"  paging=true params=["q","basisOfRecord","catalogNumber","collectionCode","continent","country","datasetKey","decimalLatitude","decimalLongitude","depth","elevation","eventDate","geometry","hasCoordinate","hasGeospatialIssue","institutionCode","issue","lastInterpreted","mediaType","month","occurrenceId","publishingCountry","recordedBy","recordNumber","scientificName","taxonKey","kingdomKey","phylumKey","classKey","orderKey","familyKey","genusKey","subGenusKey","speciesKey","year","establishmentMeans","repatriated","typeStatus","facet","facetMincount","facetMultiselect", "facet paging"]>Full search across all occurrences.
+    <@trowS url="" respLink="occurrence/search?taxonKey=1"  paging=true params=["q","basisOfRecord","catalogNumber","collectionCode","continent","country","datasetKey","decimalLatitude","decimalLongitude","depth","elevation","eventDate","geometry","hasCoordinate","hasGeospatialIssue","institutionCode","issue","lastInterpreted","mediaType","month","occurrenceId","organismId","protocol","license","publishingCountry","recordedBy","recordNumber","scientificName","locality","stateProvince","waterBody","taxonKey","kingdomKey","phylumKey","classKey","orderKey","familyKey","genusKey","subGenusKey","speciesKey","year","establishmentMeans","repatriated","typeStatus","facet","facetMincount","facetMultiselect", "facet paging"]>Full search across all occurrences.
     Results are ordered by relevance.</@trowS>
     <@trowS url="/catalogNumber" respLink="occurrence/search/catalogNumber?q=122&amp;limit=5" params=["q","limit"]>Search that returns matching catalog numbers.
     Results are ordered by relevance.</@trowS>
@@ -169,12 +169,18 @@
   "depth" : "Depth in meters relative to altitude. For example 10 meters below a lake surface with given altitude. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
   "establishmentMeans": "EstablishmentMeans, as defined in our <a href='${api.apidocs}/vocabulary/EstablishmentMeans.html' target='_blank'>EstablishmentMeans enum</a>",
   "occurrenceID" : "A single globally unique identifier for the occurrence record as provided by the publisher.",
+  "organismId": "An identifier for the Organism instance (as opposed to a particular digital record of the Organism). May be a globally unique identifier or an identifier specific to the data set.",
   "institutionCode" : "An identifier of any form assigned by the source to identify the institution the record belongs to. Not guaranteed to be unique.",
   "collectionCode": "An identifier of any form assigned by the source to identify the physical collection or digital dataset uniquely within the context of an institution.",
   "catalogNumber": "An identifier of any form assigned by the source within a physical collection or digital dataset for the record which may not be unique, but should be fairly unique in combination with the institution and collection code.",
   "recordedBy": "The person who recorded the occurrence.",
   "recordNumber": "An identifier given to the record at the time it was recorded in the field.",
   "basisOfRecord": "Basis of record, as defined in our <a href='${api.apidocs}/vocabulary/BasisOfRecord.html' target='_blank'>BasisOfRecord enum</a>",
+  "protocol":"Protocol or mechanism used to provide the occurrence record.",
+  "license": "The type license applied to the dataset or record.",
+  "locality": "The specific description of the place.",
+  "waterBody": "The name of the water body in which the Locations occurs. ",
+  "stateProvince":"he name of the next smaller administrative region than country (state, province, canton, department, region, etc.) in which the Location occurs.",
   "taxonKey": "A taxon key from the GBIF backbone. All included and synonym taxa are included in the search, so a search for aves with taxonKey=212 (i.e. <a href='${action.cfg.apiBaseUrl}occurrence/search?taxonKey=212' target='_blank'>/occurrence/search?taxonKey=212</a>) will match all birds, no matter which species.",
   "scientificName": "A scientific name from the <a href='${baseUrl}/dataset/d7dddbf4-2cf0-4f39-9b2a-bb099caae36c'>GBIF backbone</a>. All included and synonym taxa are included in the search. Under the hood a call to the <a href='${baseUrl}/developer/species#searching'>species match service</a> is done first to retrieve a taxonKey. Only unique scientific names will return results, homonyms (many monomials) return nothing! Consider to use the taxonKey parameter instead and the species match service directly",
   "hasCoordinate": "Limits searches to occurrence records which contain a value in both latitude and longitude (i.e. hasCoordinate=true limits to occurrence records with coordinate values and hasCoordinate=false limits to occurrence records without coordinate values).",

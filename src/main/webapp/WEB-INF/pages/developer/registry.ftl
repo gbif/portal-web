@@ -124,7 +124,7 @@
 <@api.article id="datasetSearch" title="Dataset Search">
   <p>The dataset search API provides search services for datasets.</p>
   <@api.apiTable auth=false >
-    <@trowS url="/search" respLink="dataset/search?q=plant&amp;publishingCountry=AR" paging=true params=["q","country","type","subtype","keyword","publishingOrg","hostingOrg","decade","publishingCountry","continent","hl","facet","facetMincount","facetMultiselect"]>Full text search across all datasets.
+    <@trowS url="/search" respLink="dataset/search?q=plant&amp;publishingCountry=AR" paging=true params=["q","country","type","subtype","license","keyword","publishingOrg","hostingOrg","decade","publishingCountry","continent","hl","facet","facetMincount","facetMultiselect"]>Full text search across all datasets.
         Results are ordered by relevance.</@trowS>
     <@trowS url="/suggest" respLink="dataset/suggest?q=Amazon&amp;type=OCCURRENCE" params=["q","country","type","subtype","keyword","publishingOrg","hostingOrg","decade","publishingCountry","continent"]>Search that returns up to 20 matching datasets.
         Results are ordered by relevance.</@trowS>
@@ -299,6 +299,7 @@
   "identifier": "The value for this parameter can be a simple string or integer, e.g. identifier=120",
   "identifierType": "Used in combination with the identifier parameter to filter identifiers by identifier type as given in our <a href='${api.apidocs}/vocabulary/IdentifierType.html' target='_blank'>IdentifierType enum</a>",
   "subtype": "Not yet implemented, but will eventually allow filtering of datasets by their dataset subtype as given in our <a href='${api.apidocs}/vocabulary/DatasetSubtype.html' target='_blank'>DatasetSubtype enum</a>.",
+  "license": "The type of license applied to the dataset.",
   "keyword": "Filters datasets by a case insensitive plain text keyword. The search is done on the merged collection of tags, the dataset keywordCollections and temporalCoverages.",
   "publishingOrg": "Filters datasets by their publishing organization UUID key",
   "hostingOrg": "Filters datasets by their hosting organization UUID key",
