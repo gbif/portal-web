@@ -32,12 +32,16 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.Nullable;
+
 import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Predicate;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,6 +76,13 @@ public class SearchAction
   private static final String URL_WHITESPACE = Matcher.quoteReplacement("\\+");
 
   private static final Set<OccurrenceIssue> OCCURRENCE_ISSUES = EnumSet.allOf(OccurrenceIssue.class);
+
+  private static final License[] CONCRETE_LICENSES = Sets.filter(EnumSet.allOf(License.class), new Predicate<License>() {
+    @Override
+    public boolean apply(@Nullable License input) {
+      return input.isConcrete();
+    }
+  }).toArray(new License[3]);
 
   private static final EnumSet<OccurrenceSearchParameter> SUPPORTED_FACETS =
     EnumSet.of(OccurrenceSearchParameter.BASIS_OF_RECORD,
@@ -291,7 +302,7 @@ public class SearchAction
    * @return the list of {@link License} literals.
    */
   public License[] getLicenses() {
-    return License.values();
+    return CONCRETE_LICENSES;
   }
 
   /**
