@@ -5,14 +5,14 @@
 
 <#-- Only show the annosys integration if it is a PreservedSpecimen -->
 <#if occ.basisOfRecord! == "PRESERVED_SPECIMEN">
-    <a id="annosysTrigger" href="#" class="annosys">AnnoSys <span class="annosysCount"></span></a>
+    <a id="annosysTrigger" href="#" class="annosys">Annotate <span class="annosysCount"></span></a>
     <div id="annosysBlanket" class="atlwdg-blanket annosysBlanket"></div>
     <div id="annosysModal" class="atlwdg-box-shadow annosysModal">
-        <h2>AnnoSys</h2>
+        <h2>Annotate</h2>
         <div class="annosysModal__content">
             <img src="//annosys.bgbm.fu-berlin.de/sites/default/files/AnnoSys_update.png">
             <p>
-                Through this pilot integration, you can make use of the AnnoSys system developed by the <a href="http://www.bgbm.org/">Botanic Garden and Botanical Museum Berlin-Dahlem</a> to create annotations about this record.
+                Through the AnnoSys system developed by the <a href="http://www.bgbm.org/">Botanic Garden and Botanical Museum Berlin</a> as a contribution of the <a href="http://gbif.de/">German GBIF Node</a>, you can create annotations about this record. AnnoSys stores the annotations created and informs users about annotations to specific topics  they can subscribe to
             </p>
             <p>
                 Currently GBIF do not store, or harvest the annotations created and do not take responsibility for annotations created through it.
