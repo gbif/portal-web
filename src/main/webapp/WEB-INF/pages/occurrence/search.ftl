@@ -446,7 +446,7 @@
     </div>
     <#assign seeAllFacets = []>
     <#assign pageableFacets = ["DATASET_KEY","COUNTRY","YEAR"]>
-    <#assign facets= ["BASIS_OF_RECORD","TYPE_STATUS","DATASET_KEY","COUNTRY","MONTH","YEAR"]>
+    <#assign facets= ["BASIS_OF_RECORD","TYPE_STATUS","DATASET_KEY","COUNTRY","LICENSE","MONTH","YEAR"]>
     <#include "/WEB-INF/inc/facets.ftl">
   </div>
   </#if>

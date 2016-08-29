@@ -89,6 +89,7 @@ public class SearchAction
                OccurrenceSearchParameter.TYPE_STATUS,
                OccurrenceSearchParameter.DATASET_KEY,
                OccurrenceSearchParameter.COUNTRY,
+               OccurrenceSearchParameter.LICENSE,
                OccurrenceSearchParameter.MONTH,
                OccurrenceSearchParameter.YEAR);
 
