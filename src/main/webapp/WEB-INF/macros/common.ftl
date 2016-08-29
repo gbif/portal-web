@@ -130,6 +130,14 @@
     </#list>
   </#if>
 
+  <#if adr.userId?has_content>
+    <#list adr.userId as id>
+    <span class="email"><a href="${id!}" title="userID-${id_index}">${id!}</a>
+      <#if id_has_next><br/></#if>
+    </#list>
+  </span>
+  </#if>
+
 </div>
 </#macro>
 
