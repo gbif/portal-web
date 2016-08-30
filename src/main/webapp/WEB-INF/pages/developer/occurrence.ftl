@@ -84,7 +84,7 @@
 </p>
 
   <@api.apiTable auth=false>
-    <@trowS url="" respLink="occurrence/search?taxonKey=1"  paging=true params=["q","basisOfRecord","catalogNumber","collectionCode","continent","country","datasetKey","decimalLatitude","decimalLongitude","depth","elevation","eventDate","geometry","hasCoordinate","hasGeospatialIssue","institutionCode","issue","lastInterpreted","mediaType","month","occurrenceId","organismId","protocol","license","publishingCountry","recordedBy","recordNumber","scientificName","locality","stateProvince","waterBody","taxonKey","kingdomKey","phylumKey","classKey","orderKey","familyKey","genusKey","subGenusKey","speciesKey","year","establishmentMeans","repatriated","typeStatus","facet","facetMincount","facetMultiselect", "facet paging"]>Full search across all occurrences.
+    <@trowS url="" respLink="occurrence/search?taxonKey=1"  paging=true params=["q","basisOfRecord","catalogNumber","collectionCode","continent","country","datasetKey","decimalLatitude","decimalLongitude","depth","elevation","eventDate","geometry","hasCoordinate","hasGeospatialIssue","institutionCode","issue","lastInterpreted","mediaType","month","occurrenceId","organismId","protocol","license","publishingCountry","publishingOrg","crawlId","recordedBy","recordNumber","scientificName","locality","stateProvince","waterBody","taxonKey","kingdomKey","phylumKey","classKey","orderKey","familyKey","genusKey","subGenusKey","speciesKey","year","establishmentMeans","repatriated","typeStatus","facet","facetMincount","facetMultiselect", "facet paging"]>Full search across all occurrences.
     Results are ordered by relevance.</@trowS>
     <@trowS url="/catalogNumber" respLink="occurrence/search/catalogNumber?q=122&amp;limit=5" params=["q","limit"]>Search that returns matching catalog numbers.
     Results are ordered by relevance.</@trowS>
@@ -155,7 +155,7 @@
 </@api.article>
 
 <#assign params = {
-  "datasetKey": "The occurrence dataset key (a uuid)",
+  "datasetKey": "The occurrence dataset key (a uuid).",
   "year": "The 4 digit year. A year of 98 will be interpreted as AD 98. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
   "month": "The month of the year, starting with 1 for January. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
   "eventDate": "Occurrence date in ISO 8601 format: yyyy, yyyy-MM, yyyy-MM-dd, or MM-dd. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
@@ -165,6 +165,8 @@
   "country": "The 2-letter country code (as per <a href='http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm' target='_blank'>ISO-3166-1</a>) of the country in which the occurrence was recorded.",
   "continent": "Continent, as defined in our <a href='${api.apidocs}/vocabulary/Continent.html' target='_blank'>Continent enum</a>",
   "publishingCountry" : "The 2-letter country code (as per <a href='http://www.iso.org/iso/country_codes/iso_3166_code_lists/country_names_and_code_elements.htm' target='_blank'>ISO-3166-1</a>) of the owining organization's country.",
+  "publishingOrg": "The publishing organization key (a uuid).",
+  "crawlId": "Crawl attempt that harvested this record.",
   "elevation": "Elevation (altitude) in meters above sea level. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
   "depth" : "Depth in meters relative to altitude. For example 10 meters below a lake surface with given altitude. Supports <a href='${baseUrl}/developer/summary#common'>range queries</a>.",
   "establishmentMeans": "EstablishmentMeans, as defined in our <a href='${api.apidocs}/vocabulary/EstablishmentMeans.html' target='_blank'>EstablishmentMeans enum</a>",
