@@ -275,7 +275,7 @@ $.fn.termsAutosuggest = function(wsServiceUrl,appendToElement,limit,onSelectEven
       url: wsServiceUrl,
       dataType: 'jsonp', //jsonp is the default
       data: {
-        q: self.val(),
+        q: self.val().toLowerCase(),
         limit: limit
       },
       success: function (data) { //response the data sent by the web service
