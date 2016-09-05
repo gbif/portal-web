@@ -50,7 +50,7 @@
                       as <em>${item.usage.scientificName}</em>
                   <#else>
                     <@s.text name="enum.datasettype.${ds.type!'UNKNOWN'}"/>
-                      with ${item.numOccurrences} records of <em>${usage.canonicalOrScientificName!}</em>
+                      with ${item.numOccurrences!0} records of <em>${usage.canonicalOrScientificName!}</em>
                   </#if>
                 </div>
             </div>

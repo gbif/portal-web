@@ -60,26 +60,29 @@ public class DatasetAction extends UsageBaseAction {
     loadUsage();
 
     page = new PagingResponse<DatasetResult>(offset, pageSize);
-
+    long count = 0;
     if (type == null || type == DatasetType.CHECKLIST) {
       PagingResponse<NameUsage> resp = usageService.listRelated(usage.getNubKey(), getLocale(), page);
-      page.setCount(resp.getCount());
+      count = resp.getCount();
       for (NameUsage u : resp.getResults()) {
         // remove nub usage itself
         if (!u.getKey().equals(usage.getKey())) {
-            page.getResults().add(new DatasetResult(datasetService.get(u.getDatasetKey()), null, u));
+          page.getResults().add(new DatasetResult(datasetService.get(u.getDatasetKey()), null, u));
+        } else {
+          count--;
         }
       }
     }
 
     if ((type == null || type == DatasetType.OCCURRENCE) && usage.getNubKey() != null) {
       SortedMap<UUID, Integer> occurrenceDatasetCounts = occurrenceDatasetService.occurrenceDatasetsForNubKey(usage.getNubKey());
-      page.setCount((long) occurrenceDatasetCounts.size());
+      count += occurrenceDatasetCounts.size();
       for (UUID uuid : sublist(Lists.newArrayList(occurrenceDatasetCounts.keySet()), offset, offset + pageSize)) {
         page.getResults().add(new DatasetResult(datasetService.get(uuid), occurrenceDatasetCounts.get(uuid), null));
       }
     }
 
+    page.setCount(count);
     return SUCCESS;
   }
 
