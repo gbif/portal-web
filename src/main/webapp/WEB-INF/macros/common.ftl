@@ -277,7 +277,7 @@ ${dataset.license.licenseTitle}
 <#macro citationArticle rights dataset publisher prefix="">
   <@article id="legal" title="Citation and licensing" class="mono_line">
   <div class="fullwidth">
-    <#if dataset.citation?? && !dataset.citation.text!?ends_with(dataset.title)>
+    <#if dataset.citation??>
       <p>The content  of the "Dataset citation provided by the publisher" depends on the metadata supplied by the publisher.
          In some cases this may be incomplete.  A standard default form for citing is provided as an alternative.
          We are in transition towards providing more consistent citation text for all datasets.
