@@ -106,7 +106,7 @@
         <a href="<@s.url value='/dataset/${id!}/stats'/>" title="Stats"><span>Stats</span></a>
       </li>
     </#if>
-<#if dataset.type! == "OCCURRENCE">
+<#if numOccurrences gt 0>
     <li<#if (tab!)=="activity"> class='selected ${hl!}'</#if>>
       <a href="<@s.url value='/dataset/${id!}/activity'/>" title="Activity"><span>Activity</span></a>
     </li>
