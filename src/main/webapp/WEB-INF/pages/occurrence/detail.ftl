@@ -91,9 +91,9 @@
         </p>
     </#if>
 
-    <#if license?has_content>
+    <#if license?has_content && license.isConcrete()>
       <h3>License</h3>
-      <p><#if license?starts_with("http")><a href="${license}">${license}</a><#else>${license}</#if></p>
+      <p><a href="${license.licenseUrl}">${license.licenseTitle}</a></p>
     </#if>
 
     <#if rights?has_content>
@@ -836,7 +836,7 @@ member?has_content || geologicalContextID?has_content || lithostratigraphicTerms
 <#assign accessRights = action.termValue('accessRights')!"" />
 <#assign rightsHolder = action.termValue('rightsHolder')!"" />
 <#-- New DwC terms -->
-<#assign license = action.termValue('license')!"" />
+<#assign license = occ.license! />
 
 <@citationArticle bibliographicCitation=bibliographicCitation rights=rights accessRights=accessRights rightsHolder=rightsHolder dataset=dataset publisher=publisher license=license/>
 
