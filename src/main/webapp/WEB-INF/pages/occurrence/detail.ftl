@@ -93,7 +93,10 @@
 
     <#if license?has_content && license.isConcrete()>
       <h3>License</h3>
-      <p><a href="${license.licenseUrl}">${license.licenseTitle}</a></p>
+      <p>
+       ${license.licenseTitle}
+       <a href="${license.licenseUrl}"><@common.licenseIcon license /></a>
+      </p>
     </#if>
 
     <#if rights?has_content>
