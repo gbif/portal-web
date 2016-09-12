@@ -78,10 +78,24 @@
          function getURLParameter(name) {
             return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || ['', ''])[1].replace(/\+/g, '%20')) || null;
          }
+
          function updateMap() {
            //UPDATE MAP
-           var mapURL = '${cfg.tileServerBaseUrl!}/heatmap.html?&resolution=1&palette=yellows_reds&' +
-           window.location.href.slice(window.location.href.indexOf('?') + 1);
+           var queryUrl = '';
+           if (typeof filtersFromRequest === 'object') {
+             Object.keys(filtersFromRequest).forEach(function(e){
+               filtersFromRequest[e].forEach(function(filter){
+                 queryUrl += filter.paramName + '=';
+                 if (filter.key !== null) {
+                   queryUrl += encodeURIComponent(filter.key) + '&';
+                 } else if(filter.value !== null) {
+                   queryUrl += filter.value + '&';
+                 }
+               })
+             });
+           }
+
+           var mapURL = '${cfg.tileServerBaseUrl!}/heatmap.html?&resolution=1&palette=yellows_reds&' + queryUrl;
            var mapframe = $('#mapframe');
            mapframe.attr('src', mapURL);
          };
