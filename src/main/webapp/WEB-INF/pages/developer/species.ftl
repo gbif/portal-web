@@ -148,7 +148,7 @@
   "nameType": "Filters by the name type as given in our <a href='${api.apidocs}/vocabulary/NameType.html' target='_blank'>NameType enum</a>",
   "nomenclaturalStatus": "Not yet implemented, but will eventually allow for filtering by a nomenclatural status enum",
   "issue": "A specific indexing issue as defined in our <a href='${api.apidocs}/vocabulary/NameUsageIssue.html' target='_blank'>NameUsageIssue enum</a>",
-  "facet": "A list of facet names used to retrieve the 100 most frequent values for a field. Allowed facets are: datasetKey, higherTaxonKey, rank, status, isExtinct, habitat and nameType. Additionally threat and nomenclaturalStatus are legal values but not yet implemented, so data will not yet be returned for them."
+  "facet": "A list of facet names used to retrieve the 100 most frequent values for a field. Allowed facets are: datasetKey, higherTaxonKey, rank, status, nomenclaturalStatus, isExtinct, habitat, threat and nameType."
 } />
 
 
