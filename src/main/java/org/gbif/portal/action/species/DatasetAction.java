@@ -61,9 +61,9 @@ public class DatasetAction extends UsageBaseAction {
 
     page = new PagingResponse<DatasetResult>(offset, pageSize);
     long count = 0;
-    if (type == null || type == DatasetType.CHECKLIST) {
+    if ((type == null || type == DatasetType.CHECKLIST) && usage.getNubKey() != null) {
       PagingResponse<NameUsage> resp = usageService.listRelated(usage.getNubKey(), getLocale(), page);
-      count = resp.getCount();
+      count = resp.getCount() == null ? resp.getResults().size() : resp.getCount();
       for (NameUsage u : resp.getResults()) {
         // remove nub usage itself
         if (!u.getKey().equals(usage.getKey())) {

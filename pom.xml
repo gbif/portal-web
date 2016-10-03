@@ -44,7 +44,7 @@
 
     <!-- dependency versions -->
     <bval.version>0.5</bval.version>
-    <checklistbank-ws-client.version>2.43</checklistbank-ws-client.version>
+    <checklistbank-ws-client.version>2.44-SNAPSHOT</checklistbank-ws-client.version>
     <commons-beanutils.version>1.9.2</commons-beanutils.version>
     <commons-io.version>2.4</commons-io.version>
     <commons-lang3.version>3.4</commons-lang3.version>
@@ -53,8 +53,8 @@
     <dwc-api.version>1.16</dwc-api.version>
     <findbugs-jsr305.version>3.0.1</findbugs-jsr305.version>
     <freemarker.version>2.3.25-incubating</freemarker.version>
-    <gbif-api.version>0.45</gbif-api.version>
-    <gbif-common-ws.version>0.36</gbif-common-ws.version>
+    <gbif-api.version>0.46-SNAPSHOT</gbif-api.version>
+    <gbif-common-ws.version>0.37-SNAPSHOT</gbif-common-ws.version>
     <gbif-common.version>0.28</gbif-common.version>
     <guava.version>18.0</guava.version>
     <guice.version>4.0</guice.version>
