@@ -31,7 +31,7 @@
       <div class="fullwidth">
 
       <#list page.results as item>
-        <@records.dataset dataset=item/>
+        <@records.dataset dataset=item maxDescriptionLength=700/>
       </#list>
         <div class="footer">
         <@paging.pagination page=page url=currentUrlWithoutPage/>
