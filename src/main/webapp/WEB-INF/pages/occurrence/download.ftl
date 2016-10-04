@@ -29,7 +29,7 @@
   <@common.notice title="Download running">
       <p>The download has been started and is currently being processed.</p>
       <p>Please expect 10 to 15 minutes for the download to complete.</p>
-      <#if currentUser?? && currentUser.userName=download.request.creator>
+      <#if currentUser?? && currentUser.userName=download.request.creator!>
         <p>A notification email with a link to download the results will be sent to the following addresses once ready:
           <ul>
             <#list download.request.notificationAddresses as email>
