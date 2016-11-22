@@ -34,7 +34,7 @@
         $(data.results).each(function() {
           var speciesLink = "<@s.url value='/species/'/>" + this.key;
           $htmlContent = '<li spid="' + this.key + '">';
-          $htmlContent += '<span class="sciname"><a href="'+speciesLink+'">' + canonicalOrScientificName(this) + "</a></span>";
+          $htmlContent += '<span class="sciname"><a href="'+speciesLink+'" onclick="trackOutboundLink(event, \'speciesNavigation\')">' + canonicalOrScientificName(this) + "</a></span>";
           $htmlContent += '<span class="rank">' + $i18nresources.getString("enum.rank." + (this.rank || "unknown")) + "</span>";
           if (this.numDescendants>0) {
             $htmlContent += '<span class="count">' + addCommas(this.numDescendants) + " descendants</span>";
@@ -142,6 +142,90 @@
         // image slideshow
         $("#images").speciesSlideshow(${id?c}, '${usage.scientificName!"Untitled"}');
       });
+
+      //add additional tracking to species pages
+       //tracking of links adapted from https://www.axllent.org/docs/view/track-outbound-links-with-analytics-js/
+      var trackOutboundLink = function _gaLt(event, gaLabel) {
+
+        /* If GA is blocked or not loaded, or not main|middle|touch click then don't track */
+        if (!ga.hasOwnProperty("loaded") || ga.loaded != true || (event.which != 1 && event.which != 2)) {
+          return;
+        }
+
+        var el = event.srcElement || event.target;
+
+        /* Loop up the DOM tree through parent elements if clicked element is not a link (eg: an image inside a link) */
+        while (el && (typeof el.tagName == 'undefined' || el.tagName.toLowerCase() != 'a' || !el.href)) {
+          el = el.parentNode;
+        }
+
+        /* if a link with valid href has been clicked */
+        if (el && el.href) {
+
+          var link = el.href;
+
+
+          /* Is actual target set and not _(self|parent|top)? */
+          var target = (el.target && !el.target.match(/^_(self|parent|top)$/i)) ? el.target : false;
+
+          /* Assume a target if Ctrl|shift|meta-click */
+          if (event.ctrlKey || event.shiftKey || event.metaKey || event.which == 2) {
+            target = "_blank";
+          }
+
+          var hbrun = false; // tracker has not yet run
+
+          /* HitCallback to open link in same window after tracker */
+          var hitBack = function() {
+            /* run once only */
+            if (hbrun) return;
+            hbrun = true;
+            window.location.href = link;
+          };
+
+          if (target) { /* If target opens a new window then just track */
+            ga(
+                "send", "event", "species", "link", gaLabel
+            );
+            ga(
+                "send", "event", "species", "scroll", deepestScroll
+            );
+          } else { /* Prevent standard click, track then open */
+            event.preventDefault ? event.preventDefault() : event.returnValue = !1;
+            /* send event with callback */
+            ga(
+                "send", "event", "species", "link", gaLabel, {
+                  "hitCallback": function(){
+                      ga(
+                          "send", "event", "species", "scroll", deepestScroll, {
+                              "hitCallback": hitBack
+                          }
+                      );
+                  }
+                }
+            );
+
+            /* Run hitCallback again if GA takes longer than 1 second */
+            setTimeout(hitBack, 1000);
+          }
+
+        }
+      };
+
+      var trackEvent = function(action, label) {
+        if (typeof ga !== 'undefined') {
+          ga('send', 'event', 'species', action, label);
+        }
+      };
+
+      var deepestScroll = 20*(Math.floor(5*(window.scrollY + $(window).height()) / $(document).height()));
+      window.addEventListener('scroll', function(e) {
+          var scrollPosition = 20*(Math.floor(5*(window.scrollY + $(window).height()) / $(document).height()));
+          if (scrollPosition > deepestScroll) {
+              deepestScroll = scrollPosition;
+          }
+      });
+
     </script>
     <style type="text/css">
         #images .title {
@@ -210,10 +294,10 @@
       <h3>Synonyms</h3>
       <ul class="no_bottom">
         <#list usage.synonyms as syn>
-          <li><a href="<@s.url value='/species/${syn.key?c}'/>">${syn.scientificName}</a></li>
+          <li><a href="<@s.url value='/species/${syn.key?c}'/>" onclick="trackOutboundLink(event, 'synonyms')">${syn.scientificName}</a></li>
           <#-- only show 5 synonyms at max -->
           <#if syn_has_next && syn_index==4>
-            <li class="more"><a href="<@s.url value='/species/${id?c}/synonyms'/>">more</a></li>
+            <li class="more"><a href="<@s.url value='/species/${id?c}/synonyms'/>" onclick="trackOutboundLink(event, 'synonyms')">more</a></li>
             <#break />
           </#if>
         </#list>
@@ -224,10 +308,10 @@
         <h3>Basionym of</h3>
         <ul class="no_bottom">
           <#list usage.combinations as comb>
-            <li><a href="<@s.url value='/species/${comb.key?c}'/>">${comb.scientificName}</a></li>
+            <li><a href="<@s.url value='/species/${comb.key?c}'/>" onclick="trackOutboundLink(event, 'combinations')">${comb.scientificName}</a></li>
             <#-- only show 5 combinations at max -->
             <#if comb_has_next && comb_index==4>
-                <li class="more"><a href="<@s.url value='/species/${id?c}/combinations'/>">more</a></li>
+                <li class="more"><a href="<@s.url value='/species/${id?c}/combinations'/>" onclick="trackOutboundLink(event, 'combinations')">more</a></li>
               <#break />
             </#if>
           </#list>
@@ -266,7 +350,7 @@
 
     <#if basionym?has_content && basionym.key != id>
       <h3>Basionym</h3>
-      <p><a href="<@s.url value='/species/${basionym.key?c}'/>">${basionym.scientificName}</a></p>
+      <p><a href="<@s.url value='/species/${basionym.key?c}'/>" onclick="trackOutboundLink(event, 'basionym')">${basionym.scientificName}</a></p>
     </#if>
 
     <#if usage.nomenclaturalStatus?has_content>
@@ -321,9 +405,9 @@
       <h3>Search links</h3>
       <ul>
         <#if usage.canonicalName??>
-            <li><a target="_blank" href="http://eol.org/search/?q=${usage.canonicalOrScientificName}" title="Encyclopedia of Life">Encyclopedia of Life</a></li>
-            <li><a target="_blank" href="http://www.catalogueoflife.org/col/search/all/key/${usage.canonicalName?replace(' ','+')}" title="Catalogue of Life">Catalogue of Life</a></li>
-            <li><a target="_blank" href="http://www.biodiversitylibrary.org/name/${usage.canonicalName?replace(' ','_')}">Biodiversity Heritage Library</a></li>
+            <li><a target="_blank" href="http://eol.org/search/?q=${usage.canonicalOrScientificName}" title="Encyclopedia of Life" onclick="trackEvent('link', 'EOL');">Encyclopedia of Life</a></li>
+            <li><a target="_blank" href="http://www.catalogueoflife.org/col/search/all/key/${usage.canonicalName?replace(' ','+')}" title="Catalogue of Life" onclick="trackEvent('link', 'COL');">Catalogue of Life</a></li>
+            <li><a target="_blank" href="http://www.biodiversitylibrary.org/name/${usage.canonicalName?replace(' ','_')}" onclick="trackEvent('link', 'BHL');">Biodiversity Heritage Library</a></li>
         </#if>
       </ul>
 
@@ -370,9 +454,9 @@
         <#if numGeoreferencedOccurrences gt 0>
           <h3>View records</h3>
           <p>
-            <a href="<@s.url value='/occurrence/search?taxon_key=${usage.key?c}&HAS_COORDINATE=true&HAS_GEOSPATIAL_ISSUE=false'/>">All ${numGeoreferencedOccurrences} </a>
+            <a href="<@s.url value='/occurrence/search?taxon_key=${usage.key?c}&HAS_COORDINATE=true&HAS_GEOSPATIAL_ISSUE=false'/>" onclick="trackOutboundLink(event, 'occurrenceSearch');">All ${numGeoreferencedOccurrences} </a>
             |
-            <a href="<@s.url value='/occurrence/search?taxon_key=${usage.key?c}&BOUNDING_BOX=90,-180,-90,180&HAS_GEOSPATIAL_ISSUE=false'/>" id='geoOccurrenceSearch'>In viewable area</a>
+            <a href="<@s.url value='/occurrence/search?taxon_key=${usage.key?c}&BOUNDING_BOX=90,-180,-90,180&HAS_GEOSPATIAL_ISSUE=false'/>" id='geoOccurrenceSearch' onclick="trackOutboundLink(event, 'occurrenceSearch');">In viewable area</a>
           </p>
         </#if>
 
@@ -394,7 +478,7 @@
   <#list usage.distributions as d>
     <#if d.locationId?has_content || d.country?has_content || d.locality?has_content >
       <#assign item >
-        <a href='<@s.url value='/species/${(d.sourceTaxonKey!usage.key)?c}#distribution'/>'>
+        <a href='<@s.url value='/species/${(d.sourceTaxonKey!usage.key)?c}#distribution'/>' onclick="trackOutboundLink(event, 'distribution')">
         <@s.text name='enum.occurrencestatus.${d.status!"PRESENT"}'/>
         <#if d.establishmentMeans??> <@s.text name='enum.establishmentmeans.${d.establishmentMeans}'/></#if>
          in
@@ -422,7 +506,7 @@
     <div class="fullwidth">
       <@common.multiColList items=items columns=2 />
       <#if usage.distributions?size gte 10>
-        <p><a href="<@s.url value='/species/${id?c}/distributions'/>">more distributions</a> ...</p>
+        <p><a href="<@s.url value='/species/${id?c}/distributions'/>" onclick="trackOutboundLink(event, 'distribution')">more distributions</a> ...</p>
       </#if>
     </div>
   </@common.article>
@@ -458,18 +542,18 @@
             <#if usage.getHigherRankKey(r) == usage.key>
               ${usage.canonicalOrScientificName}
             <#else>
-              <a href="<@s.url value='/species/${usage.getHigherRankKey(r)?c}'/>">${usage.getHigherRank(r)}</a>
+              <a href="<@s.url value='/species/${usage.getHigherRankKey(r)?c}'/>" onclick="trackOutboundLink(event, 'speciesNavigation')">${usage.getHigherRank(r)}</a>
             </#if>
           <#elseif (usageMetrics.getNumByRank(r)!0) gt 0>
             <#-- TODO: check how to search for accepted only, removed status=ACCEPTED cause its too strict -->
-            <a href="<@s.url value='/species/search?dataset_key=${usage.datasetKey}&rank=${r}&highertaxon_key=${usage.key?c}'/>">${usageMetrics.getNumByRank(r)}</a>
+            <a href="<@s.url value='/species/search?dataset_key=${usage.datasetKey}&rank=${r}&highertaxon_key=${usage.key?c}'/>" onclick="trackOutboundLink(event, 'speciesSearch')">${usageMetrics.getNumByRank(r)}</a>
           <#else>
             ---
           </#if>
         </dd>
       </#list>
         <dt>&nbsp;</dt>
-        <dd><a href="<@s.url value='/species/${id?c}/classification'/>">complete classification</a></dd>
+        <dd><a href="<@s.url value='/species/${id?c}/classification'/>" onclick="trackOutboundLink(event, 'classification')">complete classification</a></dd>
       </dl>
     </div>
 </@common.article>
@@ -537,12 +621,12 @@
               <#assign counter=counter+1 />
               <#assign title=datasets.get(uuid).title! />
               <li>
-                <a title="${title}" href="<@s.url value='/occurrence/search?taxon_key=${usage.nubKey?c}&dataset_key=${uuid}'/>">${common.limit(title, 55)}</a>
+                <a title="${title}" href="<@s.url value='/occurrence/search?taxon_key=${usage.nubKey?c}&dataset_key=${uuid}'/>" onclick="trackOutboundLink(event, 'dataset')">${common.limit(title, 55)}</a>
                 <span class="note"> in ${occurrenceDatasetCounts.get(uuid)!0} occurrences</span>
               </li>
             </#if>
             <#if uuid_has_next && counter==6>
-              <li class="more"><a href="<@s.url value='/species/${usage.nubKey?c}/datasets?type=OCCURRENCE'/>">${occurrenceDatasetCounts?size} more</a></li>
+              <li class="more"><a href="<@s.url value='/species/${usage.nubKey?c}/datasets?type=OCCURRENCE'/>" onclick="trackOutboundLink(event, 'dataset')">${occurrenceDatasetCounts?size} more</a></li>
               <#break />
             </#if>
           </#list>
@@ -615,7 +699,7 @@
       <#list typeSpecimen as occ>
               <li>
                   <#assign catnum = action.termValue(occ, 'catalogNumber')! />
-                  <a href="<@s.url value='/occurrence/${occ.key?c}'/>">${occ.typeStatus} ${catnum!}</a>
+                  <a href="<@s.url value='/occurrence/${occ.key?c}'/>" onclick="trackOutboundLink(event, 'typeSpecimen')">${occ.typeStatus} ${catnum!}</a>
                   <span class="note">
                     of <#if occ.typifiedName?has_content>${occ.typifiedName}<#else>${occ.scientificName!"?"}</#if>
                   </span>
@@ -633,12 +717,12 @@
       <#if usage.referenceList?has_content>
         <#list usage.referenceList as ref>
           <p>
-            <#if ref.link?has_content><a href="${ref.link}">${ref.citation}</a><#else>${ref.citation}</#if>
-            <#if ref.doi?has_content><br/>DOI:<a href="http://dx.doi.org/${ref.doi}">${ref.doi}</a></#if>
+            <#if ref.link?has_content><a href="${ref.link}" onclick="trackOutboundLink(event, 'bibliography')">${ref.citation}</a><#else>${ref.citation}</#if>
+            <#if ref.doi?has_content><br/>DOI:<a href="http://dx.doi.org/${ref.doi}" onclick="trackOutboundLink(event, 'bibliography')">${ref.doi}</a></#if>
           </p>
           <#-- only show 8 references at max. If we have 8 (index=7) we know there are more to show -->
           <#if ref_has_next && ref_index==7>
-            <p class="more"><a href="<@s.url value='/species/${id?c}/references'/>">more</a></p>
+            <p class="more"><a href="<@s.url value='/species/${id?c}/references'/>" onclick="trackOutboundLink(event, 'bibliography')">more</a></p>
             <#break />
           </#if>
         </#list>

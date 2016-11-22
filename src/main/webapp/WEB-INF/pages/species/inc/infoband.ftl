@@ -34,7 +34,7 @@
       <#assign classificationLength = classificationLength + classificationText?length />
     </#if>
 
-    <a href="<@s.url value='/species/${key?c}'/>">${classificationText!}</a><#if key_has_next> &#x203A;
+    <a href="<@s.url value='/species/${key?c}'/>" onclick="trackOutboundLink(event, 'speciesHeaderNavigation')">${classificationText!}</a><#if key_has_next> &#x203A;
     <#assign classificationLength = classificationLength + 3/></#if>
     <#if classificationLength gte classificationLineLength>
       <#assign classificationLength = 0/>
@@ -57,7 +57,7 @@
       </ul>
       <#-- Hide box if there not occurrences for this species-->
       <#if numOccurrences gt 0>
-        <a href="<@s.url value='/occurrence/search?taxon_key=${usage.key?c}'/>" title="View Occurrences" class="candy_blue_button"><span>View occurrences</span></a>
+        <a href="<@s.url value='/occurrence/search?taxon_key=${usage.key?c}'/>" title="View Occurrences" class="candy_blue_button" onclick="trackOutboundLink(event, 'occurrenceSearch')"><span>View occurrences</span></a>
       </#if>
     </div>
   </div>
