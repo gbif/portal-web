@@ -269,7 +269,7 @@ function getDatasetDetail(key, func) {
  */
 function imageCacheUrl(url, size) {
   if (url.indexOf(cfg.wsImageCache) > -1) return url.replace(/size=.$/, "size=" + size.toUpperCase());
-  return cfg.wsImageCache + "?url=" + url + "&size=" + size.toUpperCase();
+  return cfg.wsImageCache + "?url=" + encodeURIComponent(url) + "&size=" + size.toUpperCase();
 }
 
 
