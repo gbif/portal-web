@@ -43,6 +43,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -523,7 +524,7 @@ public class SearchAction
   @Override
   protected String translateFilterValue(OccurrenceSearchParameter param, String value) {
     if (param == OccurrenceSearchParameter.GEOMETRY) {
-      return String.format(FiltersActionHelper.POLYGON_PATTERN, value);
+      return String.format(FiltersActionHelper.POLYGON_PATTERN, StringEscapeUtils.unescapeEcmaScript(value).replace('+', ' '));
     }
     if (Enum.class.isAssignableFrom(param.type())) {
       return value.toUpperCase();

@@ -676,7 +676,8 @@ public class FiltersActionHelper {
               if (!discardedParams.contains(occParam.get())) {
                 // discarded parameters are not validated those could be an integer or a string
                 if (occParam.get() == OccurrenceSearchParameter.GEOMETRY) {
-                  String polygonValue = String.format(POLYGON_PATTERN, value);
+                  String polygonValue = String.format(POLYGON_PATTERN,
+                                                      StringEscapeUtils.unescapeEcmaScript(value).replace('+', ' '));
                   SearchTypeValidator.validate(occParam.get(), polygonValue);
                 } else {
                   SearchTypeValidator.validate(occParam.get(), value);
@@ -719,13 +720,7 @@ public class FiltersActionHelper {
    */
   private static String getGeometryTitle(String value) {
     String[] coordinates = value.split(",");
-    if (isRectangle(value)) {
-      final String[] southMost = coordinates[1].split(" ");
-      final String[] northMost = coordinates[3].split(" ");
-      return String.format(BBOX_FMT, southMost[1], southMost[0], northMost[1], northMost[0]);
-    } else {
-      return coordinates[0] + "..." + coordinates[coordinates.length - 2];
-    }
+    return coordinates[0] + "..." + coordinates[coordinates.length - 2];
   }
 
 
