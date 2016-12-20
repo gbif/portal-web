@@ -82,6 +82,7 @@
          function updateMap() {
            //UPDATE MAP
            var queryUrl = '';
+           var qParamValue = getURLParameter('q');
            if (typeof filtersFromRequest === 'object') {
              Object.keys(filtersFromRequest).forEach(function(e){
                filtersFromRequest[e].forEach(function(filter){
@@ -93,6 +94,13 @@
                  }
                })
              });
+           }
+           if (qParamValue) {
+             if (queryUrl.length > 0) {
+               queryUrl += '&';
+             }
+             queryUrl += 'q=' + qParamValue;
+
            }
 
            var mapURL = '${cfg.tileServerBaseUrl!}/heatmap.html?&resolution=1&palette=yellows_reds&' + queryUrl;
