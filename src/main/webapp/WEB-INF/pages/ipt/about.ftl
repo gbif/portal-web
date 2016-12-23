@@ -92,7 +92,7 @@
     <div class="right">
         <h3>Resources</h3>
         <ul>
-            <li><a href="https://github.com/gbif/ipt/wiki/IPT2ManualNotes.wiki" title="IPT User Manual" target="_blank">User Manual</a> <a href="https://code.google.com/p/gbif-providertoolkit/wiki/IPT2ManualNotes?wl=es" title="IPT User Manual Spanish">(es)</a></li>
+            <li><a href="https://github.com/gbif/ipt/wiki/IPT2ManualNotes.wiki" title="IPT User Manual" target="_blank">User Manual</a> <a href="https://github.com/gbif/ipt/wiki/IPT2ManualNotes_ES.wiki" title="IPT User Manual Spanish">(es)</a></li>
             <li><a href="http://lists.gbif.org/mailman/listinfo/ipt" title="IPT Mailing List" target="_blank">Mailing List</a></li>
             <li><a href="https://github.com/gbif/ipt/wiki" title="IPT Wiki" target="_blank">Wiki</a></li>
             <li><a href="https://github.com/gbif/ipt/wiki/FAQ.wiki" title="IPT FAQ" target="_blank">FAQs</a></li>
@@ -145,10 +145,10 @@
                 </li>
                 <li class="iptfeature">
                     <div class="imgbox-tall">
-                        <img typeof="foaf:Image" src="/img/ipt/languages.jpg" width="206" height="148" alt="Language selection in IPT" title="Language selection in IPT" />
+                        <img typeof="foaf:Image" src="/img/ipt/languages-2016.png" width="206" height="148" alt="Language selection in IPT" title="Language selection in IPT" />
                     </div>
                     <div class="title">Internationalization</div>
-                    <p>User interface available in six different languages: English, French, Spanish, Traditional Chinese, Brazilian Portuguese, and Japanese.</p>
+                    <p>User interface available in seven different languages: English, French, Spanish, Traditional Chinese, Brazilian Portuguese, Japanese and Russian.</p>
                 </li>
                 <li class="iptfeature last">
                     <div class="imgbox-tall">

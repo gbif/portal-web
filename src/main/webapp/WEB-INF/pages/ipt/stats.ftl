@@ -13,16 +13,17 @@
 
 <body class="ipt">
 
-<@common.article id="installations" title="" titleRight="144 IPT installations" class="map">
+<@common.article id="installations" title="" titleRight="174 IPT installations" class="map">
     <div id="iptmap" class="map"></div>
     <div class="right">
-        <p>Located in 49 countries, serving:</p>
+        <p>Located in 52 countries, serving:</p>
         <ul>
-            <li>168 checklists published by 44 different publishers totaling 863 thousand usages</li>
-            <li>1692 occurrence datasets published by 473 different publishers totaling 349 million records</li>
-            <li>17 metadata-only datasets published by 14 different publishers</li>
+            <li>211 checklists published by 57 different publishers totaling 830 thousand usages</li>
+            <li>2851 occurrence datasets published by 568 different publishers totaling 242 million records</li>
+            <li>55 sampling-event datasets published by 22 different publishers totaling 12 million records</li>
+            <li>374 metadata-only datasets published by 19 different publishers</li>
         </ul>
-        <p><em>Status: October 2015</em></p>
+        <p><em>Status: December 2016</em></p>
         <h3>Don’t see your IPT?</h3>
         <p>Send <a href="mailto:helpdesk@gbif.org" title="Mail to GBIF Helpdesk requesting IPT be added to map">GBIF</a> your coordinates.</p>
     </div>
