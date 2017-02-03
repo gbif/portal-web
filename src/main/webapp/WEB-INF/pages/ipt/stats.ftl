@@ -13,7 +13,7 @@
 
 <body class="ipt">
 
-<@common.article id="installations" title="" titleRight="174 IPT installations" class="map">
+<@common.article id="installations" title="" titleRight="174 IPT installations" class="map iptMap">
     <div id="iptmap" class="map"></div>
     <div class="right">
         <p>Located in 52 countries, serving:</p>
