@@ -11,9 +11,9 @@ functionality includes:
   * IPT: display information about releases and statistics.
   * Developer: documentation about the REST API services.
   * Infrastructure: documentation about the occurrence data indexing, processing and tools.
-  
-This portal was developed using the following technologies: [Strust2](http://struts.apache.org/), [Freemarker](http://freemarker.org/), 
-[Less](http://lesscss.org/), [Leaflet](http://leafletjs.com/) and  [JQuery](https://jquery.com/). 
+
+This portal was developed using the following technologies: [Strust2](http://struts.apache.org/), [Freemarker](http://freemarker.org/),
+[Less](http://lesscss.org/), [Leaflet](http://leafletjs.com/) and  [JQuery](https://jquery.com/).
 
 ## How to built the project
 This project requires a Maven with the following settings defined in the properties section:
@@ -29,11 +29,11 @@ This project requires a Maven with the following settings defined in the propert
         <api.baseurl>http://api.gbif-dev.org/v1</api.baseurl>
         <servername>http://www.gbif-dev.org</servername>
         <drupal.url>http://www.gbif-dev.org</drupal.url>
-        <url.includeContext>false</url.includeContext>        
+        <url.includeContext>false</url.includeContext>
         <httpTimeout>60000</httpTimeout>
         <maxHttpConnections>100</maxHttpConnections>
         <maxHttpConnectionsPerRoute>100</maxHttpConnectionsPerRoute>
-        <annosys.url>https://annosys.bgbm.fu-berlin.de/AnnoSysTest/</annosys.url> 
+        <annosys.url>https://annosys.bgbm.fu-berlin.de/AnnoSysTest/</annosys.url>
         <registry.ws.url>http://api.gbif-dev.org/v1/</registry.ws.url>
         <checklistbank.ws.url>http://api.gbif-dev.org/v1/</checklistbank.ws.url>
         <checklistbank.match.ws.url>http://api.gbif-dev.org/v1/species/match/</checklistbank.match.ws.url>
@@ -41,8 +41,8 @@ This project requires a Maven with the following settings defined in the propert
         <occurrence.ws.url.public>http://api.gbif-dev.org/v1/</occurrence.ws.url.public>
         <tile-server.url>http://api.gbif-dev.org/v1/map</tile-server.url>
         <image-cache.url>http://api.gbif-dev.org/v1/image</image-cache.url>
-        <metrics.ws.url>http://api.gbif-dev.org/v1/</metrics.ws.url>   
-        <drupal.cookiename>drupal_cookiename</drupal.cookiename>        
+        <metrics.ws.url>http://api.gbif-dev.org/v1/</metrics.ws.url>
+        <drupal.cookiename>drupal_cookiename</drupal.cookiename>
         <drupal.db.host>mysqlserver</drupal.db.host>
         <drupal.db.url>jdbc:mysql://mysqlserver:3306/drupal_db?useUnicode=true&amp;characterEncoding=UTF8&amp;characterSetResults=UTF8</drupal.db.url>
         <drupal.db.name>drupal_db_username</drupal.db.name>
@@ -59,11 +59,18 @@ Using the profile above, exceute the Maven command:
 mvn clean jetty:run -Pgbif-portal
 ```
 
-## Releasing the project
-To release this project use the following Maven command:
+## Releasing and deploying the project
+Releases can be done from `builds.gbif.org`.
 ```
-mvn clean package verify -Pgbif-portal,release
+cd code-release/portal-web
+git pull
+mvn -s ../settings.xml -Pportal-dev,secrets-dev,release clean release:prepare
+mvn -s ../settings.xml -Pportal-dev,secrets-dev,release release:perform
 ```
+
+Deploys should be done using the scripts in the private `deploy` Git repository, from either `uatapps-vh.gbif.org` or `prodapps-vh.gbif.org`, in `/root/deploy`.
+
+See [README](https://github.com/gbif/deploy/blob/master/portal-web/README.md) in that project.
 
 ## Project structure
 
@@ -102,7 +109,7 @@ Consider replacing the native struts2 text provider with a much simpler one we u
 ##### Using i18n in JQuery
 to make available the properties from Java's resource bundle to javascript, a jquery plugin is used: http://plugins.jquery.com/project/resourcebundle
 To make any property available, this process should be followed:
-1. On the Action responsible for passing the values to the ftl, create a getResourceBundleProperties() method that calls the superclass's method:  
+1. On the Action responsible for passing the values to the ftl, create a getResourceBundleProperties() method that calls the superclass's method:
   Example:
   ```
       MyAction extends BaseAction
