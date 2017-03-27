@@ -213,4 +213,5 @@ $(function() {
     // no browser support for session storage, always show it!
     $(".sessionBound").show();
   }
-})
+  $.getScript('//demo.gbif.org/js/base/shared/signpost.js');//load script from demo site with signposting to redirect traffic to the demo site
+});
