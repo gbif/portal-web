@@ -278,20 +278,13 @@ ${dataset.license.licenseTitle}
   <@article id="legal" title="Citation and licensing" class="mono_line">
   <div class="fullwidth">
     <#if dataset.citation??>
-      <p>The content  of the "Dataset citation provided by the publisher" depends on the metadata supplied by the publisher.
-         In some cases this may be incomplete.  A standard default form for citing is provided as an alternative.
-         We are in transition towards providing more consistent citation text for all datasets.
+      <p>The content  of the "Default citation" depends on the metadata supplied by the publisher.
+         In some cases this may be incomplete.
       </p>
 
-      <h3>Dataset citation provided by publisher</h3>
+      <h3>Default citation</h3>
       <p>${dataset.citation.text}</p>
     </#if>
-
-    <h3>Default citation</h3>
-    <p>${prefix!}<#if publisher??>${publisher.title}:</#if>
-      ${dataset.title}. <#if dataset.doi??><@doilink dataset.doi /></#if>
-      <br/>Accessed via ${currentUrl} on ${.now?date?iso_utc}
-    </p>
 
     <#if dataset.license?has_content && dataset.license != "UNSPECIFIED" && dataset.license != "UNSUPPORTED">
       <h3>License</h3>
