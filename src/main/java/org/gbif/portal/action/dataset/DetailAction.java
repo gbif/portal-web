@@ -86,7 +86,7 @@ public class DetailAction extends DatasetBaseAction {
     countryVariants.put(Country.RUSSIAN_FEDERATION, ImmutableList.of("Russia"));
     countryVariants.put(Country.SAINT_HELENA_ASCENSION_TRISTAN_DA_CUNHA, ImmutableList.of("Saint Helena", "Ascension", "Tristan da Cunha"));
     countryVariants.put(Country.SAINT_MARTIN_FRENCH, ImmutableList.of("Saint Martin"));
-    countryVariants.put(Country.SAO_TOME_PRINCIPE, ImmutableList.of("S. Tomé and Príncipe"));
+    countryVariants.put(Country.SAO_TOME_PRINCIPE, ImmutableList.of("S\\. Tomé and Príncipe"));
     countryVariants.put(Country.SINT_MAARTEN, ImmutableList.of("Sint Maarten"));
     countryVariants.put(Country.SVALBARD_JAN_MAYEN, ImmutableList.of("Svalbard", "Jan Mayen"));
     countryVariants.put(Country.TAIWAN, ImmutableList.of("Taiwan"));
