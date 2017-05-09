@@ -21,12 +21,16 @@ public class DetailActionTest {
         assertEquals("<a href='/country/GW'>Guinea-Bissau</a>", DetailAction.makeCountryLinks(c, "Guinea-Bissau"));
         assertEquals("<a href='/country/GN'>Guinea</a>", DetailAction.makeCountryLinks(c, "Guinea"));
 
-        assertEquals("<a href='/country/CG'>Congo</a>", DetailAction.makeCountryLinks(c, "Congo"));
+        assertEquals("<a href='/country/CG'>Congo</a>.", DetailAction.makeCountryLinks(c, "Congo."));
         assertEquals("<a href='/country/CD'>DR Congo</a>", DetailAction.makeCountryLinks(c, "DR Congo"));
 
         assertEquals("<a href='/country/US'>United States</a>", DetailAction.makeCountryLinks(c, "United States"));
         assertEquals("<a href='/country/US'>United States of America</a>", DetailAction.makeCountryLinks(c, "United States of America"));
         assertEquals("<a href='/country/US'>USA</a>", DetailAction.makeCountryLinks(c, "USA"));
+        //the last dot of U.S.A. will be outside the <a> tag
+        assertEquals("in the <a href='/country/US'>U.S.A</a>. ", DetailAction.makeCountryLinks(c, "in the U.S.A. "));
+        //ensure dots are escaped otherwise Ursua will match u.s.a.
+        assertEquals("Ursua", DetailAction.makeCountryLinks(c, "Ursua"));
         assertEquals("Matching US would also match us.", DetailAction.makeCountryLinks(c, "Matching US would also match us."));
         assertEquals("<a href='/country/VI'>US Virgin Islands</a>", DetailAction.makeCountryLinks(c, "US Virgin Islands"));
 

@@ -8,15 +8,6 @@
  */
 package org.gbif.portal.action.dataset;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Joiner;
-import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.inject.Inject;
 import org.gbif.api.model.common.paging.PagingRequest;
 import org.gbif.api.model.common.paging.PagingResponse;
 import org.gbif.api.model.registry.Dataset;
@@ -27,19 +18,43 @@ import org.gbif.api.service.checklistbank.DatasetMetricsService;
 import org.gbif.api.service.metrics.CubeService;
 import org.gbif.api.service.registry.DatasetService;
 import org.gbif.api.service.registry.OrganizationService;
-import org.gbif.api.vocabulary.*;
+import org.gbif.api.vocabulary.Country;
+import org.gbif.api.vocabulary.EndpointType;
+import org.gbif.api.vocabulary.Extension;
+import org.gbif.api.vocabulary.Kingdom;
+import org.gbif.api.vocabulary.Rank;
 
-import javax.annotation.Nullable;
-import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.annotation.Nullable;
+import javax.validation.constraints.NotNull;
+
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Joiner;
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Populates the model objects for the dataset detail page.
  */
 @SuppressWarnings("serial")
 public class DetailAction extends DatasetBaseAction {
+
+  private static final Logger LOG = LoggerFactory.getLogger(DetailAction.class);
 
   private static final List<Extension> EXTENSIONS = ImmutableList.copyOf(Extension.values());
   private static final List<Kingdom> KINGDOMS = ImmutableList.of(Kingdom.ANIMALIA, Kingdom.ARCHAEA, Kingdom.BACTERIA,
@@ -86,22 +101,22 @@ public class DetailAction extends DatasetBaseAction {
     countryVariants.put(Country.RUSSIAN_FEDERATION, ImmutableList.of("Russia"));
     countryVariants.put(Country.SAINT_HELENA_ASCENSION_TRISTAN_DA_CUNHA, ImmutableList.of("Saint Helena", "Ascension", "Tristan da Cunha"));
     countryVariants.put(Country.SAINT_MARTIN_FRENCH, ImmutableList.of("Saint Martin"));
-    countryVariants.put(Country.SAO_TOME_PRINCIPE, ImmutableList.of("S\\. Tomé and Príncipe"));
+    countryVariants.put(Country.SAO_TOME_PRINCIPE, ImmutableList.of("S. Tomé and Príncipe"));
     countryVariants.put(Country.SINT_MAARTEN, ImmutableList.of("Sint Maarten"));
     countryVariants.put(Country.SVALBARD_JAN_MAYEN, ImmutableList.of("Svalbard", "Jan Mayen"));
     countryVariants.put(Country.TAIWAN, ImmutableList.of("Taiwan"));
     countryVariants.put(Country.TANZANIA, ImmutableList.of("Tanzania"));
     countryVariants.put(Country.TIMOR_LESTE, ImmutableList.of("East Timor"));
-    countryVariants.put(Country.UNITED_KINGDOM, ImmutableList.of("Great Britain", "UK", "U\\.K\\."));
-    countryVariants.put(Country.UNITED_STATES, ImmutableList.of("United States of America", "USA", "U\\.S\\.A\\."));
+    countryVariants.put(Country.UNITED_KINGDOM, ImmutableList.of("Great Britain", "UK", "U.K."));
+    countryVariants.put(Country.UNITED_STATES, ImmutableList.of("United States of America", "USA", "U.S.A."));
     countryVariants.put(Country.VENEZUELA, ImmutableList.of("Venezuela"));
     countryVariants.put(Country.VIRGIN_ISLANDS_BRITISH, ImmutableList.of("British Virgin Islands"));
-    countryVariants.put(Country.VIRGIN_ISLANDS, ImmutableList.of("US Virgin Islands", "U\\.S\\. Virgin Islands"));
+    countryVariants.put(Country.VIRGIN_ISLANDS, ImmutableList.of("US Virgin Islands", "U.S. Virgin Islands"));
 
     for (Country c : countryVariants.keySet()) {
       for (String variant : countryVariants.get(c)) {
-        b.add(variant);
-        COUNTRY_MAP.put(variant.toLowerCase(), c);
+        b.add(normalize(variant));
+        COUNTRY_MAP.put(normalize(variant).toLowerCase(), c);
       }
     }
 
@@ -121,7 +136,7 @@ public class DetailAction extends DatasetBaseAction {
       }
     });
 
-    return "\\b(" + Joiner.on("|").join(b) + ")\\b";
+    return "\\b(" + Joiner.on("|").join(b).replace(".", "\\.") + ")\\b";
   }
 
   private final List<Endpoint> links = Lists.newArrayList();
@@ -261,11 +276,30 @@ public class DetailAction extends DatasetBaseAction {
     StringBuffer sb = new StringBuffer();
     while (m.find()) {
       Country c = COUNTRY_MAP.get(m.group().toLowerCase());
-      String replacement = "<a href='" + countryUrl + c.getIso2LetterCode() + "'>" + m.group() + "</a>";
-      m.appendReplacement(sb, replacement);
+      if(c != null ) {
+        String replacement = "<a href='" + countryUrl + c.getIso2LetterCode() + "'>" + m.group() + "</a>";
+        m.appendReplacement(sb, replacement);
+      }
+      else{
+        //put back the original string
+        m.appendReplacement(sb, m.group());
+        LOG.warn("can't render Country link for: " + m.group());
+      }
     }
     m.appendTail(sb);
     return sb.toString();
+  }
+
+  /**
+   * Normalize to country name to ensure we can use it in the regex.
+   * Currently we only remove the . if it's the last character of the String.
+   * We do that in order to be able to use it with Word boundaries (\b).
+   *
+   * @param countryName
+   * @return
+   */
+  private static String normalize(String countryName) {
+    return countryName.replaceFirst("\\.\\s*$", "");
   }
 
   /**
