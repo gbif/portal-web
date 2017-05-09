@@ -92,11 +92,11 @@ public class DetailAction extends DatasetBaseAction {
     countryVariants.put(Country.TAIWAN, ImmutableList.of("Taiwan"));
     countryVariants.put(Country.TANZANIA, ImmutableList.of("Tanzania"));
     countryVariants.put(Country.TIMOR_LESTE, ImmutableList.of("East Timor"));
-    countryVariants.put(Country.UNITED_KINGDOM, ImmutableList.of("Great Britain", "UK", "U.K."));
-    countryVariants.put(Country.UNITED_STATES, ImmutableList.of("United States of America", "USA", "U.S.A."));
+    countryVariants.put(Country.UNITED_KINGDOM, ImmutableList.of("Great Britain", "UK", "U\\.K\\."));
+    countryVariants.put(Country.UNITED_STATES, ImmutableList.of("United States of America", "USA", "U\\.S\\.A\\."));
     countryVariants.put(Country.VENEZUELA, ImmutableList.of("Venezuela"));
     countryVariants.put(Country.VIRGIN_ISLANDS_BRITISH, ImmutableList.of("British Virgin Islands"));
-    countryVariants.put(Country.VIRGIN_ISLANDS, ImmutableList.of("US Virgin Islands", "U.S. Virgin Islands"));
+    countryVariants.put(Country.VIRGIN_ISLANDS, ImmutableList.of("US Virgin Islands", "U\\.S\\. Virgin Islands"));
 
     for (Country c : countryVariants.keySet()) {
       for (String variant : countryVariants.get(c)) {
