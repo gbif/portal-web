@@ -43,9 +43,9 @@
 
 		var gbifAttrib='GBIF contributors';
 		var gbif = new L.TileLayer(getGBIFUrl(), {minZoom: 0, maxZoom: 14, attribution: gbifAttrib});
-	    var cmAttr = 'Nokia',
-			cmUrl = 'http://2.maps.nlp.nokia.com/maptile/2.1/maptile/newest/normal.day.grey/{z}/{x}/{y}/256/png8?app_id=_peU-uCkp-j8ovkzFGNU&app_code=gBoUkAMoxoqIWfxWA5DuMQ';
-	    var minimal   = L.tileLayer(cmUrl, {styleId: 22677, attribution: cmAttr});
+		var cmAttr = '© OpenMapTiles © OpenStreetMap contributors',
+		cmUrl = 'https://tile.gbif.org/3857/omt/{z}/{x}/{y}@1x.png?style=osm-bright';
+		var minimal   = L.tileLayer(cmUrl, {styleId: 22677, attribution: cmAttr, tileSize: 512, zoomOffset: -1});
 
 		var map = L.map('map', {
 			center: [0, 0],

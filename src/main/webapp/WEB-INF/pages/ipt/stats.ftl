@@ -44,10 +44,9 @@
                 layer.bindPopup("<p>" + ln + "<br>" + feature.properties.count + " " + i + "</p>");
             }
         }
-        var
-                attr = 'Nokia',
-                url  = 'http://2.maps.nlp.nokia.com/maptile/2.1/maptile/newest/normal.day.grey/{z}/{x}/{y}/256/png8?app_id=_peU-uCkp-j8ovkzFGNU&app_code=gBoUkAMoxoqIWfxWA5DuMQ'
-        minimal   = L.tileLayer(url, {attribution: attr})
+        var attr = '© OpenMapTiles © OpenStreetMap contributors';
+	var url = 'https://tile.gbif.org/3857/omt/{z}/{x}/{y}@1x.png?style=osm-bright';
+        var minimal   = L.tileLayer(url, {attribution: attr, tileSize: 512, zoomOffset: -1})
         var map = L.map('iptmap', {
             center: [30,0],
             zoom: 1,

@@ -37,13 +37,13 @@ $.fn.occurrenceMap = function(id, options) {
   );
 
   var
-  cmAttr = 'Nokia',
-  cmUrl  = 'http://2.maps.nlp.nokia.com/maptile/2.1/maptile/newest/normal.day.grey/{z}/{x}/{y}/256/png8?app_id=_peU-uCkp-j8ovkzFGNU&app_code=gBoUkAMoxoqIWfxWA5DuMQ';
+  cmAttr = '© OpenMapTiles © OpenStreetMap contributors',
+  cmUrl  = 'https://tile.gbif.org/3857/omt/{z}/{x}/{y}@1x.png?style=osm-bright';
 
   var
-  gbifBase  = L.tileLayer(cmUrl, {styleId: 69341, attribution: cmAttr}),
-  minimal   = L.tileLayer(cmUrl, {styleId: 997,   attribution: cmAttr}),
-  midnight  = L.tileLayer(cmUrl, {styleId: 999,   attribution: cmAttr});
+  gbifBase  = L.tileLayer(cmUrl, {styleId: 69341, attribution: cmAttr, tileSize: 512, zoomOffset: -1}),
+  minimal   = L.tileLayer(cmUrl, {styleId: 997,   attribution: cmAttr, tileSize: 512, zoomOffset: -1}),
+  midnight  = L.tileLayer(cmUrl, {styleId: 999,   attribution: cmAttr, tileSize: 512, zoomOffset: -1});
 
   // window scrolling needs to be disabled on full screan maps
   // but we need to return it on exiting

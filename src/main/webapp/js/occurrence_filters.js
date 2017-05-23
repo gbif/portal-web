@@ -2086,11 +2086,11 @@ var OccurrenceWidgetManager = (function ($,_) {
             defaultZoom: 1
         };
         var
-        cmAttr = 'Nokia',
-        cmUrl  = 'http://2.maps.nlp.nokia.com/maptile/2.1/maptile/newest/normal.day.grey/{z}/{x}/{y}/256/png8?app_id=_peU-uCkp-j8ovkzFGNU&app_code=gBoUkAMoxoqIWfxWA5DuMQ';
+        cmAttr = '© OpenMapTiles © OpenStreetMap contributors',
+        cmUrl  = 'https://tile.gbif.org/3857/omt/{z}/{x}/{y}@1x.png?style=osm-bright';
 
         var
-        minimal   = L.tileLayer(cmUrl, {styleId: 997,   attribution: cmAttr});
+        minimal   = L.tileLayer(cmUrl, {styleId: 997,   attribution: cmAttr, tileSize: 512, zoomOffset: -1});
 
         map = L.map('map', {
           center: CONFIG.center,
@@ -2335,4 +2335,3 @@ var OccurrenceWidgetManager = (function ($,_) {
   }
   return InnerOccurrenceWidgetManager;
 })(jQuery,_);
-
